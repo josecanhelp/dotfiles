@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Users/jose/dotfiles/oh-my-zsh'
-let g:netrw_dirhist_2='/Users/jose/.tmux/plugins/tmux-sensible'
-let g:netrw_dirhist_3='/Users/jose/.homestead'
-let g:netrw_dirhist_4='/Users/jose/.npm'
-let g:netrw_dirhist_5='/Users/jose/.npm/abbrev'
-let g:netrw_dirhist_6='/Users/jose/.atom'
-let g:netrw_dirhist_7='/Users/jose/.oh-my-zsh'

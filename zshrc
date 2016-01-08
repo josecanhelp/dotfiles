@@ -15,6 +15,7 @@ ZSH_CUSTOM=~/.oh-my-zsh-custom/custom
 plugins=(git)
 
 # User configuration
+COMPLETION_WAITING_DOTS="true"
 
 export PATH="/usr/local/heroku/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/jose/.composer/vendor/bin:/opt/puppetlabs/bin:/Users/jose/.dotfiles/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
