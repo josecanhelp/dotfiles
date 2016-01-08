@@ -6,6 +6,8 @@
     ~/.vim: vim/
     ~/.vimrc: vimrc
     ~/.hushlogin: hushlogin
+    ~/.oh-my-zsh: oh-my-zsh
+    ~/.bin: bin/
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
