@@ -8,6 +8,8 @@
     ~/.hushlogin: hushlogin
     ~/.oh-my-zsh: oh-my-zsh/
     ~/.bin: bin/
-
+    ~/.tmux: tmux/ 
+    ~/.zshrc: zshrc
+    ~/.gitconfig: gitconfig
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
