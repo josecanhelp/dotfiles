@@ -1,3 +1,6 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "vim/bundle/vim-colors-solarized-2"]
+	path = vim/bundle/vim-colors-solarized-2
+	url = git@github.com:altercation/vim-colors-solarized.git
