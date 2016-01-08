@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/Users/jose/.homestead'
+let g:netrw_dirhist_2='/Users/jose/HomeHero/.idea'
+let g:netrw_dirhist_3='/Users/jose/vagrant-puppet-lamp/.idea'
+let g:netrw_dirhist_4='/Users/jose/.oh-my-zsh'
+let g:netrw_dirhist_5='/Users/jose/react-multi-step-form/gulp'
+let g:netrw_dirhist_6='/Users/jose/.tmux'
+let g:netrw_dirhist_7='/Users/jose/.tmux/plugins'
+let g:netrw_dirhist_8='/Users/jose/.oracle_jre_usage'
