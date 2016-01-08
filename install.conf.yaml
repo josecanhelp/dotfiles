@@ -5,6 +5,7 @@
     ~/.tmux.conf: tmux.conf
     ~/.vim: vim/
     ~/.vimrc: vimrc
+    ~/.hushlogin: hushlogin
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
