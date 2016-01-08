@@ -43,7 +43,7 @@ ZSH_THEME="agnoster"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM=~/.oh-my-zsh-custom/custom
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -85,6 +85,16 @@ export LANG=en_US.UTF-8
 alias sshve="ssh root@ve.josecanhelp.com"
 alias vssh="cd ~/vagrant-homehero-web; vagrant ssh"
 alias heroky="heroku"
+#alias gl='git pull --prune'
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias gp="git push origin HEAD"
+alias gd="git diff"
+#alias gc='git commit'
+#alias gca='git commit -a'
+#alias gco='git checkout'
+#alias gcb='git copy-branch-name'
+#alias gb='git branch'
+alias gac="git add -A && git commit -m"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
