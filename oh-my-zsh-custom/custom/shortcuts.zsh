@@ -1,3 +1,3 @@
 hh=~/Homehero
-dq=~/Code/Data-Queries
+dq=~/Code/HomeHero/Data-Queries
 dot=~/Dotfiles

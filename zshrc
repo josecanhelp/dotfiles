@@ -12,7 +12,7 @@ ZSH_CUSTOM=/Users/jose/.oh-my-zsh-custom/custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git, tmux)
 
 # User configuration
 COMPLETION_WAITING_DOTS="true"
@@ -24,7 +24,6 @@ source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
-
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
