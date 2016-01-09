@@ -6,7 +6,7 @@ export ZSH=/Users/jose/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="agnoster"
-ZSH_CUSTOM=~/.oh-my-zsh-custom/custom
+ZSH_CUSTOM=/Users/jose/.oh-my-zsh-custom/custom
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -25,18 +25,6 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-#
-alias sshve="ssh root@ve.josecanhelp.com"
-alias vssh="cd ~/vagrant-homehero-web; vagrant ssh"
-alias heroky="heroku"
-alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-alias gp="git push origin HEAD"
-alias gd="git diff"
-alias gac="git add -A && git commit -m"
-alias gs="git status"
-alias partink="php artisan tinker"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
