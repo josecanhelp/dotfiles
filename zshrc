@@ -36,6 +36,7 @@ alias gp="git push origin HEAD"
 alias gd="git diff"
 alias gac="git add -A && git commit -m"
 alias gs="git status"
+alias partink="php artisan tinker"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
