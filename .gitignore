@@ -1,3 +1,5 @@
 .DS_Store
 *.log
 vim/.netrwhist
+tmux/resurrect/last
+tmux/resurrect/*.*
