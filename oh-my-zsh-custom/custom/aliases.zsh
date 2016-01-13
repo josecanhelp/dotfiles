@@ -7,3 +7,8 @@ alias gd="git diff"
 alias gac="git add -A && git commit -m"
 alias gs="git status"
 alias partink="php artisan tinker"
+alias hhlog="cd ~/HomeHero; php artisan log:tail"
+alias hh="cd ~/Homehero"
+alias dot="cd ~/dotfiles"
+alias dq="cd ~/Code/HomeHero/Data-Queries"
+
