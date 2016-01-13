@@ -10,10 +10,27 @@
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh 
 	url = git@github.com:robbyrussell/oh-my-zsh.git 
-
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = git@github.com:tmux-plugins/tpm.git
 [submodule "tmux/plugins/tmux-yank"]
 	path = tmux/plugins/tmux-yank
 	url = https://github.com/tmux-plugins/tmux-yank.git
+[submodule "tmux/plugins/tmux-sensible"]
+	path = tmux/plugins/tmux-sensible
+	url = https://github.com/tmux-plugins/tmux-sensible.git 
+[submodule "tmux/plugins/tmux-continuum"]
+	path = tmux/plugins/tmux-continuum
+	url = https://github.com/tmux-plugins/tmux-continuum.git
+[submodule "tmux/plugins/tmux-resurrect"]
+	path = tmux/plugins/tmux-resurrect
+	url = https://github.com/tmux-plugins/tmux-resurrect.git
+[submodule "themes/tomorrow-theme"]
+	path = themes/tomorrow-theme
+	url = https://github.com/chriskempson/tomorrow-theme.git
+[submodule "themes/fonts"]
+	path = themes/fonts
+	url = https://github.com/powerline/fonts.git
+[submodule "themes/powerline-fonts"]
+	path = themes/powerline-fonts
+	url = https://github.com/powerline/fonts.git
