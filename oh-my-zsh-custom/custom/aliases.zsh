@@ -11,4 +11,4 @@ alias hhlog="cd ~/HomeHero; php artisan log:tail"
 alias hh="cd ~/Homehero"
 alias dot="cd ~/dotfiles"
 alias dq="cd ~/Code/HomeHero/Data-Queries"
-
+alias gsa="git submodule add"
