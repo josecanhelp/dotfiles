@@ -3,6 +3,7 @@ syntax on
 filetype plugin indent on
 set background=dark
 colorscheme Tomorrow-Night
+set guifont=InputMono:h14
 " Enable line numbers
 set number
 " Enable syntax highlighting
