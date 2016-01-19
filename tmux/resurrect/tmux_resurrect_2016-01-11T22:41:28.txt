@@ -1,7 +1,0 @@
-pane	homehero	0	:zsh	1	:*	0	:/Users/jose/dotfiles	1	zsh	:
-pane	homehero	1	:Web App	0	:-	0	:/Users/jose/vagrant-homehero-web	0	zsh	:
-pane	homehero	1	:Web App	0	:-	1	:/Users/jose/HomeHero	0	zsh	:
-pane	homehero	1	:Web App	0	:-	2	:/Users/jose/vagrant-homehero-web	1	zsh	:
-window	homehero	0	1	:*	cfbd,158x48,0,0,0
-window	homehero	1	0	:-	19f6,158x48,0,0{78x48,0,0,1,79x48,79,0[79x25,79,0,2,79x22,79,26,3]}
-state	homehero	

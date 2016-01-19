@@ -1,18 +1,15 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "vim/bundle/vim-colors-solarized"]
-	path = vim/bundle/vim-colors-solarized
-	url = git@github.com:altercation/vim-colors-solarized.git
-[submodule "vim/bundle/vim-sensible"]
-	path = vim/bundle/vim-sensible
-	url = git@github.com:tpope/vim-sensible.git 
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh 
 	url = git@github.com:robbyrussell/oh-my-zsh.git 
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = git@github.com:tmux-plugins/tpm.git
+[submodule "tmux/plugins/tmux-yank"]
+	path = tmux/plugins/tmux-yank
+	url = https://github.com/tmux-plugins/tmux-yank.git
 [submodule "tmux/plugins/tmux-sensible"]
 	path = tmux/plugins/tmux-sensible
 	url = https://github.com/tmux-plugins/tmux-sensible.git 

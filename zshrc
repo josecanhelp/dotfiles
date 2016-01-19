@@ -37,3 +37,8 @@ DISABLE_AUTO_TITLE=true
 
 #PHP 5.6
 export PATH="$(brew --prefix homebrew/php/php56)/bin:$PATH"
+
+if [ -r ~/.not-public ]
+then
+    source ~/.not-public
+fi

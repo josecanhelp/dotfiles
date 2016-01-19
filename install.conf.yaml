@@ -5,6 +5,7 @@
     ~/.tmux.conf: tmux.conf
     ~/.vim: vim/
     ~/.vimrc: vimrc
+    ~/.gvimrc: gvimrc
     ~/.hushlogin: hushlogin
     ~/.oh-my-zsh: oh-my-zsh/
     ~/.oh-my-zsh-custom: oh-my-zsh-custom/
@@ -12,6 +13,8 @@
 #    ~/.tmux: tmux/ 
     ~/.zshrc: zshrc
     ~/.gitconfig: gitconfig
+    ~/.not-public: not-public
+
 
 
 - shell:
