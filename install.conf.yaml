@@ -13,8 +13,6 @@
 #    ~/.tmux: tmux/ 
     ~/.zshrc: zshrc
     ~/.gitconfig: gitconfig
-    ~/.not-public: not-public
-
 
 
 - shell:
