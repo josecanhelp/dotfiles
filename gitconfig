@@ -25,3 +25,7 @@
   branch = true
 [help]
   autocorrect = 1
+[core]
+	editor = /usr/bin/vim
+[credential]
+	helper = osxkeychain
