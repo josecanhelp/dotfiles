@@ -32,3 +32,10 @@ brew install git tmux tree htop screenfetch
 
 brew tap caskroom/unofficial
 brew cask install iterm2-borderless
+
+
+# Install before using the hhvm composer alias
+brew tap homebrew/dupes
+brew tap homebrew/versions
+brew tap mcuadros/homebrew-hhvm
+brew install hhvm

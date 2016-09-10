@@ -1,4 +1,5 @@
 execute pathogen#infect()
+
 syntax on
 filetype plugin indent on
 set background=dark
@@ -7,11 +8,14 @@ colorscheme Tomorrow-Night
 " Enable line numbers
 set number
 " Enable syntax highlighting
-syntax on
 " Highlight current line
 set cursorline
-" Make tabs as wide as two spaces
-set tabstop=2
+
+" Tabs are 4 spaces
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
 " Highlight searches
 set hlsearch
 " Ignore case of searches
@@ -20,3 +24,5 @@ set ignorecase
 set incsearch
 " Show the current mode
 set showmode
+
+let g:netrw_liststyle=3
