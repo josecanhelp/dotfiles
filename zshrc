@@ -1,6 +1,37 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/jose/.oh-my-zsh
 
+# Directories to be prepended to $PATH
+declare -a dirs_to_prepend
+dirs_to_prepend=(
+    "/usr/local/heroku/bin"
+    "/usr/local/sbin"
+    "/usr/local/bin"
+    "/usr/bin"
+    "/bin"
+    "/usr/sbin"
+    "/sbin"
+    "/Users/jose/.composer/vendor/bin"
+    "/Users/jose/.dotfiles/bin"
+    "$(brew --prefix homebrew/php/php56)/bin" # Forces brew's version of PHP 5.6
+)
+
+# Explicitly configured $PATH
+PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+
+for dir in ${(k)dirs_to_prepend[@]}
+do
+  if [ -d ${dir} ]; then
+    # If these directories exist, then prepend them to existing PATH
+    PATH="${dir}:$PATH"
+  fi
+done
+
+unset dirs_to_prepend
+
+export PATH
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 ZSH_THEME="agnoster"
@@ -24,19 +55,6 @@ source $ZSH/oh-my-zsh.sh
 prompt_context () { }
 
 export LANG=en_US.UTF-8
-
-# Force brew's version of PHP 5.6
-export PATH="$(brew --prefix homebrew/php/php56)/bin:$PATH"
-export PATH="$PATH:
-    /usr/local/heroku/bin:
-    /usr/local/sbin:
-    /usr/local/bin:
-    /usr/bin:
-    /bin:
-    /usr/sbin:
-    /sbin:
-    /Users/jose/.composer/vendor/bin: 
-    /Users/jose/.dotfiles/bin"
 
 if [ -r ~/.not-public ]
 then
