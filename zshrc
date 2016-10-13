@@ -17,7 +17,7 @@ dirs_to_prepend=(
 )
 
 # Explicitly configured $PATH
-PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 
 
 for dir in ${(k)dirs_to_prepend[@]}
