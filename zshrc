@@ -4,16 +4,19 @@ export ZSH=/Users/jose/.oh-my-zsh
 # Directories to be prepended to $PATH
 declare -a dirs_to_prepend
 dirs_to_prepend=(
+    "/usr/local/bin/mysql_config"
+    "/sbin"
+    "/bin"
+    "/usr/bin"
+    "/usr/sbin"
     "/usr/local/heroku/bin"
     "/usr/local/sbin"
     "/usr/local/bin"
-    "/usr/bin"
-    "/bin"
-    "/usr/sbin"
-    "/sbin"
     "/Users/jose/.composer/vendor/bin"
     "/Users/jose/.dotfiles/bin"
-    "$(brew --prefix homebrew/php/php56)/bin" # Forces brew's version of PHP 5.6
+    "$(brew --prefix homebrew/php/php70)/bin:$PATH"
+#    "$(brew --prefix homebrew/php/php56)/bin" # Forces brew's version of PHP 5.6
+    "/Users/jose/miniconda3/bin"
 )
 
 # Explicitly configured $PATH
