@@ -1,6 +1,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/jose/.oh-my-zsh
 
+export GOPATH=/Users/jose/Code/gocode
+
 # Directories to be prepended to $PATH
 declare -a dirs_to_prepend
 dirs_to_prepend=(
@@ -13,6 +15,7 @@ dirs_to_prepend=(
     "/usr/local/sbin"
     "/usr/local/bin"
     "$(brew --prefix homebrew/php/php71)/bin"
+    "/Users/jose/Code/gocode/bin"
     "/Users/jose/.composer/vendor/bin"
     "/Users/jose/.dotfiles/bin"
 )
@@ -51,7 +54,7 @@ COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_TITLE=true
 
 # php version manager
-source $(brew --prefix php-version)/php-version.sh && php-version 5
+source $(brew --prefix php-version)/php-version.sh && php-version 7.1
 
 # manually installed nvm
 source ~/.zsh-nvm/zsh-nvm.plugin.zsh
@@ -70,3 +73,5 @@ fi
 
 # added by travis gem
 [ -f /Users/jose/.travis/travis.sh ] && source /Users/jose/.travis/travis.sh
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
