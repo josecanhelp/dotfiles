@@ -1718,7 +1718,7 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>685 633 228 325 0 0 2560 1417 </string>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>618 225 623 159 0 0 1920 1178 </string>
+	<string>618 156 623 94 0 0 1920 1178 </string>
 	<key>NSWindow Frame Preferences</key>
 	<string>419 416 606 456 0 0 1440 877 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
@@ -1726,11 +1726,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 139 606 456 0 0 1440 878 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>748 705 796 473 0 0 1920 1178 </string>
+	<string>748 661 796 473 0 0 1920 1178 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 293 592 584 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>962 -3 1090 1174 0 0 1920 1178 </string>
+	<string>962 263 698 908 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>244 701 730 477 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2365,7 +2365,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FiraMonoForPowerline-Medium 18</string>
+			<string>FiraMonoForPowerline-Medium 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -2565,6 +2565,10 @@
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>1E9A5021-77C3-4B6E-AB41-33CFD035167D</string>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
+	<true/>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
+	<integer>0</integer>
 	<key>NoSyncPermissionToShowTip</key>
 	<false/>
 	<key>NoSyncSilenceAnnoyingBellAutomatically</key>
