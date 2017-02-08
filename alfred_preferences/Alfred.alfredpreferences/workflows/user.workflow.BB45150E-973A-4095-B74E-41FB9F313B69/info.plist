@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.alfredapp.david.lipsum</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>2EFD45F5-5159-4B2F-BEC4-518225E256B9</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>767ECB01-0F3E-4F55-8FFD-5B1336E1EA0D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>37044E34-76E6-4A3B-91FE-5647CD8BC3CA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DC84CF13-03DE-4277-B159-EE485FDB67D6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>615A5C1E-5022-43D2-8B34-D0041F4D9E94</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>644FD233-27E0-49E8-999C-3D483B4B40DC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>644FD233-27E0-49E8-999C-3D483B4B40DC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DC84CF13-03DE-4277-B159-EE485FDB67D6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>767ECB01-0F3E-4F55-8FFD-5B1336E1EA0D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DC84CF13-03DE-4277-B159-EE485FDB67D6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>C8F858A1-4FA0-40B4-9B9A-34419DDD6B4F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E02E0432-90D4-456A-8A83-02F5280EC380</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>CBFFCC38-3818-4ED5-A3FA-4B82D43EA339</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>37044E34-76E6-4A3B-91FE-5647CD8BC3CA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>E02E0432-90D4-456A-8A83-02F5280EC380</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DC84CF13-03DE-4277-B159-EE485FDB67D6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>David Ferguson</string>
+	<key>description</key>
+	<string>Lorem Ipsum Generator via Lipsum.com</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Lorem Ipsum</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>lipsum</string>
+				<key>subtext</key>
+				<string>Generate lipsum paragraphs at lipsum.com</string>
+				<key>text</key>
+				<string>Paragraph</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>C8F858A1-4FA0-40B4-9B9A-34419DDD6B4F</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>$in = "{query}";
+$amount = ( $in != '' ) ? $in : '1';
+
+exec( 'curl http://lipsum.com/feed/json -d what=lists -d amount='.$amount.' -d start=no', $ret );
+
+if ( count( $ret ) == 1 ):
+	$out = str_replace( ".", ".\n", $ret-&gt;feed-&gt;lipsum );
+else:
+	$out = '';
+	$ret = implode( '\n\n', $ret );
+	$ret = json_decode( $ret );
+	$out = str_replace( ". ", ".\n", $ret-&gt;feed-&gt;lipsum );
+endif;
+
+echo $out;</string>
+				<key>type</key>
+				<integer>1</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>37044E34-76E6-4A3B-91FE-5647CD8BC3CA</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>$in = "{query}";
+$amount = ( $in != '' ) ? $in : '5';
+
+exec( 'curl http://lipsum.com/feed/json -d what=words -d amount='.$amount.' -d start=no', $ret );
+
+$ret = json_decode( implode( '', $ret ) );
+
+echo $ret-&gt;feed-&gt;lipsum;</string>
+				<key>type</key>
+				<integer>1</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>767ECB01-0F3E-4F55-8FFD-5B1336E1EA0D</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>lipsum</string>
+				<key>subtext</key>
+				<string>Generate lipsum bytes from lipsum.com</string>
+				<key>text</key>
+				<string>Bytes</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>615A5C1E-5022-43D2-8B34-D0041F4D9E94</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>lipsum</string>
+				<key>subtext</key>
+				<string>Generate lipsum words from lipsum.com</string>
+				<key>text</key>
+				<string>Words</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>2EFD45F5-5159-4B2F-BEC4-518225E256B9</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>lipsum</string>
+				<key>subtext</key>
+				<string>Generate lipsum lists from lipsum.com</string>
+				<key>text</key>
+				<string>Lists</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>CBFFCC38-3818-4ED5-A3FA-4B82D43EA339</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>DC84CF13-03DE-4277-B159-EE485FDB67D6</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>$in = "{query}";
+$amount = ( $in != '' ) ? $in : '1';
+
+exec( 'curl http://lipsum.com/feed/json -d what=paras -d amount='.$amount.' -d start=no', $ret );
+
+$ret = json_decode( implode( '\n\n', $ret ) );
+
+echo $ret-&gt;feed-&gt;lipsum;</string>
+				<key>type</key>
+				<integer>1</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>E02E0432-90D4-456A-8A83-02F5280EC380</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>$in = "{query}";
+$amount = ( $in != '' ) ? $in : '1';
+
+exec( 'curl http://lipsum.com/feed/json -d what=bytes -d amount='.$amount.' -d start=no', $ret );
+
+$ret = json_decode( implode( '', $ret ) );
+
+echo $ret-&gt;feed-&gt;lipsum;</string>
+				<key>type</key>
+				<integer>1</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>644FD233-27E0-49E8-999C-3D483B4B40DC</string>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>2EFD45F5-5159-4B2F-BEC4-518225E256B9</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>37044E34-76E6-4A3B-91FE-5647CD8BC3CA</key>
+		<dict>
+			<key>ypos</key>
+			<real>370</real>
+		</dict>
+		<key>615A5C1E-5022-43D2-8B34-D0041F4D9E94</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
+		<key>644FD233-27E0-49E8-999C-3D483B4B40DC</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
+		<key>767ECB01-0F3E-4F55-8FFD-5B1336E1EA0D</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>C8F858A1-4FA0-40B4-9B9A-34419DDD6B4F</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>CBFFCC38-3818-4ED5-A3FA-4B82D43EA339</key>
+		<dict>
+			<key>ypos</key>
+			<real>370</real>
+		</dict>
+		<key>DC84CF13-03DE-4277-B159-EE485FDB67D6</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>E02E0432-90D4-456A-8A83-02F5280EC380</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>dferg.us</string>
+</dict>
+</plist>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>9585ACBC-A144-4B90-A26C-67E136279950</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C74B5D70-C4CF-4CA1-878B-84F526B5FC52</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>9E38DCEF-8085-4B92-AA9A-5EB0AAD7B3A5</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Specify length (release ⌥ for alphanumeric and symbols)</string>
+			</dict>
+		</array>
+		<key>9E38DCEF-8085-4B92-AA9A-5EB0AAD7B3A5</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DF094588-C653-4333-8C66-460B819D0FEC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>547C675E-EB28-49CC-BB92-31D43B1BFB21</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>C74B5D70-C4CF-4CA1-878B-84F526B5FC52</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DF094588-C653-4333-8C66-460B819D0FEC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>547C675E-EB28-49CC-BB92-31D43B1BFB21</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Dan Gibbons</string>
+	<key>description</key>
+	<string>Generates a random password</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Password Generator</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)	
+	set x to ""	repeat (q) times		set x to x &amp; some item of "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@£$%^&amp;*()"	end repeat
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>C74B5D70-C4CF-4CA1-878B-84F526B5FC52</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>Copied to clipboard</string>
+				<key>title</key>
+				<string>Password Generated</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>DF094588-C653-4333-8C66-460B819D0FEC</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>pwg</string>
+				<key>subtext</key>
+				<string>Specify length (hold ⌥ for alphanumeric only)</string>
+				<key>text</key>
+				<string>Generate Password and Copy To Clipboard</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>9585ACBC-A144-4B90-A26C-67E136279950</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>547C675E-EB28-49CC-BB92-31D43B1BFB21</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+	set x to ""	repeat (q) times		set x to x &amp; some item of "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"	end repeat
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>9E38DCEF-8085-4B92-AA9A-5EB0AAD7B3A5</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>547C675E-EB28-49CC-BB92-31D43B1BFB21</key>
+		<dict>
+			<key>ypos</key>
+			<real>280</real>
+		</dict>
+		<key>9585ACBC-A144-4B90-A26C-67E136279950</key>
+		<dict>
+			<key>ypos</key>
+			<real>220</real>
+		</dict>
+		<key>9E38DCEF-8085-4B92-AA9A-5EB0AAD7B3A5</key>
+		<dict>
+			<key>ypos</key>
+			<real>450</real>
+		</dict>
+		<key>C74B5D70-C4CF-4CA1-878B-84F526B5FC52</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>DF094588-C653-4333-8C66-460B819D0FEC</key>
+		<dict>
+			<key>ypos</key>
+			<real>160</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
