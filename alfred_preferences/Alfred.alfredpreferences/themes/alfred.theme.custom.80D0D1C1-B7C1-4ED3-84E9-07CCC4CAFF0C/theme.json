@@ -1,0 +1,61 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 8,
+      "subtext" : {
+        "size" : 14,
+        "colorSelected" : "#DE935FFF",
+        "font" : "Lucida Grande",
+        "color" : "#F0C674FF"
+      },
+      "shortcut" : {
+        "size" : 16,
+        "colorSelected" : "#818629FF",
+        "font" : "Lucida Grande",
+        "color" : "#AF890CFF"
+      },
+      "backgroundSelected" : "#474B52FF",
+      "text" : {
+        "size" : 16,
+        "colorSelected" : "#81A2BEFF",
+        "font" : "Lucida Grande",
+        "color" : "#8ABEB7FF"
+      },
+      "iconPaddingHorizontal" : 5,
+      "paddingVertical" : 8,
+      "iconSize" : 40
+    },
+    "search" : {
+      "paddingVertical" : 2,
+      "background" : "#969896E5",
+      "spacing" : 10,
+      "text" : {
+        "size" : 36,
+        "colorSelected" : "#032B36FF",
+        "font" : "Lucida Grande",
+        "color" : "#282A2EFF"
+      },
+      "backgroundSelected" : "#99CC99FF"
+    },
+    "window" : {
+      "color" : "#26292CFF",
+      "paddingHorizontal" : 10,
+      "width" : 560,
+      "borderPadding" : 10,
+      "borderColor" : "#032B3600",
+      "blur" : 0,
+      "roundness" : 12,
+      "paddingVertical" : 10
+    },
+    "credit" : "Chris Kempson",
+    "separator" : {
+      "color" : "#515151FF",
+      "thickness" : 1
+    },
+    "scrollbar" : {
+      "color" : "#F2777AFF",
+      "thickness" : 2
+    },
+    "name" : "Tomorrow Night (v2)"
+  }
+}

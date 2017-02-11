@@ -5,19 +5,16 @@ export ZSH=/Users/jose/.oh-my-zsh
 declare -a dirs_to_prepend
 dirs_to_prepend=(
     "/usr/local/bin/mysql_config"
-    "/sbin"
-    "/bin"
-    "/usr/bin"
-    "/usr/sbin"
     "/usr/local/heroku/bin"
     "/usr/local/sbin"
     "/usr/local/bin"
+    "/Users/jose/.rvm/bin"
     "/Users/jose/.composer/vendor/bin"
     "/Users/jose/.dotfiles/bin"
 )
 
 # Explicitly configured $PATH
-PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH"
 
 
 for dir in ${(k)dirs_to_prepend[@]}
@@ -49,15 +46,15 @@ COMPLETION_WAITING_DOTS="true"
 # Disable auto-window renaming in tmux
 DISABLE_AUTO_TITLE=true
 
-# php version manager
-source $(brew --prefix php-version)/php-version.sh && php-version 5
+# PHP version manager
+source $(brew --prefix php-version)/php-version.sh && php-version 7.1
 
-# manually installed nvm
+# Manually installed nvm
 source ~/.zsh-nvm/zsh-nvm.plugin.zsh
 
 source $ZSH/oh-my-zsh.sh
 
-# redefine prompt_context for hiding user@hostname
+# Redefine prompt_context for hiding user@hostname
 prompt_context () { }
 
 export LANG=en_US.UTF-8
@@ -67,5 +64,6 @@ then
     source ~/.not-public
 fi
 
-# added by travis gem
+# Added by travis gem
 [ -f /Users/jose/.travis/travis.sh ] && source /Users/jose/.travis/travis.sh
+
