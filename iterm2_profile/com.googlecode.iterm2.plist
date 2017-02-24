@@ -1730,9 +1730,9 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 293 592 584 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>963 11 954 1160 0 0 1920 1178 </string>
+	<string>2723 88 1274 1433 1440 84 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>244 701 730 477 0 0 1920 1178 </string>
+	<string>244 617 650 551 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>17 254 730 477 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -2653,7 +2653,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-02-07T23:24:34Z</date>
+	<date>2017-02-10T16:00:07Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -2661,7 +2661,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>ShowPaneTitles</key>
