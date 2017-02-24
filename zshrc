@@ -6,6 +6,8 @@ declare -a dirs_to_prepend
 dirs_to_prepend=(
     "/usr/local/bin/mysql_config"
     "/usr/local/heroku/bin"
+    "/usr/local/sbin"
+    "/usr/local/bin"
     "/Users/jose/.rvm/bin"
     "/Users/jose/.composer/vendor/bin"
     "/Users/jose/.dotfiles/bin"
