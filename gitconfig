@@ -1,6 +1,6 @@
 [user]
 	name = Jose Soto
-	email = jose@homehero.org
+	email = josecanhelp@gmail.com
 [mergetool "Kaleidoscope"]
 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustexitcode = true
