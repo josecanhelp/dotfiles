@@ -12,6 +12,7 @@
 	prompt = false
 [mergetool]
 	prompt = false
+	keepBackup = false
 [diff]
 	tool = Kaleidoscope
 [push]
@@ -27,5 +28,6 @@
   autocorrect = 1
 [core]
 	editor = /usr/bin/vim
+	excludesfile = /Users/jose/.gitignore_global
 [credential]
 	helper = osxkeychain

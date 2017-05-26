@@ -4,6 +4,7 @@ export ZSH=/Users/jose/.oh-my-zsh
 # Directories to be prepended to $PATH
 declare -a dirs_to_prepend
 dirs_to_prepend=(
+    "~/.composer/vendor/bin"
     "/usr/local/bin/mysql_config"
     "/usr/local/heroku/bin"
     "/usr/local/sbin"
@@ -11,6 +12,8 @@ dirs_to_prepend=(
     "/Users/jose/.rvm/bin"
     "/Users/jose/.composer/vendor/bin"
     "/Users/jose/.dotfiles/bin"
+    "/Users/jose/Code/JoseCanHelp/spark-installer"
+    "/Users/jose/.npm-packages/bin"
 )
 
 # Explicitly configured $PATH
@@ -38,7 +41,7 @@ ZSH_CUSTOM=/Users/jose/.oh-my-zsh-custom/custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux)
+plugins=(git tmux, zsh-nvm)
 
 # User configuration
 COMPLETION_WAITING_DOTS="true"
