@@ -24,4 +24,4 @@ alias tower="/usr/local/bin/gittower"
 alias dpostgres="docker run --name postgres -v data:/var/lib/postgresql/data -e POSTGRES_USER=perk -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=myapp -p 5432:5432 -d postgres"
 alias artclear="php artisan cache:clear && php artisan config:clear && php artisan view:clear && php artisan debugbar:clear && php artisan route:clear"
 alias git="hub"
-
+alias fixcamera="sudo killall VDCAssistant && sudo killall AppleCameraAssistant"
