@@ -1,4 +1,0 @@
-add to automation:
-brew tap homebrew/php
-brew install ctags
-

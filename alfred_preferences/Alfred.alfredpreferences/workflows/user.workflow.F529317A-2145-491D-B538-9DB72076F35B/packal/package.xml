@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>Shush! — Mute your microphone</name>
+  <version>1.0.0</version>
+  <bundle>com.dpskvn.shush</bundle>
+  <updated>1485178487</updated>
+  <file>alfred-shush.alfredworkflow</file>
+</workflow>

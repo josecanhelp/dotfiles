@@ -17,6 +17,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>091EEC82-494D-4CB2-B55E-172F982CA833</key>
@@ -28,6 +30,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>16BAD2E5-4DF5-4459-A200-F88601920418</key>
@@ -39,6 +43,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>42EEFA95-0B30-4EC8-A13B-22F720FFBFFB</key>
@@ -50,6 +56,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>6F3BD9EF-B075-4391-AC0E-E37E290EDDDF</key>
@@ -61,6 +69,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>A339D0E9-651B-4E2B-B03D-42AEC241B4A3</key>
@@ -72,6 +82,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>A5530FAC-6638-4A05-862C-49734238AE99</key>
@@ -83,6 +95,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>AC3DD5AA-5A89-469D-96E5-1095CA327E3D</key>
@@ -94,6 +108,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>E2D34EA2-17C9-416F-95E6-3D638168C8A1</key>
@@ -105,6 +121,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 	</dict>
@@ -113,7 +131,7 @@
 	<key>description</key>
 	<string>Access to Google Apps</string>
 	<key>disabled</key>
-	<false/>
+	<true/>
 	<key>name</key>
 	<string>Google Apps</string>
 	<key>objects</key>
@@ -125,6 +143,8 @@
 				<integer>2</integer>
 				<key>keyword</key>
 				<string>gmail</string>
+				<key>subtext</key>
+				<string></string>
 				<key>text</key>
 				<string>Open Gmail</string>
 				<key>withspace</key>
@@ -135,13 +155,15 @@
 			<key>uid</key>
 			<string>03F2CACB-0D94-434B-BFCC-48DD8CED53A1</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>plusspaces</key>
-				<false/>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
 				<key>url</key>
 				<string>https://mail.google.com</string>
 				<key>utf8</key>
@@ -152,13 +174,15 @@
 			<key>uid</key>
 			<string>CD560F14-F8EB-475F-AB0F-CC23D5EBDA89</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>plusspaces</key>
-				<false/>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
 				<key>url</key>
 				<string>https://docs.google.com</string>
 				<key>utf8</key>
@@ -169,7 +193,7 @@
 			<key>uid</key>
 			<string>944D1F52-9C03-495B-9A30-AE38AE4B0C72</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -178,6 +202,8 @@
 				<integer>2</integer>
 				<key>keyword</key>
 				<string>docs</string>
+				<key>subtext</key>
+				<string></string>
 				<key>text</key>
 				<string>Open Google Docs</string>
 				<key>withspace</key>
@@ -188,7 +214,7 @@
 			<key>uid</key>
 			<string>A339D0E9-651B-4E2B-B03D-42AEC241B4A3</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -197,6 +223,8 @@
 				<integer>2</integer>
 				<key>keyword</key>
 				<string>sheets</string>
+				<key>subtext</key>
+				<string></string>
 				<key>text</key>
 				<string>Open Google Sheets</string>
 				<key>withspace</key>
@@ -207,13 +235,15 @@
 			<key>uid</key>
 			<string>E2D34EA2-17C9-416F-95E6-3D638168C8A1</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>plusspaces</key>
-				<false/>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
 				<key>url</key>
 				<string>https://docs.google.com/spreadsheets/</string>
 				<key>utf8</key>
@@ -224,7 +254,7 @@
 			<key>uid</key>
 			<string>C2C67776-DF4A-4919-8CCB-BD48F7DD2CB5</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -233,6 +263,8 @@
 				<integer>2</integer>
 				<key>keyword</key>
 				<string>calendar</string>
+				<key>subtext</key>
+				<string></string>
 				<key>text</key>
 				<string>Open Google Calendar</string>
 				<key>withspace</key>
@@ -243,13 +275,15 @@
 			<key>uid</key>
 			<string>6F3BD9EF-B075-4391-AC0E-E37E290EDDDF</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>plusspaces</key>
-				<false/>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
 				<key>url</key>
 				<string>https://calendar.google.com/</string>
 				<key>utf8</key>
@@ -260,13 +294,15 @@
 			<key>uid</key>
 			<string>447A5F41-BA36-4457-BEDC-402FE5113F40</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>plusspaces</key>
-				<false/>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
 				<key>url</key>
 				<string>https://inbox.google.com</string>
 				<key>utf8</key>
@@ -277,7 +313,7 @@
 			<key>uid</key>
 			<string>E0A7A797-D30F-4C1E-B927-16C452001D8A</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -286,6 +322,8 @@
 				<integer>2</integer>
 				<key>keyword</key>
 				<string>inbox</string>
+				<key>subtext</key>
+				<string></string>
 				<key>text</key>
 				<string>Open Google Inbox</string>
 				<key>withspace</key>
@@ -296,7 +334,7 @@
 			<key>uid</key>
 			<string>16BAD2E5-4DF5-4459-A200-F88601920418</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -305,6 +343,8 @@
 				<integer>2</integer>
 				<key>keyword</key>
 				<string>slides</string>
+				<key>subtext</key>
+				<string></string>
 				<key>text</key>
 				<string>Open Google Slides</string>
 				<key>withspace</key>
@@ -315,13 +355,15 @@
 			<key>uid</key>
 			<string>A5530FAC-6638-4A05-862C-49734238AE99</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>plusspaces</key>
-				<false/>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
 				<key>url</key>
 				<string>https://docs.google.com/presentation/</string>
 				<key>utf8</key>
@@ -332,7 +374,7 @@
 			<key>uid</key>
 			<string>EA2B448C-8674-4C9F-A4F7-D36F032EC052</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -341,6 +383,8 @@
 				<integer>2</integer>
 				<key>keyword</key>
 				<string>drive</string>
+				<key>subtext</key>
+				<string></string>
 				<key>text</key>
 				<string>Open Google Drive</string>
 				<key>withspace</key>
@@ -351,13 +395,15 @@
 			<key>uid</key>
 			<string>091EEC82-494D-4CB2-B55E-172F982CA833</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>plusspaces</key>
-				<false/>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
 				<key>url</key>
 				<string>https://drive.google.com</string>
 				<key>utf8</key>
@@ -368,13 +414,15 @@
 			<key>uid</key>
 			<string>70495765-3A80-4041-9879-544B455CA3FF</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>plusspaces</key>
-				<false/>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
 				<key>url</key>
 				<string>https://photos.google.com/</string>
 				<key>utf8</key>
@@ -385,7 +433,7 @@
 			<key>uid</key>
 			<string>551B77E3-3099-43C1-8B08-B4322A2B0E1C</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -394,6 +442,8 @@
 				<integer>2</integer>
 				<key>keyword</key>
 				<string>photos</string>
+				<key>subtext</key>
+				<string></string>
 				<key>text</key>
 				<string>Open Google Photos</string>
 				<key>withspace</key>
@@ -404,7 +454,7 @@
 			<key>uid</key>
 			<string>42EEFA95-0B30-4EC8-A13B-22F720FFBFFB</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -413,6 +463,8 @@
 				<integer>2</integer>
 				<key>keyword</key>
 				<string>keep</string>
+				<key>subtext</key>
+				<string></string>
 				<key>text</key>
 				<string>Open Google Keep</string>
 				<key>withspace</key>
@@ -423,13 +475,15 @@
 			<key>uid</key>
 			<string>AC3DD5AA-5A89-469D-96E5-1095CA327E3D</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>plusspaces</key>
-				<false/>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
 				<key>url</key>
 				<string>https://keep.google.com/</string>
 				<key>utf8</key>
@@ -440,7 +494,7 @@
 			<key>uid</key>
 			<string>B2D22D0D-BDF7-4EB7-AFC6-42D74FBA78E3</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -449,91 +503,127 @@
 	<dict>
 		<key>03F2CACB-0D94-434B-BFCC-48DD8CED53A1</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
 		<key>091EEC82-494D-4CB2-B55E-172F982CA833</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
 			<real>730</real>
 		</dict>
 		<key>16BAD2E5-4DF5-4459-A200-F88601920418</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
 			<real>490</real>
 		</dict>
 		<key>42EEFA95-0B30-4EC8-A13B-22F720FFBFFB</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
 			<real>850</real>
 		</dict>
 		<key>447A5F41-BA36-4457-BEDC-402FE5113F40</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
 			<real>370</real>
 		</dict>
 		<key>551B77E3-3099-43C1-8B08-B4322A2B0E1C</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
 			<real>850</real>
 		</dict>
 		<key>6F3BD9EF-B075-4391-AC0E-E37E290EDDDF</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
 			<real>370</real>
 		</dict>
 		<key>70495765-3A80-4041-9879-544B455CA3FF</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
 			<real>730</real>
 		</dict>
 		<key>944D1F52-9C03-495B-9A30-AE38AE4B0C72</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
 			<real>130</real>
 		</dict>
 		<key>A339D0E9-651B-4E2B-B03D-42AEC241B4A3</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
 			<real>130</real>
 		</dict>
 		<key>A5530FAC-6638-4A05-862C-49734238AE99</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
 			<real>610</real>
 		</dict>
 		<key>AC3DD5AA-5A89-469D-96E5-1095CA327E3D</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
 			<real>970</real>
 		</dict>
 		<key>B2D22D0D-BDF7-4EB7-AFC6-42D74FBA78E3</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
 			<real>970</real>
 		</dict>
 		<key>C2C67776-DF4A-4919-8CCB-BD48F7DD2CB5</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
 			<real>250</real>
 		</dict>
 		<key>CD560F14-F8EB-475F-AB0F-CC23D5EBDA89</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
 		<key>E0A7A797-D30F-4C1E-B927-16C452001D8A</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
 			<real>490</real>
 		</dict>
 		<key>E2D34EA2-17C9-416F-95E6-3D638168C8A1</key>
 		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
 			<key>ypos</key>
 			<real>250</real>
 		</dict>
 		<key>EA2B448C-8674-4C9F-A4F7-D36F032EC052</key>
 		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
 			<key>ypos</key>
 			<real>610</real>
 		</dict>

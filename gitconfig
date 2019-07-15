@@ -30,4 +30,6 @@
 	editor = /usr/bin/vim
 	excludesfile = /Users/jose/.gitignore_global
 [credential]
-	helper = osxkeychain
+    helper = osxkeychain
+ [alias]
+    fix-staged = "!git diff-index --cached --name-status HEAD | grep -ve '^D' | cut -f2 | xargs -n1 php-cs-fixer fix --verbose --config=/Users/jose/.php_cs.dist"
