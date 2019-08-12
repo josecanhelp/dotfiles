@@ -41,7 +41,7 @@ ZSH_CUSTOM=/Users/jose/.oh-my-zsh-custom/custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux pip docker node npm brew)
+plugins=(git docker node npm brew)
 
 # User configuration
 COMPLETION_WAITING_DOTS="true"
