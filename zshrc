@@ -1,20 +1,17 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/jose/.oh-my-zsh
-
+export PATH="$PATH:$HOME/.bin"
 # Directories to be prepended to $PATH
 declare -a dirs_to_prepend
 dirs_to_prepend=(
     "/usr/local/opt/php@7.2/bin"
     "/usr/local/opt/php@7.2/sbin"
     "/usr/local/bin/mysql_config"
-    "/usr/local/heroku/bin"
     "/usr/local/sbin"
     "/usr/local/bin"
-    "/Users/jose/.rvm/bin"
     "/Users/jose/.composer/vendor/bin"
     "/Users/jose/.dotfiles/bin"
     "/Users/jose/.npm-packages/bin"
-    "/Users/jose/Code/JoseCanHelp/spark-installer"
 )
 
 # Explicitly configured $PATH
@@ -41,7 +38,7 @@ ZSH_CUSTOM=/Users/jose/.oh-my-zsh-custom/custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker node npm brew)
+plugins=(git node npm brew vi-mode)
 
 # User configuration
 COMPLETION_WAITING_DOTS="true"

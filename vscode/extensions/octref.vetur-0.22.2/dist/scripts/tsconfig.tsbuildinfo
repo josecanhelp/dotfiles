@@ -1,0 +1,628 @@
+{
+  "program": {
+    "fileInfos": {
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es6.d.ts": {
+        "version": "c180f01a2aaac7d733001fa1db20f881dc83cf33096b674a1546ca26762e69da",
+        "signature": "c180f01a2aaac7d733001fa1db20f881dc83cf33096b674a1546ca26762e69da"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "1f753cee573dea40df8a9dc873fef5566957b19ad513874f6643d8dfb14842d0",
+        "signature": "1f753cee573dea40df8a9dc873fef5566957b19ad513874f6643d8dfb14842d0"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.d.ts": {
+        "version": "7994d44005046d1413ea31d046577cdda33b8b2470f30281fd9c8b3c99fe2d96",
+        "signature": "7994d44005046d1413ea31d046577cdda33b8b2470f30281fd9c8b3c99fe2d96"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.dom.d.ts": {
+        "version": "973df4e41aea3780ce77073777d37dd5896f684124f4c42409f3a832133837a4",
+        "signature": "973df4e41aea3780ce77073777d37dd5896f684124f4c42409f3a832133837a4"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.dom.iterable.d.ts": {
+        "version": "eb843da29336c7d5840bb439b24cf68a4a1652fd01c6e4e66ec74d8b136e944a",
+        "signature": "eb843da29336c7d5840bb439b24cf68a4a1652fd01c6e4e66ec74d8b136e944a"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.webworker.importscripts.d.ts": {
+        "version": "fe4e59403e34c7ff747abe4ff6abbc7718229556d7c1a5b93473fb53156c913b",
+        "signature": "fe4e59403e34c7ff747abe4ff6abbc7718229556d7c1a5b93473fb53156c913b"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.scripthost.d.ts": {
+        "version": "b9faa17292f17d2ad75e34fac77dd63a6403af1dba02d39cd0cbb9ffdf3de8b9",
+        "signature": "b9faa17292f17d2ad75e34fac77dd63a6403af1dba02d39cd0cbb9ffdf3de8b9"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.core.d.ts": {
+        "version": "2a0390a665763bcc90f0670e43c587928d8fefe2a94a11209c1e22cba7b09f52",
+        "signature": "2a0390a665763bcc90f0670e43c587928d8fefe2a94a11209c1e22cba7b09f52"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.collection.d.ts": {
+        "version": "dd94d8ef48c562389eb58af8df3a3a34d11367f7c818192aa5f16470d469e3f0",
+        "signature": "dd94d8ef48c562389eb58af8df3a3a34d11367f7c818192aa5f16470d469e3f0"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.generator.d.ts": {
+        "version": "828413486bdcaa342558e8e4570b1b287b776cb61b4b70b0214bd10c5d9a94c3",
+        "signature": "828413486bdcaa342558e8e4570b1b287b776cb61b4b70b0214bd10c5d9a94c3"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.iterable.d.ts": {
+        "version": "6c9f73334f8bf47aea685ca5b46a8f7e992a223e96fbceb030f26a4d2324ba21",
+        "signature": "6c9f73334f8bf47aea685ca5b46a8f7e992a223e96fbceb030f26a4d2324ba21"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.promise.d.ts": {
+        "version": "e6b8ff2798f8ebd7a1c7afd8671f2cb67ee1901c422f5964d74b0b34c6574ea2",
+        "signature": "e6b8ff2798f8ebd7a1c7afd8671f2cb67ee1901c422f5964d74b0b34c6574ea2"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.proxy.d.ts": {
+        "version": "5e72f949a89717db444e3bd9433468890068bb21a5638d8ab15a1359e05e54fe",
+        "signature": "5e72f949a89717db444e3bd9433468890068bb21a5638d8ab15a1359e05e54fe"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.reflect.d.ts": {
+        "version": "f5b242136ae9bfb1cc99a5971cccc44e99947ae6b5ef6fd8aa54b5ade553b976",
+        "signature": "f5b242136ae9bfb1cc99a5971cccc44e99947ae6b5ef6fd8aa54b5ade553b976"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.symbol.d.ts": {
+        "version": "9ae2860252d6b5f16e2026d8a2c2069db7b2a3295e98b6031d01337b96437230",
+        "signature": "9ae2860252d6b5f16e2026d8a2c2069db7b2a3295e98b6031d01337b96437230"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts": {
+        "version": "3e0a459888f32b42138d5a39f706ff2d55d500ab1031e0988b5568b0f67c2303",
+        "signature": "3e0a459888f32b42138d5a39f706ff2d55d500ab1031e0988b5568b0f67c2303"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/events/index.d.ts": {
+        "version": "400db42c3a46984118bff14260d60cec580057dc1ab4c2d7310beb643e4f5935",
+        "signature": "400db42c3a46984118bff14260d60cec580057dc1ab4c2d7310beb643e4f5935"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/node/inspector.d.ts": {
+        "version": "6215001ad565ae40d8a73f08b9ac6108058e497f122b2466ef9910be219980fa",
+        "signature": "6215001ad565ae40d8a73f08b9ac6108058e497f122b2466ef9910be219980fa"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts": {
+        "version": "6e10c8879ed56edc4b1382eb247a2ab2ef9dd0b04103249675222b012e0a65bf",
+        "signature": "6e10c8879ed56edc4b1382eb247a2ab2ef9dd0b04103249675222b012e0a65bf"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/minimatch/index.d.ts": {
+        "version": "1d1e6bd176eee5970968423d7e215bfd66828b6db8d54d17afec05a831322633",
+        "signature": "1d1e6bd176eee5970968423d7e215bfd66828b6db8d54d17afec05a831322633"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/glob/index.d.ts": {
+        "version": "d852d6282c8dc8156d26d6bda83ab4bde51fee05ba2fe0ecdc165ddda009d3ee",
+        "signature": "d852d6282c8dc8156d26d6bda83ab4bde51fee05ba2fe0ecdc165ddda009d3ee"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/js-yaml/index.d.ts": {
+        "version": "a42b7d08df859d5d5774a43c161a70656b7e58c0593f249f5d403a393e0b91c6",
+        "signature": "a42b7d08df859d5d5774a43c161a70656b7e58c0593f249f5d403a393e0b91c6"
+      },
+      "/users/octref/code/mine/v/vetur/client/grammar.ts": {
+        "version": "428b657a18cc9088bff43551b457dfb772d7432a82921367260c4a412cb34a40",
+        "signature": "428b657a18cc9088bff43551b457dfb772d7432a82921367260c4a412cb34a40"
+      },
+      "/users/octref/code/mine/v/vetur/scripts/build_grammar.ts": {
+        "version": "9892712984d5dd6147c6187d827056239135fda46d46bb9696deb1e30211ff92",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts": {
+        "version": "34d4e49fb6a233df0592edeac9fecd45cf1d8e5e7ce449d5723d6d942a23e1ad",
+        "signature": "34d4e49fb6a233df0592edeac9fecd45cf1d8e5e7ce449d5723d6d942a23e1ad"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts": {
+        "version": "24f73778cc712f3d2ff4b69227957577487118bd41652b63c5f913ba12f7631a",
+        "signature": "24f73778cc712f3d2ff4b69227957577487118bd41652b63c5f913ba12f7631a"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts": {
+        "version": "b645de8e8084e4cb7fb9ba2d8e3fd893dc3b5a6568fb7a5027aec4f779ef814d",
+        "signature": "b645de8e8084e4cb7fb9ba2d8e3fd893dc3b5a6568fb7a5027aec4f779ef814d"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts": {
+        "version": "6e88e36ca6d6953fde31898701899e61239b22f09906d5970caac88107a4b01a",
+        "signature": "6e88e36ca6d6953fde31898701899e61239b22f09906d5970caac88107a4b01a"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts": {
+        "version": "8d0b0656ffc2f973bdea853fc00a3f99122db54fd7a0e13bf87d6f358fbc3c6e",
+        "signature": "8d0b0656ffc2f973bdea853fc00a3f99122db54fd7a0e13bf87d6f358fbc3c6e"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts": {
+        "version": "aab4483e495e5fa9865b69b03f96e46b52c0eaeba9275a1f6ce3c620daf90b8f",
+        "signature": "aab4483e495e5fa9865b69b03f96e46b52c0eaeba9275a1f6ce3c620daf90b8f"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts": {
+        "version": "90e654b460f8ff7a3ff73ec54996290afebf00c8acc0fc634961af1509416db5",
+        "signature": "90e654b460f8ff7a3ff73ec54996290afebf00c8acc0fc634961af1509416db5"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts": {
+        "version": "81fdef0cbc4aeed4e29f7ed43d7b768ebe39e068da55c95bd710f47be289d6ac",
+        "signature": "81fdef0cbc4aeed4e29f7ed43d7b768ebe39e068da55c95bd710f47be289d6ac"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts": {
+        "version": "17d66f8a355e76a5a1ee0a82e3428541abdebe80db47f93586a21a2cd79d89bc",
+        "signature": "17d66f8a355e76a5a1ee0a82e3428541abdebe80db47f93586a21a2cd79d89bc"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts": {
+        "version": "e4db201366aed6e8ec28c4f9e998729477b0825ae7e517441e8000f192b8b033",
+        "signature": "e4db201366aed6e8ec28c4f9e998729477b0825ae7e517441e8000f192b8b033"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts": {
+        "version": "20fb7144dd7a3e5007cc44e96c843879216fd082bf5761bd420715d645eb683e",
+        "signature": "20fb7144dd7a3e5007cc44e96c843879216fd082bf5761bd420715d645eb683e"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts": {
+        "version": "026742bab94860543fde035a6bfd5d5103fab08afbdacf9a207a44b2bb6fccba",
+        "signature": "026742bab94860543fde035a6bfd5d5103fab08afbdacf9a207a44b2bb6fccba"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts": {
+        "version": "4b0129cc010964d404b46ab0ecc2017e29e61be7f243a2f4b8633de40c6bf632",
+        "signature": "4b0129cc010964d404b46ab0ecc2017e29e61be7f243a2f4b8633de40c6bf632"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/mocha/index.d.ts": {
+        "version": "0d2394ead194f57249ac193360c6529ff4b4ec675e3499651eed6baf20867102",
+        "signature": "0d2394ead194f57249ac193360c6529ff4b4ec675e3499651eed6baf20867102"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/normalize-package-data/index.d.ts": {
+        "version": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
+        "signature": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/shelljs/index.d.ts": {
+        "version": "c28c80a7ad12093d1cec4b2e3d925a5694c724fd247fdbb8ac031c0901549933",
+        "signature": "c28c80a7ad12093d1cec4b2e3d925a5694c724fd247fdbb8ac031c0901549933"
+      },
+      "/users/octref/code/mine/v/vetur/node_modules/@types/vscode/index.d.ts": {
+        "version": "1972d2ac4670d40f86e69ec3dbc587be044065eafce3629ef5457cd9e524c71a",
+        "signature": "1972d2ac4670d40f86e69ec3dbc587be044065eafce3629ef5457cd9e524c71a"
+      }
+    },
+    "options": {
+      "target": 2,
+      "module": 1,
+      "strict": true,
+      "sourceMap": true,
+      "composite": true,
+      "outDir": "/Users/octref/Code/mine/v/vetur/dist",
+      "rootDir": "/Users/octref/Code/mine/v/vetur",
+      "configFilePath": "/Users/octref/Code/mine/v/vetur/scripts/tsconfig.json"
+    },
+    "referencedMap": {
+      "/users/octref/code/mine/v/vetur/node_modules/@types/node/inspector.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/inspector.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/glob/index.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/minimatch/index.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/scripts/build_grammar.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/glob/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/js-yaml/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts",
+        "/users/octref/code/mine/v/vetur/dist/client/grammar.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/shelljs/index.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/glob/index.d.ts"
+      ]
+    },
+    "exportedModulesMap": {
+      "/users/octref/code/mine/v/vetur/node_modules/@types/node/inspector.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/inspector.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/shelljs/index.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/glob/index.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/glob/index.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/minimatch/index.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ],
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts": [
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+        "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts"
+      ]
+    },
+    "semanticDiagnosticsPerFile": [
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es6.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es5.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.dom.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.dom.iterable.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.scripthost.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.core.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.collection.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.generator.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.iterable.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.promise.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.proxy.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.reflect.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.symbol.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/events/index.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/node/inspector.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/node/index.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/minimatch/index.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/glob/index.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/js-yaml/index.d.ts",
+      "/users/octref/code/mine/v/vetur/client/grammar.ts",
+      "/users/octref/code/mine/v/vetur/scripts/build_grammar.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/common.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/array.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/collection.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/date.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/function.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/lang.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/math.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/number.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/object.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/seq.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/string.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/common/util.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/lodash/index.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/mocha/index.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/normalize-package-data/index.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/shelljs/index.d.ts",
+      "/users/octref/code/mine/v/vetur/node_modules/@types/vscode/index.d.ts"
+    ]
+  },
+  "version": "3.5.3"
+}
