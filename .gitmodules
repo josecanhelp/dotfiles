@@ -31,3 +31,9 @@
 [submodule "vim/pack/plugins/start/vim-vue"]
 	path = vim/pack/plugins/start/vim-vue
 	url = git@github.com:posva/vim-vue.git
+[submodule "vim/pack/plugins/start/vim-gitgutter"]
+	path = vim/pack/plugins/start/vim-gitgutter
+	url = git://github.com/airblade/vim-gitgutter.git
+[submodule "vim/pack/plugins/start/nerdcommenter"]
+	path = vim/pack/plugins/start/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
