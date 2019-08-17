@@ -28,3 +28,6 @@
 [submodule "themes/powerline-fonts"]
 	path = themes/powerline-fonts
 	url = https://github.com/powerline/fonts.git
+[submodule "vim/pack/plugins/start/vim-vue"]
+	path = vim/pack/plugins/start/vim-vue
+	url = git@github.com:posva/vim-vue.git
