@@ -2122,7 +2122,7 @@
 		"semver": "^5.4.1",
 		"source-map-support": "^0.5.10",
 		"strip-json-comments": "^2.0.1",
-		"tar": "^4.3.0",
+		"tar": "^4.4.2",
 		"tmp": "^0.0.33",
 		"uuid": "^3.2.1",
 		"vscode-cached-file-search-provider": "0.0.4",
