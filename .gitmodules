@@ -37,3 +37,9 @@
 [submodule "vim/pack/plugins/start/nerdcommenter"]
 	path = vim/pack/plugins/start/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "vim/pack/plugins/start/Spacegray"]
+	path = vim/pack/plugins/start/Spacegray
+	url = git://github.com/ajh17/Spacegray.vim
+[submodule "vim/pack/plugins/start/vim-javascript"]
+	path = vim/pack/plugins/start/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git

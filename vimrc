@@ -3,7 +3,7 @@ filetype plugin indent on
 set background=dark
 set guifont=InputMono:h14
 "colorscheme nova
-colorscheme Tomorrow-Night
+colorscheme spacegray
 " Enable line numbers
 set number
 " Enable syntax highlighting
@@ -48,3 +48,7 @@ let g:NERDCommentEmptyLines = 1
 "
 " " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
+
+set rtp+=/usr/local/opt/fzf
+let macvim_skip_colorscheme=1
+set tags=tags;/

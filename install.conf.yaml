@@ -12,7 +12,6 @@
 #    ~/.tmux: tmux/ 
     ~/.zshrc: zshrc
     ~/.gitconfig: gitconfig
-    ~/.vscode: vscode
 
 
 - shell:
