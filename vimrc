@@ -50,5 +50,5 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 set rtp+=/usr/local/opt/fzf
-let macvim_skip_colorscheme=1
 set tags=tags;/
+set scrolloff=7

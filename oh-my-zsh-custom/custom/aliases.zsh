@@ -32,4 +32,5 @@ alias dockerps="docker ps --format \"{{.Names}} \t {{.Status}} \t {{.Ports}}\""
 alias phpunit="./vendor/bin/phpunit"
 alias python='python3'
 alias nrs='npm run serve'
-
+alias editzshrc='vim ~/.zshrc'
+alias editalias='vim ~/.oh-my-zsh-custom/custom/aliases.zsh'

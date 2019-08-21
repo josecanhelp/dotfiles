@@ -4,8 +4,8 @@ export PATH="$PATH:$HOME/.bin"
 # Directories to be prepended to $PATH
 declare -a dirs_to_prepend
 dirs_to_prepend=(
-    "/usr/local/opt/php@7.2/bin"
-    "/usr/local/opt/php@7.2/sbin"
+    "/usr/local/opt/php@7.3/bin"
+    "/usr/local/opt/php@7.3/sbin"
     "/usr/local/bin/mysql_config"
     "/usr/local/sbin"
     "/usr/local/bin"
@@ -29,16 +29,11 @@ unset dirs_to_prepend
 
 export PATH
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
 ZSH_THEME="agnoster"
 ZSH_CUSTOM=/Users/jose/.oh-my-zsh-custom/custom
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git node npm brew vi-mode)
+
+plugins=(git node npm brew vi-mode history-substring-search)
 
 # User configuration
 COMPLETION_WAITING_DOTS="true"
@@ -64,3 +59,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 ctags=/usr/local/bin/ctags
+fpath=(/usr/local/share/zsh-completions $fpath)
