@@ -1,7 +1,8 @@
 syntax on
-filetype plugin indent on
+filetype plugin on
 set background=dark
 set guifont=InputMono:h14
+set clipboard=unnamed
 "colorscheme nova
 colorscheme spacegray
 " Enable line numbers
@@ -52,3 +53,4 @@ let g:NERDTrimTrailingWhitespace = 1
 set rtp+=/usr/local/opt/fzf
 set tags=tags;/
 set scrolloff=7
+let g:ackprg = 'ag --nogroup --nocolor --column'

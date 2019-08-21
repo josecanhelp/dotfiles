@@ -46,3 +46,12 @@
 [submodule "vim/pack/plugins/start/vim-airline"]
 	path = vim/pack/plugins/start/vim-airline
 	url = git@github.com:vim-airline/vim-airline.git
+[submodule "vim/pack/plugins/start/vim-prettier"]
+	path = vim/pack/plugins/start/vim-prettier
+	url = https://github.com/prettier/vim-prettier
+[submodule "vim/pack/plugins/start/typescript-vim"]
+	path = vim/pack/plugins/start/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim.git
+[submodule "vim/pack/plugins/start/ack"]
+	path = vim/pack/plugins/start/ack
+	url = https://github.com/mileszs/ack.vim.git
