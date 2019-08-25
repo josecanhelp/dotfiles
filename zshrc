@@ -33,7 +33,7 @@ ZSH_THEME="agnoster"
 ZSH_CUSTOM=/Users/jose/.oh-my-zsh-custom/custom
 
 
-plugins=(git node npm brew vi-mode history-substring-search)
+plugins=(git node npm brew history-substring-search)
 
 # User configuration
 COMPLETION_WAITING_DOTS="true"

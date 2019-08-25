@@ -293,7 +293,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>530 476 620 392 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1680 217 2560 1417 1680 217 2560 1417 </string>
+	<string>0 575 650 452 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>2963 217 1274 1417 1680 217 2560 1417 </string>
 	<key>New Bookmarks</key>
@@ -960,14 +960,14 @@
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{1680, 217}, {2560, 1440}}</string>
+		<string>{{0, 0}, {1680, 1050}}</string>
 		<key>topLeft</key>
-		<string>{1875, 919}</string>
+		<string>{268, 595}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>84A3B922-450C-4E48-810E-7F1DFF06A7B6</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>21</integer>
+	<integer>29</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1729,6 +1729,8 @@
 	<false/>
 	<key>Print In Black And White</key>
 	<true/>
+	<key>PromptOnQuit</key>
+	<false/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
@@ -1738,7 +1740,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-08-20T18:04:34Z</date>
+	<date>2019-08-22T15:48:00Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
