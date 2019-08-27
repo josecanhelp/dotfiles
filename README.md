@@ -34,3 +34,27 @@ git rm vim/pack/shapeshed/start/vim-airline
 rm -Rf .git/modules/vim/pack/shapeshed/start/vim-airline
 git commit
 ```
+
+
+### Removing a Package v2
+
+If the above steps don't work for whatever reason, you can use these steps:
+
+
+Delete the relevant section from the .gitmodules file.  The section would look similar to:
+
+[submodule "vendor"]
+    path = vendor
+    url = git://github.com/some-user/some-repo.git
+
+Stage the .gitmodules changes via command line using:git add .gitmodules
+Delete the relevant section from .git/config, which will look like:
+
+[submodule "vendor"]
+    url = git://github.com/some-user/some-repo.git
+
+Run git rm --cached path/to/submodule .  Don't include a trailing slash -- that will lead to an error.
+Run rm -rf .git/modules/submodule_name
+Commit the change:
+Delete the now untracked submodule files rm -rf path/to/submodule
+
