@@ -61,3 +61,9 @@
 [submodule "vim/pack/plugins/start/nerdtree"]
 	path = vim/pack/plugins/start/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
+[submodule "vim/pack/plugins/start/emmet-vim"]
+	path = vim/pack/plugins/start/emmet-vim
+	url = https://github.com/mattn/emmet-vim.git
+[submodule "vim/pack/plugins/start/YouCompleteMe"]
+	path = vim/pack/plugins/start/YouCompleteMe
+	url = git@github.com:ycm-core/YouCompleteMe.git
