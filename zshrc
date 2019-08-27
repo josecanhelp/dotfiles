@@ -1,21 +1,26 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/jose/.oh-my-zsh
 export PATH="$PATH:$HOME/.bin"
+
 # Directories to be prepended to $PATH
+# Later directories take precendence
 declare -a dirs_to_prepend
 dirs_to_prepend=(
     "/usr/local/opt/php@7.3/bin"
     "/usr/local/opt/php@7.3/sbin"
     "/usr/local/bin/mysql_config"
-    "/usr/local/sbin"
-    "/usr/local/bin"
     "/Users/jose/.composer/vendor/bin"
     "/Users/jose/.dotfiles/bin"
     "/Users/jose/.npm-packages/bin"
+    "/sbin"
+    "usr/sbin"
+    "usr/local/sbin"
+    "/bin"
+    "/usr/bin"
+    "/usr/local/bin"
 )
 
-# Explicitly configured $PATH
-PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH"
+PATH=""
 
 for dir in ${(k)dirs_to_prepend[@]}
 do
