@@ -6,8 +6,8 @@ set clipboard=unnamed " yanked content is copied to the clipboard
 colorscheme spacegray
 set number " Enable line numbers
 set cursorline " Highlight current line
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set hlsearch " Highlight searches
 set ignorecase " Ignore case of search
@@ -19,6 +19,7 @@ set backspace=indent,eol,start
 
 let g:netrw_liststyle=3
 
+let g:NERDTreeShowHidden=1
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
 let g:NERDCompactSexyComs = 1 "  Use compact syntax for prettified multi-line comments
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
@@ -50,11 +51,8 @@ set scrolloff=7
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-" CtrlP Stuff
-
-" Familiar commands for file/symbol browsing
-map <D-p> :CtrlP<cr>
-"map <C-r> :CtrlPBufTag<cr>
+" FZF Stuff
+map <C-p> :FZF<cr>
 
 " I don't want to pull up these folders/files when calling CtrlP
 set wildignore+=*/vendor/**
@@ -72,11 +70,4 @@ nmap :bn :BufSurfForward<cr>
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0

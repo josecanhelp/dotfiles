@@ -27,7 +27,7 @@
 [help]
   autocorrect = 1
 [core]
-	editor = /usr/bin/vim
+	editor = /usr/local/Cellar/vim/8.1.1900/bin/vim
 	excludesfile = /Users/jose/.gitignore_global
 [credential]
     helper = osxkeychain

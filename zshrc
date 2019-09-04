@@ -1,7 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/jose/.oh-my-zsh
 export PATH="$PATH:$HOME/.bin"
-
+export EDITOR="/usr/local/bin/vim"
 # Directories to be prepended to $PATH
 # Later directories take precendence
 declare -a dirs_to_prepend
