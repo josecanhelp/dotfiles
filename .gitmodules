@@ -70,3 +70,9 @@
 [submodule "vim/pack/plugins/start/vim-fugitive"]
 	path = vim/pack/plugins/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim/pack/plugins/start/tsuquyomi"]
+	path = vim/pack/plugins/start/tsuquyomi
+	url = git@github.com:Quramy/tsuquyomi.git
+[submodule "vim/pack/plugins/start/auto-pairs"]
+	path = vim/pack/plugins/start/auto-pairs
+	url = git@github.com:jiangmiao/auto-pairs.git

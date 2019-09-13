@@ -70,4 +70,10 @@ nmap :bn :BufSurfForward<cr>
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" repeat macros for all selected lines
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
