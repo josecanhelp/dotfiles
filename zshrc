@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/jose/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 export PATH="$PATH:$HOME/.bin"
 export EDITOR="/usr/local/bin/vim"
 # Directories to be prepended to $PATH
@@ -10,9 +10,9 @@ dirs_to_prepend=(
     "/usr/local/opt/php@7.3/bin"
     "/usr/local/opt/php@7.3/sbin"
     "/usr/local/bin/mysql_config"
-    "/Users/jose/.composer/vendor/bin"
-    "/Users/jose/.dotfiles/bin"
-    "/Users/jose/.npm-packages/bin"
+    "~/.composer/vendor/bin"
+    "~/.dotfiles/bin"
+    "~/.npm-packages/bin"
     "/sbin"
     "usr/sbin"
     "usr/local/sbin"
@@ -36,10 +36,10 @@ unset dirs_to_prepend
 export PATH
 
 ZSH_THEME="agnoster"
-ZSH_CUSTOM=/Users/jose/.oh-my-zsh-custom/custom
+ZSH_CUSTOM=~/.oh-my-zsh-custom/custom
 
 
-plugins=(git node npm brew history-substring-search)
+plugins=(git node npm history-substring-search)
 
 # User configuration
 COMPLETION_WAITING_DOTS="true"
