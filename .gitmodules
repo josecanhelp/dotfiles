@@ -76,3 +76,6 @@
 [submodule "vim/pack/plugins/start/auto-pairs"]
 	path = vim/pack/plugins/start/auto-pairs
 	url = git@github.com:jiangmiao/auto-pairs.git
+[submodule "vim/pack/plugins/start/phpactor"]
+	path = vim/pack/plugins/start/phpactor
+	url = git@github.com:phpactor/phpactor.git
