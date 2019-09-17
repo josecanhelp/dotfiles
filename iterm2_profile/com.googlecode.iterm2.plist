@@ -291,11 +291,11 @@
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>640 192 400 129 0 0 1680 1027 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>2082 18 700 622 1680 -88 3008 1669 </string>
+	<string>490 304 700 622 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1683 -88 1498 1669 1680 -88 3008 1669 </string>
+	<string>1683 218 1274 707 1680 217 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>3845 473 650 452 1680 -88 3008 1669 </string>
+	<string>1680 901 1920 707 1680 217 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>2129 111 650 452 1680 -88 3008 1669 </string>
 	<key>New Bookmarks</key>
@@ -564,8 +564,34 @@
 			</dict>
 			<key>Guid</key>
 			<string>1BD9F06F-6861-4918-9901-1A08DF9730AF</string>
+			<key>Has Hotkey</key>
+			<true/>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
+			<key>HotKey Activated By Modifier</key>
+			<false/>
+			<key>HotKey Alternate Shortcuts</key>
+			<array/>
+			<key>HotKey Characters</key>
+			<string>'</string>
+			<key>HotKey Characters Ignoring Modifiers</key>
+			<string>'</string>
+			<key>HotKey Key Code</key>
+			<integer>39</integer>
+			<key>HotKey Modifier Activation</key>
+			<integer>0</integer>
+			<key>HotKey Modifier Flags</key>
+			<integer>262144</integer>
+			<key>HotKey Window Animates</key>
+			<true/>
+			<key>HotKey Window AutoHides</key>
+			<true/>
+			<key>HotKey Window Dock Click Action</key>
+			<integer>0</integer>
+			<key>HotKey Window Floats</key>
+			<true/>
+			<key>HotKey Window Reopens On Activation</key>
+			<false/>
 			<key>Icon</key>
 			<integer>0</integer>
 			<key>Idle Code</key>
@@ -970,14 +996,14 @@
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{1680, -88}, {3008, 1692}}</string>
+		<string>{{1680, 217}, {2560, 1440}}</string>
 		<key>topLeft</key>
-		<string>{2411, 1095}</string>
+		<string>{3044, 1078}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>84A3B922-450C-4E48-810E-7F1DFF06A7B6</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>66</integer>
+	<integer>89</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1750,7 +1776,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-09-09T01:00:57Z</date>
+	<date>2019-09-17T15:33:54Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>

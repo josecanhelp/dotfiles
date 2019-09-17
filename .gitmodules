@@ -28,57 +28,6 @@
 [submodule "themes/powerline-fonts"]
 	path = themes/powerline-fonts
 	url = https://github.com/powerline/fonts.git
-[submodule "vim/pack/plugins/start/vim-vue"]
-	path = vim/pack/plugins/start/vim-vue
-	url = git@github.com:posva/vim-vue.git
-[submodule "vim/pack/plugins/start/vim-gitgutter"]
-	path = vim/pack/plugins/start/vim-gitgutter
-	url = git://github.com/airblade/vim-gitgutter.git
-[submodule "vim/pack/plugins/start/nerdcommenter"]
-	path = vim/pack/plugins/start/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "vim/pack/plugins/start/Spacegray"]
-	path = vim/pack/plugins/start/Spacegray
-	url = git://github.com/ajh17/Spacegray.vim
-[submodule "vim/pack/plugins/start/vim-javascript"]
-	path = vim/pack/plugins/start/vim-javascript
-	url = https://github.com/pangloss/vim-javascript.git
-[submodule "vim/pack/plugins/start/vim-airline"]
-	path = vim/pack/plugins/start/vim-airline
-	url = git@github.com:vim-airline/vim-airline.git
-[submodule "vim/pack/plugins/start/vim-prettier"]
-	path = vim/pack/plugins/start/vim-prettier
-	url = https://github.com/prettier/vim-prettier
-[submodule "vim/pack/plugins/start/typescript-vim"]
-	path = vim/pack/plugins/start/typescript-vim
-	url = https://github.com/leafgarland/typescript-vim.git
-[submodule "vim/pack/plugins/start/ack"]
-	path = vim/pack/plugins/start/ack
-	url = https://github.com/mileszs/ack.vim.git
-[submodule "vim/pack/plugins/start/nerdtree"]
-	path = vim/pack/plugins/start/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule "vim/pack/plugins/start/emmet-vim"]
-	path = vim/pack/plugins/start/emmet-vim
-	url = https://github.com/mattn/emmet-vim.git
-[submodule "vim/pack/plugins/start/YouCompleteMe"]
-	path = vim/pack/plugins/start/YouCompleteMe
-	url = git@github.com:ycm-core/YouCompleteMe.git
-[submodule "vim/pack/plugins/start/fzf"]
-	path = vim/pack/plugins/start/fzf
-	url = git@github.com:junegunn/fzf.vim.git
-[submodule "vim/pack/plugins/start/vim-fugitive"]
-	path = vim/pack/plugins/start/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
 [submodule "vim/pack/plugins/start/tsuquyomi"]
 	path = vim/pack/plugins/start/tsuquyomi
 	url = git@github.com:Quramy/tsuquyomi.git
-[submodule "vim/pack/plugins/start/auto-pairs"]
-	path = vim/pack/plugins/start/auto-pairs
-	url = git@github.com:jiangmiao/auto-pairs.git
-[submodule "vim/pack/plugins/start/phpactor"]
-	path = vim/pack/plugins/start/phpactor
-	url = git@github.com:phpactor/phpactor.git
-[submodule "vim/pack/git-plugins/start/ale"]
-	path = vim/pack/git-plugins/start/ale
-	url = https://github.com/dense-analysis/ale.git

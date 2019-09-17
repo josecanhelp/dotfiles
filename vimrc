@@ -1,3 +1,16 @@
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'git://github.com/ajh17/Spacegray.vim'
+" Initialize plugin system
+call plug#end()
+
 syntax on
 filetype plugin on
 set omnifunc=syntaxcomplete#Completeset background=dark
@@ -63,7 +76,7 @@ set wildignore+=*/vendor/**
 nmap vs :vsplit<cr>
 nmap sp :split<cr>
 
-"map <C-n> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
 
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
