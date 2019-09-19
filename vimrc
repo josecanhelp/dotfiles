@@ -1,22 +1,18 @@
 " Specify a directory for plugins
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
-" Make sure you use single quotes
-
-" On-demand loading
+" On-demand Plugin Loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'git://github.com/ajh17/Spacegray.vim'
+" Normal Plugin Loading
+Plug 'git@github.com:morhetz/gruvbox.git'
+
 " Initialize plugin system
 call plug#end()
 
 syntax on
+colorscheme gruvbox
 filetype plugin on
-set omnifunc=syntaxcomplete#Completeset background=dark
-set guifont=InputMono:h14
 set clipboard=unnamed " yanked content is copied to the clipboard
-colorscheme spacegray
 set number " Enable line numbers
 set cursorline " Highlight current line
 set tabstop=2
@@ -29,7 +25,12 @@ set showmode " Show the current mode
 set autowrite  " Save on buffer switch
 set mouse=a " Enable mouse scroll
 set backspace=indent,eol,start
-hi CursorLine   cterm=NONE ctermbg=lightblue ctermfg=white guibg=lightblue guifg=white
+
+" Set the cursorline highlight colors
+hi CursorLine cterm=NONE ctermbg=lightblue ctermfg=white guibg=lightblue guifg=white
+
+" Toggle the cursor line highlighting
+nnoremap <Leader>h :set cursorline!<CR>
 
 let g:NERDTreeShowHidden=1
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
@@ -48,8 +49,6 @@ let g:mapleader = ","
 " Fast saves
 nmap <leader>w :w!<cr>
 
-" Toggle the cursor line highlighting
-nnoremap <Leader>h :set cursorline!<CR>
 
 " Down is really the next line
 nnoremap j gj
@@ -77,7 +76,6 @@ nmap vs :vsplit<cr>
 nmap sp :split<cr>
 
 map <C-n> :NERDTreeToggle<CR>
-
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
