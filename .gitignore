@@ -1,6 +1,7 @@
 .DS_Store
 *.log
 vim/.netrwhist
-vim/bundle/*
-tmux/resurrect/*
 not-public
+tmux/plugins/*
+vim/plugged
+tmux/resurrect
