@@ -35,7 +35,13 @@ set showmode " Show the current mode
 set autowrite  " Save on buffer switch
 set mouse=a " Enable mouse scroll
 set backspace=indent,eol,start
-
+"
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
+nmap <leader>w :w!<cr>
+"
 " Set the cursorline highlight colors
 hi CursorLine cterm=NONE ctermbg=lightblue ctermfg=white guibg=lightblue guifg=white
 
@@ -50,15 +56,6 @@ let g:NERDAltDelims_java = 1 " Set a language to use its alternate delimiters by
 let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } } " Add your own custom formats or override the defaults
 let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
- 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
-
-" Fast saves
-nmap <leader>w :w!<cr>
-
 
 " Down is really the next line
 nnoremap j gj
