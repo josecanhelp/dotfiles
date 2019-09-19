@@ -4,17 +4,18 @@ call plug#begin('~/.vim/plugged')
 " On-demand Plugin Loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Normal Plugin Loading
-Plug 'git@github.com:morhetz/gruvbox.git'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'posva/vim-vue'
-Plug 'prettier/vim-prettier'
+Plug 'git@github.com:morhetz/gruvbox.git'
+Plug 'jiangmiao/auto-pairs'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
-Plug 'jiangmiao/auto-pairs'
+Plug 'posva/vim-vue'
+Plug 'prettier/vim-prettier'
 Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Initialize plugin system
 call plug#end()
