@@ -5,6 +5,16 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Normal Plugin Loading
 Plug 'git@github.com:morhetz/gruvbox.git'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'posva/vim-vue'
+Plug 'prettier/vim-prettier'
+Plug 'leafgarland/typescript-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'jiangmiao/auto-pairs'
+Plug 'scrooloose/nerdcommenter'
 
 " Initialize plugin system
 call plug#end()
@@ -84,6 +94,8 @@ let g:ycm_filetype_specific_completion_to_disable = {
   \ 'php': 1
 \}
 
+" Let vim-javascript detect which pre-processors to check for
+let g:vue_pre_processors = 'detect_on_enter'
 
 " Ale Linting
 let g:ale_sign_column_always = 1
