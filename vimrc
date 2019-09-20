@@ -4,9 +4,11 @@ call plug#begin('~/.vim/plugged')
 " On-demand Plugin Loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Normal Plugin Loading
+Plug '/usr/local/opt/fzf'
 Plug 'airblade/vim-gitgutter'
 Plug 'git@github.com:morhetz/gruvbox.git'
 Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/fzf.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'posva/vim-vue'
