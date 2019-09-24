@@ -33,6 +33,7 @@
 
 " Colors {{{
 colorscheme gruvbox
+set background=dark
 " }}}
 
 syntax on
