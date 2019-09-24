@@ -11,6 +11,7 @@
   Plug 'jiangmiao/auto-pairs'
   Plug 'junegunn/fzf.vim'
   Plug 'leafgarland/typescript-vim'
+  Plug 'ludovicchabant/vim-gutentags'
   Plug 'pangloss/vim-javascript'
   Plug 'posva/vim-vue'
   Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
@@ -24,41 +25,7 @@
   call plug#end()
 " }}}
 
-" Plugin Specific Settings {{{
-  let g:prettier#exec_cmd_path = "~/.nvm/versions/node/v8.16.0/bin/prettier"
-  " Show Ale errors and warnings in Airline status bar
-  let g:airline#extensions#ale#enabled = 1
-" }}}
-
-" Colors {{{
-colorscheme gruvbox
-" }}}
-
-syntax on
-filetype plugin on
-set clipboard=unnamed " yanked content is copied to the clipboard
-set number " Enable line numbers
-set relativenumber
-set cursorline " Highlight current line
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set hlsearch " Highlight searches
-set ignorecase " Ignore case of search
-set incsearch " Highlight dynamically as pattern is typed
-set showmode " Show the current mode
-set autowrite  " Save on buffer switch
-set mouse=a " Enable mouse scroll
-set backspace=indent,eol,start
-
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
-nmap <leader>w :w!<cr>
-"
-" Set the cursorline highlight colors
-hi CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white guibg=lightblue guifg=white
+hi CursorLine cterm=NONE ctermbg=yellow ctermfg=white guibg=yellow guifg=white
 
 " Toggle the cursor line highlighting
 nnoremap <Leader>h :set cursorline!<CR>
@@ -79,7 +46,7 @@ nnoremap k gk
 " Easy escaping to normal model
 imap jj <esc>
 
-set rtp+=/usr/local/opt/fzf
+set runtimepath+=/usr/local/opt/fzf
 set tags=.git/tags
 
 " How many lines of the files should be visible while scrolling up or down?
@@ -146,7 +113,7 @@ let g:phpactorOmniError = v:true
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
 function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
+  echo '@'.getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 " end repeat macros for all selected lines
