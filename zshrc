@@ -10,7 +10,7 @@ dirs_to_prepend=(
     "/usr/local/opt/php@7.3/bin"
     "/usr/local/opt/php@7.3/sbin"
     "/usr/local/bin/mysql_config"
-    "~/.composer/vendor/bin"
+    "/Users/jose/.composer/vendor/bin"
     "~/.dotfiles/bin"
     "~/.npm-packages/bin"
     "/sbin"

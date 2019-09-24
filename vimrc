@@ -1,32 +1,44 @@
-" Specify a directory for plugins
-call plug#begin('~/.vim/plugged')
+"   Plugins {{{
+  call plug#begin('~/.vim/plugged')
 
-" On-demand Plugin Loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" Normal Plugin Loading
-Plug '/usr/local/opt/fzf'
-Plug 'airblade/vim-gitgutter'
-Plug 'git@github.com:morhetz/gruvbox.git'
-Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/fzf.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'pangloss/vim-javascript'
-Plug 'posva/vim-vue'
-Plug 'prettier/vim-prettier'
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+  " On-demand Plugin Loading
+  Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+  " Normal Plugin Loading
+  Plug '/usr/local/opt/fzf'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'dense-analysis/ale'
+  Plug 'git@github.com:morhetz/gruvbox.git'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'junegunn/fzf.vim'
+  Plug 'leafgarland/typescript-vim'
+  Plug 'pangloss/vim-javascript'
+  Plug 'posva/vim-vue'
+  Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-surround'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 
-" Initialize plugin system
-call plug#end()
+  " Initialize plugin system
+  call plug#end()
+" }}}
+
+" Plugin Specific Settings {{{
+  let g:prettier#exec_cmd_path = "~/.nvm/versions/node/v8.16.0/bin/prettier"
+  " Show Ale errors and warnings in Airline status bar
+  let g:airline#extensions#ale#enabled = 1
+" }}}
+
+" Colors {{{
+colorscheme gruvbox
+" }}}
 
 syntax on
-colorscheme gruvbox
 filetype plugin on
 set clipboard=unnamed " yanked content is copied to the clipboard
 set number " Enable line numbers
+set relativenumber
 set cursorline " Highlight current line
 set tabstop=2
 set shiftwidth=2
@@ -38,7 +50,7 @@ set showmode " Show the current mode
 set autowrite  " Save on buffer switch
 set mouse=a " Enable mouse scroll
 set backspace=indent,eol,start
-"
+
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
@@ -46,7 +58,7 @@ let g:mapleader = ","
 nmap <leader>w :w!<cr>
 "
 " Set the cursorline highlight colors
-hi CursorLine cterm=NONE ctermbg=lightblue ctermfg=white guibg=lightblue guifg=white
+hi CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white guibg=lightblue guifg=white
 
 " Toggle the cursor line highlighting
 nnoremap <Leader>h :set cursorline!<CR>
@@ -99,9 +111,9 @@ let g:vue_pre_processors = 'detect_on_enter'
 
 " Ale Linting
 let g:ale_sign_column_always = 1
-let g:ale_linters = {
-\   'php': ['tlint']
-\}
+" let g:ale_linters = {
+" \   'php': ['tlint']
+" \}
 
 " Phpactor
 " Include use statement
@@ -146,3 +158,10 @@ packloadall
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags ALL
+
+" Modeline and Notes {{{
+" vim:foldmethod=marker:foldlevel=0
+"
+"	This is the personal .vimrc file of Jose Soto.
+"	Website: JoseSoto.com
+" }}}

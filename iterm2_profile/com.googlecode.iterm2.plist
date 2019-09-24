@@ -1277,7 +1277,11 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>1BD9F06F-6861-4918-9901-1A08DF9730AF</string>
+	<key>DimBackgroundWindows</key>
+	<true/>
 	<key>DimInactiveSplitPanes</key>
+	<false/>
+	<key>DimOnlyText</key>
 	<false/>
 	<key>EnableDivisionView</key>
 	<true/>
@@ -1345,11 +1349,13 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>490 303 700 622 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1920 1177 0 0 1920 1200 </string>
+	<string>1680 217 2560 1417 1680 217 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1680 1156 650 452 1680 217 2560 1417 </string>
+	<string>0 690 730 727 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>2129 111 650 452 1680 -88 3008 1669 </string>
+	<string>2044 217 730 727 1680 217 2560 1417 </string>
+	<key>NSWindow Frame iTerm Window 3</key>
+	<string>2110 907 730 727 1680 217 2560 1417 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1654,6 +1660,8 @@
 			<integer>0</integer>
 			<key>Initial Text</key>
 			<string></string>
+			<key>Initial Use Transparency</key>
+			<true/>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -1958,7 +1966,7 @@
 				<real>0.0</real>
 			</dict>
 			<key>Minimum Contrast</key>
-			<real>0.0</real>
+			<real>0.31938032670454547</real>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
@@ -2005,6 +2013,8 @@
 			<string></string>
 			<key>Silence Bell</key>
 			<true/>
+			<key>Smart Cursor Color</key>
+			<true/>
 			<key>Sync Title</key>
 			<false/>
 			<key>Tags</key>
@@ -2021,6 +2031,8 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Cursor Guide</key>
+			<false/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
@@ -2057,14 +2069,14 @@
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{0, 0}, {1920, 1200}}</string>
+		<string>{{0, 0}, {2560, 1440}}</string>
 		<key>topLeft</key>
-		<string>{294, 735}</string>
+		<string>{268, 750}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>84A3B922-450C-4E48-810E-7F1DFF06A7B6</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>93</integer>
+	<integer>95</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2837,7 +2849,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-09-18T15:33:54Z</date>
+	<date>2019-09-19T20:32:25Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -2855,7 +2867,7 @@
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.18925642730496456</real>
+	<real>0.20271221187943261</real>
 	<key>StretchTabsToFillBar</key>
 	<true/>
 	<key>TabStyleWithAutomaticOption</key>
@@ -2872,5 +2884,9 @@
 	<false/>
 	<key>iTerm Version</key>
 	<string>3.3.4</string>
+	<key>kCPKSelectionViewPreferredModeKey</key>
+	<integer>0</integer>
+	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
+	<false/>
 </dict>
 </plist>
