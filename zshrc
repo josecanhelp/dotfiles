@@ -50,7 +50,9 @@ DISABLE_AUTO_TITLE=true
 source $ZSH/oh-my-zsh.sh
 
 # Redefine prompt_context for hiding user@hostname
-prompt_context () { }
+prompt_context () {
+  prompt_segment black default "%m"
+}
 
 export LANG=en_US.UTF-8
 
