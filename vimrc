@@ -25,7 +25,41 @@
   call plug#end()
 " }}}
 
-hi CursorLine cterm=NONE ctermbg=yellow ctermfg=white guibg=yellow guifg=white
+" Plugin Specific Settings {{{
+  let g:prettier#exec_cmd_path = "~/.nvm/versions/node/v8.16.0/bin/prettier"
+  " Show Ale errors and warnings in Airline status bar
+  let g:airline#extensions#ale#enabled = 1
+" }}}
+
+" Colors {{{
+colorscheme gruvbox
+" }}}
+
+syntax on
+filetype plugin on
+set clipboard=unnamed " yanked content is copied to the clipboard
+set number " Enable line numbers
+set relativenumber
+set nocursorline " Highlight current line
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set hlsearch " Highlight searches
+set ignorecase " Ignore case of search
+set incsearch " Highlight dynamically as pattern is typed
+set showmode " Show the current mode
+set autowrite  " Save on buffer switch
+set mouse=a " Enable mouse scroll
+set backspace=indent,eol,start
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
+nmap <leader>w :w!<cr>
+"
+" Set the cursorline highlight colors
+hi CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white guibg=lightblue guifg=white
 
 " Toggle the cursor line highlighting
 nnoremap <Leader>h :set cursorline!<CR>
