@@ -2,16 +2,17 @@
   call plug#begin('~/.vim/plugged')
 
   " On-demand Plugin Loading
-  Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+  " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
   " Normal Plugin Loading
   Plug '/usr/local/opt/fzf'
   Plug 'airblade/vim-gitgutter'
-  Plug 'dense-analysis/ale'
+"  Plug 'dense-analysis/ale'
   Plug 'git@github.com:morhetz/gruvbox.git'
-  Plug 'jiangmiao/auto-pairs'
+"  Plug 'jiangmiao/auto-pairs'
   Plug 'junegunn/fzf.vim'
   Plug 'leafgarland/typescript-vim'
   Plug 'ludovicchabant/vim-gutentags'
+  Plug 'scrooloose/nerdtree'
   Plug 'pangloss/vim-javascript'
   Plug 'posva/vim-vue'
   Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
@@ -20,13 +21,14 @@
   Plug 'tpope/vim-surround'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  Plug 'lumiliet/vim-twig'
 
   " Initialize plugin system
   call plug#end()
 " }}}
 
 " Plugin Specific Settings {{{
-  let g:prettier#exec_cmd_path = "~/.nvm/versions/node/v8.16.0/bin/prettier"
+  let g:prettier#exec_cmd_path = '~/.nvm/versions/node/v8.16.0/bin/prettier'
   " Show Ale errors and warnings in Airline status bar
   let g:airline#extensions#ale#enabled = 1
 " }}}
@@ -52,11 +54,14 @@ set showmode " Show the current mode
 set autowrite  " Save on buffer switch
 set mouse=a " Enable mouse scroll
 set backspace=indent,eol,start
+set splitright " Open new files in vertical splits to the right
+set splitbelow " Open new files in horizontal splits to the bottom
+set nowrap " Do not wrap the end of the line
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
+let mapleader = ','
+let g:mapleader = ','
 nmap <leader>w :w!<cr>
 "
 " Set the cursorline highlight colors
@@ -143,6 +148,9 @@ let g:phpactorBranch = 'master'
 let g:phpactorOmniAutoClassImport = v:true
 autocmd FileType php setlocal omnifunc=phpactor#Complete
 let g:phpactorOmniError = v:true
+
+" map rc to open vimrc automatically
+nmap rc :vsplit ~/.vimrc<cr>
 
 " Repeat macros for all selected lines
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>

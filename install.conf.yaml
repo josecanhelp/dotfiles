@@ -13,6 +13,7 @@
     ~/.zshrc: zshrc
     ~/.gitconfig: gitconfig
     ~/.ctags: ctags
+    ~/.ideavimrc: ideavimrc
 
 
 - shell:
