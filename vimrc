@@ -13,7 +13,9 @@
   Plug 'leafgarland/typescript-vim'
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'scrooloose/nerdtree'
-  Plug 'pangloss/vim-javascript'
+  " Plug 'pangloss/vim-javascript'
+  Plug 'yuezk/vim-js'
+  Plug 'maxmellon/vim-jsx-pretty'
   Plug 'posva/vim-vue'
   Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
   Plug 'scrooloose/nerdcommenter'
@@ -22,6 +24,8 @@
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'lumiliet/vim-twig'
+  Plug 'sheerun/vim-polyglot'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   " Initialize plugin system
   call plug#end()
@@ -148,6 +152,8 @@ let g:phpactorBranch = 'master'
 let g:phpactorOmniAutoClassImport = v:true
 autocmd FileType php setlocal omnifunc=phpactor#Complete
 let g:phpactorOmniError = v:true
+let g:polyglot_disabled = ['jsx']
+let g:vim_jsx_pretty_colorful_config = 1
 
 " map rc to open vimrc automatically
 nmap rc :vsplit ~/.vimrc<cr>

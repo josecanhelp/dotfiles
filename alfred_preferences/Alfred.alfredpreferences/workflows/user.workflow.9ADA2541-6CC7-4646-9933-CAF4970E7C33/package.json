@@ -1,0 +1,18 @@
+{
+  "name": "com.vivaxy.alfred-workflow.open-in-vscode",
+  "version": "0.0.0",
+  "description": "alfred workflow to open in vscode",
+  "main": "index.js",
+  "keywords": [
+    "alfred",
+    "workflow",
+    "vscode",
+    "finder"
+  ],
+  "author": "vivaxy <xyxuye2007@126.com>",
+  "license": "MIT",
+  "dependencies": {
+    "alfy": "^0.9.0",
+    "fast-glob": "^3.0.4"
+  }
+}

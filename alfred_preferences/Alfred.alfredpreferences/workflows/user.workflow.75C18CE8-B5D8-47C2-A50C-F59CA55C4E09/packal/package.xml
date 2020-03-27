@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Slack</name>
-  <version>4.0.2</version>
-  <bundle>com.yannickglt.alfred2.slack</bundle>
-  <updated>1540243277</updated>
-  <file>slack.alfredworkflow</file>
-</workflow>

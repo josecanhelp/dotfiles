@@ -6,9 +6,10 @@ export EDITOR="/usr/local/bin/vim"
 # Later directories take precendence
 declare -a dirs_to_prepend
 dirs_to_prepend=(
+    "/Users/jose/Library/Android/sdk"
+    "/Users/jose/Library/Android/sdk/platform-tools"
+    "/Users/jose/Code/JoseCanHelp/spark-installer"
     "/Users/jose/go/bin"
-    "/usr/local/opt/php@7.3/bin"
-    "/usr/local/opt/php@7.3/sbin"
     "/usr/local/bin/mysql_config"
     "/Users/jose/.composer/vendor/bin"
     "~/.dotfiles/bin"
@@ -20,8 +21,6 @@ dirs_to_prepend=(
     "/usr/bin"
     "/usr/local/bin"
 )
-
-PATH=""
 
 for dir in ${(k)dirs_to_prepend[@]}
 do
@@ -51,7 +50,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Redefine prompt_context for hiding user@hostname
 prompt_context () {
-  prompt_segment black default "%m"
+  #prompt_segment black default "%m"
 }
 
 export LANG=en_US.UTF-8
@@ -69,3 +68,4 @@ export NVM_DIR="$HOME/.nvm"
 ctags=/usr/local/bin/ctags
 fpath=(/usr/local/share/zsh-completions $fpath)
 export PATH="/usr/local/sbin:$PATH"
+export HOMEBREW_GITHUB_API_TOKEN=394542250dd8d789afc27c79eab68af006797cf9
