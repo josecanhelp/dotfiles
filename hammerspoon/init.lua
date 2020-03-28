@@ -17,33 +17,48 @@ end):start()
 hs.loadSpoon('ReloadConfiguration')
 spoon.ReloadConfiguration:start()
 hs.notify.new({title = 'Hammerspoon', informativeText = 'Config loaded'}):send()
-hs.loadSpoon("ModalMgr")
 
+----------------------------------------------------------------------------------------------------
+-- Add a menubar item to track currently enabled Mode
+----------------------------------------------------------------------------------------------------
+modeMenuBar = hs.menubar.new():setTitle('Normal');
+changeModeMenuBar = function(modeName) modeMenuBar:setTitle(modeName) end
+
+hs.loadSpoon("ModalMgr")
+hs.hotkey.alertDuration = 0 -- disable hotkey alerts from displaying
 ----------------------------------------------------------------------------------------------------
 -- Register modal keybindings environments.
 ----------------------------------------------------------------------------------------------------
 -- Register windowHints (Register a keybinding which is NOT modal environment with modal supervisor)
-hswhints_keys = hswhints_keys or {"alt", "tab"}
+-- This is done to deactivate all current modals to display the hints
+hswhints_keys = hswhints_keys or {"alt", "j"}
 if string.len(hswhints_keys[2]) > 0 then
-    spoon.ModalMgr.supervisor:bind(hswhints_keys[1], hswhints_keys[2], 'Show Window Hints', function()
+    -- Show Window Hints
+    spoon.ModalMgr.supervisor:bind(hswhints_keys[1], hswhints_keys[2], nil, function()
         spoon.ModalMgr:deactivateAll()
         hs.hints.windowHints()
     end)
 end
 
 ----------------------------------------------------------------------------------------------------
--- appM modal environment
 spoon.ModalMgr:new("appM")
 local cmodal = spoon.ModalMgr.modal_list["appM"]
 cmodal:bind('', 'escape', 'Deactivate appM', function() spoon.ModalMgr:deactivate({"appM"}) end)
 cmodal:bind('', 'Q', 'Deactivate appM', function() spoon.ModalMgr:deactivate({"appM"}) end)
 cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
+cmodal.entered = function() changeModeMenuBar('App') end
+cmodal.exited = function() changeModeMenuBar('Normal') end
+
 if not hsapp_list then
     hsapp_list = {
-        {key = 'f', name = 'Finder'},
-        {key = 's', name = 'Safari'},
-        {key = 't', name = 'Terminal'},
+        {key = 'a', name = 'Slack'},
+        {key = 'c', name = 'Visual Studio Code'},
+        {key = 'f', name = 'Firefox Developer Edition'},
+        {key = 'm', name = 'Messages'},
+        {key = 's', name = 'Slack'},
+        {key = 't', name = 'TablePlus'},
         {key = 'v', id = 'com.apple.ActivityMonitor'},
+        {key = 'x', name = 'Xcode'},
         {key = 'y', id = 'com.apple.systempreferences'},
     }
 end
@@ -67,10 +82,10 @@ end
 -- Then we register some keybindings with modal supervisor
 hsappM_keys = hsappM_keys or {"ctrl", "J"}
 if string.len(hsappM_keys[2]) > 0 then
-    spoon.ModalMgr.supervisor:bind(hsappM_keys[1], hsappM_keys[2], "Enter AppM Environment", function()
+    spoon.ModalMgr.supervisor:bind(hsappM_keys[1], hsappM_keys[2], nil, function()
         spoon.ModalMgr:deactivateAll()
         -- Show the keybindings cheatsheet once appM is activated
-        spoon.ModalMgr:activate({"appM"}, "#FFBD2E", true)
+        spoon.ModalMgr:activate({"appM"}, "#ff4432", false)
     end)
 end
 

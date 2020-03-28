@@ -16,6 +16,5 @@
     ~/.ideavimrc: ideavimrc
     ~/.hammerspoon: hammerspoon
 
-
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

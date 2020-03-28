@@ -27,18 +27,18 @@ function obj:init()
     hshelp_keys = hshelp_keys or {{"alt", "shift"}, "/"}
     obj.supervisor:bind(hshelp_keys[1], hshelp_keys[2], "Toggle Help Panel", function() obj:toggleCheatsheet({all=obj.supervisor}) end)
     obj.modal_tray = hs.canvas.new({x = 0, y = 0, w = 0, h = 0})
-    obj.modal_tray:level(hs.canvas.windowLevels.tornOffMenu)
+    obj.modal_tray:level(hs.canvas.windowLevels.overlay)
     obj.modal_tray[1] = {
         type = "circle",
         action = "fill",
         fillColor = {hex = "#FFFFFF", alpha = 0.7},
     }
     obj.which_key = hs.canvas.new({x = 0, y = 0, w = 0, h = 0})
-    obj.which_key:level(hs.canvas.windowLevels.tornOffMenu)
+    obj.which_key:level(hs.canvas.windowLevels.overlay)
     obj.which_key[1] = {
         type = "rectangle",
         action = "fill",
-        fillColor = {hex = "#EEEEEE", alpha = 0.95},
+        fillColor = {hex = "#000000", alpha = 0.95},
         roundedRectRadii = {xRadius = 10, yRadius = 10},
     }
 end
