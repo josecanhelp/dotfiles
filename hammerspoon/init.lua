@@ -25,7 +25,23 @@ modeMenuBar = hs.menubar.new():setTitle('Normal');
 changeModeMenuBar = function(modeName) modeMenuBar:setTitle(modeName) end
 
 hs.loadSpoon("ModalMgr")
-hs.hotkey.alertDuration = 0 -- disable hotkey alerts from displaying
+
+-- Define default Spoons which will be loaded later
+if not hspoon_list then
+    hspoon_list = {
+        "WinWin",
+    }
+end
+
+-- Load those Spoons
+for _, v in pairs(hspoon_list) do
+    hs.loadSpoon(v)
+end
+
+hs.hotkey.alertDuration = 0
+hs.hints.showTitleThresh = 0
+hs.window.animationDuration = 0
+
 ----------------------------------------------------------------------------------------------------
 -- Register modal keybindings environments.
 ----------------------------------------------------------------------------------------------------
@@ -53,11 +69,15 @@ if not hsapp_list then
     hsapp_list = {
         {key = 'a', name = 'Slack'},
         {key = 'c', name = 'Visual Studio Code'},
+        {key = 'e', name = 'Finder'},
         {key = 'f', name = 'Firefox Developer Edition'},
+        {key = 'i', name = 'iTerm'},
         {key = 'm', name = 'Messages'},
+        {key = 'n', id = 'com.apple.ActivityMonitor'},
+        {key = 'r', name = 'Bear'},
         {key = 's', name = 'Slack'},
         {key = 't', name = 'TablePlus'},
-        {key = 'v', id = 'com.apple.ActivityMonitor'},
+        {key = 'v', name = 'Visual Studio Code'},
         {key = 'x', name = 'Xcode'},
         {key = 'y', id = 'com.apple.systempreferences'},
     }
@@ -85,8 +105,60 @@ if string.len(hsappM_keys[2]) > 0 then
     spoon.ModalMgr.supervisor:bind(hsappM_keys[1], hsappM_keys[2], nil, function()
         spoon.ModalMgr:deactivateAll()
         -- Show the keybindings cheatsheet once appM is activated
-        spoon.ModalMgr:activate({"appM"}, "#ff4432", false)
+        spoon.ModalMgr:activate({"appM"}, "#fff223", false)
     end)
+end
+
+
+----------------------------------------------------------------------------------------------------
+-- windowM modal environment
+if spoon.WinWin then
+    spoon.ModalMgr:new("windowM")
+    local cmodal = spoon.ModalMgr.modal_list["windowM"]
+    cmodal.entered = function() changeModeMenuBar('Window') end
+    cmodal.exited = function() changeModeMenuBar('Normal') end
+    cmodal:bind('', 'escape', 'Deactivate windowM', function() spoon.ModalMgr:deactivate({"windowM"}) end)
+    cmodal:bind('', 'Q', 'Deactivate windowM', function() spoon.ModalMgr:deactivate({"windowM"}) end)
+    cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
+    cmodal:bind('', 'A', 'Move Leftward', function() spoon.WinWin:stepMove("left") end, nil, function() spoon.WinWin:stepMove("left") end)
+    cmodal:bind('', 'D', 'Move Rightward', function() spoon.WinWin:stepMove("right") end, nil, function() spoon.WinWin:stepMove("right") end)
+    cmodal:bind('', 'W', 'Move Upward', function() spoon.WinWin:stepMove("up") end, nil, function() spoon.WinWin:stepMove("up") end)
+    cmodal:bind('', 'S', 'Move Downward', function() spoon.WinWin:stepMove("down") end, nil, function() spoon.WinWin:stepMove("down") end)
+    cmodal:bind('', 'H', 'Lefthalf of Screen', function()  spoon.WinWin:moveAndResize("halfleft") end)
+    cmodal:bind('', 'L', 'Righthalf of Screen', function()  spoon.WinWin:moveAndResize("halfright") end)
+    cmodal:bind('', 'K', 'Uphalf of Screen', function()  spoon.WinWin:moveAndResize("halfup") end)
+    cmodal:bind('', 'J', 'Downhalf of Screen', function()  spoon.WinWin:moveAndResize("halfdown") end)
+    cmodal:bind('', 'Y', 'NorthWest Corner', function()  spoon.WinWin:moveAndResize("cornerNW") end)
+    cmodal:bind('', 'O', 'NorthEast Corner', function()  spoon.WinWin:moveAndResize("cornerNE") end)
+    cmodal:bind('', 'U', 'SouthWest Corner', function()  spoon.WinWin:moveAndResize("cornerSW") end)
+    cmodal:bind('', 'I', 'SouthEast Corner', function()  spoon.WinWin:moveAndResize("cornerSE") end)
+    cmodal:bind('', 'F', 'Fullscreen', function()  spoon.WinWin:moveAndResize("maximize") end)
+    cmodal:bind('', 'C', 'Center Window', function()  spoon.WinWin:moveAndResize("center") end)
+    cmodal:bind('', '=', 'Stretch Outward', function() spoon.WinWin:moveAndResize("expand") end, nil, function() spoon.WinWin:moveAndResize("expand") end)
+    cmodal:bind('', '-', 'Shrink Inward', function() spoon.WinWin:moveAndResize("shrink") end, nil, function() spoon.WinWin:moveAndResize("shrink") end)
+    cmodal:bind('shift', 'H', 'Resize Leftward', function() spoon.WinWin:stepResize("left") end, nil, function() spoon.WinWin:stepResize("left") end)
+    cmodal:bind('shift', 'L', 'Resize Rightward', function() spoon.WinWin:stepResize("right") end, nil, function() spoon.WinWin:stepResize("right") end)
+    cmodal:bind('shift', 'K', 'Resize Upward', function() spoon.WinWin:stepResize("up") end, nil, function() spoon.WinWin:stepResize("up") end)
+    cmodal:bind('shift', 'J', 'Resize Downward', function() spoon.WinWin:stepResize("down") end, nil, function() spoon.WinWin:stepResize("down") end)
+    cmodal:bind('', 'left', 'Move to Left Monitor', function()  spoon.WinWin:moveToScreen("left") end)
+    cmodal:bind('', 'right', 'Move to Right Monitor', function()  spoon.WinWin:moveToScreen("right") end)
+    cmodal:bind('', 'up', 'Move to Above Monitor', function()  spoon.WinWin:moveToScreen("up") end)
+    cmodal:bind('', 'down', 'Move to Below Monitor', function()  spoon.WinWin:moveToScreen("down") end)
+    cmodal:bind('', 'space', 'Move to Next Monitor', function()  spoon.WinWin:moveToScreen("next") end)
+    cmodal:bind('', '[', 'Undo Window Manipulation', function() spoon.WinWin:undo() end)
+    cmodal:bind('', ']', 'Redo Window Manipulation', function() spoon.WinWin:redo() end)
+    cmodal:bind('', '`', 'Center Cursor', function() spoon.WinWin:centerCursor() end)
+
+    -- Register windowM with modal supervisor
+    hsresizeM_keys = hsresizeM_keys or {"ctrl", "K"}
+    if string.len(hsresizeM_keys[2]) > 0 then
+        spoon.ModalMgr.supervisor:bind(hsresizeM_keys[1], hsresizeM_keys[2], "Enter windowM Environment", function()
+            -- Deactivate some modal environments or not before activating a new one
+            spoon.ModalMgr:deactivateAll()
+            -- Show an status indicator so we know we're in some modal environment now
+            spoon.ModalMgr:activate({"windowM"}, "#B22222")
+        end)
+    end
 end
 
 ----------------------------------------------------------------------------------------------------
