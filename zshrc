@@ -68,4 +68,3 @@ export NVM_DIR="$HOME/.nvm"
 ctags=/usr/local/bin/ctags
 fpath=(/usr/local/share/zsh-completions $fpath)
 export PATH="/usr/local/sbin:$PATH"
-export HOMEBREW_GITHUB_API_TOKEN=394542250dd8d789afc27c79eab68af006797cf9
