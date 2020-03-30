@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "gifify -r 20@1 -p 1400:-1 myfile.mp4",
+    "dontautoexpand" : true,
+    "uid" : "F99D65BF-397D-4965-A3F7-69C3E7543A2D",
+    "name" : "Convert to GIF (OLD)",
+    "keyword" : ""
+  }
+}

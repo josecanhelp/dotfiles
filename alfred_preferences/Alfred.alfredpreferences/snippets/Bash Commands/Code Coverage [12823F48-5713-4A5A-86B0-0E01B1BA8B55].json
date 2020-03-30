@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "php vendor\/bin\/codecept run unit,integration --steps --colors --coverage-html ..\/..\/public\/coverage",
+    "dontautoexpand" : true,
+    "uid" : "12823F48-5713-4A5A-86B0-0E01B1BA8B55",
+    "name" : "Code Coverage",
+    "keyword" : "ccoverage"
+  }
+}

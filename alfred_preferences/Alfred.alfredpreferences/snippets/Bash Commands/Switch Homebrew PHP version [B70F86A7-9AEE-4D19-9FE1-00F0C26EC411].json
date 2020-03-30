@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "brew unlink php@7.2\nbrew link php@7.3 --force",
+    "dontautoexpand" : true,
+    "uid" : "B70F86A7-9AEE-4D19-9FE1-00F0C26EC411",
+    "name" : "Switch Homebrew PHP version",
+    "keyword" : "homebrew php"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "sudo phpdismod -s cli xdebug",
+    "dontautoexpand" : true,
+    "uid" : "0EAA46E8-B2CD-4039-A695-A83C29BDB5D6",
+    "name" : "Disable Xdebug",
+    "keyword" : "xdebug"
+  }
+}

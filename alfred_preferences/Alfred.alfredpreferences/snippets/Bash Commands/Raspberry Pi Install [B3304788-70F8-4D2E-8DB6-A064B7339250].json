@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "sudo dd if=2018-04-18-raspbian-stretch-lite.img of=\/dev\/sdg status=progress # Remember to use status=progress or you'll be wondering.",
+    "dontautoexpand" : true,
+    "uid" : "B3304788-70F8-4D2E-8DB6-A064B7339250",
+    "name" : "Raspberry Pi Install",
+    "keyword" : "raspberry pi"
+  }
+}

@@ -62,7 +62,12 @@ local cmodal = spoon.ModalMgr.modal_list["appM"]
 cmodal:bind('', 'escape', 'Deactivate appM', function() spoon.ModalMgr:deactivate({"appM"}) end)
 cmodal:bind('', 'Q', 'Deactivate appM', function() spoon.ModalMgr:deactivate({"appM"}) end)
 cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
-cmodal.entered = function() changeModeMenuBar('App') end
+
+local modeText = hs.styledtext.new("App", {
+    color = {hex = "#FFFFFF", alpha = 1},
+    backgroundColor = {hex = "#0000FF", alpha = 1},
+})
+cmodal.entered = function() changeModeMenuBar(modeText) end
 cmodal.exited = function() changeModeMenuBar('Normal') end
 
 if not hsapp_list then
@@ -115,7 +120,11 @@ end
 if spoon.WinWin then
     spoon.ModalMgr:new("windowM")
     local cmodal = spoon.ModalMgr.modal_list["windowM"]
-    cmodal.entered = function() changeModeMenuBar('Window') end
+    local modeText = hs.styledtext.new("Window", {
+        color = {hex = "#FFFFFF", alpha = 1},
+        backgroundColor = {hex = "#FFA500", alpha = 1},
+    })
+    cmodal.entered = function() changeModeMenuBar(modeText) end
     cmodal.exited = function() changeModeMenuBar('Normal') end
     cmodal:bind('', 'escape', 'Deactivate windowM', function() spoon.ModalMgr:deactivate({"windowM"}) end)
     cmodal:bind('', 'Q', 'Deactivate windowM', function() spoon.ModalMgr:deactivate({"windowM"}) end)

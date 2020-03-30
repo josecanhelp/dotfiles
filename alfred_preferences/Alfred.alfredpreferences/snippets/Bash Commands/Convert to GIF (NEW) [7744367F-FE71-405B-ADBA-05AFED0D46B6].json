@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "gifify -o myfile.gif --from=28 --to=13 --colors=255 --fps=20 --resize=300:-1 --compress=30 myfile.mp4",
+    "dontautoexpand" : true,
+    "uid" : "7744367F-FE71-405B-ADBA-05AFED0D46B6",
+    "name" : "Convert to GIF (NEW)",
+    "keyword" : ">gifify"
+  }
+}

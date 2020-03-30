@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "npm list --depth=0",
+    "dontautoexpand" : true,
+    "uid" : "524F595D-90E7-4C60-B47C-0B19DD3BB697",
+    "name" : "List installed NPM dependencies",
+    "keyword" : "npm list"
+  }
+}

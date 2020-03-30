@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "find . -name '*DeathWish*' -exec bash -c 'file={}; git mv $file ${file\/DeathWish\/Deathwish}' \\;",
+    "dontautoexpand" : true,
+    "uid" : "E1B32ADC-D25F-4F51-8A83-F2D1B663A19D",
+    "name" : "Recursively rename files",
+    "keyword" : ""
+  }
+}

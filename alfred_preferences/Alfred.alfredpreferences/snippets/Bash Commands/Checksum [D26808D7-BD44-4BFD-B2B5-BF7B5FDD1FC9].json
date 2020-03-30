@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "shasum -a 256 <file>",
+    "dontautoexpand" : true,
+    "uid" : "D26808D7-BD44-4BFD-B2B5-BF7B5FDD1FC9",
+    "name" : "Checksum",
+    "keyword" : ">checksum"
+  }
+}

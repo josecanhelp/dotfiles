@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "nvm install node --latest-npm --reinstall-packages-from=node",
+    "dontautoexpand" : true,
+    "uid" : "315B5B65-4BB3-4B89-89B7-A781E656038C",
+    "name" : "Upgrade Node & NPM with NVM",
+    "keyword" : "nvm upgrade"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "phpcs -p --standard=PSR2 --ignore=vendor .",
+    "dontautoexpand" : true,
+    "uid" : "2EA864D7-B38B-44F9-A804-C5ADA18CB2B2",
+    "name" : "phpcs",
+    "keyword" : "phpcs"
+  }
+}
