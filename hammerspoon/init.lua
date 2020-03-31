@@ -110,7 +110,7 @@ if string.len(hsappM_keys[2]) > 0 then
     spoon.ModalMgr.supervisor:bind(hsappM_keys[1], hsappM_keys[2], nil, function()
         spoon.ModalMgr:deactivateAll()
         -- Show the keybindings cheatsheet once appM is activated
-        spoon.ModalMgr:activate({"appM"}, "#fff223", false)
+        spoon.ModalMgr:activate({"appM"}, "#0000FF", false)
     end)
 end
 
@@ -165,7 +165,7 @@ if spoon.WinWin then
             -- Deactivate some modal environments or not before activating a new one
             spoon.ModalMgr:deactivateAll()
             -- Show an status indicator so we know we're in some modal environment now
-            spoon.ModalMgr:activate({"windowM"}, "#B22222")
+            spoon.ModalMgr:activate({"windowM"}, "#FFA500")
         end)
     end
 end
