@@ -1306,7 +1306,7 @@
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>HotkeyTermAnimationDuration</key>
-	<real>0.5</real>
+	<real>0.0</real>
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
 	<key>NSNavLastRootDirectory</key>
@@ -2097,7 +2097,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>84A3B922-450C-4E48-810E-7F1DFF06A7B6</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>309</integer>
+	<integer>310</integer>
 	<key>NoSyncNeverPromptToChangeOption</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
@@ -2902,7 +2902,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-03-30T02:43:27Z</date>
+	<date>2020-03-31T03:59:21Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
