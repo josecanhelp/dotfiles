@@ -8,6 +8,7 @@ slack = 'com.tinyspeck.slackmacgap'
 spotify = 'com.spotify.client' 
 tableplus = 'com.tinyapp.TablePlus'
 vscode = 'com.microsoft.VSCode'
+phpstorm = 'com.jetbrains.PhpStorm'
 
 gokuWatcher = hs.pathwatcher.new(os.getenv('HOME') .. '/.config/karabiner.edn/', function ()
     output = hs.execute('/usr/local/bin/goku')
@@ -25,6 +26,8 @@ modeMenuBar = hs.menubar.new():setTitle('Normal');
 changeModeMenuBar = function(modeName) modeMenuBar:setTitle(modeName) end
 
 hs.loadSpoon("ModalMgr")
+
+hs.tabs.enableForApp(phpstorm); 
 
 -- Define default Spoons which will be loaded later
 if not hspoon_list then
@@ -77,6 +80,7 @@ if not hsapp_list then
         {key = 'e', name = 'Finder'},
         {key = 'f', name = 'Firefox Developer Edition'},
         {key = 'i', name = 'iTerm'},
+        {key = 'p', name = 'PhpStorm'},
         {key = 'm', name = 'Messages'},
         {key = 'n', id = 'com.apple.ActivityMonitor'},
         {key = 'r', name = 'Bear'},
@@ -232,6 +236,8 @@ hs.urlevent.bind('openAnything', function()
         hs.eventtap.keyStroke({'cmd'}, 'p')
     elseif appIs(slack) then
         hs.eventtap.keyStroke({'cmd'}, 'k')
+    elseif appIs(phpstorm) then
+        hs.eventtap.keyStroke({'cmd, shift'}, 'o')
     elseif appIs(finder) then
         triggerAlfredSearch('o')
     elseif appIncludes({chrome, firefox}) then
