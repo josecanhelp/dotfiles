@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>iconid</key>
+	<string>AA9E4F40-099C-4072-9B2C-F4494D23DE02</string>
+	<key>iconisuserspecified</key>
+	<false/>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Grow Left</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>DC7709BA-CCC5-4445-905F-18E71416563D</string>
+			<key>buttonlabel</key>
+			<string>Grow Left</string>
+			<key>itemuid</key>
+			<string>493978E0-C8E4-4D0D-B675-C9F4B0F88D01</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Grow Top</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>F5F366FD-89CE-4A3E-ACC6-CF9950CAAD1E</string>
+			<key>buttonlabel</key>
+			<string>Grow Top</string>
+			<key>itemuid</key>
+			<string>5C05A37B-9A3B-46D5-A962-9DA95A9D244C</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Grow Bottom</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>EEC69C84-6CD8-4322-8057-6F7C02B19FAC</string>
+			<key>buttonlabel</key>
+			<string>Grow Bottom</string>
+			<key>itemuid</key>
+			<string>105D1CCD-389D-453A-A3B7-F61D9D792956</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Grow Right</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>885C1986-C1BB-49F0-92E0-2B7B3FD338DB</string>
+			<key>buttonlabel</key>
+			<string>Grow Right</string>
+			<key>itemuid</key>
+			<string>60D1DD82-1368-41A1-8676-E072C9F3A4D8</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Shrink left</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>BB947FA1-3463-4CAC-8EDE-61CCC34764BF</string>
+			<key>buttonlabel</key>
+			<string>Shrink Left</string>
+			<key>itemuid</key>
+			<string>AD31C0D7-B11D-4906-AC22-51885F455644</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Shrink Top</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>927596DC-1061-4EBE-9E33-1D4847ED217E</string>
+			<key>buttonlabel</key>
+			<string>Shrink Top</string>
+			<key>itemuid</key>
+			<string>FD5C52B2-0124-405C-84DD-3440586C5A84</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Shrink Bottom</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>797E4712-D31D-4858-A3BC-8B479613F98B</string>
+			<key>buttonlabel</key>
+			<string>Shrink Bottom</string>
+			<key>itemuid</key>
+			<string>711AC4A8-E344-46AF-BE8B-AB09E9181B9C</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Shrink Right</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>DA0D9764-64A9-4B30-BE55-19EA05150627</string>
+			<key>buttonlabel</key>
+			<string>Shrink Right</string>
+			<key>itemuid</key>
+			<string>F91539CF-6B80-4DD6-953B-F339F40DD022</string>
+		</dict>
+		<dict/>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Center</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>5034F4D3-06AA-459F-85DA-2239BA021F91</string>
+			<key>buttonlabel</key>
+			<string>Center</string>
+			<key>itemuid</key>
+			<string>34B60AB3-7B1C-4118-856D-2678C20930B8</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Grow All</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>74E96638-902B-42E2-9215-B5CE954A2DB6</string>
+			<key>buttonlabel</key>
+			<string>Grow All</string>
+			<key>itemuid</key>
+			<string>2D6BADD9-9003-43F5-A31C-D4A3E461FCA7</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>Shrink All</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>5744F2CD-56FF-4087-9471-939881F6925D</string>
+			<key>buttonlabel</key>
+			<string>Shrink All</string>
+			<key>itemuid</key>
+			<string>E086E0E9-B057-4BCC-9566-00E2A5CFF8FD</string>
+		</dict>
+		<dict/>
+		<dict/>
+		<dict/>
+		<dict/>
+	</array>
+	<key>subtitle</key>
+	<string>Hammerspoon Workflow</string>
+	<key>title</key>
+	<string>Hammerspoon Sizing</string>
+</dict>
+</plist>

@@ -27,8 +27,6 @@ changeModeMenuBar = function(modeName) modeMenuBar:setTitle(modeName) end
 
 hs.loadSpoon("ModalMgr")
 
-hs.tabs.enableForApp(phpstorm); 
-
 -- Define default Spoons which will be loaded later
 if not hspoon_list then
     hspoon_list = {
@@ -43,6 +41,7 @@ end
 
 hs.hotkey.alertDuration = 0
 hs.hints.showTitleThresh = 0
+hs.hints.style = 'vimperator'
 hs.window.animationDuration = 0
 
 ----------------------------------------------------------------------------------------------------
