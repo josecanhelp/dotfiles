@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "vim ~\/.tmux.conf",
+    "uid" : "9C1F01EF-30C1-47DA-911A-8BF8F2603A86",
+    "name" : "Edit TMUX conf",
+    "keyword" : "tmux"
+  }
+}
