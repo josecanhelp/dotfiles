@@ -352,6 +352,8 @@ echo (new Action($_SERVER['action']))-&gt;execute("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -393,7 +395,7 @@ echo (new Project('/usr/local/bin/appcode'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>5B6FA7E8-B78F-4F83-BF61-F5A577D0F1FF</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -402,6 +404,8 @@ echo (new Project('/usr/local/bin/appcode'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -443,7 +447,7 @@ echo (new Project('/usr/local/bin/charm'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>40643495-60FF-4B39-93FC-9B824826B311</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -452,6 +456,8 @@ echo (new Project('/usr/local/bin/charm'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -493,7 +499,7 @@ echo (new Project('/usr/local/bin/clion'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>EBC4824D-2259-4B43-BB3C-5A43FDB58C58</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -502,6 +508,8 @@ echo (new Project('/usr/local/bin/clion'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -543,7 +551,7 @@ echo (new Project('/usr/local/bin/datagrip'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>62FF54E7-235D-44C1-A6EC-477EAEEDAB41</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -552,6 +560,8 @@ echo (new Project('/usr/local/bin/datagrip'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -593,7 +603,7 @@ echo (new Project('/usr/local/bin/idea'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>12F9AD1F-2AAB-4B11-91EF-DAF051A7B05F</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -602,6 +612,8 @@ echo (new Project('/usr/local/bin/idea'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -643,7 +655,7 @@ echo (new Project('/usr/local/bin/goland'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>489F5EE4-5905-4959-9905-A5DA5C312094</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -704,6 +716,8 @@ fi</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -745,7 +759,7 @@ echo (new Project('/usr/local/bin/Gogland'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>65B68312-32A5-4312-AA95-B92B8FCC50AB</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -754,6 +768,8 @@ echo (new Project('/usr/local/bin/Gogland'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -795,7 +811,7 @@ echo (new Project('/usr/local/bin/mine'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>2A5BF866-0709-4BCC-B429-1598F29812D8</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -804,6 +820,8 @@ echo (new Project('/usr/local/bin/mine'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -826,7 +844,7 @@ echo (new Project('/usr/local/bin/mine'))-&gt;search("{query}");</string>
 				<string>require_once './Project.php';
 
 
-echo (new Project('/usr/local/bin/phpstorm'))-&gt;search("{query}");</string>
+echo (new Project('/usr/local/bin/pstorm'))-&gt;search("{query}");</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -845,7 +863,7 @@ echo (new Project('/usr/local/bin/phpstorm'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>1D4C7D37-59A5-4CD0-BD1E-172882487E25</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -854,6 +872,8 @@ echo (new Project('/usr/local/bin/phpstorm'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -895,7 +915,7 @@ echo (new Project('/usr/local/bin/pstorm'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>D0C771FF-6798-4558-A786-DA0C37246B1F</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -904,6 +924,8 @@ echo (new Project('/usr/local/bin/pstorm'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -945,7 +967,7 @@ echo (new Project('/usr/local/bin/rider'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>F3631540-263B-4515-9DDC-2AC7AA4A18D0</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -954,6 +976,8 @@ echo (new Project('/usr/local/bin/rider'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -995,7 +1019,7 @@ echo (new Project('/usr/local/bin/studio'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>119F0957-49BC-43B1-9E87-2E9CC8F498D7</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1004,6 +1028,8 @@ echo (new Project('/usr/local/bin/studio'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1045,7 +1071,7 @@ echo (new Project('/usr/local/bin/webstorm'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>8DEE0F33-4044-49A3-85D1-AE5984508486</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1054,6 +1080,8 @@ echo (new Project('/usr/local/bin/webstorm'))-&gt;search("{query}");</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1095,7 +1123,7 @@ echo (new Project('/usr/local/bin/wstorm'))-&gt;search("{query}");</string>
 			<key>uid</key>
 			<string>61BFF62D-6B2E-4760-B0DA-120EDF237D9E</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 	</array>
 	<key>readme</key>

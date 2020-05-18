@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string></string>
+	<string>com.josecanhelp.app-bundle-id</string>
 	<key>category</key>
 	<string>Productivity</string>
 	<key>connections</key>
@@ -36,9 +36,9 @@
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string></string>
+	<string>Jose Soto</string>
 	<key>description</key>
-	<string></string>
+	<string>Get the bundle id of the focused application.</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -146,6 +146,6 @@
 	<key>version</key>
 	<string></string>
 	<key>webaddress</key>
-	<string></string>
+	<string>https://josesoto.com</string>
 </dict>
 </plist>

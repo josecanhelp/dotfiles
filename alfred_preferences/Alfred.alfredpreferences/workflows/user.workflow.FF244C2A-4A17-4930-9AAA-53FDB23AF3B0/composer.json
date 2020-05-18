@@ -1,0 +1,19 @@
+{
+    "name": "josecanhelp/alfred-meili-search",
+    "type": "alfred-workflow",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jose Soto",
+            "email": "josecanhelp@gmail.com"
+        }
+    ],
+    "require": {
+        "meilisearch/meilisearch-php": "^0.9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ramsearch\\": "src/"
+        }
+    }
+}

@@ -10,6 +10,8 @@
 	<true/>
 	<key>hideshortcuts</key>
 	<true/>
+	<key>showOnScreen</key>
+	<integer>2</integer>
 	<key>showscrollbar</key>
 	<false/>
 	<key>visibleresults</key>

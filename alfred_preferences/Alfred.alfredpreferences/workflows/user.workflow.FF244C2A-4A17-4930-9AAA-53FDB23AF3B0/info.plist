@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.josecanhelp.ramsearch</string>
+	<string>com.josecanhelp.alfred.ram</string>
 	<key>category</key>
 	<string>Tools</string>
 	<key>connections</key>
@@ -25,7 +25,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>1ABD3E75-6E29-4F38-9F2D-8151ED1FE839</string>
+				<string>FA4CF016-E27A-4B25-890C-2E4BE77F09AE</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -35,11 +35,67 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>03B339FE-C355-4F53-8B33-FADCF6FE0C9C</string>
+				<string>7405A963-2017-4541-8853-3451DFC389B8</string>
 				<key>modifiers</key>
 				<integer>1048576</integer>
 				<key>modifiersubtext</key>
 				<string>Copy the entry URL to your clipboard.</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>7405A963-2017-4541-8853-3451DFC389B8</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>03B339FE-C355-4F53-8B33-FADCF6FE0C9C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>51C5743A-22EE-437E-8F21-0E66C9A33010</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>9DBD8EA4-A6A8-4843-A968-6BBC73C77BD5</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B0743D9F-97B6-4A19-9F6B-7C90A415B53A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D4D5C28D-4988-43E4-8044-0FFA74ADA254</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9DBD8EA4-A6A8-4843-A968-6BBC73C77BD5</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>FA4CF016-E27A-4B25-890C-2E4BE77F09AE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1ABD3E75-6E29-4F38-9F2D-8151ED1FE839</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>51C5743A-22EE-437E-8F21-0E66C9A33010</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -63,7 +119,7 @@
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>https://ram.test/entries/{query}</string>
+				<string>https://ram.tighten.co/entries/{query}</string>
 				<key>utf8</key>
 				<true/>
 			</dict>
@@ -102,7 +158,9 @@
 				<key>runningsubtext</key>
 				<string>Loading...</string>
 				<key>script</key>
-				<string>php search.php $query</string>
+				<string>query=$1
+
+php search.php $query {var:token}</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -120,6 +178,53 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>3E48FE9E-87D4-421F-A2CC-6D095DDFF724</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{query}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>2</integer>
+						<key>matchstring</key>
+						<string>0</string>
+						<key>outputlabel</key>
+						<string>{query}</string>
+						<key>uid</key>
+						<string>51C5743A-22EE-437E-8F21-0E66C9A33010</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>donothing</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>FA4CF016-E27A-4B25-890C-2E4BE77F09AE</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>https://ram.test/entries/{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>03B339FE-C355-4F53-8B33-FADCF6FE0C9C</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -147,56 +252,185 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>autopaste</key>
-				<false/>
-				<key>clipboardtext</key>
-				<string>https://ram.test/entries/{query}</string>
-				<key>transient</key>
-				<false/>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{query}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>2</integer>
+						<key>matchstring</key>
+						<string>0</string>
+						<key>outputlabel</key>
+						<string>{query}</string>
+						<key>uid</key>
+						<string>51C5743A-22EE-437E-8F21-0E66C9A33010</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>donothing</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
+			<string>alfred.workflow.utility.conditional</string>
 			<key>uid</key>
-			<string>03B339FE-C355-4F53-8B33-FADCF6FE0C9C</string>
+			<string>7405A963-2017-4541-8853-3451DFC389B8</string>
 			<key>version</key>
-			<integer>3</integer>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>ramkey</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Update the Master Key</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>D4D5C28D-4988-43E4-8044-0FFA74ADA254</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>on run argv
+  set enteredKey to item 1 of argv
+	tell application id "com.runningwithcrayons.Alfred" to set configuration "token" to value enteredKey in workflow "com.josecanhelp.alfred.ram" with exportable
+end run</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>9DBD8EA4-A6A8-4843-A968-6BBC73C77BD5</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>Ram Search Key Successfully Set!</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>B0743D9F-97B6-4A19-9F6B-7C90A415B53A</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string>Use this workflow to search ram.tighten.co and open a url based on the selected entry.
+
+Run `ramkey` to update the master api key with the appropriate value to access the search feature.
+
+Run `ram` to search with a query of your choice.</string>
 	<key>uidata</key>
 	<dict>
 		<key>03B339FE-C355-4F53-8B33-FADCF6FE0C9C</key>
 		<dict>
 			<key>xpos</key>
-			<integer>410</integer>
+			<integer>530</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>250</integer>
 		</dict>
 		<key>1ABD3E75-6E29-4F38-9F2D-8151ED1FE839</key>
 		<dict>
 			<key>xpos</key>
-			<integer>385</integer>
+			<integer>535</integer>
 			<key>ypos</key>
-			<integer>110</integer>
+			<integer>95</integer>
 		</dict>
 		<key>3E48FE9E-87D4-421F-A2CC-6D095DDFF724</key>
 		<dict>
 			<key>note</key>
 			<string>github.com</string>
 			<key>xpos</key>
-			<integer>115</integer>
+			<integer>60</integer>
 			<key>ypos</key>
-			<integer>275</integer>
+			<integer>110</integer>
+		</dict>
+		<key>7405A963-2017-4541-8853-3451DFC389B8</key>
+		<dict>
+			<key>xpos</key>
+			<integer>335</integer>
+			<key>ypos</key>
+			<integer>285</integer>
+		</dict>
+		<key>9DBD8EA4-A6A8-4843-A968-6BBC73C77BD5</key>
+		<dict>
+			<key>xpos</key>
+			<integer>315</integer>
+			<key>ypos</key>
+			<integer>385</integer>
+		</dict>
+		<key>B0743D9F-97B6-4A19-9F6B-7C90A415B53A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>530</integer>
+			<key>ypos</key>
+			<integer>385</integer>
+		</dict>
+		<key>D4D5C28D-4988-43E4-8044-0FFA74ADA254</key>
+		<dict>
+			<key>xpos</key>
+			<integer>60</integer>
+			<key>ypos</key>
+			<integer>385</integer>
 		</dict>
 		<key>DD441847-1CC0-479B-835F-622F29BE8600</key>
 		<dict>
 			<key>xpos</key>
-			<integer>585</integer>
+			<integer>760</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>250</integer>
+		</dict>
+		<key>FA4CF016-E27A-4B25-890C-2E4BE77F09AE</key>
+		<dict>
+			<key>xpos</key>
+			<integer>335</integer>
+			<key>ypos</key>
+			<integer>130</integer>
 		</dict>
 	</dict>
+	<key>variables</key>
+	<dict>
+		<key>token</key>
+		<string>correct-horse-battery-staple</string>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>0.0.2</string>
 	<key>webaddress</key>
 	<string>https://josesoto.com</string>
 </dict>

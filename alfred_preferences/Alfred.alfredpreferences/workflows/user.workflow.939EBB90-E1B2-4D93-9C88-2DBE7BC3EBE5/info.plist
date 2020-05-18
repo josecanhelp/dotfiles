@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.josecanhelp.alfred-osx</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>1C7C4A75-0477-4F65-921F-33960019D454</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>91D5DD2E-9CE9-47DD-9F0F-39A1906F69E0</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>63C10B5D-A19F-4ED3-862A-85109A0AF4EE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>EA09F097-0E38-42C9-90E2-774089BDC629</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>91D5DD2E-9CE9-47DD-9F0F-39A1906F69E0</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>63C10B5D-A19F-4ED3-862A-85109A0AF4EE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Jose Soto</string>
+	<key>description</key>
+	<string>Modify user default settings via Alfred</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Run OSX Commands</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>EA09F097-0E38-42C9-90E2-774089BDC629</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>STATE="$(defaults read com.apple.finder CreateDesktop)"
+
+case $STATE in
+  (0)    defaults write com.apple.finder CreateDesktop -bool true &amp;&amp; killall Finder;;
+  (1)    defaults write com.apple.finder CreateDesktop -bool false &amp;&amp; killall Finder;;
+esac
+
+NEWSTATE="$(defaults read com.apple.finder CreateDesktop)"
+
+if [ $NEWSTATE = 1 ]
+then
+	echo "Desktop Icons Enabled"
+else
+	echo "Desktop Icons Disabled"
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>63C10B5D-A19F-4ED3-862A-85109A0AF4EE</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>fixedorder</key>
+				<false/>
+				<key>items</key>
+				<string>[{"title":"Toggle Desktop Icons","arg":"desktopIconToggle","subtitle":"Turn desktop icon visibility on or off."}]</string>
+				<key>keyword</key>
+				<string>osx</string>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.listfilter</string>
+			<key>uid</key>
+			<string>1C7C4A75-0477-4F65-921F-33960019D454</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>desktopIconToggle</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>91D5DD2E-9CE9-47DD-9F0F-39A1906F69E0</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>1C7C4A75-0477-4F65-921F-33960019D454</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>8</integer>
+			<key>note</key>
+			<string>List Filter Input: Create a pre-set list of options to show in Alfred's results.</string>
+			<key>xpos</key>
+			<integer>80</integer>
+			<key>ypos</key>
+			<integer>215</integer>
+		</dict>
+		<key>63C10B5D-A19F-4ED3-862A-85109A0AF4EE</key>
+		<dict>
+			<key>xpos</key>
+			<integer>425</integer>
+			<key>ypos</key>
+			<integer>215</integer>
+		</dict>
+		<key>91D5DD2E-9CE9-47DD-9F0F-39A1906F69E0</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>12</integer>
+			<key>note</key>
+			<string>Filter Utility: Stop the stream continuing based on a filter.</string>
+			<key>xpos</key>
+			<integer>295</integer>
+			<key>ypos</key>
+			<integer>245</integer>
+		</dict>
+		<key>EA09F097-0E38-42C9-90E2-774089BDC629</key>
+		<dict>
+			<key>xpos</key>
+			<integer>620</integer>
+			<key>ypos</key>
+			<integer>215</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>https://josesoto.com</string>
+</dict>
+</plist>
