@@ -1293,6 +1293,8 @@
 	<true/>
 	<key>EnableDivisionView</key>
 	<true/>
+	<key>EnableProxyIcon</key>
+	<false/>
 	<key>FlashTabBarInFullscreen</key>
 	<true/>
 	<key>HapticFeedbackForEsc</key>
@@ -1361,7 +1363,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>2610 286 700 622 1680 -310 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>2 0 1675 879 0 0 1680 1027 </string>
+	<string>1920 -228 3840 879 1920 -228 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1680 205 730 902 1680 -310 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2060,7 +2062,7 @@
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
-			<integer>8</integer>
+			<integer>1</integer>
 			<key>Working Directory</key>
 			<string>/Users/jose</string>
 		</dict>
@@ -2092,14 +2094,16 @@
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{0, 0}, {1680, 1050}}</string>
+		<string>{{1920, -228}, {3840, 2160}}</string>
 		<key>topLeft</key>
-		<string>{266, 803}</string>
+		<string>{2188, 529}</string>
 	</dict>
+	<key>NoSyncHaveUsedCopyMode</key>
+	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>84A3B922-450C-4E48-810E-7F1DFF06A7B6</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>314</integer>
+	<integer>336</integer>
 	<key>NoSyncNeverPromptToChangeOption</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
@@ -2906,7 +2910,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-04-05T16:00:01Z</date>
+	<date>2020-05-17T09:37:01Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
@@ -2928,13 +2932,13 @@
 	<key>SplitPaneDimmingAmount</key>
 	<real>0.20271221187943261</real>
 	<key>StatusBarPosition</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>StretchTabsToFillBar</key>
 	<true/>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>3</integer>
 	<key>TabViewType</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>TabsHaveCloseButton</key>
 	<true/>
 	<key>TmuxUsesDedicatedProfile</key>

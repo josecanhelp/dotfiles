@@ -76,6 +76,7 @@ if not hsapp_list then
     hsapp_list = {
         {key = 'a', name = 'Slack'},
         {key = 'c', name = 'Visual Studio Code'},
+        {key = 'd', name = 'React Native Debugger'},
         {key = 'e', name = 'Finder'},
         {key = 'f', name = 'Firefox Developer Edition'},
         {key = 'i', name = 'iTerm'},
@@ -83,7 +84,7 @@ if not hsapp_list then
         {key = 'm', name = 'Messages'},
         {key = 'n', id = 'com.apple.ActivityMonitor'},
         {key = 'r', name = 'Bear'},
-        {key = 's', name = 'Slack'},
+        {key = 's', name = 'Simulator'},
         {key = 't', name = 'TablePlus'},
         {key = 'v', name = 'Visual Studio Code'},
         {key = 'x', name = 'Xcode'},
@@ -252,6 +253,8 @@ hs.urlevent.bind('toggleSidebar', function()
         hs.eventtap.keyStroke({'cmd'}, 'h', 0)
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'control'}, '1')
+    elseif appIs(phpstorm) then
+        hs.eventtap.keyStroke({'cmd'}, '1')
     end
 end)
 
