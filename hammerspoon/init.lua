@@ -9,6 +9,7 @@ spotify = 'com.spotify.client'
 tableplus = 'com.tinyapp.TablePlus'
 vscode = 'com.microsoft.VSCode'
 phpstorm = 'com.jetbrains.PhpStorm'
+fork = 'com.DanPristupov.Fork'
 
 gokuWatcher = hs.pathwatcher.new(os.getenv('HOME') .. '/.config/karabiner.edn/', function ()
     output = hs.execute('/usr/local/bin/goku')
@@ -232,7 +233,7 @@ function triggerAlfredWorkflow(workflow, trigger)
 end
 
 hs.urlevent.bind('openAnything', function()
-    if appIncludes({vscode, tableplus}) then
+    if appIncludes({vscode, tableplus, fork}) then
         hs.eventtap.keyStroke({'cmd'}, 'p')
     elseif appIs(slack) then
         hs.eventtap.keyStroke({'cmd'}, 'k')
