@@ -1,23 +1,18 @@
-" ------------------------------------------------------------------------------
-" # Vimrc
-" ------------------------------------------------------------------------------
-" # This file sets up my basic vim environment.  Here I set a few defaults,
-" # paths, and source the rest of the config files as necessary.  Most
-" # of the config lives in plugins.vim and mappings.vim, with more
-" # elaborate config in /local-config and /plugin-config.
+" -----------------------------------------------------------------------------
+" File: ~/dotfiles/vim/vimrc
+" Description: Base configuration settings for Vim
+" Author: Jose Soto <josecanhelp@gmail.com>
+" Source: https://github.com/josecanhelp/dotfiles
+" Last Modified: 18 May 2020
+" -----------------------------------------------------------------------------
 
-
-" # Defaults
-" ------------------------------------------------------------------------------
-" Vim 8 defaults
+" Basic -----------------------------------------------------------------------
+" Defaults: {{{
 " For more info, see :help defaults.vim
 unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
-
-
-" ------------------------------------------------------------------------------
-" # Paths
-" ------------------------------------------------------------------------------
+" }}}
+" Paths: {{{
 " Parent paths
 let g:dotfiles_path = $HOME . '/.dotfiles'
 let g:dotvim_path = $HOME . '/.vim'
@@ -38,15 +33,9 @@ let g:vimrc_related_paths = [
   \ VimrcPath('vimrc'),
   \ VimrcPath('*.vim')
   \ ]
-
-
-" ------------------------------------------------------------------------------
-" # Sourcing
-" ------------------------------------------------------------------------------
+" }}}
+" Sourcing: {{{
 " Source plugins
-call plug#begin('~/.vim/plugged')
-  execute 'source ' . VimrcPath('plugins.vim')
-call plug#end()
 
 " Source mappings
 execute 'source ' VimrcPath('mappings.vim')
@@ -66,16 +55,106 @@ augroup autosource_vimrc
   execute 'autocmd BufWritePost ' . join(g:vimrc_related_paths, ',') . ' nested source ' . $MYVIMRC
 augroup END
 
+" }}}
+" Plugins ---------------------------------------------------------------------
+" Installed: {{{
+call plug#begin('~/.vim/plugged')
+Plug '/usr/local/opt/fzf'
+Plug 'airblade/vim-gitgutter'
+Plug 'git@github.com:morhetz/gruvbox.git'
+Plug 'junegunn/fzf.vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'scrooloose/nerdtree'
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'posva/vim-vue'
+Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'lumiliet/vim-twig'
+Plug 'sheerun/vim-polyglot'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vim-vdebug/vdebug', {'on': ['Breakpoint', 'VdebugStart']}
+Plug 'justinmk/vim-sneak'
+Plug 'junegunn/vim-peekaboo'
+Plug 'janko/vim-test'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'christoomey/vim-tmux-runner'
+Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
+Plug 'vim-vdebug/vdebug', {'on': ['Breakpoint', 'VdebugStart']}
+call plug#end()
+"}}}
+" Settings -------------------------------------------------------------------
+" Airline: {{{
+" Show Ale errors and warnings in Airline status bar
+let g:airline#extensions#ale#enabled = 1
+" }}}
+" Ale: {{{
+let g:ale_sign_column_always = 1
+" let g:ale_linters = {
+" \   'php': ['tlint']
+" \}
+" }}}
+" Nerdtree: {{{
+let g:NERDTreeShowHidden=1
+let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
+let g:NERDCompactSexyComs = 1 "  Use compact syntax for prettified multi-line comments
+let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDAltDelims_java = 1 " Set a language to use its alternate delimiters by default
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } } " Add your own custom formats or override the defaults
+let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
+" }}}
+" Peekaboo: {{{
+let g:peekaboo_window = 'vertical botright 80new'
+" }}}
+" Phpactor: {{{
+let g:phpactorPhpBin = 'php'
+let g:phpactorBranch = 'master'
+let g:phpactorOmniAutoClassImport = v:true
+let g:phpactorOmniError = v:true
+let g:polyglot_disabled = ['jsx']
+let g:vim_jsx_pretty_colorful_config = 1
+" }}}
+" Prettier: {{{
+let g:prettier#exec_cmd_path = '~/.nvm/versions/node/v8.16.0/bin/prettier'
+" }}}
+" Sneak: {{{
+let g:sneak#label = 1
+" }}}
+" Vim-Javascript: {{{
+" Let vim-javascript detect which pre-processors to check for
+let g:vue_pre_processors = 'detect_on_enter'
+" }}}
+" Vim-Test: {{{
+let test#enabled_runners = ["php#phpunit"]
+let test#strategy = "vtr"
+" }}}
+" ------------------------------------------------------------------------------
+" # Basic Edit Commands
+" ------------------------------------------------------------------------------
 
+command! EditVimrc call EditVimConfig('vimrc')
+command! EditVimMappings call EditVimConfig('mappings.vim')
+command! EditVimPlugins call EditVimConfig('plugins.vim')
+
+function! EditVimConfig(file)
+  execute 'edit ' . VimrcPath(a:file)
+endfunction
 
 " ------------------------------------------------------------------------------
 " # Misc. & Management
 " ------------------------------------------------------------------------------
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+nnoremap <Leader>r :source $MYVIMRC<CR>
 
 " Modeline and Notes {{{
 " vim:foldmethod=marker:foldlevel=0
 "
 "	This is the personal .vimrc file of Jose Soto.
 "	Website: JoseSoto.com
+"	Twitter: @josecanhelp
 " }}}

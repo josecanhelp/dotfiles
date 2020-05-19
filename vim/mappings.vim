@@ -24,6 +24,7 @@ nmap <Leader>f :GFiles<CR>
 syntax on
 filetype plugin on
 colorscheme gruvbox
+set noswapfile
 set background=dark
 set clipboard=unnamed " yanked content is copied to the clipboard
 set number " Enable line numbers
@@ -72,7 +73,6 @@ nmap sp :split<cr>
 " Plugin: Nerdtree
 map <C-n> :NERDTreeToggle<CR>
 
-
 " Plugin: Phpactor
 " Include use statement
 nmap <Leader>u :call phpactor#UseAdd()<CR>
@@ -105,3 +105,22 @@ function! ExecuteMacroOverVisualRange()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 " end repeat macros for all selected lines
+"
+"
+nmap <Leader><Leader>v :EditVimrc<CR>
+nmap <Leader><Leader>vm :EditVimMappings<CR>
+nmap <Leader><Leader>vp :EditVimPlugins<CR>
+
+" Run tests
+" Plugin: test
+nmap <Leader>rt :w<CR>:TestToggleStrategy<CR>
+nmap <Leader>rs :w<CR>:TestSuite<CR>
+nmap <Leader>rf :w<CR>:TestFile<CR>
+nmap <Leader>rl :w<CR>:TestLast<CR>
+nmap <Leader>rn :w<CR>:TestNearest<CR>
+nmap <Leader>rv :w<CR>:TestVisit<CR>
+
+" Debugger
+" Plugin: vdebug
+nnoremap <Leader>B :Breakpoint<CR>
+nnoremap <Leader>V :VdebugStart<CR>
