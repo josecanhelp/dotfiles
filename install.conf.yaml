@@ -1,21 +1,63 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+      force: true
+    shell:
+      quiet: true
+- shell:
+  - description: Validating sudo credentials
+    command: "sudo --validate"
 - clean: ['~']
-
 - link:
+    ~/.bin: bin/
+    ~/.ctags.d: ctags
+    ~/.ctags: ctags
     ~/.dotfiles: ''
+    ~/.gitconfig: gitconfig
+    ~/.hammerspoon: hammerspoon
+    ~/.hushlogin: hushlogin
+    ~/.ideavimrc: ideavimrc
+    ~/.oh-my-zsh-custom: oh-my-zsh-custom/
+    ~/.oh-my-zsh: oh-my-zsh/
     ~/.tmux.conf: tmux.conf
+    ~/.tmux: tmux/ 
+    ~/.vim/coc-settings.json: vim/coc/settings.json
     ~/.vim: vim/
     ~/.vimrc: vim/vimrc
-    ~/.vim/coc-settings.json: vim/coc/settings.json
-    ~/.hushlogin: hushlogin
-    ~/.oh-my-zsh: oh-my-zsh/
-    ~/.oh-my-zsh-custom: oh-my-zsh-custom/
-    ~/.bin: bin/
-    ~/.tmux: tmux/ 
     ~/.zshrc: zshrc
-    ~/.gitconfig: gitconfig
-    ~/.ctags: ctags
-    ~/.ideavimrc: ideavimrc
-    ~/.hammerspoon: hammerspoon
-
+- create:
+    - ~/Code
 - shell:
-  - [git submodule update --init --recursive, Installing submodules]
+  - description: Hushing login
+    command: "[ -f ~/.hushlogin ] || touch ~/.hushlogin"
+  - description: Telling gatekeeper to allow unidentified developers
+    command: "sudo spctl --master-disable"
+  - description: Installing brew
+    command: "[ -x \"$(which brew)\" ] || /usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
+  - description: Updating brew
+    command: "brew update"
+  - description: Installing brew bundler
+    command: "brew tap homebrew/bundle"
+  - description: Installing brewfile bundle
+    command: "brew bundle"
+  - description: Removing old brew files
+    command: "brew cleanup"
+  - description: Adding zsh to list of acceptable shells
+    command: "[[ \"$(ag $(which zsh) /etc/shells)\" ]] || sudo sh -c \"echo $(which zsh) >> /etc/shells\""
+  - description: Making zsh the default shell
+    command: "sudo chsh -s $(which zsh)"
+  # - description: Compiling antibody bundles
+    # command: "sh zsh/bundles_compile"
+  - description: Installing vim-plug
+    command: "[ -f ~/.vim/autoload/plug.vim ] || curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  - description: Installing vim plugins
+    command: "vim +PlugInstall +qa"
+  # - description: Installing global composer dependencies
+    # command: "sh composer/global_install"
+  # - description: Initializing valet
+    # command: "sudo valet install"
+  # - description: Parking valet on code directory
+    # command: "valet park ~/Code"
+  - description: Clearing sudo credential cache
+    command: "sudo --reset-timestamp"
