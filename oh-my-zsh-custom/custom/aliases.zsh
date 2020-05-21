@@ -1,4 +1,4 @@
-alias sshve="ssh root@ve.josecanhelp.com"
+alias sshve="ssh jose@ve.kz2dxbt7.vesrv.com"
 alias heroky="heroku"
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias gp="git push origin HEAD"
@@ -37,3 +37,5 @@ alias python='python3'
 alias nrs='npm run serve'
 alias editzshrc='vim ~/.zshrc'
 alias editalias='vim ~/.oh-my-zsh-custom/custom/aliases.zsh'
+alias vimt="cd ~/Code/Tighten/\$(ls ~/Code/Tighten | fzf) && vim +GFiles"
+alias vimj="cd ~/Code/JoseCanHelp/\$(ls ~/Code/JoseCanHelp | fzf) && vim +GFiles"
