@@ -26,6 +26,13 @@ function! VimrcPath(path)
   return g:dotfiles_path . '/vim/' . a:path
 endfunction
 " }}}
+" Theme: {{{
+" Set the cursorline highlight colors
+let g:gruvbox_contrast_dark = 'soft'
+let gruvbox_vert_split = 'purple'
+let &colorcolumn=join(range(81,999),",") " Display a different bg beyond 80 chars
+colorscheme gruvbox
+" }}}
 " General --------------------------------------------------------------------
 " Defaults: {{{
 
@@ -35,7 +42,6 @@ unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
 syntax on
 filetype plugin on
-colorscheme gruvbox
 set autowrite  " Save on buffer switch
 set background=dark
 set backspace=indent,eol,start
@@ -45,7 +51,7 @@ set hlsearch " Highlight searches
 set ignorecase " Ignore case of search
 set incsearch " Highlight dynamically as pattern is typed
 set mouse=a " Enable mouse scroll
-set nocursorline " Highlight current line
+set cursorline " Highlight current line
 set noswapfile
 set nowrap " Do not wrap the end of the line
 set number " Enable line numbers
@@ -56,13 +62,9 @@ set splitbelow " Open new files in horizontal splits to the bottom
 set splitright " Open new files in vertical splits to the right
 set tabstop=2
 set wildignore+=*/vendor/** " Ignore these folders during fuzzy search
+set wildignore+=*/node_modules/** " Ignore these folders during fuzzy search
 set runtimepath+=/usr/local/opt/fzf
-set tags=.git/tags
 set scrolloff=7 " Add padding to the bottom of the file
-" }}}
-" Theme: {{{
-" Set the cursorline highlight colors
-hi CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white guibg=lightblue guifg=white
 " }}}
 " Paths: {{{
 " Parent paths
@@ -84,6 +86,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'dense-analysis/ale'
 Plug 'git@github.com:morhetz/gruvbox.git'
+Plug 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn run build'}
 Plug 'janko/vim-test'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-peekaboo'
@@ -92,9 +95,8 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'lumiliet/vim-twig'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
+Plug 'phpactor/phpactor', {'branch': 'develop', 'for': 'php', 'do': 'composer install --no-dev -o'}
 Plug 'posva/vim-vue'
-Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
@@ -121,18 +123,22 @@ let g:ale_sign_style_warning = '!'
 " Linters: {{{
   let g:ale_linters = {
     \ 'php': ['php', 'phpcs', 'phpmd'],
+    \ 'javascript': ['prettier'],
     \ }
 
-  let g:ale_php_phpcs_standard = 'PSR2'
+  let g:ale_php_phpcs_standard = '~/.phpcs.xml.dist'
+  let g:ale_php_phpcs_use_global = 1
 " }}}
 " Fixers: {{{
   let g:ale_fixers = {
     \ 'php': ['php_cs_fixer'],
+    \ 'javascript': ['prettier'],
     \ }
 
   augroup fix_on_save
     autocmd! *
     autocmd BufEnter *.php call s:fix_php()
+    autocmd BufEnter *.js call s:fix_javascript()
   augroup END
 
   function! s:fix_php()
@@ -140,9 +146,13 @@ let g:ale_sign_style_warning = '!'
       let b:ale_fix_on_save = 1
     endif
   endfunction
+
+  function! s:fix_javascript()
+    let b:ale_fix_on_save = 1
+  endfunction
 " }}}
 " }}}
-" Nerdtree: {{{
+" Nerdtree / Nerdcommenter: {{{
 let g:NERDTreeShowHidden=1
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
 let g:NERDCompactSexyComs = 1 "  Use compact syntax for prettified multi-line comments
@@ -156,15 +166,12 @@ let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace wh
 let g:peekaboo_window = 'vertical botright 80new'
 " }}}
 " Phpactor: {{{
-let g:phpactorPhpBin = 'php'
-let g:phpactorBranch = 'master'
+let g:phpactorPhpBin = '/usr/local/bin/php'
+let g:phpactorBranch = 'develop'
 let g:phpactorOmniAutoClassImport = v:true
 let g:phpactorOmniError = v:true
 let g:polyglot_disabled = ['jsx']
-let g:vim_jsx_pretty_colorful_config = 1
-" }}}
-" Prettier: {{{
-let g:prettier#exec_cmd_path = '~/.nvm/versions/node/v8.16.0/bin/prettier'
+let g:vim_jsx_pretty_colorful_config = v:true
 " }}}
 " Sneak: {{{
 let g:sneak#label = 1
@@ -177,6 +184,15 @@ let g:vue_pre_processors = 'detect_on_enter'
 let test#enabled_runners = ["php#phpunit"]
 let test#strategy = "vtr"
 " }}}
+" FZF: {{{
+" command! LS call fzf#run(fzf#wrap'}))
+"
+" if exists('$TMUX')
+  " let g:fzf_layout = { 'tmux': '-p90%,60%' }
+" else
+  " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+" endif
+" }}}
 " Mappings  -------------------------------------------------------------------
 " General: {{{
 " Re-source vimrc
@@ -188,6 +204,8 @@ cnoremap jj <C-c>
 nnoremap <Leader>h :set cursorline!<CR>
 " Clear the highlighted search results
 nnoremap <Leader><space> :noh<CR>
+"Delete all buffers
+nmap <Leader>bda :bufdo bd <cr>
 " }}}
 " Fuzzy Finders: {{{
 map <C-p> :GFiles<cr>
@@ -207,26 +225,32 @@ nmap sp :split<cr>
     map <C-n> :NERDTreeToggle<CR>
  " }}}
  " Phpactor: {{{
+  augroup PhpactorMappings
+    au!
+    au FileType php nmap <buffer> <Leader>u :PhpactorImportClass<CR>
     " Include use statement
-    nmap <Leader>u :call phpactor#UseAdd()<CR>
+    au FileType php nmap <Leader>u :call phpactor#UseAdd()<CR>
     " Invoke the context menu
-    nmap <Leader>mm :call phpactor#ContextMenu()<CR>
+    au FileType php nmap <Leader>mm :call phpactor#ContextMenu()<CR>
     " Invoke the navigation menu
-    nmap <Leader>nn :call phpactor#Navigate()<CR>
+    au FileType php nmap <Leader>nn :call phpactor#Navigate()<CR>
     " Goto definition of class or class member under the cursor
-    nmap <Leader>o :call phpactor#GotoDefinition()<CR>
+    au FileType php nmap <Leader>d :call phpactor#GotoDefinition()<CR>
+    " Goto definition of class or class member under the cursor
+    au FileType php nmap <Leader>dv :call phpactor#GotoDefinitionVsplit()<CR>
     " Show brief information about the symbol under the cursor
-    nmap <Leader>K :call phpactor#Hover()<CR>
+    au FileType php nmap <Leader>K :call phpactor#Hover()<CR>
     " Transform the classes in the current file
-    nmap <Leader>tt :call phpactor#Transform()<CR>
+    au FileType php nmap <Leader>tt :call phpactor#Transform()<CR>
     " Generate a new class (replacing the current file)
-    nmap <Leader>cc :call phpactor#ClassNew()<CR>
+    au FileType php nmap <Leader>cc :call phpactor#ClassNew()<CR>
     " Extract expression (normal mode)
-    nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
+    au FileType php nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
     " Extract expression from selection
-    vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
+    au FileType php vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
     " Extract method from selection
-    vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
+    au FileType php vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
+  augroup END
  " }}}
 "}}}
 " Custom Commands -------------------------------------------------------------
@@ -273,3 +297,18 @@ nmap <Leader>rv :w<CR>:TestVisit<CR>
 " Plugin: vdebug
 nnoremap <Leader>B :Breakpoint<CR>
 nnoremap <Leader>V :VdebugStart<CR>
+
+" Coc
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Find symbol of current document.
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
