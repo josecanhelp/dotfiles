@@ -10,6 +10,10 @@ tableplus = 'com.tinyapp.TablePlus'
 vscode = 'com.microsoft.VSCode'
 phpstorm = 'com.jetbrains.PhpStorm'
 fork = 'com.DanPristupov.Fork'
+simulator = 'com.apple.iphonesimulator'
+
+
+activeModal = nil
 
 gokuWatcher = hs.pathwatcher.new(os.getenv('HOME') .. '/.config/karabiner.edn/', function ()
     output = hs.execute('/usr/local/bin/goku')
@@ -70,8 +74,14 @@ local modeText = hs.styledtext.new("App", {
     color = {hex = "#FFFFFF", alpha = 1},
     backgroundColor = {hex = "#0000FF", alpha = 1},
 })
-cmodal.entered = function() changeModeMenuBar(modeText) end
-cmodal.exited = function() changeModeMenuBar('Normal') end
+cmodal.entered = function() 
+  activeModal = 'appM'
+  changeModeMenuBar(modeText) 
+end
+cmodal.exited = function() 
+  activeModal = nil
+  changeModeMenuBar('Normal') 
+end
 
 if not hsapp_list then
     hsapp_list = {
@@ -81,7 +91,7 @@ if not hsapp_list then
         {key = 'e', name = 'Finder'},
         {key = 'f', name = 'Firefox Developer Edition'},
         {key = 'i', name = 'iTerm'},
-        {key = 'p', name = 'PhpStorm'},
+        {key = 'p', name = 'Paw'},
         {key = 'm', name = 'Messages'},
         {key = 'n', id = 'com.apple.ActivityMonitor'},
         {key = 'r', name = 'Bear'},
@@ -129,8 +139,15 @@ if spoon.WinWin then
         color = {hex = "#FFFFFF", alpha = 1},
         backgroundColor = {hex = "#FFA500", alpha = 1},
     })
-    cmodal.entered = function() changeModeMenuBar(modeText) end
-    cmodal.exited = function() changeModeMenuBar('Normal') end
+
+    cmodal.entered = function() 
+      activeModal = 'windowM'
+      changeModeMenuBar(modeText) 
+    end
+    cmodal.exited = function() 
+      activeModal = nil
+      changeModeMenuBar('Normal') 
+    end
     cmodal:bind('', 'escape', 'Deactivate windowM', function() spoon.ModalMgr:deactivate({"windowM"}) end)
     cmodal:bind('', 'Q', 'Deactivate windowM', function() spoon.ModalMgr:deactivate({"windowM"}) end)
     cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
@@ -232,9 +249,23 @@ function triggerAlfredWorkflow(workflow, trigger)
     hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '"')
 end
 
+hs.urlevent.bind('debug', function()
+    if  appIs(simulator) then
+        hs.eventtap.keyStroke({'ctrl, cmd'}, 'z')
+    end
+end)
+
+hs.urlevent.bind('expose', function()
+    if  appIs(simulator) then
+        hs.eventtap.keyStroke({'ctrl, shift, cmd'}, 'h')
+    end
+end)
+
 hs.urlevent.bind('openAnything', function()
     if appIncludes({vscode, tableplus, fork}) then
         hs.eventtap.keyStroke({'cmd'}, 'p')
+    elseif appIs(simulator) then
+        hs.eventtap.keyStroke({'ctrl, shift, cmd'}, 'h')
     elseif appIs(slack) then
         hs.eventtap.keyStroke({'cmd'}, 'k')
     elseif appIs(phpstorm) then
@@ -260,10 +291,14 @@ hs.urlevent.bind('toggleSidebar', function()
 end)
 
 hs.urlevent.bind('navigateBack', function()
-    if appIncludes({bear, spotify}) then
-        hs.eventtap.keyStroke({'cmd', 'option'}, 'left')
-    elseif appIncludes({finder, chrome, slack, iterm}) then
-        hs.eventtap.keyStroke({'cmd'}, '[')
+    if(activeModal == nil) then
+      if appIncludes({bear, spotify}) then
+          hs.eventtap.keyStroke({'cmd', 'option'}, 'left')
+      elseif appIncludes({finder, chrome, slack, iterm}) then
+          hs.eventtap.keyStroke({'cmd'}, '[')
+      end
+    elseif activeModal == 'windowM' then
+        hs.eventtap.keyStroke({}, 'a')
     end
 end)
 
@@ -320,9 +355,24 @@ hs.urlevent.bind('copyAnything', function()
         ]])
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'cmd', 'option', 'shift'}, 'l')
-    elseif appIs(chrome) then
-        hs.eventtap.keyStrokes('yy')
+    elseif appIs(firefox) then
+        hs.eventtap.keyStrokes('y')
     elseif appIs(vscode) then
         hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 'y')
     end
 end)
+
+local function mouseClicked(eventobj)
+  appName = hs.application.frontmostApplication():title()
+  script = ''..
+    'do shell script '..
+    '"echo '..
+    eventobj:timestamp() ..
+    ',' ..
+    appName ..
+    ' >> /Users/jose/Desktop/mouselog.txt"'
+  hs.osascript.applescript(script)
+  return false;
+end
+
+-- hs.eventtap.new({hs.eventtap.event.types["leftMouseDown"]}, mouseClicked):start()

@@ -29,9 +29,10 @@ endfunction
 " Theme: {{{
 " Set the cursorline highlight colors
 let g:gruvbox_contrast_dark = 'soft'
-let gruvbox_vert_split = 'purple'
-let &colorcolumn=join(range(81,999),",") " Display a different bg beyond 80 chars
+let gruvbox_vert_split = 'gray'
+let &colorcolumn=join(range(81,999),',') " Display a different bg beyond 80 chars
 colorscheme gruvbox
+let g:airline_theme='fruit_punch'
 " }}}
 " General --------------------------------------------------------------------
 " Defaults: {{{
@@ -105,7 +106,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-vdebug/vdebug', {'on': ['Breakpoint', 'VdebugStart']}
+Plug 'vim-vdebug/vdebug'
 Plug 'yuezk/vim-js'
 call plug#end()
 "}}}
@@ -181,8 +182,9 @@ let g:sneak#label = 1
 let g:vue_pre_processors = 'detect_on_enter'
 " }}}
 " Vim-Test: {{{
-let test#enabled_runners = ["php#phpunit"]
+let test#enabled_runners = ['php#phpunit']
 let test#strategy = "vtr"
+let test#php#phpunit#executable = 'vendor/bin/phpunit'
 " }}}
 " FZF: {{{
 " command! LS call fzf#run(fzf#wrap'}))
@@ -192,6 +194,12 @@ let test#strategy = "vtr"
 " else
   " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 " endif
+" }}}
+" Vdebug: {{{
+    let g:vdebug_options = {
+    \    'simplified_status': 1,
+    \    'layout': 'vertical',
+    \}
 " }}}
 " Mappings  -------------------------------------------------------------------
 " General: {{{
@@ -206,6 +214,9 @@ nnoremap <Leader>h :set cursorline!<CR>
 nnoremap <Leader><space> :noh<CR>
 "Delete all buffers
 nmap <Leader>bda :bufdo bd <cr>
+"Move highlighted text
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 " }}}
 " Fuzzy Finders: {{{
 map <C-p> :GFiles<cr>
@@ -311,4 +322,4 @@ function! s:show_documentation()
 endfunction
 
 " Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <space>o  :<C-u>CocList outline<cr>

@@ -2,6 +2,7 @@
 export ZSH=~/.oh-my-zsh
 export PATH="$PATH:$HOME/.bin"
 export EDITOR="/usr/local/bin/vim"
+export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 # Directories to be prepended to $PATH
 # Later directories take precendence
 declare -a dirs_to_prepend
@@ -20,6 +21,7 @@ dirs_to_prepend=(
     "/bin"
     "/usr/bin"
     "/usr/local/bin"
+    "/usr/local/opt/ruby/bin"
 )
 
 for dir in ${(k)dirs_to_prepend[@]}
@@ -67,4 +69,6 @@ export NVM_DIR="$HOME/.nvm"
 
 ctags=/usr/local/bin/ctags
 fpath=(/usr/local/share/zsh-completions $fpath)
-export PATH="/usr/local/sbin:$PATH"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

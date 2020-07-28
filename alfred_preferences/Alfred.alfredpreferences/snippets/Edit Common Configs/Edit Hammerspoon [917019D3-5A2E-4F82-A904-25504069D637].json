@@ -3,6 +3,6 @@
     "snippet" : "vim ~\/.hammerspoon\/init.lua",
     "uid" : "917019D3-5A2E-4F82-A904-25504069D637",
     "name" : "Edit Hammerspoon",
-    "keyword" : "ham"
+    "keyword" : "::ham"
   }
 }

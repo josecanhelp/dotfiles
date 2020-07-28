@@ -13,7 +13,7 @@ function openpr() {
 
 # Run git push and then immediately open the pull request url
 function gpp() {
-  git push origin HEAD
+  git push -u origin HEAD
 
   if [ $? -eq 0 ]; then
     openpr
@@ -31,4 +31,32 @@ function fa() {
   dir=$(find ${1:-.} -path '*/\.*' -prune \
                   -o -type d -print 2> /dev/null | fzf +m) &&
   cd "$dir"
+}
+
+function getPhpIni() {
+ php --ini | awk '/php.ini$/' | awk '{print $4}'
+}
+
+function xdebugenable() {
+  sed -ie 's!^;\(zend.*xdebug\.so\)!\1!' $(php --ini | awk '/php.ini$/' | awk '{print $4}')
+}
+
+function xdebugdisable() {
+  sed -ie 's!^\(zend.*xdebug\.so\)!;\1!' $(php --ini | awk '/php.ini$/' | awk '{print $4}')
+}
+
+function toggleXdebug() {
+# find the line with xdebug.so
+# capture it in a variable
+# check if the line has a `;` prepended
+# if it does, remove it, if not, add it
+
+  xdebugline=`awk '/^;zend.*xdebug.so\"$/' $(getPhpIni)`;
+
+  if [ -z "$xdebugline" ]
+  then
+        echo "not here"
+  else
+        sed -i '/^;zend.*xdebug.so\"$ /s/^;//' $(getPhpIni)
+  fi
 }

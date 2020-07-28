@@ -3,6 +3,6 @@
     "snippet" : "vim ~\/.oh-my-zsh-custom\/custom\/functions.zsh",
     "uid" : "8DC311FC-6421-489C-A26C-858464981F68",
     "name" : "Edit Oh My ZSH Functions",
-    "keyword" : "omf"
+    "keyword" : "::functions"
   }
 }
