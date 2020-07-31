@@ -1511,8 +1511,10 @@
 	<false/>
 	<key>EnableProxyIcon</key>
 	<false/>
+	<key>ExtraSpaceBeforeCompactTopTabBar</key>
+	<real>10</real>
 	<key>FlashTabBarInFullscreen</key>
-	<true/>
+	<false/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideActivityIndicator</key>
@@ -1524,7 +1526,7 @@
 	<key>HideTab</key>
 	<true/>
 	<key>HideTabNumber</key>
-	<false/>
+	<true/>
 	<key>Hotkey</key>
 	<true/>
 	<key>HotkeyChar</key>
@@ -1589,13 +1591,13 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
-	<string>3440 1038 799 448 0 0 1920 1177 </string>
+	<string>2961 247 799 448 1680 -310 2560 1417 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>760 786 400 129 0 0 1920 1177 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>610 416 700 622 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1920 1177 0 0 1920 1177 </string>
+	<string>1680 -310 2560 1417 1680 -310 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1680 205 730 902 1680 -310 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1799,6 +1801,8 @@
 			</dict>
 			<key>Blend</key>
 			<real>0.10681177512886599</real>
+			<key>Blink Allowed</key>
+			<false/>
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
@@ -1913,7 +1917,7 @@
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Text</key>
-			<string>tmux ls &amp;&amp; read tmux_session &amp;&amp; tmux attach -t ${tmux_session:-tighten}</string>
+			<string>tmux ls &amp;&amp; read tmux_session &amp;&amp; tmux attach -t ${tmux_session:-tighten} || tmux new -s ${tmux_session:-tighten}</string>
 			<key>Initial Use Transparency</key>
 			<false/>
 			<key>Jobs to Ignore</key>
@@ -2230,11 +2234,13 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FiraCode-Light_Retina 18</string>
+			<string>FiraCodeNerdFontComplete-Medium 16</string>
 			<key>Open Toolbelt</key>
 			<false/>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
+			<key>Place Prompt at First Column</key>
+			<false/>
 			<key>Prompt Before Closing 2</key>
 			<false/>
 			<key>Right Option Key Sends</key>
@@ -2266,7 +2272,9 @@
 			<key>Send Code When Idle</key>
 			<false/>
 			<key>Shortcut</key>
-			<string>I</string>
+			<string></string>
+			<key>Show Mark Indicators</key>
+			<false/>
 			<key>Silence Bell</key>
 			<true/>
 			<key>Smart Cursor Color</key>
@@ -2279,10 +2287,16 @@
 			<array/>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
+			<key>Thin Strokes</key>
+			<integer>4</integer>
 			<key>Title Components</key>
 			<integer>1</integer>
 			<key>Transparency</key>
 			<real>0.0</real>
+			<key>Unicode Normalization</key>
+			<integer>0</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -2296,11 +2310,11 @@
 			<key>Use Non-ASCII Font</key>
 			<false/>
 			<key>Vertical Spacing</key>
-			<real>1.24</real>
+			<real>1.5</real>
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
-			<integer>0</integer>
+			<integer>15</integer>
 			<key>Working Directory</key>
 			<string>/Users/jose</string>
 		</dict>
@@ -2321,6 +2335,8 @@
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
+		<string>FiraCode Nerd Font Mono</string>
+		<string>FiraCode Nerd Font</string>
 		<string>Fira Code</string>
 		<string>Fira Mono for Powerline</string>
 	</array>
@@ -2336,16 +2352,16 @@
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{0, 0}, {1920, 1200}}</string>
+		<string>{{1680, -310}, {2560, 1440}}</string>
 		<key>topLeft</key>
-		<string>{307, 854}</string>
+		<string>{2901, 773}</string>
 	</dict>
 	<key>NoSyncHaveUsedCopyMode</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>84A3B922-450C-4E48-810E-7F1DFF06A7B6</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>444</integer>
+	<integer>448</integer>
 	<key>NoSyncNeverPromptToChangeOption</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
@@ -3120,7 +3136,7 @@
 	<key>OpenNewWindowAtStartup</key>
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
-	<true/>
+	<false/>
 	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
 	<key>PasteTabToStringTabStopSize</key>
@@ -3179,7 +3195,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-07-28T15:59:42Z</date>
+	<date>2020-07-30T15:59:43Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
@@ -3201,17 +3217,19 @@
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.18388741134751774</real>
+	<real>0.19776706560283688</real>
 	<key>StatusBarPosition</key>
 	<integer>0</integer>
 	<key>StretchTabsToFillBar</key>
-	<true/>
+	<false/>
 	<key>TabStyleWithAutomaticOption</key>
-	<integer>1</integer>
+	<integer>6</integer>
 	<key>TabViewType</key>
 	<integer>2</integer>
 	<key>TabsHaveCloseButton</key>
 	<true/>
+	<key>TerminalMargin</key>
+	<integer>5</integer>
 	<key>TmuxUsesDedicatedProfile</key>
 	<false/>
 	<key>UseBorder</key>
