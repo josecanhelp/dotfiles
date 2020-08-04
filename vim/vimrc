@@ -154,9 +154,10 @@ let g:ale_sign_style_warning = '!'
 " }}}
 " Fern: {{{
     let g:fern#renderer = "nerdfont"
+    let g:fern#default_hidden = 1
 
     function! s:init_fern() abort
-        nmap <buffer> <C-n> :<C-u>FernDo close<CR>
+        nmap <silent> <buffer> <C-n> :<C-u>FernDo close<CR>
     endfunction
 
     augroup fern-custom
@@ -228,6 +229,7 @@ let test#vim#term_position = "belowleft"
 " }}}
 " Vdebug: {{{
     let g:vdebug_options = {
+    \    'port': 9001,
     \    'simplified_status': 1,
     \    'layout': 'vertical',
     \}
@@ -264,7 +266,7 @@ nmap sp :split<cr>
 "}}}
 " Plugin Specific Mapping: {{{
  " Fern: {{{
-    map <C-n> :Fern . -drawer<CR>
+    map <silent> <C-n> :Fern . -drawer<CR>
  " }}}
  " Phpactor: {{{
   augroup PhpactorMappings

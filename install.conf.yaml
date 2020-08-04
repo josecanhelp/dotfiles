@@ -26,6 +26,7 @@
     ~/.vim: vim/
     ~/.vimrc: vim/vimrc
     ~/.zshrc: zshrc
+    ~/.pydoro.ini: pydoro.ini
 - create:
     - ~/Code
 - shell:
