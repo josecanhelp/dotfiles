@@ -1,3 +1,3 @@
-set shiftwidth=2
-set tabstop=2
-let b:ale_linters = ['eslint']
+set shiftwidth=4
+set tabstop=5
+" let b:ale_linters = ['eslint']

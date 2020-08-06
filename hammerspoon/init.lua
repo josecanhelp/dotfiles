@@ -11,7 +11,8 @@ vscode = 'com.microsoft.VSCode'
 phpstorm = 'com.jetbrains.PhpStorm'
 fork = 'com.DanPristupov.Fork'
 simulator = 'com.apple.iphonesimulator'
-
+omnifocus = 'com.omnigroup.OmniFocus3'
+discord = 'com.hnc.Discord'
 
 activeModal = nil
 
@@ -261,12 +262,18 @@ hs.urlevent.bind('expose', function()
     end
 end)
 
+hs.urlevent.bind('createNewThing', function()
+    if appIs(omnifocus) then
+        hs.eventtap.keyStroke({'ctrl', 'option'}, 'space')
+        end
+end)
+
 hs.urlevent.bind('openAnything', function()
     if appIncludes({vscode, tableplus, fork}) then
         hs.eventtap.keyStroke({'cmd'}, 'p')
     elseif appIs(simulator) then
         hs.eventtap.keyStroke({'ctrl, shift, cmd'}, 'h')
-    elseif appIs(slack) then
+    elseif appIncludes({ slack, discord }) then
         hs.eventtap.keyStroke({'cmd'}, 'k')
     elseif appIs(phpstorm) then
         hs.eventtap.keyStroke({'cmd, shift'}, 'o')
@@ -274,6 +281,8 @@ hs.urlevent.bind('openAnything', function()
         triggerAlfredSearch('o')
     elseif appIncludes({chrome, firefox}) then
         triggerAlfredSearch('bm')
+    elseif appIs(omnifocus) then
+        hs.eventtap.keyStroke({'cmd'}, 'o')
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, 'f')
     end
@@ -287,6 +296,8 @@ hs.urlevent.bind('toggleSidebar', function()
         hs.eventtap.keyStroke({'control'}, '1')
     elseif appIs(phpstorm) then
         hs.eventtap.keyStroke({'cmd'}, '1')
+    elseif appIs(omnifocus) then
+        hs.eventtap.keyStroke({'cmd', 'option'}, 's')
     end
 end)
 

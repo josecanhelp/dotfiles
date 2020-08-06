@@ -5,11 +5,17 @@
 " Description: Base configuration settings for Vim
 " Author: Jose Soto <josecanhelp@gmail.com>
 " Source: https://github.com/josecanhelp/dotfiles
-" Last Modified: 18 May 2020
 " -----------------------------------------------------------------------------
 
 " Custom Functions  -----------------------------------------------------------
 
+" EditKBMappers: {{{
+function! EditKBMappers()
+  execute 'edit ~/.config/karabiner.edn '
+  execute 'vsplit'
+  execute 'edit ~/.hammerspoon/init.lua'
+endfunction
+" }}}
 " EditVimConfig: {{{
 function! EditVimConfig(file)
   execute 'edit ' . VimrcPath(a:file)
@@ -52,11 +58,11 @@ set noswapfile
 set nowrap " Do not wrap the end of the line
 set number " Enable line numbers
 set relativenumber " Make the line numbers display relative numbers
-set shiftwidth=2
+" set shiftwidth=2
 set showmode " Show the current mode
 set splitbelow " Open new files in horizontal splits to the bottom
 set splitright " Open new files in vertical splits to the right
-set tabstop=2
+" set tabstop=2
 set wildignore+=*/vendor/** " Ignore these folders during fuzzy search
 set wildignore+=*/node_modules/** " Ignore these folders during fuzzy search
 set runtimepath+=/usr/local/opt/fzf
@@ -123,7 +129,6 @@ let g:ale_sign_style_warning = '!'
 " Linters: {{{
   let g:ale_linters = {
     \ 'php': ['php', 'phpcs', 'phpmd'],
-    \ 'javascript': ['prettier'],
     \ }
 
   let g:ale_php_phpcs_standard = '~/.phpcs.xml.dist'
@@ -250,9 +255,12 @@ nmap <Leader>bda :bufdo bd <cr>
 "Move highlighted text
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+
+" console log helper
+vnoremap L yoconsole.log('<ESC>pa: ', <ESC>pa);<ESC>
 " }}}
 " Fuzzy Finders: {{{
-map <C-p> :GFiles<cr>
+map <C-p> :Files<cr>
 "}}}
 " Write: {{{
 nmap <D-s> <Esc>:w<CR>
@@ -300,7 +308,7 @@ nmap sp :split<cr>
 " Custom Commands -------------------------------------------------------------
 " Editing: {{{
 command! EditVimrc call EditVimConfig('vimrc')
-command! EditVimMappings call EditVimConfig('mappings.vim')
+command! EditKBMappers call EditKBMappers()
 " }}}
 " AutoCommands ----------------------------------------------------------------
 " General: {{{
@@ -322,7 +330,7 @@ endfunction
 " end repeat macros for all selected lines
 
 nmap <Leader><Leader>v :EditVimrc<CR>
-nmap <Leader><Leader>vm :EditVimMappings<CR>
+nmap <Leader><Leader>kb :EditKBMappers<CR>
 
 " Run tests
 " Plugin: test
