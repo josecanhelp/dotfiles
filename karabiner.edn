@@ -1,0 +1,85 @@
+; !  | means mandatory
+; #  | means optional
+; C  | left_command
+; T  | left_control
+; O  | left_option
+; S  | left_shift
+; F  | fn
+; Q  | right_command
+; W  | right_control
+; E  | right_option
+; R  | right_shift
+; !! | mandatory command + control + optional + shift (hyper)
+; ## | optional any
+
+{
+  :templates {
+   :launch "open -a %s"
+   :hs "open -g hammerspoon://%s"
+  }
+  :layers {
+   :hyper-mode {:key :caps_lock :alone {:key :escape}}
+  }
+  :simlayers {
+    :comma-mode {:key :comma}
+    :semicolon-mode {:key :semicolon}
+    :quote-mode {:key :quote}
+    :fn-mode {:key :fn}
+    :z-mode {:key :z}
+  }
+  :simlayer-threshold 150
+  :applications {
+    :alfred ["^com\\.runningwithcrayons\\.Alfred"]
+    :bear ["^net\\.shinyfrog\\.bear$"]
+    :code ["^com\\.microsoft\\.VSCode$"]
+    :chrome ["^com\\.google\\.Chrome$"]
+    :finder ["^com\\.apple\\.finder$"]
+    :firefox ["^org\\.mozilla\\.firefoxdeveloperedition$"]
+    :slack ["^com\\.tinyspeck\\.slackmacgap$"]
+    :spotify ["^com\\.spotify\\.client$"]
+  }
+  :main [
+    {
+      :des "Hyper Mode"
+      :rules [:hyper-mode
+        [:semicolon :!!semicolon] ; open Alfred
+        [:a :!!a] ; get app bundle ID from Alfred
+        [:h [:hs "navigateBack"]]
+        [:i :!Ci]
+        [:j [:hs "goToPreviousTab"]]
+        [:k [:hs "goToNextTab"]]
+        [:l [:hs "navigateForward"]]
+        [:m [:hs "toggleSidebar"]]
+        [:n [:hs "createNewThing"]]
+        [:o [:hs "openAnything"]]
+        [:p :!Cv]
+        [:t :!Ct]
+        [:u :!Cz]
+        [:v :!Oj]
+        [:w [:hs "openWindowModal"]]
+        [:y [:hs "copyAnything"]]
+        [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
+        [:quote [:hs "openCommandPalette"]]
+      ]
+    }
+    {
+      :des "Semicolon mode for performing actions"
+      :rules [:semicolon-mode
+        [:a :!Ca] ; Select all
+        [:g :!!g] ; Omnifocus quick entry
+        [:e :!!e] ; Edit with
+        [:d :!!d] ; Edit done
+        [:s :!Cs] ; Save
+        [:v :!!v] ; Alfred clipboard
+        [:x :!Tc] ; ctrl+c
+      ]
+    }
+    {
+     :des "Quote mode for running commands"
+     :rules [:quote-mode
+        [:z [:hs "debug"]]
+        [:x [:hs "expose"]]
+     ]
+    }
+  ]
+}
