@@ -58,11 +58,11 @@ set noswapfile
 set nowrap " Do not wrap the end of the line
 set number " Enable line numbers
 set relativenumber " Make the line numbers display relative numbers
-" set shiftwidth=2
+set shiftwidth=4
 set showmode " Show the current mode
 set splitbelow " Open new files in horizontal splits to the bottom
 set splitright " Open new files in vertical splits to the right
-" set tabstop=2
+set tabstop=4
 set wildignore+=*/vendor/** " Ignore these folders during fuzzy search
 set wildignore+=*/node_modules/** " Ignore these folders during fuzzy search
 set runtimepath+=/usr/local/opt/fzf

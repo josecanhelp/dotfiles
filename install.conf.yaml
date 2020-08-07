@@ -27,8 +27,10 @@
     ~/.vimrc: vim/vimrc
     ~/.zshrc: zshrc
     ~/.pydoro.ini: pydoro.ini
-- create:
-    - ~/Code
+    ~/.config/karabiner: karabiner/
+    ~/.config/karabiner.edn: karabiner.edn
+# - create:
+    # - ~/Code
 - shell:
   - description: Hushing login
     command: "[ -f ~/.hushlogin ] || touch ~/.hushlogin"

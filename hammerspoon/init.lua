@@ -120,16 +120,10 @@ for _, v in ipairs(hsapp_list) do
     end
 end
 
--- Then we register some keybindings with modal supervisor
-hsappM_keys = hsappM_keys or {"ctrl", "J"}
-if string.len(hsappM_keys[2]) > 0 then
-    spoon.ModalMgr.supervisor:bind(hsappM_keys[1], hsappM_keys[2], nil, function()
-        spoon.ModalMgr:deactivateAll()
-        -- Show the keybindings cheatsheet once appM is activated
-        spoon.ModalMgr:activate({"appM"}, "#0000FF", false)
-    end)
-end
-
+hs.urlevent.bind('openAppModal', function()
+    spoon.ModalMgr:deactivateAll()
+    spoon.ModalMgr:activate({"appM"}, "#0000FF", false)
+end)
 
 ----------------------------------------------------------------------------------------------------
 -- windowM modal environment
@@ -181,16 +175,10 @@ if spoon.WinWin then
     cmodal:bind('', ']', 'Redo Window Manipulation', function() spoon.WinWin:redo() end)
     cmodal:bind('', '`', 'Center Cursor', function() spoon.WinWin:centerCursor() end)
 
-    -- Register windowM with modal supervisor
-    hsresizeM_keys = hsresizeM_keys or {"ctrl", "K"}
-    if string.len(hsresizeM_keys[2]) > 0 then
-        spoon.ModalMgr.supervisor:bind(hsresizeM_keys[1], hsresizeM_keys[2], "Enter windowM Environment", function()
-            -- Deactivate some modal environments or not before activating a new one
-            spoon.ModalMgr:deactivateAll()
-            -- Show an status indicator so we know we're in some modal environment now
-            spoon.ModalMgr:activate({"windowM"}, "#FFA500")
-        end)
-    end
+    hs.urlevent.bind('openWindowModal', function()
+        spoon.ModalMgr:deactivateAll()
+        spoon.ModalMgr:activate({"windowM"}, "#FFA500")
+    end)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -273,7 +261,7 @@ hs.urlevent.bind('openAnything', function()
         hs.eventtap.keyStroke({'cmd'}, 'p')
     elseif appIs(simulator) then
         hs.eventtap.keyStroke({'ctrl, shift, cmd'}, 'h')
-    elseif appIncludes({ slack, discord }) then
+    elseif appIncludes({slack, discord}) then
         hs.eventtap.keyStroke({'cmd'}, 'k')
     elseif appIs(phpstorm) then
         hs.eventtap.keyStroke({'cmd, shift'}, 'o')
@@ -373,17 +361,3 @@ hs.urlevent.bind('copyAnything', function()
     end
 end)
 
-local function mouseClicked(eventobj)
-  appName = hs.application.frontmostApplication():title()
-  script = ''..
-    'do shell script '..
-    '"echo '..
-    eventobj:timestamp() ..
-    ',' ..
-    appName ..
-    ' >> /Users/jose/Desktop/mouselog.txt"'
-  hs.osascript.applescript(script)
-  return false;
-end
-
--- hs.eventtap.new({hs.eventtap.event.types["leftMouseDown"]}, mouseClicked):start()
