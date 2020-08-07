@@ -5,5 +5,5 @@ not-public
 tmux/plugins/*
 vim/plugged
 tmux/resurrect
-karabiner/assets/*
-karabiner/automatic_backups/*
+karabiner/*
+karabiner.edn.bak

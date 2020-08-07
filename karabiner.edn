@@ -12,74 +12,52 @@
 ; !! | mandatory command + control + optional + shift (hyper)
 ; ## | optional any
 
-{
-  :templates {
-   :launch "open -a %s"
-   :hs "open -g hammerspoon://%s"
-  }
-  :layers {
-   :hyper-mode {:key :caps_lock :alone {:key :escape}}
-  }
-  :simlayers {
-    :comma-mode {:key :comma}
-    :semicolon-mode {:key :semicolon}
-    :quote-mode {:key :quote}
-    :fn-mode {:key :fn}
-    :z-mode {:key :z}
-  }
-  :simlayer-threshold 150
-  :applications {
-    :alfred ["^com\\.runningwithcrayons\\.Alfred"]
-    :bear ["^net\\.shinyfrog\\.bear$"]
-    :code ["^com\\.microsoft\\.VSCode$"]
-    :chrome ["^com\\.google\\.Chrome$"]
-    :finder ["^com\\.apple\\.finder$"]
-    :firefox ["^org\\.mozilla\\.firefoxdeveloperedition$"]
-    :slack ["^com\\.tinyspeck\\.slackmacgap$"]
-    :spotify ["^com\\.spotify\\.client$"]
-  }
-  :main [
-    {
-      :des "Hyper Mode"
-      :rules [:hyper-mode
-        [:semicolon :!!semicolon] ; open Alfred
-        [:a :!!a] ; get app bundle ID from Alfred
-        [:h [:hs "navigateBack"]]
-        [:i :!Ci]
-        [:j [:hs "goToPreviousTab"]]
-        [:k [:hs "goToNextTab"]]
-        [:l [:hs "navigateForward"]]
-        [:m [:hs "toggleSidebar"]]
-        [:n [:hs "createNewThing"]]
-        [:o [:hs "openAnything"]]
-        [:p :!Cv]
-        [:t :!Ct]
-        [:u :!Cz]
-        [:v :!Oj]
-        [:w [:hs "openWindowModal"]]
-        [:y [:hs "copyAnything"]]
-        [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
-        [:quote [:hs "openCommandPalette"]]
-      ]
-    }
-    {
-      :des "Semicolon mode for performing actions"
-      :rules [:semicolon-mode
-        [:a :!Ca] ; Select all
-        [:g :!!g] ; Omnifocus quick entry
-        [:e :!!e] ; Edit with
-        [:d :!!d] ; Edit done
-        [:s :!Cs] ; Save
-        [:v :!!v] ; Alfred clipboard
-        [:x :!Tc] ; ctrl+c
-      ]
-    }
-    {
-     :des "Quote mode for running commands"
-     :rules [:quote-mode
-        [:z [:hs "debug"]]
-        [:x [:hs "expose"]]
-     ]
-    }
-  ]
-}
+{:templates {:launch "open -a %s"
+             :hs "open -g hammerspoon://%s"}
+ :applications {:bear ["^net\\.shinyfrog\\.bear$"]}
+ :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}}
+ :simlayers {:quote-mode {:key :quote}}
+ :simlayer-threshold 150
+ :main [{:des "Hyper Mode"
+         :rules [:hyper-mode
+                 [:a :!!a] ; get app bundle ID from Alfred
+                 [:h [:hs "navigateBack"]]
+                 [:i :!T9] ; Toggle iTerm with hotkey
+                 [:j [:hs "goToPreviousTab"]]
+                 [:k [:hs "goToNextTab"]]
+                 [:l [:hs "navigateForward"]]
+                 [:m [:hs "toggleSidebar"]]
+                 [:n [:hs "createNewThing"]]
+                 [:o [:hs "openAnything"]]
+                 [:p :!Cv] ; Paste
+                 [:q :!Cw] ; Close the current window
+                 [:v :!Oj] ; Show all open apps in hammerspoon overlay
+                 [:w [:hs "openWindowModal"]] ; Window Management
+                 [:y [:hs "copyAnything"]]
+                 [:quote [:hs "openCommandPalette"]]
+                 [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
+                 [:semicolon :!!semicolon] ; open Alfred
+                 ]}
+        {:des "Simultaneous s + d --> Super Duper Mode"
+         :rules [[{:sim [:s :d] :simo {:interrupt true
+                                       :dorder :insensitive
+                                       :uorder :insensitive
+                                       :afterup {:set ["super-duper" 0]}}} {:set ["super-duper" 1]}]]}
+        {:des "Super Duper Mode for Traversing Tmux"
+         :rules [:super-duper
+                 [:f [:!Ta :f]] ; Find a window
+                 [:c [:!Ta :c]] ; Create a new tmux window
+                 [:h [:!Ta :p]] ; Switch to the previous tmux window 
+                 [:j [:!Ta :j]] ; Focus on the pane below current pane
+                 [:k [:!Ta :k]] ; Focus on the pane above current pane
+                 [:l [:!Ta :n]] ; Switch the the next tmux window
+                 [:o [:!Ta :z]] ; Zoom on current pane
+                 [:r [:!Ta :r]] ; Reload the Matrix
+                 [:hyphen [:!Ta :hyphen]] ; Split tmux window horizontally
+                 [:backslash [:!Ta :!Sbackslash]] ; Split tmux window vertically
+                 [:delete_or_backspace [:!Ta :x :y]] ; Kill a tmux pane without asking for confirmation
+                 ]}
+        {:des "Quote mode for running commands"
+         :rules [:quote-mode
+                 [:z [:hs "debug-menu"]]
+                 [:x [:hs "expose"]]]}]}

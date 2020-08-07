@@ -238,7 +238,7 @@ function triggerAlfredWorkflow(workflow, trigger)
     hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '"')
 end
 
-hs.urlevent.bind('debug', function()
+hs.urlevent.bind('debug-menu', function()
     if  appIs(simulator) then
         hs.eventtap.keyStroke({'ctrl, cmd'}, 'z')
     end
@@ -253,7 +253,15 @@ end)
 hs.urlevent.bind('createNewThing', function()
     if appIs(omnifocus) then
         hs.eventtap.keyStroke({'ctrl', 'option'}, 'space')
-        end
+    elseif appIs(firefox) then
+        hs.eventtap.keyStroke({'cmd'}, 't')
+    end
+end)
+
+hs.urlevent.bind('closeAnything', function()
+    if appIncludes({firefox}) then
+        hs.eventtap.keyStroke({'cmd'}, 'w')
+    end
 end)
 
 hs.urlevent.bind('openAnything', function()
@@ -281,7 +289,7 @@ hs.urlevent.bind('toggleSidebar', function()
         hs.eventtap.keyStroke({'cmd'}, 'b', 0)
         hs.eventtap.keyStroke({'cmd'}, 'h', 0)
     elseif appIs(bear) then
-        hs.eventtap.keyStroke({'control'}, '1')
+        hs.eventtap.keyStroke({'control'}, '3')
     elseif appIs(phpstorm) then
         hs.eventtap.keyStroke({'cmd'}, '1')
     elseif appIs(omnifocus) then
@@ -353,11 +361,9 @@ hs.urlevent.bind('copyAnything', function()
             set the clipboard to theString
         ]])
     elseif appIs(bear) then
-        hs.eventtap.keyStroke({'cmd', 'option', 'shift'}, 'l')
+        hs.eventtap.keyStroke({'cmd', 'option', 'shift'}, 'l') -- Copy link to note
     elseif appIs(firefox) then
-        hs.eventtap.keyStrokes('y')
-    elseif appIs(vscode) then
-        hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 'y')
+        hs.eventtap.keyStrokes('y') -- Copy current URL
     end
 end)
 
