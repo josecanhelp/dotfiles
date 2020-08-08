@@ -239,6 +239,24 @@ function triggerAlfredWorkflow(workflow, trigger)
     hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '"')
 end
 
+-- This is almost unfair
+hs.urlevent.bind('quickSlackReactEmoji', function()
+    refocus = false
+
+    if not focusedWindowIs(slack) then
+        refocus = true
+        focusedApp = hs.window:focusedWindow():application():bundleID()
+        hs.application.launchOrFocus("slack")
+    end
+
+    hs.eventtap.keyStrokes('+:wave::skin-tone-4:')
+    hs.eventtap.keyStroke({}, 'return')
+
+    if refocus then
+        hs.application.launchOrFocusByBundleID(focusedApp)
+    end
+end)
+
 hs.urlevent.bind('debug-menu', function()
     if  appIs(simulator) then
         hs.eventtap.keyStroke({'ctrl, cmd'}, 'z')

@@ -15,6 +15,7 @@
 {:templates {:launch "open -a %s"
              :hs "open -g hammerspoon://%s"}
  :applications {:bear ["^net\\.shinyfrog\\.bear$"]
+                :slack ["^com\\.tinyspeck\\.slackmacgap$"]
                 :messages ["^com\\.apple\\.iChat$"]}
  :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}}
  :simlayers {:v-mode {:key :v}
@@ -24,6 +25,7 @@
          :rules [:hyper-mode
                  [:a :!!a] ; get app bundle ID from Alfred
                  [:f [:launch "Firefox\\ Developer\\ Edition.app"]] ; Open FireFox
+                 [:g [:hs "quickSlackReactEmoji"]] ; Wave goodbye to folks in Slack
                  [:h [:hs "navigateBack"]]
                  [:i :!T9] ; Toggle iTerm with hotkey
                  [:j [:hs "navigateUpward"]]
