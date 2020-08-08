@@ -16,7 +16,8 @@
              :hs "open -g hammerspoon://%s"}
  :applications {:bear ["^net\\.shinyfrog\\.bear$"]}
  :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}}
- :simlayers {:quote-mode {:key :quote}}
+ :simlayers {:v-mode {:key :v}
+             :quote-mode {:key :quote}}
  :simlayer-threshold 150
  :main [{:des "Hyper Mode"
          :rules [:hyper-mode
@@ -57,6 +58,10 @@
                  [:backslash [:!Ta :!Sbackslash]] ; Split tmux window vertically
                  [:delete_or_backspace [:!Ta :x :y]] ; Kill a tmux pane without asking for confirmation
                  ]}
+        {:des "V mode for Vim Motions"
+         :rules [:v-mode
+                 [:j :up_arrow]
+                 [:k :down_arrow]]}
         {:des "Quote mode for running commands"
          :rules [:quote-mode
                  [:z [:hs "debug-menu"]]
