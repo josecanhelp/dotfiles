@@ -1,18 +1,19 @@
 bear = 'net.shinyfrog.bear'
 chrome = 'com.google.Chrome'
+discord = 'com.hnc.Discord'
 finder = 'com.apple.finder'
 firefox = 'org.mozilla.firefoxdeveloperedition'
+fork = 'com.DanPristupov.Fork'
 iterm = 'com.googlecode.iterm2'
+messages = 'com.apple.iChat'
+omnifocus = 'com.omnigroup.OmniFocus3'
+phpstorm = 'com.jetbrains.PhpStorm'
 preview = 'com.apple.Preview'
+simulator = 'com.apple.iphonesimulator'
 slack = 'com.tinyspeck.slackmacgap'
 spotify = 'com.spotify.client' 
 tableplus = 'com.tinyapp.TablePlus'
 vscode = 'com.microsoft.VSCode'
-phpstorm = 'com.jetbrains.PhpStorm'
-fork = 'com.DanPristupov.Fork'
-simulator = 'com.apple.iphonesimulator'
-omnifocus = 'com.omnigroup.OmniFocus3'
-discord = 'com.hnc.Discord'
 
 activeModal = nil
 
@@ -301,8 +302,11 @@ hs.urlevent.bind('navigateBack', function()
     if(activeModal == nil) then
       if appIncludes({bear, spotify}) then
           hs.eventtap.keyStroke({'cmd', 'option'}, 'left')
-      elseif appIncludes({finder, chrome, slack, iterm}) then
+      elseif appIncludes({finder, chrome, slack}) then
           hs.eventtap.keyStroke({'cmd'}, '[')
+      elseif appIs(iterm) then
+          hs.eventtap.keyStroke({'control'}, 'w', 0)
+          hs.eventtap.keyStroke({}, 'h')
       end
     elseif activeModal == 'windowM' then
         hs.eventtap.keyStroke({}, 'a')
@@ -312,22 +316,35 @@ end)
 hs.urlevent.bind('navigateForward', function()
     if appIncludes({bear, spotify}) then
         hs.eventtap.keyStroke({'cmd', 'option'}, 'right')
-    elseif appIncludes({finder, chrome, slack, iterm}) then
+    elseif appIncludes({finder, chrome, slack}) then
         hs.eventtap.keyStroke({'cmd'}, ']')
+    elseif appIs(iterm) then
+        hs.eventtap.keyStroke({'control'}, 'w', 0)
+        hs.eventtap.keyStroke({}, 'l')
     end
 end)
 
-hs.urlevent.bind('goToPreviousTab', function()
+hs.urlevent.bind('navigateUpward', function()
     if appIs(tableplus) then
         hs.eventtap.keyStroke({'cmd'}, '[')
+    elseif appIs(messages) then
+        hs.eventtap.keyStroke({'control'}, 'tab')
+    elseif appIs(iterm) then
+        hs.eventtap.keyStroke({'control'}, 'w', 0)
+        hs.eventtap.keyStroke({}, 'j')
     else
         hs.eventtap.keyStroke({'cmd', 'shift'}, '[')
     end
 end)
 
-hs.urlevent.bind('goToNextTab', function()
+hs.urlevent.bind('navigateDownward', function()
     if appIs(tableplus) then
         hs.eventtap.keyStroke({'cmd'}, ']')
+    elseif appIs(messages) then
+        hs.eventtap.keyStroke({'control', 'shift'}, 'tab')
+    elseif appIs(iterm) then
+        hs.eventtap.keyStroke({'control'}, 'w', 0)
+        hs.eventtap.keyStroke({}, 'k')
     else
         hs.eventtap.keyStroke({'cmd', 'shift'}, ']')
     end

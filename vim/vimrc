@@ -267,6 +267,8 @@ nmap <D-s> <Esc>:w<CR>
 map <M-s> <Esc>:w<CR>
 map <C-s> <Esc>:w<CR>
 map <leader>w :w!<cr>
+map <leader>wq  :wq<cr>
+map <leader><leader>q   q<cr>
 "}}}
 " Window Management: {{{
 nmap vs :vsplit<cr>

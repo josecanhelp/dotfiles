@@ -14,7 +14,8 @@
 
 {:templates {:launch "open -a %s"
              :hs "open -g hammerspoon://%s"}
- :applications {:bear ["^net\\.shinyfrog\\.bear$"]}
+ :applications {:bear ["^net\\.shinyfrog\\.bear$"]
+                :messages ["^com\\.apple\\.iChat$"]}
  :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}}
  :simlayers {:v-mode {:key :v}
              :quote-mode {:key :quote}}
@@ -22,16 +23,19 @@
  :main [{:des "Hyper Mode"
          :rules [:hyper-mode
                  [:a :!!a] ; get app bundle ID from Alfred
+                 [:f [:launch "Firefox\\ Developer\\ Edition.app"]] ; Open FireFox
                  [:h [:hs "navigateBack"]]
                  [:i :!T9] ; Toggle iTerm with hotkey
-                 [:j [:hs "goToPreviousTab"]]
-                 [:k [:hs "goToNextTab"]]
+                 [:j [:hs "navigateUpward"]]
+                 [:k [:hs "navigateDownward"]]
                  [:l [:hs "navigateForward"]]
                  [:m [:hs "toggleSidebar"]]
                  [:n [:hs "createNewThing"]]
                  [:o [:hs "openAnything"]]
                  [:p :!Cv] ; Paste
                  [:q :!Cw] ; Close the current window
+                 [:r [:launch "Bear.app"]] ; Open Bear Notes
+                 [:s [:launch "Slack.app"]] ; Open Slack
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
                  [:w [:hs "openWindowModal"]] ; Window Management
                  [:y [:hs "copyAnything"]]
@@ -60,8 +64,10 @@
                  ]}
         {:des "V mode for Vim Motions"
          :rules [:v-mode
-                 [:j :up_arrow]
-                 [:k :down_arrow]]}
+                 [:k :up_arrow]
+                 [:h :left_arrow]
+                 [:l :right_arrow]
+                 [:j :down_arrow]]}
         {:des "Quote mode for running commands"
          :rules [:quote-mode
                  [:z [:hs "debug-menu"]]
