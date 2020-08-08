@@ -263,12 +263,9 @@ vnoremap L yoconsole.log('<ESC>pa: ', <ESC>pa);<ESC>
 map <C-p> :Files<cr>
 "}}}
 " Write: {{{
-nmap <D-s> <Esc>:w<CR>
-map <M-s> <Esc>:w<CR>
-map <C-s> <Esc>:w<CR>
-map <leader>w :w!<cr>
-map <leader>wq  :wq<cr>
-map <leader><leader>q   q<cr>
+map <leader>w <ESC>:w!<CR>
+map <leader>wq <ESC>:wq<CR>
+map <leader><leader>q <ESC>:q<CR>
 "}}}
 " Window Management: {{{
 nmap vs :vsplit<cr>
