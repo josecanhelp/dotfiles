@@ -1,4 +1,5 @@
 bear = 'net.shinyfrog.bear'
+breaktime = 'com.excitedpixel.breaktime'
 chrome = 'com.google.Chrome'
 discord = 'com.hnc.Discord'
 finder = 'com.apple.finder'
@@ -17,6 +18,10 @@ vscode = 'com.microsoft.VSCode'
 
 activeModal = nil
 
+function getBundleId()
+    return hs.application.frontmostApplication():bundleID();
+end
+
 gokuWatcher = hs.pathwatcher.new(os.getenv('HOME') .. '/.config/karabiner.edn/', function ()
     output = hs.execute('/usr/local/bin/goku')
     hs.notify.new({title = 'Karabiner Config', informativeText = output}):send()
@@ -25,7 +30,6 @@ end):start()
 hs.loadSpoon('ReloadConfiguration')
 spoon.ReloadConfiguration:start()
 hs.notify.new({title = 'Hammerspoon', informativeText = 'Config loaded'}):send()
-
 ----------------------------------------------------------------------------------------------------
 -- Add a menubar item to track currently enabled Mode
 ----------------------------------------------------------------------------------------------------
@@ -272,8 +276,20 @@ end)
 hs.urlevent.bind('createNewThing', function()
     if appIs(omnifocus) then
         hs.eventtap.keyStroke({'ctrl', 'option'}, 'space')
+    elseif appIs(bear) then
+        hs.eventtap.keyStroke({'cmd'}, 'n')
     elseif appIs(firefox) then
         hs.eventtap.keyStroke({'cmd'}, 't')
+    end
+end)
+
+hs.urlevent.bind('deleteThing', function()
+    if appIs(bear) then
+        -- Delete the currently opened note and go back to default screen
+        hs.eventtap.keyStroke({'shift', 'cmd', 'option'}, 'i')
+        noteId = hs.pasteboard.getContents();
+        hs.urlevent.openURL('bear://x-callback-url/trash?id=' .. noteId)
+        hs.urlevent.openURL('bear://x-callback-url/search')
     end
 end)
 
@@ -300,6 +316,9 @@ hs.urlevent.bind('openAnything', function()
         hs.eventtap.keyStroke({'cmd'}, 'o')
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, 'f')
+    elseif true then
+        bundleId = getBundleId();
+        hs.notify.new(function() hs.pasteboard.setContents(bundleId) end, {title = 'Hammerspoon', informativeText = 'Open Anything not set up', actionButtonTitle = 'Copy Bundle ID', alwaysShowAdditionalActions = true, hasActionButton = true}):send()
     end
 end)
 
@@ -320,7 +339,7 @@ hs.urlevent.bind('navigateBack', function()
     if(activeModal == nil) then
       if appIncludes({bear, spotify}) then
           hs.eventtap.keyStroke({'cmd', 'option'}, 'left')
-      elseif appIncludes({finder, chrome, slack}) then
+      elseif appIncludes({finder, firefox, slack}) then
           hs.eventtap.keyStroke({'cmd'}, '[')
       elseif appIs(iterm) then
           hs.eventtap.keyStroke({'control'}, 'w', 0)
@@ -334,7 +353,7 @@ end)
 hs.urlevent.bind('navigateForward', function()
     if appIncludes({bear, spotify}) then
         hs.eventtap.keyStroke({'cmd', 'option'}, 'right')
-    elseif appIncludes({finder, chrome, slack}) then
+    elseif appIncludes({finder, firefox, slack}) then
         hs.eventtap.keyStroke({'cmd'}, ']')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'w', 0)
@@ -345,8 +364,12 @@ end)
 hs.urlevent.bind('navigateUpward', function()
     if appIs(tableplus) then
         hs.eventtap.keyStroke({'cmd'}, '[')
+    elseif appIs(bear) then
+        hs.eventtap.keyStroke({''}, 'up')
     elseif appIs(messages) then
-        hs.eventtap.keyStroke({'control'}, 'tab')
+        hs.eventtap.keyStroke({'control', 'shift'}, 'tab')
+    elseif appIs(firefox) then
+        hs.eventtap.keyStroke({'cmd', 'shift'}, ']')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'w', 0)
         hs.eventtap.keyStroke({}, 'j')
@@ -358,8 +381,12 @@ end)
 hs.urlevent.bind('navigateDownward', function()
     if appIs(tableplus) then
         hs.eventtap.keyStroke({'cmd'}, ']')
+    elseif appIs(bear) then
+        hs.eventtap.keyStroke({''}, 'down')
     elseif appIs(messages) then
-        hs.eventtap.keyStroke({'control', 'shift'}, 'tab')
+        hs.eventtap.keyStroke({'control'}, 'tab')
+    elseif appIs(firefox) then
+        hs.eventtap.keyStroke({'cmd', 'shift'}, '[')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'w', 0)
         hs.eventtap.keyStroke({}, 'k')
@@ -402,3 +429,21 @@ hs.urlevent.bind('copyAnything', function()
     end
 end)
 
+hs.urlevent.bind('toggleBreakTime', function()
+    local status, response, description = hs.osascript.javascript([[
+        breaktime = Application("BreakTime")
+        breaktime.enabled = !breaktime.enabled()
+        breaktime.enabled()
+    ]])
+
+    if status then -- if the call to toggle BreakTime was successful
+        if response then -- response is the updated status of BreakTime
+            text = "BreakTime was Enabled."
+        else
+            text = "BreakTime was Disabled."
+        end
+        btNotify = hs.notify.new({title = 'BreakTime', informativeText = text})
+        btNotify:contentImage(hs.image.imageFromAppBundle(breaktime))
+        btNotify:send()
+    end
+end)

@@ -40,6 +40,7 @@ alias editalias='vim ~/.oh-my-zsh-custom/custom/aliases.zsh'
 alias vimt="cd ~/Code/Tighten/\$(ls ~/Code/Tighten | fzf) && vim +GFiles"
 alias vimj="cd ~/Code/JoseCanHelp/\$(ls ~/Code/JoseCanHelp | fzf) && vim +GFiles"
 alias vv="vim ."
+alias mutt="neomutt"
 alias dockerps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}"'
 alias dockerpsa='docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}"'
 alias resetwacom="launchctl unload /Library/LaunchAgents/com.wacom.wacomtablet.plist && launchctl load -w /Library/LaunchAgents/com.wacom.wacomtablet.plist"

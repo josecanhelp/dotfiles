@@ -15,8 +15,6 @@
 	keepBackup = false
 [diff]
 	tool = Kaleidoscope
-[push]
-	default = matching
 [github]
   user = josecanhelp
 [format]

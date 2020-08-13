@@ -24,15 +24,17 @@
  :main [{:des "Hyper Mode"
          :rules [:hyper-mode
                  [:a :!!a] ; get app bundle ID from Alfred
+                 [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
                  [:f [:launch "Firefox\\ Developer\\ Edition.app"]] ; Open FireFox
                  [:g [:hs "quickSlackReactEmoji"]] ; Wave goodbye to folks in Slack
                  [:h [:hs "navigateBack"]]
                  [:i :!T9] ; Toggle iTerm with hotkey
-                 [:j [:hs "navigateUpward"]]
-                 [:k [:hs "navigateDownward"]]
+                 [:j [:hs "navigateDownward"]]
+                 [:k [:hs "navigateUpward"]]
                  [:l [:hs "navigateForward"]]
                  [:m [:hs "toggleSidebar"]]
                  [:n [:hs "createNewThing"]]
+                 [:delete_or_backspace [:hs "deleteThing"]]
                  [:o [:hs "openAnything"]]
                  [:p :!Cv] ; Paste
                  [:q :!Cw] ; Close the current window
@@ -45,6 +47,11 @@
                  [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
                  [:semicolon :!!semicolon] ; open Alfred
                  ]}
+        {:des "ASDF Mode"
+         :rules [[{:sim [:a :s :d :f] :simo {:interrupt true
+                                       :dorder :insensitive
+                                       :uorder :insensitive
+                                       :afterup {:set ["asdf-mode" 0]}}} {:set ["asdf-mode" 1]}]]}
         {:des "Simultaneous s + d --> Super Duper Mode"
          :rules [[{:sim [:s :d] :simo {:interrupt true
                                        :dorder :insensitive
@@ -52,8 +59,7 @@
                                        :afterup {:set ["super-duper" 0]}}} {:set ["super-duper" 1]}]]}
         {:des "Super Duper Mode for Traversing Tmux"
          :rules [:super-duper
-                 [:c [:!Ta :c]] ; Create a new tmux window
-                 [:f [:!Ta :f]] ; Find a window
+                 [:f [:!Ta :f :return_or_enter]] ; Find a window
                  [:h [:!Ta :p]] ; Switch to the previous tmux window 
                  [:j [:!Ta :j]] ; Focus on the pane below current pane
                  [:k [:!Ta :k]] ; Focus on the pane above current pane
@@ -64,6 +70,12 @@
                  [:backslash [:!Ta :!Sbackslash]] ; Split tmux window vertically
                  [:delete_or_backspace [:!Ta :x :y]] ; Kill a tmux pane without asking for confirmation
                  ]}
+        {:des "ASDF Mode"
+         :rules [:asdf-mode
+                 [:k :up_arrow]
+                 [:h :left_arrow]
+                 [:l :right_arrow]
+                 [:j :down_arrow]]}
         {:des "V mode for Vim Motions"
          :rules [:v-mode
                  [:k :up_arrow]
