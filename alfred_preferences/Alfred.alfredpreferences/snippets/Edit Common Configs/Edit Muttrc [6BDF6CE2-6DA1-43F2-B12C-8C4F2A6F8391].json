@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "vim ~\/.config\/mutt\/muttrc",
+    "uid" : "6BDF6CE2-6DA1-43F2-B12C-8C4F2A6F8391",
+    "name" : "Edit Muttrc",
+    "keyword" : "::mutt"
+  }
+}

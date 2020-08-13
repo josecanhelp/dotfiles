@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "Commit message here.\n\n\nCo-authored-by: Matt Stauffer <matt@tighten.co>",
+    "uid" : "34588FB1-1B3C-4385-9B62-96F596249584",
+    "name" : "Coauthor",
+    "keyword" : "::coauth"
+  }
+}
