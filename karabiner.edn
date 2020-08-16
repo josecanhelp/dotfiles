@@ -50,9 +50,9 @@
                  ]}
         {:des "ASDF Mode"
          :rules [[{:sim [:a :s :d :f] :simo {:interrupt true
-                                       :dorder :insensitive
-                                       :uorder :insensitive
-                                       :afterup {:set ["asdf-mode" 0]}}} {:set ["asdf-mode" 1]}]]}
+                                             :dorder :insensitive
+                                             :uorder :insensitive
+                                             :afterup {:set ["asdf-mode" 0]}}} {:set ["asdf-mode" 1]}]]}
         {:des "Simultaneous s + d --> Super Duper Mode"
          :rules [[{:sim [:s :d] :simo {:interrupt true
                                        :dorder :insensitive
