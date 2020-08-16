@@ -447,3 +447,42 @@ hs.urlevent.bind('toggleBreakTime', function()
         btNotify:send()
     end
 end)
+
+hs.urlevent.bind('widgetTest', function()
+    local status, response, description = hs.osascript.javascript([[
+        breaktime.enabled()
+    ]])
+     return description;
+end)
+
+
+slackMenuBarStyledText1 = hs.styledtext.new("1", {
+    color = {hex = "#000000", alpha = 1},
+    backgroundColor = {hex = "#FFFFFF", alpha = 1},
+})
+
+slackMenuBarStyledText2 = hs.styledtext.new("/", {
+    color = {hex = "#000000", alpha = 1},
+    backgroundColor = {hex = "#FFFFFF", alpha = 1},
+})
+
+slackMenuBarStyledText3 = hs.styledtext.new("2", {
+    color = {hex = "#FF0000", alpha = 1},
+    backgroundColor = {hex = "#FFFFFF", alpha = 1},
+})
+-- print(hs.inspect.inspect(slackMenuBarStyledText1))
+function slackMenuBarText()
+    if slackMenuBarStyledText3:getString() == "0" then 
+        slackMenuBarStyledText3 = slackMenuBarStyledText3:setStyle({
+            color = {hex = "#000000", alpha = 1},
+            backgroundColor = {hex = "#FFFFFF", alpha = 1},
+        }) 
+    end
+
+    return slackMenuBarStyledText1..slackMenuBarStyledText2..slackMenuBarStyledText3
+end
+
+-- hs.menubar.new()
+    -- :setIcon(hs.image.imageFromURL("https://cdn.freebiesupply.com/logos/large/2x/slack-1-logo-png-transparent.png")
+    -- :setSize({w=16,h=16}))
+    -- :setTitle(slackMenuBarText())

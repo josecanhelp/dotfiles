@@ -23,6 +23,7 @@
  :simlayer-threshold 150
  :main [{:des "Hyper Mode"
          :rules [:hyper-mode
+                 [:0 :f12] ; get app bundle ID from Alfred
                  [:a :!!a] ; get app bundle ID from Alfred
                  [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
                  [:f [:launch "Firefox\\ Developer\\ Edition.app"]] ; Open FireFox

@@ -29,6 +29,7 @@
     ~/.pydoro.ini: pydoro.ini
     ~/.config/karabiner: karabiner/
     ~/.config/karabiner.edn: karabiner.edn
+    ~/.config/kitty: kitty/
 # - create:
     # - ~/Code
 - shell:

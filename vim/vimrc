@@ -390,3 +390,4 @@ nnoremap <leader>bn :bnext<CR>
 nnoremap <leader>bp :bprevious<CR>
 nnoremap <leader>bd :bdelete<CR>
 
+nnoremap <leader>i <C-a>
