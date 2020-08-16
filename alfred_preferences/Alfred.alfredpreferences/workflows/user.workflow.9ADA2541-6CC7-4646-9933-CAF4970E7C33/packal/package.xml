@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Open in VSCode</name>
-  <version>0.1.2</version>
-  <bundle>com.vivaxy.alfred-workflow.open-in-vscode</bundle>
-  <updated>1565853889</updated>
-  <file>open_in_vscode.alfredworkflow</file>
-</workflow>
