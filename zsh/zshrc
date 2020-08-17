@@ -1,12 +1,10 @@
-
-
 # ------------------------------------------------------------------------------
 # Zshrc
 # ------------------------------------------------------------------------------
 # This file configures all of the settings for zsh.
 # Alias and Functions files are sourced from external paths.
 # Plugins were installed via brew.
-#   -- brew install zsh-autosuggestions zsh-syntax-highlighting z.lua (managed via install.conf.yaml)
+#   -- brew install zsh-autosuggestions zsh-syntax-highlighting z.lua
 
 
 # ------------------------------------------------------------------------------
