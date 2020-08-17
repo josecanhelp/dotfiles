@@ -1,9 +1,6 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "oh-my-zsh"]
-	path = oh-my-zsh 
-	url = git@github.com:robbyrussell/oh-my-zsh.git 
 [submodule "tmux/plugins/tmux-yank"]
 	path = tmux/plugins/tmux-yank
 	url = https://github.com/tmux-plugins/tmux-yank.git
@@ -16,6 +13,3 @@
 [submodule "themes/powerline-fonts"]
 	path = themes/powerline-fonts
 	url = https://github.com/powerline/fonts.git
-[submodule "vim/pack/plugins/start/tsuquyomi"]
-	path = vim/pack/plugins/start/tsuquyomi
-	url = git@github.com:Quramy/tsuquyomi.git

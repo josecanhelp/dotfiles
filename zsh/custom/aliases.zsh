@@ -44,3 +44,6 @@ alias mutt="neomutt"
 alias dockerps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}"'
 alias dockerpsa='docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}"'
 alias resetwacom="launchctl unload /Library/LaunchAgents/com.wacom.wacomtablet.plist && launchctl load -w /Library/LaunchAgents/com.wacom.wacomtablet.plist"
+alias l="ls -alh"
+alias src="source ~/.zshrc"
+alias ..="cd .."

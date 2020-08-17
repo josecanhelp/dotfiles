@@ -18,18 +18,13 @@
     ~/.hammerspoon: hammerspoon
     ~/.hushlogin: hushlogin
     ~/.ideavimrc: ideavimrc
-    ~/.oh-my-zsh-custom: oh-my-zsh-custom/
-    ~/.oh-my-zsh: oh-my-zsh/
     ~/.tmux.conf: tmux.conf
     ~/.tmux: tmux/ 
     ~/.vim/coc-settings.json: vim/coc/settings.json
     ~/.vim: vim/
     ~/.vimrc: vim/vimrc
-    ~/.zshrc: zshrc
-    ~/.pydoro.ini: pydoro.ini
-    ~/.config/karabiner: karabiner/
+    ~/.zshrc: zsh/zshrc
     ~/.config/karabiner.edn: karabiner.edn
-    ~/.config/kitty: kitty/
 # - create:
     # - ~/Code
 - shell:
