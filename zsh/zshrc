@@ -1,5 +1,10 @@
-export EDITOR="/usr/local/bin/vim"
+export EDITOR="vim"
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
+
+# History in cache directory:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.cache/zsh/history
 
 # Directories to be prepended to $PATH
 # Later directories take precendence
@@ -30,9 +35,23 @@ done
 unset dirs_to_prepend
 
 export PATH
+fpath=($fpath $HOME/dotfiles/zsh/custom)
 
-fpath=(/usr/local/share/zsh-completions $fpath)
+# for func in $^fpath/*(N-.x:t); autoload $func
+# typeset -U path cdpath fpath manpath
+
+source $HOME/dotfiles/zsh/custom/functions.zsh
 source $HOME/dotfiles/zsh/custom/aliases.zsh
+
+# Basic auto/tab complete:
+autoload -Uz compinit
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # case-insensitive completion
+zstyle :prompt:pure:git:stash show yes # show the symbol when a stash exists
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)               # Include hidden files.
 
 export LANG=en_US.UTF-8
 
@@ -46,3 +65,52 @@ export NVM_DIR="$HOME/.nvm"
 ctags=/usr/local/bin/ctags
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# vim mode config
+# ---------------
+
+# Activate vim mode.
+bindkey -v
+export KEYTIMEOUT=1 # Remove mode switching delay.
+
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+  fi
+}
+zle -N zle-keymap-select
+zle-line-init() {
+    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    echo -ne "\e[5 q"
+}
+zle -N zle-line-init
+echo -ne '\e[5 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+
+eval "$(lua /usr/local/Cellar/z.lua/1.8.7/share/z.lua/z.lua --init zsh)"
+export _ZL_ROOT_MARKERS=".git,package.json,composer.json"
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_USE_ASYNC=true
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+
+# Load zsh-syntax-highlighting; should be last.
+export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
