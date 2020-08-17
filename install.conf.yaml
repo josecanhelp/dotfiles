@@ -8,7 +8,11 @@
 - shell:
   - description: Validating sudo credentials
     command: "sudo --validate"
-- clean: ['~']
+- clean:
+    ~/:
+      force: true
+    ~/.config:
+      recursive: true
 - link:
     ~/.bin: bin/
     ~/.ctags.d: ctags
@@ -30,28 +34,28 @@
 - shell:
   - description: Hushing login
     command: "[ -f ~/.hushlogin ] || touch ~/.hushlogin"
-  - description: Telling gatekeeper to allow unidentified developers
-    command: "sudo spctl --master-disable"
-  - description: Installing brew
-    command: "[ -x \"$(which brew)\" ] || /usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
+  # - description: Telling gatekeeper to allow unidentified developers
+    # command: "sudo spctl --master-disable"
+  # - description: Installing brew
+    # command: "[ -x \"$(which brew)\" ] || /usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
   - description: Updating brew
     command: "brew update"
-  - description: Installing brew bundler
-    command: "brew tap homebrew/bundle"
-  - description: Installing brewfile bundle
-    command: "brew bundle"
+  # - description: Installing brew bundler
+    # command: "brew tap homebrew/bundle"
+  # - description: Installing brewfile bundle
+    # command: "brew bundle"
   - description: Removing old brew files
     command: "brew cleanup"
-  - description: Adding zsh to list of acceptable shells
-    command: "[[ \"$(ag $(which zsh) /etc/shells)\" ]] || sudo sh -c \"echo $(which zsh) >> /etc/shells\""
-  - description: Making zsh the default shell
-    command: "sudo chsh -s $(which zsh)"
+  # - description: Adding zsh to list of acceptable shells
+    # command: "[[ \"$(ag $(which zsh) /etc/shells)\" ]] || sudo sh -c \"echo $(which zsh) >> /etc/shells\""
+  # - description: Making zsh the default shell
+    # command: "sudo chsh -s $(which zsh)"
   # - description: Compiling antibody bundles
     # command: "sh zsh/bundles_compile"
-  - description: Installing vim-plug
-    command: "[ -f ~/.vim/autoload/plug.vim ] || curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-  - description: Installing vim plugins
-    command: "vim +PlugInstall +qa"
+  # - description: Installing vim-plug
+    # command: "[ -f ~/.vim/autoload/plug.vim ] || curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  # - description: Installing vim plugins
+    # command: "vim +PlugInstall +qa"
   # - description: Installing global composer dependencies
     # command: "sh composer/global_install"
   # - description: Initializing valet
@@ -60,3 +64,9 @@
     # command: "valet park ~/Code"
   - description: Clearing sudo credential cache
     command: "sudo --reset-timestamp"
+- pip:
+    file: pip/requirements.txt
+    binary: /usr/local/bin/pip3
+    user: true    # Like --user
+    stdout: false # Print the execution stdout
+    stderr: true  # Print the execution stderr

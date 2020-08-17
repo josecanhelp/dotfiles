@@ -13,3 +13,6 @@
 [submodule "themes/powerline-fonts"]
 	path = themes/powerline-fonts
 	url = https://github.com/powerline/fonts.git
+[submodule "dotbot-pip"]
+	path = dotbot-pip
+	url = https://github.com/sobolevn/dotbot-pip.git

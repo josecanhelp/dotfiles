@@ -1,95 +1,120 @@
-export EDITOR="vim"
-export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 
-# History in cache directory:
+
+# ------------------------------------------------------------------------------
+# Zshrc
+# ------------------------------------------------------------------------------
+# This file configures all of the settings for zsh.
+# Alias and Functions files are sourced from external paths.
+# Plugins were installed via brew.
+#   -- brew install zsh-autosuggestions zsh-syntax-highlighting z.lua (managed via install.conf.yaml)
+
+
+# ------------------------------------------------------------------------------
+# Paths
+# ------------------------------------------------------------------------------
+
+export PATH=${PATH}:/usr/local/bin
+export PATH=${PATH}:/usr/local/sbin
+export PATH=${PATH}:/usr/bin
+export PATH=${PATH}:/usr/sbin
+export PATH=${PATH}:/bin
+export PATH=${PATH}:/sbin
+export PATH=${PATH}:~/.composer/vendor/bin
+export PATH=${PATH}:/usr/local/opt/ruby/bin
+export PATH=${PATH}:~/Library/Android/sdk
+export PATH=${PATH}:~/Library/Android/sdk/platform-tools
+export PATH=${PATH}:~/go/bin
+export PATH=${PATH}:~/.dotfiles/bin
+
+
+# ------------------------------------------------------------------------------
+# General Settings
+# ------------------------------------------------------------------------------
+
+export EDITOR="vim"
+export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES # Required for iterm shell integration
+export LANG=en_US.UTF-8
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.cache/zsh/history
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# Directories to be prepended to $PATH
-# Later directories take precendence
-declare -a dirs_to_prepend
-dirs_to_prepend=(
-    "/Users/jose/Library/Android/sdk"
-    "/Users/jose/Library/Android/sdk/platform-tools"
-    "/Users/jose/go/bin"
-    "/Users/jose/.composer/vendor/bin"
-    "~/.dotfiles/bin"
-    "/sbin"
-    "/usr/sbin"
-    "/usr/local/sbin"
-    "/bin"
-    "/usr/bin"
-    "/usr/local/bin"
-    "/usr/local/opt/ruby/bin"
-)
 
-for dir in ${(k)dirs_to_prepend[@]}
-do
-  if [ -d ${dir} ]; then
-    # If these directories exist, then prepend them to existing PATH
-    PATH="${dir}:$PATH"
-  fi
-done
-
-unset dirs_to_prepend
-
-export PATH
-fpath=($fpath $HOME/dotfiles/zsh/custom)
-
-# for func in $^fpath/*(N-.x:t); autoload $func
-# typeset -U path cdpath fpath manpath
+# ------------------------------------------------------------------------------
+# Source External ZSH Files
+# ------------------------------------------------------------------------------
 
 source $HOME/dotfiles/zsh/custom/functions.zsh
 source $HOME/dotfiles/zsh/custom/aliases.zsh
 
-# Basic auto/tab complete:
+
+# ------------------------------------------------------------------------------
+# Auto-Tab / Completion
+# ------------------------------------------------------------------------------
+
 autoload -Uz compinit
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # case-insensitive completion
-zstyle :prompt:pure:git:stash show yes # show the symbol when a stash exists
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)               # Include hidden files.
 
-export LANG=en_US.UTF-8
+
+# ------------------------------------------------------------------------------
+# Pure Prompt
+# ------------------------------------------------------------------------------
 
 autoload -U promptinit; promptinit
 prompt pure
+zstyle :prompt:pure:git:stash show yes # show the symbol when a stash exists
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-ctags=/usr/local/bin/ctags
+# ------------------------------------------------------------------------------
+# Vim Mode
+# ------------------------------------------------------------------------------
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# vim mode config
-# ---------------
-
-# Activate vim mode.
-bindkey -v
+bindkey -v # Enable vim mode in zsh
 export KEYTIMEOUT=1 # Remove mode switching delay.
 
+# Use HJKL in auto-complete menu selection
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
-# Edit line in vim with ctrl-e:
+# Edit line in Vim with CTRL-E
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-eval "$(lua /usr/local/Cellar/z.lua/1.8.7/share/z.lua/z.lua --init zsh)"
-export _ZL_ROOT_MARKERS=".git,package.json,composer.json"
 
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+# ------------------------------------------------------------------------------
+# Z.lua Jump to Directory
+# ------------------------------------------------------------------------------
+
+eval "$(lua /usr/local/Cellar/z.lua/1.8.7/share/z.lua/z.lua --init zsh)"
+export _ZL_ROOT_MARKERS=".git,package.json,composer.json" # Jump to project root with zb
+
+
+# ------------------------------------------------------------------------------
+# Auto Suggest Settings
+# ------------------------------------------------------------------------------
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion) # First search history, then directory
 ZSH_AUTOSUGGEST_USE_ASYNC=true
+
+# Source autosuggestion plugin
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 
-# Load zsh-syntax-highlighting; should be last.
+
+# ------------------------------------------------------------------------------
+# Auto Suggest Settings (Needs to be last)
+# ------------------------------------------------------------------------------
+
 export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
+
+# Source syntax highlighting plugin
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+
