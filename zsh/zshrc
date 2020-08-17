@@ -96,6 +96,30 @@ export _ZL_ROOT_MARKERS=".git,package.json,composer.json" # Jump to project root
 
 
 # ------------------------------------------------------------------------------
+# Fzf Config
+# ------------------------------------------------------------------------------
+
+export FZF_DEFAULT_COMMAND='ag -u -g ""'
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export FZF_DEFAULT_OPTS='--preview-window right:50%:noborder:hidden --color "preview-bg:234" --bind "alt-p:toggle-preview"'
+
+
+# ------------------------------------------------------------------------------
+# Fzf Installer Generated Config
+# ------------------------------------------------------------------------------
+
+# Setup fzf
+if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+fi
+
+# Auto-completion
+[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+
+# Key bindings
+source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+
+# ------------------------------------------------------------------------------
 # Auto Suggest Settings
 # ------------------------------------------------------------------------------
 
@@ -116,3 +140,5 @@ export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/h
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
