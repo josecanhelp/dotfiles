@@ -23,5 +23,5 @@ I am using [vim-plug](https://github.com/junegunn/vim-plug) to manage my Vim plu
 
 ## Keyboard Mapping
 
-[Karabiner](https://karabiner-elements.pqrs.org/) and [Hammerspoon](https://www.hammerspoon.org/) heavily to completely re-bind modifier+keys across applications. I also make use of [modals](https://www.hammerspoon.org/docs/hs.hotkey.modal.html) to add multiple layers to my keyboard beyond modifiers.
+[Karabiner](https://karabiner-elements.pqrs.org/) and [Hammerspoon](https://www.hammerspoon.org/) are used heavily to completely re-bind modifier+keys across applications. I also make use of [modals](https://www.hammerspoon.org/docs/hs.hotkey.modal.html) to add multiple layers to my keyboard beyond modifiers.
 
