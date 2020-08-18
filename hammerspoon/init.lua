@@ -1,9 +1,9 @@
 bear = 'net.shinyfrog.bear'
+brave = 'com.brave.Browser'
 breaktime = 'com.excitedpixel.breaktime'
 chrome = 'com.google.Chrome'
 discord = 'com.hnc.Discord'
 finder = 'com.apple.finder'
-firefox = 'org.mozilla.firefoxdeveloperedition'
 fork = 'com.DanPristupov.Fork'
 iterm = 'com.googlecode.iterm2'
 messages = 'com.apple.iChat'
@@ -92,14 +92,14 @@ end
 if not hsapp_list then
     hsapp_list = {
         {key = 'a', name = 'Slack'},
+        {key = 'b', name = 'Brave Browser'},
         {key = 'c', name = 'Visual Studio Code'},
         {key = 'd', name = 'React Native Debugger'},
         {key = 'e', name = 'Finder'},
-        {key = 'f', name = 'Firefox Developer Edition'},
         {key = 'i', name = 'iTerm'},
-        {key = 'p', name = 'Paw'},
         {key = 'm', name = 'Messages'},
         {key = 'n', id = 'com.apple.ActivityMonitor'},
+        {key = 'p', name = 'Paw'},
         {key = 'r', name = 'Bear'},
         {key = 's', name = 'Simulator'},
         {key = 't', name = 'TablePlus'},
@@ -278,7 +278,7 @@ hs.urlevent.bind('createNewThing', function()
         hs.eventtap.keyStroke({'ctrl', 'option'}, 'space')
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'cmd'}, 'n')
-    elseif appIs(firefox) then
+    elseif appIs(brave) then
         hs.eventtap.keyStroke({'cmd'}, 't')
     end
 end)
@@ -294,7 +294,7 @@ hs.urlevent.bind('deleteThing', function()
 end)
 
 hs.urlevent.bind('closeAnything', function()
-    if appIncludes({firefox}) then
+    if appIncludes({brave}) then
         hs.eventtap.keyStroke({'cmd'}, 'w')
     end
 end)
@@ -310,8 +310,8 @@ hs.urlevent.bind('openAnything', function()
         hs.eventtap.keyStroke({'cmd, shift'}, 'o')
     elseif appIs(finder) then
         triggerAlfredSearch('o')
-    elseif appIncludes({chrome, firefox}) then
-        triggerAlfredSearch('bm')
+    elseif appIncludes({brave}) then
+        hs.eventtap.keyStroke({}, 'f')
     elseif appIs(omnifocus) then
         hs.eventtap.keyStroke({'cmd'}, 'o')
     elseif appIs(bear) then
@@ -339,7 +339,7 @@ hs.urlevent.bind('navigateBack', function()
     if(activeModal == nil) then
       if appIncludes({bear, spotify}) then
           hs.eventtap.keyStroke({'cmd', 'option'}, 'left')
-      elseif appIncludes({finder, firefox, slack}) then
+      elseif appIncludes({finder, slack, brave}) then
           hs.eventtap.keyStroke({'cmd'}, '[')
       elseif appIs(iterm) then
           hs.eventtap.keyStroke({'control'}, 'w', 0)
@@ -353,7 +353,7 @@ end)
 hs.urlevent.bind('navigateForward', function()
     if appIncludes({bear, spotify}) then
         hs.eventtap.keyStroke({'cmd', 'option'}, 'right')
-    elseif appIncludes({finder, firefox, slack}) then
+    elseif appIncludes({finder, slack, brave}) then
         hs.eventtap.keyStroke({'cmd'}, ']')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'w', 0)
@@ -368,7 +368,7 @@ hs.urlevent.bind('navigateUpward', function()
         hs.eventtap.keyStroke({''}, 'up')
     elseif appIs(messages) then
         hs.eventtap.keyStroke({'control', 'shift'}, 'tab')
-    elseif appIs(firefox) then
+    elseif appIs(brave) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, ']')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'w', 0)
@@ -385,7 +385,7 @@ hs.urlevent.bind('navigateDownward', function()
         hs.eventtap.keyStroke({''}, 'down')
     elseif appIs(messages) then
         hs.eventtap.keyStroke({'control'}, 'tab')
-    elseif appIs(firefox) then
+    elseif appIs(brave) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, '[')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'w', 0)
@@ -424,8 +424,8 @@ hs.urlevent.bind('copyAnything', function()
         ]])
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'cmd', 'option', 'shift'}, 'l') -- Copy link to note
-    elseif appIs(firefox) then
-        hs.eventtap.keyStrokes('y') -- Copy current URL
+    elseif appIs(brave) then
+        hs.eventtap.keyStrokes('yy') -- Copy current URL
     end
 end)
 
