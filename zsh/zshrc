@@ -131,6 +131,13 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 
 
 # ------------------------------------------------------------------------------
+# FZF
+# ------------------------------------------------------------------------------
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+# ------------------------------------------------------------------------------
 # Auto Suggest Settings (Needs to be last)
 # ------------------------------------------------------------------------------
 
@@ -139,6 +146,3 @@ export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/h
 # Source syntax highlighting plugin
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
