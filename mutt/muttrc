@@ -1,0 +1,110 @@
+source creds.muttrc
+
+set folder = "imaps://imap.gmail.com/"
+set spoolfile = "+INBOX"
+set trash = "+[Gmail]/Trash"
+set postponed="+[Gmail]/Drafts"
+
+mailboxes "+INBOX"
+mailboxes "+[Gmail]/All Mail"
+mailboxes "+[Gmail]/Sent Mail"
+mailboxes "+[Gmail]/Drafts"
+
+set sidebar_visible
+set sidebar_format="%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats
+
+source dracula.muttrc
+auto_view text/html                                   # view html automatically
+alternative_order text/plain text/enriched text/html  # save html for last
+set editor = "vim"
+
+# delete trash: source:
+# https://promberger.info/linux/2008/03/10/mutt-and-gmail-via-imap-how-to-delete-messages/
+# folder-hook . 'unset trash'
+# folder-hook imaps://imap.gmail.com 'set trash="=[Gmail]/Trash"'
+
+##
+## mutt configuration file 
+##
+
+# IMAP Settings
+set imap_check_subscribed = no
+set imap_keepalive      = 900
+
+# where to put the stuff
+set message_cachedir='~/.mutt/cache/bodies'
+set header_cache = "~/.mutt/cache/headers"
+set certificate_file='~/.mutt/certificates'
+
+# options
+unset record                                            # prevent dups in Sent
+unset move                                              # gmail does that
+unset mark_old                                          # read/new is good enough
+unset confirmappend                                     # don't ask, just do!
+set delete              = yes                           # don't ask, just do!
+set quit                = yes                           # don't ask, just do!
+set mail_check          = 60                            # check every 60 sec
+set sort_alias          = alias                         # sort by alias
+
+# index options
+set sort                = threads                       # like gmail
+set sort_aux            = reverse-last-date-received    # like gmail
+set sort_re                                             # thread based on reply_regexp
+unset collapse_unread                                   # don't collaps unread threads
+
+# pager
+set pager_index_lines   = 8                             # show 8 messages when in pager
+set pager_context       = 5                             # show five lines when skipping in pager
+set pager_stop                                          # don't go to next message automatically
+set menu_scroll                                         # scroll in menus
+set smart_wrap                                          # don't split words
+set tilde                                               # show tildes like in vim
+unset markers                                           # no ugly plus signs
+
+# composing mail
+set fcc_attach                                          # save attachments with the body
+unset mime_forward                                      # forward attachments as part of body
+set forward_format      = "Fwd: %s"                     # format for subject when forwarding
+set include                                             # include message in replies
+set forward_quote                                       # include message in forwards
+
+# headers to show
+ignore *                                                # ignore all headers
+unignore from: to: cc: date: subject:                   # show only these
+hdr_order from: to: cc: date: subject:                  # and in this order
+
+# Keybindings:
+# use `exec what-key` to find the correct keymapping that mutt is reading
+# index keybindings
+macro index \Ck     <sidebar-prev>
+macro index <enter>    <sidebar-next>
+macro index \Cl        <sidebar-open>
+# macro index <up>        <previous-entry>
+# macro index <down>      <next-entry>
+# macro index <right>     <display-message>
+# macro index <left>      <sync-mailbox><change-folder>? "Go to the folder menu"
+# macro index <tab>       <next-unread><enter>
+macro index a           "<save-message>+[Gmail]/All Mail<enter><enter><sync-mailbox>" "Archive"
+macro index b           "<enter-command>toggle sidebar_visible<enter><refresh>"
+macro index d           "<save-message>+[Gmail]/Trash<enter><enter><sync-mailbox>" "Trash"
+bind index g noop # disable g so the rest of the macros can work
+macro index gi          "<change-folder>+INBOX<enter>" "Go to inbox"
+macro index ga          "<change-folder>+[Gmail]/All Mail<enter>" "Go to all mail"
+macro index gs          "<change-folder>+[Gmail]/Starred<enter>" "Go to starred messages"
+macro index gd          "<change-folder>+[Gmail]/Drafts<enter>" "Go to drafts"
+
+# pager keybindings
+# macro pager <left>      <previous-entry>
+# macro pager <right>     <next-entry>
+# macro pager <up>        <previous-line>
+# macro pager <down>      <next-line>
+# macro pager <pageup>    <previous-entry>
+# macro pager <pagedown>  <next-entry>
+# macro pager <space>     <next-entry>
+
+macro pager a           "<save-message>+[Gmail]/All Mail<enter><enter><sync-mailbox>" "Archive"
+macro pager d           "<save-message>+[Gmail]/Trash<enter><enter><sync-mailbox>" "Trash"
+macro pager b           "<enter-command>toggle sidebar_visible<enter><redraw-screen>" "Toggle Sidebar"
+
+# vim: ft=muttrc
