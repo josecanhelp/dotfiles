@@ -12,6 +12,7 @@ phpstorm = 'com.jetbrains.PhpStorm'
 preview = 'com.apple.Preview'
 simulator = 'com.apple.iphonesimulator'
 slack = 'com.tinyspeck.slackmacgap'
+sketch = 'com.bohemiancoding.sketch3'
 spotify = 'com.spotify.client' 
 tableplus = 'com.tinyapp.TablePlus'
 vscode = 'com.microsoft.VSCode'
@@ -239,8 +240,12 @@ function triggerAlfredSearch(search)
     hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to search "' .. search ..' "')
 end
 
-function triggerAlfredWorkflow(workflow, trigger)
+function triggerAlfredWorkflow(workflow, trigger, arg)
+    if (arg) then
+    hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '" with argument "' .. arg .. ' "')
+    else
     hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '"')
+    end
 end
 
 -- This is almost unfair
@@ -316,6 +321,8 @@ hs.urlevent.bind('openAnything', function()
         hs.eventtap.keyStroke({'cmd'}, 'o')
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, 'f')
+    elseif appIs(sketch) then
+        triggerAlfredWorkflow('com.tedwise.menubarsearch', 'menubarsearch', 'open recent')
     elseif true then
         bundleId = getBundleId();
         hs.notify.new(function() hs.pasteboard.setContents(bundleId) end, {title = 'Hammerspoon', informativeText = 'Open Anything not set up', actionButtonTitle = 'Copy Bundle ID', alwaysShowAdditionalActions = true, hasActionButton = true}):send()
