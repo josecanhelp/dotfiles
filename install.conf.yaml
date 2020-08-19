@@ -29,6 +29,8 @@
     ~/.vimrc: vim/vimrc
     ~/.zshrc: zsh/zshrc
     ~/.config/karabiner.edn: karabiner.edn
+    ~/.config/mutt/muttrc: mutt/muttrc
+    ~/.config/mutt/dracula.muttrc: mutt/dracula.muttrc
 # - create:
     # - ~/Code
 - shell:
