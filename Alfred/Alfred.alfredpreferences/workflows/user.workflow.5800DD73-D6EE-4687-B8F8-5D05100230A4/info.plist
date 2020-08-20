@@ -7,7 +7,49 @@
 	<key>category</key>
 	<string>Productivity</string>
 	<key>connections</key>
-	<dict/>
+	<dict>
+		<key>C439E513-31B8-4779-B3EB-46EC32BF6109</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CE5A9094-B774-483F-B34C-F417BE9D468F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C90FAD9D-4E17-4E49-9712-123910ADE51B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1201FE3F-83AF-41C6-B43A-347C4F69CC4E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>CE5A9094-B774-483F-B34C-F417BE9D468F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C90FAD9D-4E17-4E49-9712-123910ADE51B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>54CD2D7B-6CDC-4C72-86C9-6D152FE05F32</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
 	<key>createdby</key>
 	<string>Jose Soto</string>
 	<key>description</key>
@@ -21,61 +63,138 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string>%20</string>
+				<key>url</key>
+				<string>bear://x-callback-url/create?title=Today's Notes {query}&amp;tags=tighten&amp;open_note=yes&amp;new_window=no&amp;show_window=yes&amp;pin=yes&amp;edit=yes&amp;timestamp=no&amp;text=%23%23%203%20main%20goals%3A%0A1.%20%0A2.%20%0A3.%20%0A%0A%0A%23%23%20Doing%0A-%20%0A%0A%23%23%20Done%0A-%20%0A%0A%23%23%20Blockers%0A-%20&amp;x-success=hammerspoon://hitMe</string>
+				<key>utf8</key>
 				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>1201FE3F-83AF-41C6-B43A-347C4F69CC4E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+echo $(date +"%Y-%m-%d")</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>C90FAD9D-4E17-4E49-9712-123910ADE51B</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>0</integer>
-				<key>escaping</key>
-				<integer>127</integer>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
+				<key>fixedorder</key>
+				<false/>
+				<key>items</key>
+				<string>[{"title":"Start Day","arg":"start_day"},{"title":"End Day","arg":"end_day"}]</string>
+				<key>keyword</key>
+				<string>t</string>
 				<key>runningsubtext</key>
-				<string></string>
-				<key>script</key>
-				<string></string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
 				<string></string>
-				<key>type</key>
-				<integer>0</integer>
 				<key>withspace</key>
 				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
+			<string>alfred.workflow.input.listfilter</string>
 			<key>uid</key>
-			<string>A2C6D337-E218-4EC3-8871-578C68B53AF8</string>
+			<string>C439E513-31B8-4779-B3EB-46EC32BF6109</string>
 			<key>version</key>
-			<integer>3</integer>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{query}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>start_day</string>
+						<key>outputlabel</key>
+						<string>start</string>
+						<key>uid</key>
+						<string>54CD2D7B-6CDC-4C72-86C9-6D152FE05F32</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>else</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>CE5A9094-B774-483F-B34C-F417BE9D468F</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>A2C6D337-E218-4EC3-8871-578C68B53AF8</key>
+		<key>1201FE3F-83AF-41C6-B43A-347C4F69CC4E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>145</integer>
+			<integer>730</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>265</integer>
+		</dict>
+		<key>C439E513-31B8-4779-B3EB-46EC32BF6109</key>
+		<dict>
+			<key>xpos</key>
+			<integer>105</integer>
+			<key>ypos</key>
+			<integer>365</integer>
+		</dict>
+		<key>C90FAD9D-4E17-4E49-9712-123910ADE51B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>505</integer>
+			<key>ypos</key>
+			<integer>265</integer>
+		</dict>
+		<key>CE5A9094-B774-483F-B34C-F417BE9D468F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>325</integer>
+			<key>ypos</key>
+			<integer>385</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>

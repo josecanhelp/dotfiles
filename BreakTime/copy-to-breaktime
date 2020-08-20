@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+test -f /Users/jose/Library/Application\ Scripts/com.excitedpixel.breaktime/start-break.sh && \
+rm /Users/jose/Library/Application\ Scripts/com.excitedpixel.breaktime/start-break.sh
+cp start-break.sh /Users/jose/Library/Application\ Scripts/com.excitedpixel.breaktime/
+

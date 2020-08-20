@@ -493,3 +493,9 @@ end
     -- :setIcon(hs.image.imageFromURL("https://cdn.freebiesupply.com/logos/large/2x/slack-1-logo-png-transparent.png")
     -- :setSize({w=16,h=16}))
     -- :setTitle(slackMenuBarText())
+    --
+
+
+hs.urlevent.bind('hitMe', function(hsFnName, payload)
+    hs.notify.new({title = payload.title }):send()
+end)
