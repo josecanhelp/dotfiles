@@ -11,6 +11,7 @@ omnifocus = 'com.omnigroup.OmniFocus3'
 phpstorm = 'com.jetbrains.PhpStorm'
 preview = 'com.apple.Preview'
 simulator = 'com.apple.iphonesimulator'
+sizzy = 'com.kitze.sizzy'
 slack = 'com.tinyspeck.slackmacgap'
 sketch = 'com.bohemiancoding.sketch3'
 spotify = 'com.spotify.client' 
@@ -242,9 +243,9 @@ end
 
 function triggerAlfredWorkflow(workflow, trigger, arg)
     if (arg) then
-    hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '" with argument "' .. arg .. ' "')
+        hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '" with argument "' .. arg .. ' "')
     else
-    hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '"')
+        hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '"')
     end
 end
 
@@ -379,7 +380,7 @@ hs.urlevent.bind('navigateUpward', function()
         hs.eventtap.keyStroke({'cmd', 'shift'}, ']')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'w', 0)
-        hs.eventtap.keyStroke({}, 'j')
+        hs.eventtap.keyStroke({}, 'k')
     else
         hs.eventtap.keyStroke({'cmd', 'shift'}, '[')
     end
@@ -396,7 +397,7 @@ hs.urlevent.bind('navigateDownward', function()
         hs.eventtap.keyStroke({'cmd', 'shift'}, '[')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'w', 0)
-        hs.eventtap.keyStroke({}, 'k')
+        hs.eventtap.keyStroke({}, 'j')
     else
         hs.eventtap.keyStroke({'cmd', 'shift'}, ']')
     end
@@ -495,7 +496,66 @@ end
     -- :setTitle(slackMenuBarText())
     --
 
+hs.urlevent.bind('createOmniEODTask', function(hsFnName, payload)
+    hs.urlevent.openURL('omnifocus:///add?name=Write%20EOD%20&due=today%206pm&project=Tighten%3A%20Admin&reveal-new-item=false&autosave=true&note=hammerspoon://hitMe')
+end)
 
 hs.urlevent.bind('hitMe', function(hsFnName, payload)
-    hs.notify.new({title = payload.title }):send()
+    -- hs.osascript.javascript('Application("Docker").quit()')
+end)
+
+hs.urlevent.bind('reloadSizzy', function()
+    refocus = false
+
+    if not focusedWindowIs(sizzy) then
+        refocus = true
+        focusedApp = hs.window:focusedWindow():application():bundleID()
+        hs.application.launchOrFocus("sizzy")
+    end
+
+    hs.eventtap.keyStroke({'cmd'}, 'r')
+
+    if refocus then
+        hs.application.launchOrFocusByBundleID(focusedApp)
+    end
+end)
+
+
+-- Callback Function to focus on Brave Browser and press the spacebar
+-- Pressing the spacebar is usually the command to start or stop video playback
+function togglePlayOnNoise(recognizerObject, command)
+    refocus = false
+
+    if not focusedWindowIs(brave) then
+        refocus = true
+        focusedApp = hs.window:focusedWindow():application():bundleID()
+        hs.application.launchOrFocusByBundleID(brave)
+    end
+    
+    if command == 'start' or command == 'stop' then
+        hs.eventtap.keyStroke({}, 'space')
+    elseif command == 'back' then
+        hs.eventtap.keyStroke({}, 'left')
+    elseif command == 'forward' then
+        hs.eventtap.keyStroke({}, 'right')
+    end
+
+    if refocus then
+        hs.application.launchOrFocusByBundleID(focusedApp)
+    end
+end
+
+-- I can hit this binding via Alfred with hammerspoon://enablePlayOnNoise
+hs.urlevent.bind('enablePlayOnNoise', function()
+    listener = hs.speech.listener.new("SpeechToPlay")
+    listener:commands({'start', 'stop', 'back', 'forward'})
+    listener:setCallback(togglePlayOnNoise)
+    listener:start()
+end)
+
+-- I can hit this binding via Alfred with hammerspoon://disablePlayOnNoise
+hs.urlevent.bind('disablePlayOnNoise', function()
+    if listener and listener:isListening() then
+        listener:stop()
+    end
 end)
