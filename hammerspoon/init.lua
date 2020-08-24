@@ -317,7 +317,7 @@ hs.urlevent.bind('openAnything', function()
     elseif appIs(finder) then
         triggerAlfredSearch('o')
     elseif appIncludes({brave}) then
-        hs.eventtap.keyStroke({}, 'f')
+        hs.eventtap.keyStroke({'shift'}, 't') -- Open Vomnibar in Vimium
     elseif appIs(omnifocus) then
         hs.eventtap.keyStroke({'cmd'}, 'o')
     elseif appIs(bear) then
