@@ -18,6 +18,7 @@
                 :keynote ["^com\\.apple\\.iWork\\.Keynote$"]
                 :slack ["^com\\.tinyspeck\\.slackmacgap$"]
                 :messages ["^com\\.apple\\.iChat$"]}
+:devices {:corsair [{:product_id 6933 :vendor_id 6940}]}
  :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}}
  :simlayers {:v-mode {:key :v}
              :quote-mode {:key :quote}}
@@ -50,6 +51,10 @@
                  [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
                  [:semicolon :!!semicolon] ; open Alfred
                  ]}
+        {:des "Corsair Keyboard - Map Option to Command"
+         :rules [[:left_option :left_command [:corsair]]]}
+        {:des "Corsair Keyboard - Map Command to Option"
+         :rules [[:left_command :left_option [:corsair]]]}
         {:des "ASDF Mode"
          :rules [[{:sim [:a :s :d :f] :simo {:interrupt true
                                              :dorder :insensitive
