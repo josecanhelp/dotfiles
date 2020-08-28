@@ -95,18 +95,16 @@ if not hsapp_list then
     hsapp_list = {
         {key = 'a', name = 'Slack'},
         {key = 'b', name = 'Brave Browser'},
-        {key = 'c', name = 'Visual Studio Code'},
         {key = 'd', name = 'React Native Debugger'},
         {key = 'e', name = 'Finder'},
         {key = 'i', name = 'iTerm'},
+        {key = 'k', name = 'Keynote'},
         {key = 'm', name = 'Messages'},
         {key = 'n', id = 'com.apple.ActivityMonitor'},
         {key = 'p', name = 'Paw'},
         {key = 'r', name = 'Bear'},
         {key = 's', name = 'Simulator'},
         {key = 't', name = 'TablePlus'},
-        {key = 'v', name = 'Visual Studio Code'},
-        {key = 'x', name = 'Xcode'},
         {key = 'y', id = 'com.apple.systempreferences'},
     }
 end
@@ -338,6 +336,9 @@ hs.urlevent.bind('toggleSidebar', function()
         hs.eventtap.keyStroke({'control'}, '3')
     elseif appIs(phpstorm) then
         hs.eventtap.keyStroke({'cmd'}, '1')
+    elseif appIs(sketch) then
+        hs.eventtap.keyStroke({'cmd', 'option'}, '1')
+        hs.eventtap.keyStroke({'cmd', 'option'}, '2')
     elseif appIs(omnifocus) then
         hs.eventtap.keyStroke({'cmd', 'option'}, 's')
     end

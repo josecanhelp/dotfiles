@@ -29,11 +29,16 @@ endfunction
 " }}}
 " Theme: {{{
 " Set the cursorline highlight colors
-let g:gruvbox_contrast_dark = 'soft'
-let gruvbox_vert_split = 'gray'
-let &colorcolumn=join(range(81,999),',') " Display a different bg beyond 80 chars
+let &colorcolumn=join(range(82,999),',') " Display a different bg beyond 80 chars
+
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ }
+
 colorscheme gruvbox
-let g:airline_theme='fruit_punch'
+let g:gruvbox_contrast_dark = 'hard'
+let gruvbox_vert_split = 'gray'
+
 " }}}
 " General --------------------------------------------------------------------
 " Defaults: {{{
@@ -59,7 +64,7 @@ set nowrap " Do not wrap the end of the line
 set number " Enable line numbers
 set relativenumber " Make the line numbers display relative numbers
 set shiftwidth=4
-set showmode " Show the current mode
+set noshowmode " Show the current mode
 set splitbelow " Open new files in horizontal splits to the bottom
 set splitright " Open new files in vertical splits to the right
 set tabstop=4
@@ -67,6 +72,9 @@ set wildignore+=*/vendor/** " Ignore these folders during fuzzy search
 set wildignore+=*/node_modules/** " Ignore these folders during fuzzy search
 set runtimepath+=/usr/local/opt/fzf
 set scrolloff=7 " Add padding to the bottom of the file
+set laststatus=2
+let g:polyglot_disabled = ['jsx']
+
 " }}}
 " Paths: {{{
 " Parent paths
@@ -104,23 +112,21 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'phpactor/phpactor', {'branch': 'develop', 'for': 'php', 'do': 'composer install --no-dev -o'}
 Plug 'posva/vim-vue'
 Plug 'scrooloose/nerdcommenter'
-Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot',
 Plug 'skywind3000/asyncrun.vim'
 Plug 'tmsvg/pear-tree'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'vim-vdebug/vdebug'
 Plug 'yuezk/vim-js'
 Plug 'junegunn/goyo.vim'
+Plug 'mattn/emmet-vim'
+Plug 'ap/vim-css-color'
+Plug 'edkolev/tmuxline.vim'
 call plug#end()
 "}}}
 " Plugin Settings ------------------------------------------------------------
-" Airline: {{{
-" Show Ale errors and warnings in Airline status bar
-let g:airline#extensions#ale#enabled = 1
-" }}}
 " Ale: {{{
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '!!'
@@ -139,6 +145,7 @@ let g:ale_sign_style_warning = '!'
   let g:ale_fixers = {
     \ 'php': ['php_cs_fixer'],
     \ 'javascript': ['prettier'],
+    \ 'html': ['prettier'],
     \ }
 
   augroup fix_on_save
@@ -208,7 +215,6 @@ let g:phpactorPhpBin = '/usr/local/bin/php'
 let g:phpactorBranch = 'develop'
 let g:phpactorOmniAutoClassImport = v:true
 let g:phpactorOmniError = v:true
-let g:polyglot_disabled = ['jsx']
 let g:vim_jsx_pretty_colorful_config = v:true
 " }}}
 " Sneak: {{{
@@ -240,6 +246,7 @@ let test#vim#term_position = "belowleft"
     \    'layout': 'vertical',
     \}
 " }}}
+
 " Mappings  -------------------------------------------------------------------
 " General: {{{
 " Re-source vimrc
@@ -318,7 +325,7 @@ augroup END
 " }}}
 
 " ------------------------------------------------------------------------------
-" # Mappings
+" # Mapping
 " ------------------------------------------------------------------------------
 " Repeat macros for all selected lines
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
@@ -391,3 +398,14 @@ nnoremap <leader>bp :bprevious<CR>
 nnoremap <leader>bd :bdelete<CR>
 
 nnoremap <leader>i <C-a>
+
+
+" Enable Listener
+nmap <silent> <Leader>l :call system('open -g hammerspoon://enablePlayOnNoise')<CR>
+
+" Disable Listener
+nmap <silent> <Leader><Leader>l :call system('open -g hammerspoon://disablePlayOnNoise')<CR>
+
+"Reload Sizzy on Save
+nmap <silent> <Leader>n :w<CR>:call system('open -g hammerspoon://reloadSizzy')<CR>
+

@@ -19,7 +19,7 @@ I am using [vim-plug](https://github.com/junegunn/vim-plug) to manage my Vim plu
 - iTerm
 - tmux
 - zsh shell
-- [Pure Prompt](https://github.com/sindresorhus/pure)
+- [Starship Prompt](https://starship.rs/)
 
 ## Keyboard Mapping
 

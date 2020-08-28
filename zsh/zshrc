@@ -23,6 +23,7 @@ export PATH=${PATH}:~/Library/Android/sdk
 export PATH=${PATH}:~/Library/Android/sdk/platform-tools
 export PATH=${PATH}:~/go/bin
 export PATH=${PATH}:~/.dotfiles/bin
+export PATH=${PATH}:~/.emacs.d/bin
 
 
 # ------------------------------------------------------------------------------
@@ -32,9 +33,9 @@ export PATH=${PATH}:~/.dotfiles/bin
 export EDITOR="vim"
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES # Required for iterm shell integration
 export LANG=en_US.UTF-8
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+# HISTSIZE=10000
+# SAVEHIST=10000
+# HISTFILE=~/.cache/zsh/history
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
@@ -60,26 +61,23 @@ _comp_options+=(globdots)               # Include hidden files.
 
 
 # ------------------------------------------------------------------------------
-# Pure Prompt
+# Starship Prompt
 # ------------------------------------------------------------------------------
 
-autoload -U promptinit; promptinit
-prompt pure
-zstyle :prompt:pure:git:stash show yes # show the symbol when a stash exists
-
+eval "$(starship init zsh)"
 
 # ------------------------------------------------------------------------------
 # Vim Mode
 # ------------------------------------------------------------------------------
 
 bindkey -v # Enable vim mode in zsh
-export KEYTIMEOUT=1 # Remove mode switching delay.
+# export KEYTIMEOUT=1 # Remove mode switching delay.
 
 # Use HJKL in auto-complete menu selection
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
+# bindkey -M menuselect 'h' vi-backward-char
+# bindkey -M menuselect 'k' vi-up-line-or-history
+# bindkey -M menuselect 'l' vi-forward-char
+# bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
 # Edit line in Vim with CTRL-E

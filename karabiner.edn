@@ -15,6 +15,7 @@
 {:templates {:launch "open -a %s"
              :hs "open -g hammerspoon://%s"}
  :applications {:bear ["^net\\.shinyfrog\\.bear$"]
+                :keynote ["^com\\.apple\\.iWork\\.Keynote$"]
                 :slack ["^com\\.tinyspeck\\.slackmacgap$"]
                 :messages ["^com\\.apple\\.iChat$"]}
  :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}}
@@ -29,6 +30,7 @@
                  [:f [:launch "Brave\\ Browser"]] ; Open Brave
                  [:g [:hs "quickSlackReactEmoji"]] ; Wave goodbye to folks in Slack
                  [:h [:hs "navigateBack"]]
+                 [:i :!Sh :keynote]
                  [:i :!T9] ; Toggle iTerm with hotkey
                  [:j [:hs "navigateDownward"]]
                  [:k [:hs "navigateUpward"]]
@@ -61,10 +63,12 @@
         {:des "Super Duper Mode for Traversing Tmux"
          :rules [:super-duper
                  [:f [:!Ta :f :return_or_enter]] ; Find a window
-                 [:h [:!Ta :p]] ; Switch to the previous tmux window 
+                 [:open_bracket [:!Ta :p]] ; Switch to the previous tmux window 
+                 [:close_bracket [:!Ta :n]] ; Switch the the next tmux window
                  [:j [:!Ta :j]] ; Focus on the pane below current pane
                  [:k [:!Ta :k]] ; Focus on the pane above current pane
-                 [:l [:!Ta :n]] ; Switch the the next tmux window
+                 [:h [:!Ta :h]] ; Focus on the pane to the left of the current pane
+                 [:l [:!Ta :l]] ; Focus on the pane to the right of the current pane
                  [:o [:!Ta :z]] ; Zoom on current pane
                  [:r [:!Ta :r]] ; Reload the Matrix
                  [:hyphen [:!Ta :hyphen]] ; Split tmux window horizontally
