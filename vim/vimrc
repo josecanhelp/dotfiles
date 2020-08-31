@@ -62,7 +62,7 @@ set cursorline " Highlight current line
 set noswapfile
 set nowrap " Do not wrap the end of the line
 set number " Enable line numbers
-set relativenumber " Make the line numbers display relative numbers
+set norelativenumber " Make the line numbers display relative numbers
 set shiftwidth=4
 set noshowmode " Show the current mode
 set splitbelow " Open new files in horizontal splits to the bottom
@@ -399,7 +399,7 @@ nnoremap <leader>bd :bdelete<CR>
 
 nnoremap <leader>i <C-a>
 
-
+nnoremap <Leader>if :ALEFix<CR>k
 " Enable Listener
 nmap <silent> <Leader>l :call system('open -g hammerspoon://enablePlayOnNoise')<CR>
 
@@ -409,3 +409,15 @@ nmap <silent> <Leader><Leader>l :call system('open -g hammerspoon://disablePlayO
 "Reload Sizzy on Save
 nmap <silent> <Leader>n :w<CR>:call system('open -g hammerspoon://reloadSizzy')<CR>
 
+" Stolen from Jesse Leite:
+" https://github.com/jesseleite/dotfiles/blob/master/vim/local-config/filetype.vim
+augroup framework_filetype_settings
+  autocmd!
+  autocmd BufRead,BufNewFile *.blade.php setlocal commentstring={{--\ %s\ --}}
+  autocmd BufRead,BufNewFile *.antlers.html setlocal commentstring={{#\ %s\ #}}
+augroup END
+
+" HTML and CSS abbreviation expansion
+" Plugin: emmet
+imap <C-e> <plug>(emmet-expand-abbr)
+" imap <C-y>c  <plug>(emmet-code-pretty)
