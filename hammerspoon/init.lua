@@ -2,7 +2,7 @@
 -- JoseCanHelp - https://github.com/josecanhelp
 --
 -- This is my Hammerspoon init file. It is a big mix of inspiration from
--- others as well as my own work. Attributions and Insprations below.
+-- others as well as my own work. Attributions and Inspirations below.
 --
 -- Feel free to steal any of this and use it for your own workflow.
 --
@@ -479,6 +479,7 @@ hs.urlevent.bind('disablePlayOnNoise', function()
         listener:stop()
     end
 end)
+
 ----------------------------------------------------------------------------------------------------
 -- Misc. Functions
 --
@@ -489,14 +490,15 @@ end)
 -- Temporarily focus on Brave Browser and press the spacebar
 -- Pressing the spacebar is usually the command to start or stop video playback
 function togglePlayOnNoise(recognizerObject, command)
-    refocus = false
+    local refocus = false
+    local focusedApp = nil
 
     if not focusedWindowIs(brave) then
         refocus = true
-        focusedApp = hs.window:focusedWindow():application():bundleID()
+        local focusedApp = hs.window:focusedWindow():application():bundleID()
         hs.application.launchOrFocusByBundleID(brave)
     end
-    
+
     if command == 'start' or command == 'stop' then
         hs.eventtap.keyStroke({}, 'space')
     elseif command == 'back' then
@@ -512,6 +514,7 @@ end
 
 --------------------------------------------------------------------------------
 -- Attributions and Inspirations
--- Jesse Leite: https://github.com/jesseleite/dotfiles/tree/master/hammerspoon
+--
 -- Andrew Morgan: https://github.com/andrewmile/dotfiles/tree/master/hammerspoon
+-- Jesse Leite: https://github.com/jesseleite/dotfiles/tree/master/hammerspoon
 --------------------------------------------------------------------------------
