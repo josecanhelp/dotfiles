@@ -372,7 +372,7 @@ nnoremap <space>o  :<C-u>CocList outline<cr>
 nmap <Leader>g :Gedit :<CR>
 
 " Delete Buffer
-nmap <silent> <Leader>x :bd<CR>
+" nmap <silent> <Leader>x :bd<CR>
 
 " Delete Currently Open File and Buffer
 command! DELF :call delete(expand('%')) | bdelete
