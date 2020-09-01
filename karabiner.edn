@@ -18,20 +18,19 @@
                 :keynote ["^com\\.apple\\.iWork\\.Keynote$"]
                 :slack ["^com\\.tinyspeck\\.slackmacgap$"]
                 :messages ["^com\\.apple\\.iChat$"]}
-:devices {:corsair [{:product_id 6933 :vendor_id 6940}]}
- :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}}
+ :devices {:corsair [{:product_id 6933 :vendor_id 6940}]}
+ :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}
+          :tilde-mode {:key :grave_accent_and_tilde}}
  :simlayers {:v-mode {:key :v}
-             :quote-mode {:key :quote}}
- :simlayer-threshold 150
+             :launch-mode {:key :quote}}
+ :simlayer-threshold 350
  :main [{:des "Hyper Mode"
          :rules [:hyper-mode
-                 [:0 :f12] ; get app bundle ID from Alfred
+                 [:0 :f12] ; view desktop
                  [:a :!!a] ; get app bundle ID from Alfred
                  [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
-                 [:f [:launch "Brave\\ Browser"]] ; Open Brave
                  [:g [:hs "quickSlackReactEmoji"]] ; Wave goodbye to folks in Slack
                  [:h [:hs "navigateBack"]]
-                 [:i :!Sh :keynote]
                  [:i :!T9] ; Toggle iTerm with hotkey
                  [:j [:hs "navigateDownward"]]
                  [:k [:hs "navigateUpward"]]
@@ -42,8 +41,6 @@
                  [:o [:hs "openAnything"]]
                  [:p :!Cv] ; Paste
                  [:q :!Cw] ; Close the current window
-                 [:r [:launch "Bear.app"]] ; Open Bear Notes
-                 [:s [:launch "Slack.app"]] ; Open Slack
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
                  [:w [:hs "openWindowModal"]] ; Window Management
                  [:y [:hs "copyAnything"]]
@@ -92,7 +89,15 @@
                  [:h :left_arrow]
                  [:l :right_arrow]
                  [:j :down_arrow]]}
-        {:des "Quote mode for running commands"
-         :rules [:quote-mode
+        {:des "Launch Mode for opening up Applications"
+         :rules [:launch-mode
+                 [:r [:launch "Bear"]]
+                 [:f [:launch "Brave\\ Browser"]]
+                 [:i [:launch "iterm"]]
+                 [:s [:launch "Slack"]]
+                 [:o [:launch "OmniFocus"]]
+                 [:y [:launch "Sizzy"]]
+                 [:t [:launch "TablePlus"]]
+                 [:m [:launch "Messages"]]
                  [:z [:hs "debug-menu"]]
                  [:x [:hs "expose"]]]}]}
