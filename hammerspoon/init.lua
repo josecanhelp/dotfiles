@@ -143,12 +143,11 @@ end)
 -- placement by hitting the same key multiple times.
 ----------------------------------------------------------------------------------------------------
 
+-- Set up the grid and margins I want to use
 hs.grid.setGrid('30x20')
+hs.grid.setMargins('20x30')
 
-resetWhenSwitchingScreen(function ()
-  hs.grid.setMargins('20x30')
-end)
-
+-- Available positions for application windows
 positions = {
   full     = '0,0 30x20',
 
@@ -181,29 +180,37 @@ positions = {
   },
 }
 
+-- Splits (from positions above) that I'll make available to the modal keybindings
+local splits = { 'thirds', 'halves', 'twoThirds', }
+
 if spoon.WinWin then
+    -- Create a new Modal Manager
+    -- https://www.hammerspoon.org/Spoons/ModalMgr.html
     spoon.ModalMgr:new("windowM")
+
+    -- Grab the actual Modal
+    -- https://www.hammerspoon.org/docs/hs.hotkey.modal.html
     local cmodal = spoon.ModalMgr.modal_list["windowM"]
-    local modeText = hs.styledtext.new("Window", {
-        color = {hex = "#FFFFFF", alpha = 1},
-        backgroundColor = {hex = "#FFA500", alpha = 1},
-    })
 
-    local splits = { 'thirds', 'halves', 'twoThirds', }
-
+    -- Add hooks to the Modal to sync macOS menubar
     cmodal.entered = function()
-      activeModal = 'windowM'
-      modeMenuBar:setTitle(modeText)
+        activeModal = 'windowM'
+        local modeText = hs.styledtext.new("Window", {
+            color = {hex = "#FFFFFF", alpha = 1},
+            backgroundColor = {hex = "#FFA500", alpha = 1},
+        })
+        modeMenuBar:setTitle(modeText)
     end
-
     cmodal.exited = function()
-      activeModal = nil
-      modeMenuBar:setTitle('Normal')
+        activeModal = nil
+        modeMenuBar:setTitle('Normal')
     end
 
+    -- Modal Specific Binding
     cmodal:bind('', 'escape', 'Deactivate windowM', function() spoon.ModalMgr:deactivate({"windowM"}) end)
     cmodal:bind('', 'Q', 'Deactivate windowM', function() spoon.ModalMgr:deactivate({"windowM"}) end)
     cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
+    -- Positioning
     cmodal:bind('', 'F', 'Full Screen', chain({positions.full}))
     cmodal:bind('', 'H', 'Left Splits', chain(getPositions(splits, 'left')))
     cmodal:bind('', 'L', 'Right Splits', chain(getPositions(splits, 'right')))
@@ -214,24 +221,27 @@ if spoon.WinWin then
     cmodal:bind('', 'U', 'Upper Right Corner', chain(getPositions(splits, 'right', 'top')))
     cmodal:bind('', 'B', 'Bottom Left Corner', chain(getPositions(splits, 'left', 'bottom')))
     cmodal:bind('', 'N', 'Bottom Right Corner', chain(getPositions(splits, 'right', 'bottom')))
-
+    cmodal:bind('shift', 'S', 'Snap To Grid', function() snap() end)
+    -- Movement
     cmodal:bind('', 'W', 'Move Upward', function() spoon.WinWin:stepMove("up") end, nil, function() spoon.WinWin:stepMove("up") end)
     cmodal:bind('', 'A', 'Move Leftward', function() spoon.WinWin:stepMove("left") end, nil, function() spoon.WinWin:stepMove("left") end)
     cmodal:bind('', 'S', 'Move Downward', function() spoon.WinWin:stepMove("down") end, nil, function() spoon.WinWin:stepMove("down") end)
     cmodal:bind('', 'D', 'Move Rightward', function() spoon.WinWin:stepMove("right") end, nil, function() spoon.WinWin:stepMove("right") end)
     cmodal:bind('', 'C', 'Center Window', function()  spoon.WinWin:moveAndResize("center") end)
-
+    -- Sizing
     cmodal:bind('', '-', 'Shrink Inward', function() spoon.WinWin:moveAndResize("shrink") end, nil, function() spoon.WinWin:moveAndResize("shrink") end)
     cmodal:bind('shift', 'H', 'Resize Leftward', function() spoon.WinWin:stepResize("left") end, nil, function() spoon.WinWin:stepResize("left") end)
     cmodal:bind('shift', 'L', 'Resize Rightward', function() spoon.WinWin:stepResize("right") end, nil, function() spoon.WinWin:stepResize("right") end)
     cmodal:bind('shift', 'K', 'Resize Upward', function() spoon.WinWin:stepResize("up") end, nil, function() spoon.WinWin:stepResize("up") end)
     cmodal:bind('shift', 'J', 'Resize Downward', function() spoon.WinWin:stepResize("down") end, nil, function() spoon.WinWin:stepResize("down") end)
+    -- Monitor Movement
     cmodal:bind('', 'left', 'Move to Left Monitor', function()  spoon.WinWin:moveToScreen("left") end)
     cmodal:bind('', 'right', 'Move to Right Monitor', function()  spoon.WinWin:moveToScreen("right") end)
     cmodal:bind('', 'space', 'Move to Next Monitor', function()  spoon.WinWin:moveToScreen("next") end)
+    -- Cursor
     cmodal:bind('', '`', 'Center Cursor', function() spoon.WinWin:centerCursor() end)
-    cmodal:bind('shift', 'S', 'Snap To Grid', function() snap() end)
 
+    -- Listen for this binding invocation to activate modal
     hs.urlevent.bind('openWindowModal', function()
         spoon.ModalMgr:deactivateAll()
         spoon.ModalMgr:activate({"windowM"}, "#FFA500")
