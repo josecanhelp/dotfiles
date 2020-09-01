@@ -2,8 +2,9 @@
 -- JoseCanHelp - https://github.com/josecanhelp
 --
 -- This is my Hammerspoon init file. It is a big mix of inspiration from
--- others as well as my own work. Feel free to steal any of this and use
--- it for your own workflow. 
+-- others as well as my own work. Attributions and Insprations below.
+--
+-- Feel free to steal any of this and use it for your own workflow.
 --
 -- Find your own liberation from default keybindings.
 --------------------------------------------------------------------------------
@@ -12,23 +13,32 @@
 -- Dependencies
 ----------------------------------------------------------------------------------------------------
 
-local chain = require('chain')
 require('helpers')
 require('appBundles')
+local chain = require('chain')
 
 ----------------------------------------------------------------------------------------------------
 -- Local State
 ----------------------------------------------------------------------------------------------------
 
-activeModal = nil
+local activeModal = nil
+local hsapp_list = nil
+local hspoon_list = nil
+
+----------------------------------------------------------------------------------------------------
+-- Generic Settings
+----------------------------------------------------------------------------------------------------
+
+hs.hotkey.alertDuration = 0
+hs.window.animationDuration = 0
 
 ----------------------------------------------------------------------------------------------------
 -- Configuration File Auto-Reload
 ----------------------------------------------------------------------------------------------------
 
 -- Goku
-gokuWatcher = hs.pathwatcher.new(os.getenv('HOME') .. '/.config/karabiner.edn/', function ()
-    output = hs.execute('/usr/local/bin/goku')
+hs.pathwatcher.new(os.getenv('HOME') .. '/.config/karabiner.edn/', function ()
+    local output = hs.execute('/usr/local/bin/goku')
     hs.notify.new({title = 'Karabiner Config', informativeText = output}):send()
 end):start()
 
@@ -38,26 +48,25 @@ spoon.ReloadConfiguration:start()
 hs.notify.new({title = 'Hammerspoon', informativeText = 'Config loaded'}):send()
 
 ----------------------------------------------------------------------------------------------------
--- Add a menubar item to track currently enabled Mode
+-- Lazy Load Spoons that aren't needed on script initialization
 ----------------------------------------------------------------------------------------------------
-modeMenuBar = hs.menubar.new():setTitle('Normal');
-changeModeMenuBar = function(modeName) modeMenuBar:setTitle(modeName) end
 
-hs.loadSpoon("ModalMgr")
-
--- Define default Spoons which will be loaded later
 if not hspoon_list then
     hspoon_list = {
-        "WinWin",
+        'ModalMgr',
+        'WinWin',
     }
 end
 
--- Load those Spoons
 for _, v in pairs(hspoon_list) do
     hs.loadSpoon(v)
 end
 
-hs.hotkey.alertDuration = 0
+----------------------------------------------------------------------------------------------------
+-- Add a menubar item to track currently enabled Mode (Modal)
+----------------------------------------------------------------------------------------------------
+
+local modeMenuBar = hs.menubar.new():setTitle('Normal');
 
 ----------------------------------------------------------------------------------------------------
 -- App Modal
@@ -77,14 +86,15 @@ local modeText = hs.styledtext.new("App", {
     color = {hex = "#FFFFFF", alpha = 1},
     backgroundColor = {hex = "#0000FF", alpha = 1},
 })
-cmodal.entered = function() 
+cmodal.entered = function()
   activeModal = 'appM'
-  changeModeMenuBar(modeText) 
+    modeMenuBar:setTitle(modeText)
 end
-cmodal.exited = function() 
+cmodal.exited = function()
   activeModal = nil
-  changeModeMenuBar('Normal') 
+  modeMenuBar:setTitle('Normal')
 end
+
 
 if not hsapp_list then
     hsapp_list = {
@@ -129,11 +139,12 @@ end)
 -- Window Modal
 --
 -- This modal is used to manage the positioning of my application windows.
--- Is utilizes chaining to allow for toggling of 1/3, 1/2, 2/3 
+-- Is utilizes chaining to allow for toggling of 1/3, 1/2, 2/3
 -- placement by hitting the same key multiple times.
 ----------------------------------------------------------------------------------------------------
-hs.window.animationDuration = 0
+
 hs.grid.setGrid('30x20')
+
 resetWhenSwitchingScreen(function ()
   hs.grid.setMargins('20x30')
 end)
@@ -180,14 +191,14 @@ if spoon.WinWin then
 
     local splits = { 'thirds', 'halves', 'twoThirds', }
 
-    cmodal.entered = function() 
+    cmodal.entered = function()
       activeModal = 'windowM'
-      changeModeMenuBar(modeText) 
+      modeMenuBar:setTitle(modeText)
     end
 
-    cmodal.exited = function() 
+    cmodal.exited = function()
       activeModal = nil
-      changeModeMenuBar('Normal') 
+      modeMenuBar:setTitle('Normal')
     end
 
     cmodal:bind('', 'escape', 'Deactivate windowM', function() spoon.ModalMgr:deactivate({"windowM"}) end)
@@ -228,9 +239,26 @@ if spoon.WinWin then
 end
 
 ----------------------------------------------------------------------------------------------------
--- Finally we initialize ModalMgr supervisor
+-- Initialize ModalMgr Supervisor
+----------------------------------------------------------------------------------------------------
+
 spoon.ModalMgr.supervisor:enter()
 
+----------------------------------------------------------------------------------------------------
+-- Hammerspoon URL Event Bindings
+-- 
+-- This is a list of event bindings that can be invoked from anywhere
+-- using the hammerspoon url protocol:
+-- hammerspoon://hitMe
+--
+-- If there is a binding like below, then the callback function will run
+-- hs.urlevent.bind('hitMe', function()...
+--
+-- Examples of invoking this binding:
+-- alfred: Open URL Action -> hammerspoon://hitMe
+-- bash: open -g hammerspoon://hitMe
+-- goku/karabiner: hyper + h -> [:hs "hitMe"]
+----------------------------------------------------------------------------------------------------
 
 -- This is almost unfair
 hs.urlevent.bind('quickSlackReactEmoji', function()
@@ -276,7 +304,7 @@ hs.urlevent.bind('deleteAnything', function()
     if appIs(bear) then
         -- Delete the currently opened note and go back to default screen
         hs.eventtap.keyStroke({'shift', 'cmd', 'option'}, 'i')
-        noteId = hs.pasteboard.getContents();
+        local noteId = hs.pasteboard.getContents();
         hs.urlevent.openURL('bear://x-callback-url/trash?id=' .. noteId)
         hs.urlevent.openURL('bear://x-callback-url/search')
     end
@@ -398,7 +426,7 @@ hs.urlevent.bind('openCommandPalette', function()
 end)
 
 hs.urlevent.bind('copyAnything', function()
-    text = getSelectedText(true)
+    local text = getSelectedText(true)
     if text then
         -- Already in clipboard, do not reset
     elseif appIs(bear) then
@@ -431,8 +459,26 @@ hs.urlevent.bind('createOmniEODTask', function(hsFnName, payload)
     hs.urlevent.openURL('omnifocus:///add?name=Write%20EOD%20&due=today%206pm&project=Tighten%3A%20Admin&reveal-new-item=false&autosave=true&note=hammerspoon://hitMe')
 end)
 
+hs.urlevent.bind('enablePlayOnNoise', function()
+    listener = hs.speech.listener.new("SpeechToPlay")
+    listener:commands({'start', 'stop', 'back', 'forward'})
+    listener:setCallback(togglePlayOnNoise)
+    listener:start()
+end)
 
--- Callback Function to focus on Brave Browser and press the spacebar
+hs.urlevent.bind('disablePlayOnNoise', function()
+    if listener and listener:isListening() then
+        listener:stop()
+    end
+end)
+----------------------------------------------------------------------------------------------------
+-- Misc. Functions
+--
+-- Functions that I use in my Hammerspoon script, but don't feel the need
+-- to break it out into a separate .lua file to import
+------------------------------------------------------------------------------------------------------
+
+-- Temporarily focus on Brave Browser and press the spacebar
 -- Pressing the spacebar is usually the command to start or stop video playback
 function togglePlayOnNoise(recognizerObject, command)
     refocus = false
@@ -456,23 +502,8 @@ function togglePlayOnNoise(recognizerObject, command)
     end
 end
 
--- I can hit this binding via Alfred with hammerspoon://enablePlayOnNoise
-hs.urlevent.bind('enablePlayOnNoise', function()
-    listener = hs.speech.listener.new("SpeechToPlay")
-    listener:commands({'start', 'stop', 'back', 'forward'})
-    listener:setCallback(togglePlayOnNoise)
-    listener:start()
-end)
-
--- I can hit this binding via Alfred with hammerspoon://disablePlayOnNoise
-hs.urlevent.bind('disablePlayOnNoise', function()
-    if listener and listener:isListening() then
-        listener:stop()
-    end
-end)
-
 --------------------------------------------------------------------------------
--- Attribution and Inspirations
+-- Attributions and Inspirations
 -- Jesse Leite: https://github.com/jesseleite/dotfiles/tree/master/hammerspoon
 -- Andrew Morgan: https://github.com/andrewmile/dotfiles/tree/master/hammerspoon
 --------------------------------------------------------------------------------

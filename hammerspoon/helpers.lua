@@ -16,7 +16,6 @@ function sleep(milliseconds)
   hs.timer.usleep(milliseconds * 1000)
 end
 
-
 --------------------------------------------------------------------------------
 -- Grid Helpers
 --------------------------------------------------------------------------------
@@ -71,7 +70,6 @@ function getPositions(sizes, leftOrRight, topOrBottom)
   return map(applyLeftOrRight, sizes)
 end
 
-
 --------------------------------------------------------------------------------
 -- Screen Helpers
 --------------------------------------------------------------------------------
@@ -83,7 +81,6 @@ function resetWhenSwitchingScreen(f)
     f()
   end):start()
 end
-
 
 --------------------------------------------------------------------------------
 -- Layout Helpers
@@ -155,11 +152,11 @@ end
 --------------------------------------------------------------------------------
 
 function getSelectedText(copying)
-    original = hs.pasteboard.getContents()
+    local original = hs.pasteboard.getContents()
     hs.pasteboard.clearContents()
     hs.eventtap.keyStroke({'cmd'}, 'C')
-    text = hs.pasteboard.getContents()
-    finderFileSelected = false
+    local text = hs.pasteboard.getContents()
+    local finderFileSelected = false
     for k,v in pairs(hs.pasteboard.contentTypes()) do
         if v == 'public.file-url' then
             finderFileSelected = true
