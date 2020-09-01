@@ -246,18 +246,26 @@ spoon.ModalMgr.supervisor:enter()
 
 ----------------------------------------------------------------------------------------------------
 -- Hammerspoon URL Event Bindings
--- 
--- This is a list of event bindings that can be invoked from anywhere
--- using the hammerspoon url protocol:
+--
+-- This is a list of event bindings that can be invoked
+-- from anywhere using the hammerspoon url protocol:
+--
 -- hammerspoon://hitMe
 --
--- If there is a binding like below, then the callback function will run
+-- If the above protocol is accessed, then the binding below
+-- will invoke the asssociated callback function:
+--
 -- hs.urlevent.bind('hitMe', function()...
 --
--- Examples of invoking this binding:
+-- Examples of invoking a url binding:
+--
 -- alfred: Open URL Action -> hammerspoon://hitMe
 -- bash: open -g hammerspoon://hitMe
+-- browser: go to hammerspoon://hitMe
 -- goku/karabiner: hyper + h -> [:hs "hitMe"]
+--
+-- The true power here is in having each callback do something different
+-- depending on the app in focus at the time of invocation.
 ----------------------------------------------------------------------------------------------------
 
 -- This is almost unfair
