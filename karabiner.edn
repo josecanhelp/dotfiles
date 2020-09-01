@@ -36,8 +36,8 @@
                  [:k [:hs "navigateUpward"]]
                  [:l [:hs "navigateForward"]]
                  [:m [:hs "toggleSidebar"]]
-                 [:n [:hs "createNewThing"]]
-                 [:delete_or_backspace [:hs "deleteThing"]]
+                 [:n [:hs "createAnything"]]
+                 [:delete_or_backspace [:hs "deleteAnything"]]
                  [:o [:hs "openAnything"]]
                  [:p :!Cv] ; Paste
                  [:q :!Cw] ; Close the current window

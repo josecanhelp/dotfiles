@@ -1,23 +1,42 @@
-local chain = require('chain')
+--------------------------------------------------------------------------------
+-- JoseCanHelp - https://github.com/josecanhelp
+--
+-- This is my Hammerspoon init file. It is a big mix of inspiration from
+-- others as well as my own work. Feel free to steal any of this and use
+-- it for your own workflow. 
+--
+-- Find your own liberation from default keybindings.
+--------------------------------------------------------------------------------
 
+----------------------------------------------------------------------------------------------------
+-- Dependencies
+----------------------------------------------------------------------------------------------------
+
+local chain = require('chain')
 require('helpers')
 require('appBundles')
 
+----------------------------------------------------------------------------------------------------
+-- Local State
+----------------------------------------------------------------------------------------------------
 
 activeModal = nil
 
-function getBundleId()
-    return hs.application.frontmostApplication():bundleID();
-end
+----------------------------------------------------------------------------------------------------
+-- Configuration File Auto-Reload
+----------------------------------------------------------------------------------------------------
 
+-- Goku
 gokuWatcher = hs.pathwatcher.new(os.getenv('HOME') .. '/.config/karabiner.edn/', function ()
     output = hs.execute('/usr/local/bin/goku')
     hs.notify.new({title = 'Karabiner Config', informativeText = output}):send()
 end):start()
 
+-- Hammerspoon
 hs.loadSpoon('ReloadConfiguration')
 spoon.ReloadConfiguration:start()
 hs.notify.new({title = 'Hammerspoon', informativeText = 'Config loaded'}):send()
+
 ----------------------------------------------------------------------------------------------------
 -- Add a menubar item to track currently enabled Mode
 ----------------------------------------------------------------------------------------------------
@@ -39,24 +58,15 @@ for _, v in pairs(hspoon_list) do
 end
 
 hs.hotkey.alertDuration = 0
-hs.hints.showTitleThresh = 0
-hs.hints.style = 'vimperator'
 
 ----------------------------------------------------------------------------------------------------
--- Register modal keybindings environments.
+-- App Modal
+--
+-- This modal is used to open apps that are accessed semi-often:
+-- Not often enough to warrant a direct hyper-key shortcut but
+-- often enough that I don't want to use Alfred to open them
 ----------------------------------------------------------------------------------------------------
--- Register windowHints (Register a keybinding which is NOT modal environment with modal supervisor)
--- This is done to deactivate all current modals to display the hints
-hswhints_keys = hswhints_keys or {"alt", "j"}
-if string.len(hswhints_keys[2]) > 0 then
-    -- Show Window Hints
-    spoon.ModalMgr.supervisor:bind(hswhints_keys[1], hswhints_keys[2], nil, function()
-        spoon.ModalMgr:deactivateAll()
-        hs.hints.windowHints()
-    end)
-end
 
-----------------------------------------------------------------------------------------------------
 spoon.ModalMgr:new("appM")
 local cmodal = spoon.ModalMgr.modal_list["appM"]
 cmodal:bind('', 'escape', 'Deactivate appM', function() spoon.ModalMgr:deactivate({"appM"}) end)
@@ -116,9 +126,12 @@ hs.urlevent.bind('openAppModal', function()
 end)
 
 ----------------------------------------------------------------------------------------------------
--- windowM modal environment
+-- Window Modal
+--
+-- This modal is used to manage the positioning of my application windows.
+-- Is utilizes chaining to allow for toggling of 1/3, 1/2, 2/3 
+-- placement by hitting the same key multiple times.
 ----------------------------------------------------------------------------------------------------
-
 hs.window.animationDuration = 0
 hs.grid.setGrid('30x20')
 resetWhenSwitchingScreen(function ()
@@ -218,62 +231,6 @@ end
 -- Finally we initialize ModalMgr supervisor
 spoon.ModalMgr.supervisor:enter()
 
-local function has_value(tab, val)
-    for index, value in ipairs(tab) do
-        if value == val then
-            return true
-        end
-    end
-
-    return false
-end
-
-function appIs(bundle)
-    return hs.application.frontmostApplication():bundleID() == bundle
-end
-
-function appIncludes(bundles)
-    return has_value(bundles, hs.application.frontmostApplication():bundleID())
-end
-
-function focusedWindowIs(bundle)
-    return hs.window:focusedWindow():application():bundleID() == bundle
-end
-
-function getSelectedText(copying)
-    original = hs.pasteboard.getContents()
-    hs.pasteboard.clearContents()
-    hs.eventtap.keyStroke({'cmd'}, 'C')
-    text = hs.pasteboard.getContents()
-    finderFileSelected = false
-    for k,v in pairs(hs.pasteboard.contentTypes()) do
-        if v == 'public.file-url' then
-            finderFileSelected = true
-        end
-    end
-
-    if not copying and finderFileSelected then
-        text = 'finderFileSelected'
-    end
-
-    if not copying then
-        hs.pasteboard.setContents(original)
-    end
-
-    return text
-end
-
-function triggerAlfredSearch(search)
-    hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to search "' .. search ..' "')
-end
-
-function triggerAlfredWorkflow(workflow, trigger, arg)
-    if (arg) then
-        hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '" with argument "' .. arg .. ' "')
-    else
-        hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '"')
-    end
-end
 
 -- This is almost unfair
 hs.urlevent.bind('quickSlackReactEmoji', function()
@@ -305,7 +262,7 @@ hs.urlevent.bind('expose', function()
     end
 end)
 
-hs.urlevent.bind('createNewThing', function()
+hs.urlevent.bind('createAnything', function()
     if appIs(omnifocus) then
         hs.eventtap.keyStroke({'ctrl', 'option'}, 'space')
     elseif appIs(bear) then
@@ -315,7 +272,7 @@ hs.urlevent.bind('createNewThing', function()
     end
 end)
 
-hs.urlevent.bind('deleteThing', function()
+hs.urlevent.bind('deleteAnything', function()
     if appIs(bear) then
         -- Delete the currently opened note and go back to default screen
         hs.eventtap.keyStroke({'shift', 'cmd', 'option'}, 'i')
@@ -444,21 +401,6 @@ hs.urlevent.bind('copyAnything', function()
     text = getSelectedText(true)
     if text then
         -- Already in clipboard, do not reset
-    elseif appIs(spotify) then
-        hs.osascript.applescript([[
-            tell application "Spotify"
-                set theTrack to name of the current track
-                set theArtist to artist of the current track
-                set theAlbum to album of the current track
-                set track_id to id of current track
-            end tell
-            set AppleScript's text item delimiters to ":"
-            set track_id to third text item of track_id
-            set AppleScript's text item delimiters to {""}
-            set realurl to ("https://open.spotify.com/track/" & track_id)
-            set theString to theTrack & " by " & theArtist & ": " & realurl
-            set the clipboard to theString
-        ]])
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'cmd', 'option', 'shift'}, 'l') -- Copy link to note
     elseif appIs(brave) then
@@ -485,68 +427,8 @@ hs.urlevent.bind('toggleBreakTime', function()
     end
 end)
 
-hs.urlevent.bind('widgetTest', function()
-    local status, response, description = hs.osascript.javascript([[
-        breaktime.enabled()
-    ]])
-     return description;
-end)
-
-
-slackMenuBarStyledText1 = hs.styledtext.new("1", {
-    color = {hex = "#000000", alpha = 1},
-    backgroundColor = {hex = "#FFFFFF", alpha = 1},
-})
-
-slackMenuBarStyledText2 = hs.styledtext.new("/", {
-    color = {hex = "#000000", alpha = 1},
-    backgroundColor = {hex = "#FFFFFF", alpha = 1},
-})
-
-slackMenuBarStyledText3 = hs.styledtext.new("2", {
-    color = {hex = "#FF0000", alpha = 1},
-    backgroundColor = {hex = "#FFFFFF", alpha = 1},
-})
--- print(hs.inspect.inspect(slackMenuBarStyledText1))
-function slackMenuBarText()
-    if slackMenuBarStyledText3:getString() == "0" then 
-        slackMenuBarStyledText3 = slackMenuBarStyledText3:setStyle({
-            color = {hex = "#000000", alpha = 1},
-            backgroundColor = {hex = "#FFFFFF", alpha = 1},
-        }) 
-    end
-
-    return slackMenuBarStyledText1..slackMenuBarStyledText2..slackMenuBarStyledText3
-end
-
--- hs.menubar.new()
-    -- :setIcon(hs.image.imageFromURL("https://cdn.freebiesupply.com/logos/large/2x/slack-1-logo-png-transparent.png")
-    -- :setSize({w=16,h=16}))
-    -- :setTitle(slackMenuBarText())
-    --
-
 hs.urlevent.bind('createOmniEODTask', function(hsFnName, payload)
     hs.urlevent.openURL('omnifocus:///add?name=Write%20EOD%20&due=today%206pm&project=Tighten%3A%20Admin&reveal-new-item=false&autosave=true&note=hammerspoon://hitMe')
-end)
-
-hs.urlevent.bind('hitMe', function(hsFnName, payload)
-    -- hs.osascript.javascript('Application("Docker").quit()')
-end)
-
-hs.urlevent.bind('reloadSizzy', function()
-    refocus = false
-
-    if not focusedWindowIs(sizzy) then
-        refocus = true
-        focusedApp = hs.window:focusedWindow():application():bundleID()
-        hs.application.launchOrFocus("sizzy")
-    end
-
-    hs.eventtap.keyStroke({'cmd'}, 'r')
-
-    if refocus then
-        hs.application.launchOrFocusByBundleID(focusedApp)
-    end
 end)
 
 
@@ -588,3 +470,9 @@ hs.urlevent.bind('disablePlayOnNoise', function()
         listener:stop()
     end
 end)
+
+--------------------------------------------------------------------------------
+-- Attribution and Inspirations
+-- Jesse Leite: https://github.com/jesseleite/dotfiles/tree/master/hammerspoon
+-- Andrew Morgan: https://github.com/andrewmile/dotfiles/tree/master/hammerspoon
+--------------------------------------------------------------------------------

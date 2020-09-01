@@ -76,14 +76,6 @@ end
 -- Screen Helpers
 --------------------------------------------------------------------------------
 
-function largeOrSmallScreen(large, small)
-  if hs.screen.mainScreen():name() == 'Color LCD' then
-    return large
-  end
-
-  return small
-end
-
 function resetWhenSwitchingScreen(f)
   f()
 
@@ -110,4 +102,77 @@ end
 
 function resetLayout()
   currentLayout = nil
+end
+
+--------------------------------------------------------------------------------
+-- App/Window Helpers
+--------------------------------------------------------------------------------
+
+function has_value(tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
+function appIs(bundle)
+    return hs.application.frontmostApplication():bundleID() == bundle
+end
+
+function appIncludes(bundles)
+    return has_value(bundles, hs.application.frontmostApplication():bundleID())
+end
+
+function focusedWindowIs(bundle)
+    return hs.window:focusedWindow():application():bundleID() == bundle
+end
+
+function getBundleId()
+    return hs.application.frontmostApplication():bundleID();
+end
+
+--------------------------------------------------------------------------------
+-- Alfred Helpers
+--------------------------------------------------------------------------------
+
+function triggerAlfredSearch(search)
+    hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to search "' .. search ..' "')
+end
+
+function triggerAlfredWorkflow(workflow, trigger, arg)
+    if (arg) then
+        hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '" with argument "' .. arg .. ' "')
+    else
+        hs.osascript.applescript('tell application id "com.runningwithcrayons.Alfred" to run trigger "' .. trigger .. '" in workflow "' .. workflow .. '"')
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Clipboard Helpers
+--------------------------------------------------------------------------------
+
+function getSelectedText(copying)
+    original = hs.pasteboard.getContents()
+    hs.pasteboard.clearContents()
+    hs.eventtap.keyStroke({'cmd'}, 'C')
+    text = hs.pasteboard.getContents()
+    finderFileSelected = false
+    for k,v in pairs(hs.pasteboard.contentTypes()) do
+        if v == 'public.file-url' then
+            finderFileSelected = true
+        end
+    end
+
+    if not copying and finderFileSelected then
+        text = 'finderFileSelected'
+    end
+
+    if not copying then
+        hs.pasteboard.setContents(original)
+    end
+
+    return text
 end
