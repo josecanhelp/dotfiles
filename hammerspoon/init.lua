@@ -150,7 +150,7 @@ resetWhenSwitchingScreen(function ()
 end)
 
 positions = {
-  full     = '0,0 30x10',
+  full     = '0,0 30x20',
 
   center = {
     wide   = '2,1 26x18',
