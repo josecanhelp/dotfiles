@@ -21,13 +21,15 @@ end
 --------------------------------------------------------------------------------
 
 function moveApp(application, cell)
-  local app = hs.application.get(application)
+  local app = hs.application.get(application) or hs.application.open(application)
   if app == nil then
     return false
   end
   local window = hs.application.mainWindow(app)
   if window then
     hs.grid.set(window, cell, hs.screen.mainScreen())
+    hs.application.unhide(app)
+    hs.application.activate(app)
   end
 end
 

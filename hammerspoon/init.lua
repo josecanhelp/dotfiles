@@ -31,6 +31,7 @@ local hspoon_list = nil
 
 hs.hotkey.alertDuration = 0
 hs.window.animationDuration = 0
+hs.application.enableSpotlightForNameSearches(true)
 
 ----------------------------------------------------------------------------------------------------
 -- Configuration File Auto-Reload
@@ -145,7 +146,7 @@ end)
 
 -- Set up the grid and margins I want to use
 hs.grid.setGrid('30x20')
-hs.grid.setMargins('20x30')
+hs.grid.setMargins({x=28, y=28})
 
 -- Available positions for application windows
 positions = {
@@ -247,6 +248,71 @@ if spoon.WinWin then
         spoon.ModalMgr:activate({"windowM"}, "#FFA500")
     end)
 end
+
+----------------------------------------------------------------------------------------------------
+-- Layout Modal
+--
+-- This modal is used to snap multiple windows to specific locations
+-- depending on the hotkey selected.
+----------------------------------------------------------------------------------------------------
+
+spoon.ModalMgr:new("layoutM")
+local cmodal = spoon.ModalMgr.modal_list["layoutM"]
+cmodal:bind('', 'escape', 'Deactivate layoutM', function() spoon.ModalMgr:deactivate({"layoutM"}) end)
+cmodal:bind('', 'Q', 'Deactivate layoutM', function() spoon.ModalMgr:deactivate({"layoutM"}) end)
+cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
+
+local modeText = hs.styledtext.new("Layout", {
+    color = {hex = "#FFFFFF", alpha = 1},
+    backgroundColor = {hex = "#FF00FF", alpha = 1},
+})
+cmodal.entered = function()
+  activeModal = 'layoutM'
+    modeMenuBar:setTitle(modeText)
+end
+cmodal.exited = function()
+  activeModal = nil
+  modeMenuBar:setTitle('Normal')
+end
+
+currentLayout = nil
+
+layouts = {
+  a = function ()
+    moveApp('Discord', '0,10 12x10')
+    moveApp('Slack', '0,0 12x10')
+    moveApp('Brave Browser', '12,0 20x20')
+  end,
+
+  chat = function ()
+    moveApp('YT Music', '0,0 12x10')
+    moveApp('Discord', '0,10 12x10')
+    moveApp('Messages', '12,0 10x10')
+    moveApp('Slack', '12,10 10x10')
+    moveApp('WhatsApp', '22,0 8x10')
+    moveApp('Telegram', '22,10 8x10')
+  end,
+}
+
+cmodal:bind('', 'S', 'Standard Layout', function() setLayoutAndDeactivate('a', true) end)
+cmodal:bind('', 'C', 'Chat-centric', function() setLayoutAndDeactivate('chat') end)
+cmodal:bind('', 'R', 'Reset Layout', function() resetLayout() ; spoon.ModalMgr:deactivate({"layoutM"}) end)
+
+function setLayoutAndDeactivate(layoutKey, saveCurrentLayout)
+    -- First hide all opened windows
+    for index, value in ipairs(hs.window.visibleWindows()) do
+        value:application():hide()
+    end
+    -- Then set the layout
+    setLayout(layoutKey, saveCurrentLayout)
+    -- Finally, deactivate the modal
+    spoon.ModalMgr:deactivate({"layoutM"})
+end
+
+hs.urlevent.bind('enableLayoutM', function()
+    spoon.ModalMgr:deactivateAll()
+    spoon.ModalMgr:activate({"layoutM"}, "#FF00FF", false)
+end)
 
 ----------------------------------------------------------------------------------------------------
 -- Initialize ModalMgr Supervisor

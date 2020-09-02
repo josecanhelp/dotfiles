@@ -44,6 +44,7 @@
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
                  [:w [:hs "openWindowModal"]] ; Window Management
                  [:y [:hs "copyAnything"]]
+                 [:x [:hs "enableLayoutM"]]
                  [:quote [:hs "openCommandPalette"]]
                  [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
                  [:semicolon :!!semicolon] ; open Alfred
@@ -91,13 +92,15 @@
                  [:j :down_arrow]]}
         {:des "Launch Mode for opening up Applications"
          :rules [:launch-mode
-                 [:r [:launch "Bear"]]
+                 [:d [:launch "Discord"]]
                  [:f [:launch "Brave\\ Browser"]]
+                 [:h [:launch "Sketch"]]
                  [:i [:launch "iterm"]]
-                 [:s [:launch "Slack"]]
-                 [:o [:launch "OmniFocus"]]
-                 [:y [:launch "Sizzy"]]
-                 [:t [:launch "TablePlus"]]
                  [:m [:launch "Messages"]]
+                 [:o [:launch "OmniFocus"]]
+                 [:r [:launch "Bear"]]
+                 [:s [:launch "Slack"]]
+                 [:t [:launch "TablePlus"]]
+                 [:y [:launch "YT\\ Music"]]
                  [:z [:hs "debug-menu"]]
                  [:x [:hs "expose"]]]}]}
