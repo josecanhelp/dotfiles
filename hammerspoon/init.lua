@@ -16,6 +16,7 @@
 require('helpers')
 require('appBundles')
 local chain = require('chain')
+require('experimental')
 
 ----------------------------------------------------------------------------------------------------
 -- Local State
@@ -145,44 +146,59 @@ end)
 ----------------------------------------------------------------------------------------------------
 
 -- Set up the grid and margins I want to use
-hs.grid.setGrid('30x20')
-hs.grid.setMargins({x=28, y=28})
+hs.grid.setGrid('10x4')
+hs.grid.setMargins({x=10, y=10})
+
+hs.grid.HINTS={
+    { 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10' },
+    {  '1',  '2',  '3',  '4',  '5',  '6', '7', '8', '9', '0' },
+    {  'Q',  'W',  'E',  'R',  'T',  'Y', 'U', 'I', 'O', 'P' },
+    {  'A',  'S',  'D',  'F',  'G',  'H', 'J', 'K', 'L', ';' },
+    {  'Z',  'X',  'C',  'V',  'B',  'N', 'M', ',', '.', '/' },
+}
 
 -- Available positions for application windows
 positions = {
-  full     = '0,0 30x20',
+  full     = '0,0 10x4',
 
-  center = {
-    wide   = '2,1 26x18',
-    normal = '6,1 18x18',
-    narrow = '10,1 10x18',
+  tenths2 = {
+    left   = '0,0 2x4',
+    right   = '8,0 2x4',
+  },
+  tenths3 = {
+    left   = '0,0 3x4',
+    right   = '7,0 3x4',
+  },
+  tenths4 = {
+    left   = '0,0 4x4',
+    right   = '6,0 4x4',
+  },
+  tenths5 = {
+    left   = '0,0 5x4',
+    right   = '5,0 5x4',
   },
 
-  thirds = {
-    left   = '0,0 10x20',
-    center = '10,0 10x20',
-    right  = '20,0 10x20',
+  fourths1 = {
+    top      = '0,0 10x1',
+    bottom   = '0,3 10x1',
   },
-
-  halves = {
-    left   = '0,0 15x20',
-    right  = '15,0 15x20',
+  fourths2 = {
+    top      = '0,0 10x2',
+    bottom   = '0,2 10x2',
   },
-
-  twoThirds = {
-    left   = '0,0 20x20',
-    right  = '10,0 20x20',
+  fourths3 = {
+    top      = '0,0 10x3',
+    bottom   = '0,1 10x3',
   },
-
-  fourFifths = {
-    left   = '0,0 24x20',
-    center = '3,0 24x20',
-    right  = '6,0 24x20',
+  fourths4 = {
+    top      = '0,0 10x4',
+    bottom   = '0,0 10x4',
   },
 }
 
 -- Splits (from positions above) that I'll make available to the modal keybindings
-local splits = { 'thirds', 'halves', 'twoThirds', }
+local lrsplits = { 'tenths2', 'tenths3', 'tenths4', 'tenths5' }
+local tbsplits = { 'fourths1', 'fourths2', 'fourths3', 'fourths4' }
 
 if spoon.WinWin then
     -- Create a new Modal Manager
@@ -213,16 +229,17 @@ if spoon.WinWin then
     cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
     -- Positioning
     cmodal:bind('', 'F', 'Full Screen', chain({positions.full}))
-    cmodal:bind('', 'H', 'Left Splits', chain(getPositions(splits, 'left')))
-    cmodal:bind('', 'L', 'Right Splits', chain(getPositions(splits, 'right')))
-    cmodal:bind('', 'J', 'Bottom Splits', chain(getPositions(splits, 'center', 'bottom')))
-    cmodal:bind('', 'K', 'Top Splits', chain(getPositions(splits, 'center', 'top')))
-    cmodal:bind('', 'M', 'Center Middle', chain(getPositions(splits, 'center')))
-    cmodal:bind('', 'Y', 'Upper Left Corner', chain(getPositions(splits, 'left', 'top')))
-    cmodal:bind('', 'U', 'Upper Right Corner', chain(getPositions(splits, 'right', 'top')))
-    cmodal:bind('', 'B', 'Bottom Left Corner', chain(getPositions(splits, 'left', 'bottom')))
-    cmodal:bind('', 'N', 'Bottom Right Corner', chain(getPositions(splits, 'right', 'bottom')))
+    cmodal:bind('', 'H', 'Left Splits', chain(getPositions(lrsplits, 'left')))
+    cmodal:bind('', 'L', 'Right Splits', chain(getPositions(lrsplits, 'right')))
+    cmodal:bind('', 'J', 'Bottom Splits', chain(getPositions(tbsplits, 'bottom')))
+    cmodal:bind('', 'K', 'Top Splits', chain(getPositions(tbsplits, 'top')))
+    cmodal:bind('', 'M', 'Center Middle', chain(getPositions(lrsplits, 'center')))
+    cmodal:bind('', 'Y', 'Upper Left Corner', chain(getPositions(lrsplits, 'left', 'top')))
+    cmodal:bind('', 'U', 'Upper Right Corner', chain(getPositions(lrsplits, 'right', 'top')))
+    cmodal:bind('', 'B', 'Bottom Left Corner', chain(getPositions(lrsplits, 'left', 'bottom')))
+    cmodal:bind('', 'N', 'Bottom Right Corner', chain(getPositions(lrsplits, 'right', 'bottom')))
     cmodal:bind('shift', 'S', 'Snap To Grid', function() snap() end)
+    cmodal:bind('', 'X', 'Interactive', function() spoon.ModalMgr:deactivate({"windowM"}) ; hs.grid.show(nil, true) end)
     -- Movement
     cmodal:bind('', 'W', 'Move Upward', function() spoon.WinWin:stepMove("up") end)
     cmodal:bind('', 'A', 'Move Leftward', function() spoon.WinWin:stepMove("left") end)
@@ -278,10 +295,10 @@ end
 currentLayout = nil
 
 layouts = {
-  a = function ()
-    moveApp('Discord', '0,10 12x10')
+  standard = function ()
     moveApp('Slack', '0,0 12x10')
     moveApp('Brave Browser', '12,0 20x20')
+    moveApp('Iterm', '0,10 12x10')
   end,
 
   chat = function ()
@@ -294,7 +311,7 @@ layouts = {
   end,
 }
 
-cmodal:bind('', 'S', 'Standard Layout', function() setLayoutAndDeactivate('a', true) end)
+cmodal:bind('', 'S', 'Standard Layout', function() setLayoutAndDeactivate('standard', true) end)
 cmodal:bind('', 'C', 'Chat-centric', function() setLayoutAndDeactivate('chat') end)
 cmodal:bind('', 'R', 'Reset Layout', function() resetLayout() ; spoon.ModalMgr:deactivate({"layoutM"}) end)
 
