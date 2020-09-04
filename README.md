@@ -1,6 +1,12 @@
-# JoseCanHelp Dotfiles
-
 ![](./dotfiles.png)
+
+# JoseCanHelp
+
+I'm a vim-loving dev and I try my best to automate as much as I can. Hopefully, you find a golden nugget here and there as you search for ways to improve your configurations.
+
+Find me on [twitter](https://twitter.com/josecanhelp).
+
+If you happen to copy anything from this repository or if you are inspired by this repository to do something your own customized way, please link back to this repo in yours. I will do the same for the folks I have "borrowed" from. Cheers!
 
 ## Framework
 
