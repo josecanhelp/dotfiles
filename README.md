@@ -1,5 +1,9 @@
 ![](./dotfiles.png)
 
+my hard work / 
+by these words guarded /
+please steal. (c) JoseCanHelp
+
 # JoseCanHelp
 
 I'm a vim-loving dev and I try my best to automate as much as I can. Hopefully, you find a golden nugget here and there as you search for ways to improve your configurations.
