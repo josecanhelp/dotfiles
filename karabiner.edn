@@ -44,20 +44,21 @@
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
                  [:w [:hs "openWindowModal"]] ; Window Management
                  [:y [:hs "copyAnything"]]
-                 [:x [:hs "enableLayoutM"]]
+                 ; [:x [:hs "enableLayoutM"]]
                  [:quote [:hs "openCommandPalette"]]
                  [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
                  [:semicolon :!!semicolon] ; open Alfred
                  ]}
-        {:des "Corsair Keyboard - Map Option to Command"
-         :rules [[:left_option :left_command [:corsair]]]}
-        {:des "Corsair Keyboard - Map Command to Option"
-         :rules [[:left_command :left_option [:corsair]]]}
         {:des "ASDF Mode"
          :rules [[{:sim [:a :s :d :f] :simo {:interrupt true
                                              :dorder :insensitive
                                              :uorder :insensitive
                                              :afterup {:set ["asdf-mode" 0]}}} {:set ["asdf-mode" 1]}]]}
+        {:des "Simultaneous v + l --> Wave" ; Experimental
+         :rules [[{:sim [:v :l] :simo {:interrupt true
+                                       :dorder :insensitive
+                                       :uorder :insensitive
+                                       :afterup {:set ["auto-wave" 0]}}} {:set ["auto-wave" 1]}]]}
         {:des "Simultaneous s + d --> Super Duper Mode"
          :rules [[{:sim [:s :d] :simo {:interrupt true
                                        :dorder :insensitive
@@ -86,12 +87,14 @@
                  [:j :down_arrow]]}
         {:des "V mode for Vim Motions"
          :rules [:v-mode
+                 [:i [:hs "slack-rw-wave"]]
                  [:k :up_arrow]
                  [:h :left_arrow]
                  [:l :right_arrow]
                  [:j :down_arrow]]}
         {:des "Launch Mode for opening up Applications"
          :rules [:launch-mode
+                 [:c [:launch "Visual\\ Studio\\ Code"]]
                  [:d [:launch "Discord"]]
                  [:f [:launch "Brave\\ Browser"]]
                  [:h [:launch "Sketch"]]

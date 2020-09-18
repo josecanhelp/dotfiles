@@ -1970,7 +1970,7 @@
 	<key>DimInactiveSplitPanes</key>
 	<true/>
 	<key>DimOnlyText</key>
-	<false/>
+	<true/>
 	<key>DisableFullscreenTransparency</key>
 	<true/>
 	<key>DockIconTogglesWindow</key>
@@ -2061,13 +2061,13 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
-	<string>2560 561 799 448 0 0 1680 1027 </string>
+	<string>1775 -21 799 448 1680 -165 2560 1417 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>760 786 400 129 0 0 1920 1177 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>610 416 700 622 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1920 1177 0 0 1920 1177 </string>
+	<string>629 134 1510 1572 0 0 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1680 205 730 902 1680 -310 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2121,12 +2121,16 @@
 			</dict>
 			<key>Ansi 10 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.50980392156862742</real>
+				<real>0.364166259765625</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.76078431372549016</real>
+				<real>0.514923095703125</real>
 				<key>Red Component</key>
-				<real>0.87450980392156863</real>
+				<real>0.0</real>
 			</dict>
 			<key>Ansi 11 Color</key>
 			<dict>
@@ -2193,12 +2197,16 @@
 			</dict>
 			<key>Ansi 4 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.32549019607843138</real>
+				<real>0.511505126953125</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.81568627450980391</real>
+				<real>0.31975691374002224</real>
 				<key>Red Component</key>
-				<real>0.85882352941176465</real>
+				<real>0.022501667495816946</real>
 			</dict>
 			<key>Ansi 5 Color</key>
 			<dict>
@@ -2274,7 +2282,7 @@
 				<real>1</real>
 			</dict>
 			<key>Blend</key>
-			<real>0.10681177512886599</real>
+			<real>0.050000000000000003</real>
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
@@ -2713,6 +2721,8 @@
 			<true/>
 			<key>Normal Font</key>
 			<string>MonoLisa-Regular 16</string>
+			<key>Only The Default BG Color Uses Transparency</key>
+			<true/>
 			<key>Open Toolbelt</key>
 			<false/>
 			<key>Option Key Sends</key>
@@ -2770,7 +2780,7 @@
 			<key>Title Components</key>
 			<integer>1</integer>
 			<key>Transparency</key>
-			<real>0.0</real>
+			<real>0.67143083756345179</real>
 			<key>Unicode Normalization</key>
 			<integer>0</integer>
 			<key>Unicode Version</key>
@@ -2838,16 +2848,16 @@
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{1680, -165}, {2560, 1440}}</string>
+		<string>{{0, 0}, {3840, 2160}}</string>
 		<key>topLeft</key>
-		<string>{2203, 904}</string>
+		<string>{27, 1389}</string>
 	</dict>
 	<key>NoSyncHaveUsedCopyMode</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>84A3B922-450C-4E48-810E-7F1DFF06A7B6</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>514</integer>
+	<integer>527</integer>
 	<key>NoSyncNeverPromptToChangeOption</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
@@ -3681,7 +3691,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-08-29T16:29:45Z</date>
+	<date>2020-09-12T06:47:32Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
@@ -3703,13 +3713,13 @@
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.19776706560283688</real>
+	<real>0.45516400709219862</real>
 	<key>StatusBarPosition</key>
 	<integer>0</integer>
 	<key>StretchTabsToFillBar</key>
 	<false/>
 	<key>TabStyleWithAutomaticOption</key>
-	<integer>6</integer>
+	<integer>5</integer>
 	<key>TabViewType</key>
 	<integer>2</integer>
 	<key>TabsHaveCloseButton</key>
@@ -3735,7 +3745,7 @@
 	<key>iTerm Version</key>
 	<string>3.3.12</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
-	<integer>0</integer>
+	<integer>4</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
 	<false/>
 </dict>

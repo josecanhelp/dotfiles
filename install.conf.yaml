@@ -23,11 +23,14 @@
     ~/.hushlogin: hushlogin
     ~/.ideavimrc: ideavimrc
     ~/.tmux.conf: tmux.conf
+    ~/.config/kyrat/tmux.conf: tmux.conf
     ~/.tmux: tmux/ 
     ~/.vim/coc-settings.json: vim/coc/settings.json
     ~/.vim: vim/
     ~/.vimrc: vim/vimrc
+    ~/.config/kyrat/vimrc: vim/vimrc
     ~/.zshrc: zsh/zshrc
+    ~/.config/kyrat/zshrc: zsh/zshrc
     ~/.config/karabiner.edn: karabiner.edn
     ~/.config/mutt/muttrc: mutt/muttrc
     ~/.config/mutt/dracula.muttrc: mutt/dracula.muttrc

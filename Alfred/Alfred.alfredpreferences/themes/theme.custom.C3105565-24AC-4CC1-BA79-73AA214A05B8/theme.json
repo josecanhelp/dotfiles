@@ -12,9 +12,9 @@
         "size" : 15,
         "colorSelected" : "#FEFFFEFF",
         "font" : "System Light",
-        "color" : "#F6B358FF"
+        "color" : "#1A1D21FF"
       },
-      "backgroundSelected" : "#B77C29FF",
+      "backgroundSelected" : "#004145FF",
       "text" : {
         "size" : 25,
         "colorSelected" : "#FEFFFEFF",
@@ -27,15 +27,15 @@
     },
     "search" : {
       "paddingVertical" : 0,
-      "background" : "#333740FF",
+      "background" : "#212121FF",
       "spacing" : 1,
       "text" : {
         "size" : 64,
-        "colorSelected" : "#D1D2D3FF",
+        "colorSelected" : "#FEFFFEFF",
         "font" : "Avenir Next Ultra Light",
-        "color" : "#D1D2D3FF"
+        "color" : "#FEFFFEFF"
       },
-      "backgroundSelected" : "#B77C29FF"
+      "backgroundSelected" : "#004145FF"
     },
     "window" : {
       "color" : "#1A1C21FF",
@@ -53,9 +53,9 @@
       "thickness" : 0
     },
     "scrollbar" : {
-      "color" : "#F6B358FF",
+      "color" : "#1A1D21FF",
       "thickness" : 2
     },
-    "name" : "Tighten"
+    "name" : "Jose Custom"
   }
 }

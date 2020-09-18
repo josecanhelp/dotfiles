@@ -124,6 +124,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'mattn/emmet-vim'
 Plug 'ap/vim-css-color'
 Plug 'edkolev/tmuxline.vim'
+Plug 'takac/vim-hardtime'
 call plug#end()
 "}}}
 " Plugin Settings ------------------------------------------------------------
@@ -136,8 +137,11 @@ let g:ale_sign_style_warning = '!'
 " Linters: {{{
   let g:ale_linters = {
     \ 'php': ['php', 'phpcs', 'phpmd'],
+    \ 'lua': ['luacheck'],
+    \ 'yml': ['yamllint'],
     \ }
 
+  let g:ale_lua_luacheck_options="--ignore hs"
   let g:ale_php_phpcs_standard = '~/.phpcs.xml.dist'
   let g:ale_php_phpcs_use_global = 1
 " }}}
@@ -246,6 +250,9 @@ let test#vim#term_position = "belowleft"
     \    'layout': 'vertical',
     \}
 " }}}
+" Goyo: {{{
+    let g:goyo_linenr=1
+" }}}
 
 " Mappings  -------------------------------------------------------------------
 " General: {{{
@@ -323,6 +330,9 @@ augroup phpactor_autocomplete_php
   autocmd FileType php setlocal omnifunc=phpactor#Complete
 augroup END
 " }}}
+" Shit
+let g:hardtime_default_on = 0
+let g:hardtime_showmsg = 1
 
 " ------------------------------------------------------------------------------
 " # Mapping
@@ -371,8 +381,8 @@ nnoremap <space>o  :<C-u>CocList outline<cr>
 " Fugitive
 nmap <Leader>g :Gedit :<CR>
 
-" Delete Buffer
-" nmap <silent> <Leader>x :bd<CR>
+" Select Open Buffers
+nmap <silent> <Leader>b :Buffers<CR>
 
 " Delete Currently Open File and Buffer
 command! DELF :call delete(expand('%')) | bdelete

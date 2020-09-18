@@ -379,6 +379,18 @@ hs.urlevent.bind('quickSlackReactEmoji', function()
     end
 end)
 
+hs.urlevent.bind('slack-rw-wave', function()
+    if  appIs(slack) then
+        hs.eventtap.keyStroke({}, 'r')
+        hs.timer.doAfter(.2, function()
+            hs.eventtap.keyStroke({}, 'w')
+        end)
+        hs.timer.doAfter(.2, function()
+            hs.eventtap.keyStroke({}, 'return')
+        end)
+    end
+end)
+
 hs.urlevent.bind('debug-menu', function()
     if  appIs(simulator) then
         hs.eventtap.keyStroke({'ctrl, cmd'}, 'z')
@@ -422,8 +434,11 @@ hs.urlevent.bind('openAnything', function()
         hs.eventtap.keyStroke({'cmd'}, 'p')
     elseif appIs(simulator) then
         hs.eventtap.keyStroke({'ctrl, shift, cmd'}, 'h')
-    elseif appIncludes({slack, discord}) then
+    elseif appIncludes({discord}) then
         hs.eventtap.keyStroke({'cmd'}, 'k')
+    elseif appIncludes({slack}) then
+        hs.eventtap.keyStroke({'cmd'}, 'k')
+        hs.eventtap.keyStroke({}, 'down')
     elseif appIs(phpstorm) then
         hs.eventtap.keyStroke({'cmd, shift'}, 'o')
     elseif appIs(finder) then

@@ -75,6 +75,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>D0E0DE3F-1B3D-4678-85E9-8D9AEB593BC3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>0631B182-A696-45A7-9CCC-099A85D631BC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Jose Soto</string>
@@ -86,6 +99,25 @@
 	<string>Tighten Workflows</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string>%20</string>
+				<key>url</key>
+				<string>bear://x-callback-url/create?title=Today's Notes {query}&amp;tags=tighten&amp;open_note=yes&amp;new_window=no&amp;show_window=yes&amp;pin=yes&amp;edit=yes&amp;timestamp=no&amp;text=%23%23%203%20main%20goals%3A%0A1.%20%0A2.%20%0A3.%20%0A%0A%0A%23%23%20Doing%0A-%20%0A%0A%23%23%20Done%0A-%20%0A%0A%23%23%20Blockers%0A-%20&amp;x-success=hammerspoon://createOmniEODTask</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>1201FE3F-83AF-41C6-B43A-347C4F69CC4E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -117,16 +149,16 @@ echo $(date +"%Y-%m-%d")</string>
 				<key>browser</key>
 				<string></string>
 				<key>spaces</key>
-				<string>%20</string>
+				<string></string>
 				<key>url</key>
-				<string>bear://x-callback-url/create?title=Today's Notes {query}&amp;tags=tighten&amp;open_note=yes&amp;new_window=no&amp;show_window=yes&amp;pin=yes&amp;edit=yes&amp;timestamp=no&amp;text=%23%23%203%20main%20goals%3A%0A1.%20%0A2.%20%0A3.%20%0A%0A%0A%23%23%20Doing%0A-%20%0A%0A%23%23%20Done%0A-%20%0A%0A%23%23%20Blockers%0A-%20&amp;x-success=hammerspoon://createOmniEODTask</string>
+				<string>hammerspoon://enablePlayOnNoise</string>
 				<key>utf8</key>
 				<true/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>1201FE3F-83AF-41C6-B43A-347C4F69CC4E</string>
+			<string>A0AD21C2-731B-415E-ABC6-7F7B2CFC0CD8</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -191,25 +223,6 @@ echo $(date +"%Y-%m-%d")</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>browser</key>
-				<string></string>
-				<key>spaces</key>
-				<string></string>
-				<key>url</key>
-				<string>hammerspoon://enablePlayOnNoise</string>
-				<key>utf8</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
-			<string>A0AD21C2-731B-415E-ABC6-7F7B2CFC0CD8</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -255,24 +268,79 @@ echo $(date +"%Y-%m-%d")</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>fixedorder</key>
+				<false/>
+				<key>items</key>
+				<string>[{"title":"Cenitoria Melton","arg":"Keep Rocking.\n\n\nCo-authored-by: Cenitoria Melton &lt;cenitoria@tighten.co&gt;","subtitle":"The cool one."},{"title":"Matt Stauffer","arg":"Commit message here.\n\n\nCo-authored-by: Matt Stauffer &lt;matt@tighten.co&gt;","subtitle":"1\/2 Santa Boss"}]</string>
+				<key>keyword</key>
+				<string>coauth</string>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Select Coworker</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.listfilter</string>
+			<key>uid</key>
+			<string>D0E0DE3F-1B3D-4678-85E9-8D9AEB593BC3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>0631B182-A696-45A7-9CCC-099A85D631BC</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
 	<key>uidata</key>
 	<dict>
+		<key>0631B182-A696-45A7-9CCC-099A85D631BC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>295</integer>
+			<key>ypos</key>
+			<integer>510</integer>
+		</dict>
 		<key>1201FE3F-83AF-41C6-B43A-347C4F69CC4E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>640</integer>
+			<integer>675</integer>
 			<key>ypos</key>
-			<integer>115</integer>
+			<integer>205</integer>
 		</dict>
 		<key>A0AD21C2-731B-415E-ABC6-7F7B2CFC0CD8</key>
 		<dict>
 			<key>xpos</key>
-			<integer>500</integer>
+			<integer>475</integer>
 			<key>ypos</key>
-			<integer>335</integer>
+			<integer>350</integer>
 		</dict>
 		<key>C439E513-31B8-4779-B3EB-46EC32BF6109</key>
 		<dict>
@@ -284,23 +352,30 @@ echo $(date +"%Y-%m-%d")</string>
 		<key>C90FAD9D-4E17-4E49-9712-123910ADE51B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>435</integer>
+			<integer>475</integer>
 			<key>ypos</key>
-			<integer>110</integer>
+			<integer>205</integer>
 		</dict>
 		<key>CE5A9094-B774-483F-B34C-F417BE9D468F</key>
 		<dict>
 			<key>xpos</key>
 			<integer>295</integer>
 			<key>ypos</key>
-			<integer>330</integer>
+			<integer>355</integer>
+		</dict>
+		<key>D0E0DE3F-1B3D-4678-85E9-8D9AEB593BC3</key>
+		<dict>
+			<key>xpos</key>
+			<integer>110</integer>
+			<key>ypos</key>
+			<integer>510</integer>
 		</dict>
 		<key>FD51C320-A221-49A4-9A44-0997FF2C26B2</key>
 		<dict>
 			<key>xpos</key>
-			<integer>560</integer>
+			<integer>675</integer>
 			<key>ypos</key>
-			<integer>455</integer>
+			<integer>375</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
