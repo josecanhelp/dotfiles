@@ -197,8 +197,8 @@ positions = {
 }
 
 -- Splits (from positions above) that I'll make available to the modal keybindings
-local lrsplits = { 'tenths2', 'tenths3', 'tenths4', 'tenths5' }
-local tbsplits = { 'fourths1', 'fourths2', 'fourths3', 'fourths4' }
+lrsplits = { 'tenths2', 'tenths3', 'tenths4', 'tenths5' }
+tbsplits = { 'fourths1', 'fourths2', 'fourths3', 'fourths4' }
 
 if spoon.WinWin then
     -- Create a new Modal Manager
@@ -365,18 +365,21 @@ spoon.ModalMgr.supervisor:enter()
 hs.urlevent.bind('quickSlackReactEmoji', function()
     refocus = false
 
-    if not focusedWindowIs(slack) then
+    if not appIs(slack) then
         refocus = true
-        focusedApp = hs.window:focusedWindow():application():bundleID()
+        focusedApp = hs.window.focusedWindow():application():bundleID()
         hs.application.launchOrFocus("slack")
     end
 
     hs.eventtap.keyStrokes('+:wave::skin-tone-4:')
-    hs.eventtap.keyStroke({}, 'return')
-
-    if refocus then
-        hs.application.launchOrFocusByBundleID(focusedApp)
-    end
+    hs.timer.doAfter(.2, function()
+        hs.eventtap.keyStroke({}, 'return')
+        hs.timer.doAfter(.2, function()
+          if refocus then
+              hs.application.launchOrFocusByBundleID(focusedApp)
+          end
+        end)
+    end)
 end)
 
 hs.urlevent.bind('slack-rw-wave', function()
@@ -603,7 +606,7 @@ function togglePlayOnNoise(recognizerObject, command)
 
     if not focusedWindowIs(brave) then
         refocus = true
-        local focusedApp = hs.window:focusedWindow():application():bundleID()
+        local focusedApp = hs.window.focusedWindow():application():bundleID()
         hs.application.launchOrFocusByBundleID(brave)
     end
 

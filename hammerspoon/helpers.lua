@@ -125,10 +125,6 @@ function appIncludes(bundles)
     return has_value(bundles, hs.application.frontmostApplication():bundleID())
 end
 
-function focusedWindowIs(bundle)
-    return hs.window:focusedWindow():application():bundleID() == bundle
-end
-
 function getBundleId()
     return hs.application.frontmostApplication():bundleID();
 end

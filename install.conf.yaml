@@ -24,7 +24,7 @@
     ~/.ideavimrc: ideavimrc
     ~/.tmux.conf: tmux.conf
     ~/.config/kyrat/tmux.conf: tmux.conf
-    ~/.tmux: tmux/ 
+    ~/.tmux: tmux/
     ~/.vim/coc-settings.json: vim/coc/settings.json
     ~/.vim: vim/
     ~/.vimrc: vim/vimrc
