@@ -1,4 +1,3 @@
-" vim:foldmethod=marker:foldlevel=0
 "
 " -----------------------------------------------------------------------------
 " File: ~/dotfiles/vim/vimrc
@@ -7,79 +6,32 @@
 " Source: https://github.com/josecanhelp/dotfiles
 " -----------------------------------------------------------------------------
 
-" Custom Functions  -----------------------------------------------------------
+" ------------------------------------------------------------------------------
+" # Defaults
+" ------------------------------------------------------------------------------
 
-" EditKBMappers: {{{
-function! EditKBMappers()
-  execute 'edit ~/.config/karabiner.edn '
-  execute 'vsplit'
-  execute 'edit ~/.hammerspoon/init.lua'
-endfunction
-" }}}
-" EditVimConfig: {{{
-function! EditVimConfig(file)
-  execute 'edit ' . VimrcPath(a:file)
-endfunction
-" }}}
-" VimrcPath: {{{
+" Vim 8 defaults
+" For more info, see :help defaults.vim
+unlet! skip_defaults_vim
+silent! source $VIMRUNTIME/defaults.vim
+
+" ------------------------------------------------------------------------------
+" # Paths
+" ------------------------------------------------------------------------------
+
+" Parent paths
+let g:dotfiles_path = $HOME . '/.dotfiles'
+let g:dotvim_path = $HOME . '/.vim'
+
 " Get path relative to .vimrc file
 function! VimrcPath(path)
   return g:dotfiles_path . '/vim/' . a:path
 endfunction
-" }}}
-" Theme: {{{
-" Set the cursorline highlight colors
-let &colorcolumn=join(range(82,999),',') " Display a different bg beyond 80 chars
 
-let g:lightline = {
-      \ 'colorscheme': 'powerline',
-      \ }
-
-colorscheme gruvbox
-let g:gruvbox_contrast_dark = 'hard'
-let gruvbox_vert_split = 'gray'
-
-" }}}
-" General --------------------------------------------------------------------
-" Defaults: {{{
-
-let mapleader = "\<Space>"
-
-unlet! skip_defaults_vim
-silent! source $VIMRUNTIME/defaults.vim
-syntax on
-filetype plugin on
-set autowrite  " Save on buffer switch
-set background=dark
-set backspace=indent,eol,start
-set clipboard=unnamed " yanked content is copied to the clipboard
-set expandtab
-set hlsearch " Highlight searches
-set ignorecase " Ignore case of search
-set incsearch " Highlight dynamically as pattern is typed
-set mouse=a " Enable mouse scroll
-set cursorline " Highlight current line
-set noswapfile
-set nowrap " Do not wrap the end of the line
-set number " Enable line numbers
-set norelativenumber " Make the line numbers display relative numbers
-set shiftwidth=4
-set noshowmode " Show the current mode
-set splitbelow " Open new files in horizontal splits to the bottom
-set splitright " Open new files in vertical splits to the right
-set tabstop=4
-set wildignore+=*/vendor/** " Ignore these folders during fuzzy search
-set wildignore+=*/node_modules/** " Ignore these folders during fuzzy search
-set runtimepath+=/usr/local/opt/fzf
-set scrolloff=7 " Add padding to the bottom of the file
-set laststatus=2
-let g:polyglot_disabled = ['jsx']
-
-" }}}
-" Paths: {{{
-" Parent paths
-let g:dotfiles_path = $HOME . '/.dotfiles'
-let g:dotvim_path = $HOME . '/.vim'
+" Get path relative to .vim directory
+function! DotVimPath(path)
+  return g:dotvim_path . '/' . a:path
+endfunction
 
 " Vimrc related paths for autocmds
 let g:vimrc_related_paths = [
@@ -87,347 +39,35 @@ let g:vimrc_related_paths = [
   \ VimrcPath('vimrc'),
   \ VimrcPath('*.vim')
   \ ]
-" }}}
-" Plugins --------------------------------------------------------------------
-" Installed: {{{
+
+
+" ------------------------------------------------------------------------------
+" # Sourcing
+" ------------------------------------------------------------------------------
+
+" Source plugins
 call plug#begin('~/.vim/plugged')
-Plug '/usr/local/opt/fzf'
-Plug 'airblade/vim-gitgutter'
-Plug 'christoomey/vim-tmux-runner'
-Plug 'dense-analysis/ale'
-Plug 'git@github.com:morhetz/gruvbox.git'
-Plug 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn run build'}
-Plug 'janko/vim-test'
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/vim-peekaboo'
-Plug 'justinmk/vim-sneak'
-Plug 'lambdalisue/fern.vim'
-Plug 'lambdalisue/fern-renderer-nerdfont.vim'
-Plug 'lambdalisue/nerdfont.vim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'lumiliet/vim-twig'
-Plug 'LumaKernel/fern-mapping-fzf.vim'
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'phpactor/phpactor', {'branch': 'develop', 'for': 'php', 'do': 'composer install --no-dev -o'}
-Plug 'posva/vim-vue'
-Plug 'scrooloose/nerdcommenter'
-Plug 'sheerun/vim-polyglot',
-Plug 'skywind3000/asyncrun.vim'
-Plug 'tmsvg/pear-tree'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'itchyny/lightline.vim'
-Plug 'vim-vdebug/vdebug'
-Plug 'yuezk/vim-js'
-Plug 'junegunn/goyo.vim'
-Plug 'mattn/emmet-vim'
-Plug 'ap/vim-css-color'
-Plug 'edkolev/tmuxline.vim'
-Plug 'takac/vim-hardtime'
+  execute 'source ' . VimrcPath('plugins.vim')
 call plug#end()
-"}}}
-" Plugin Settings ------------------------------------------------------------
-" Ale: {{{
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = '!!'
-let g:ale_sign_style_error = '!!'
-let g:ale_sign_warning = '!'
-let g:ale_sign_style_warning = '!'
-" Linters: {{{
-  let g:ale_linters = {
-    \ 'php': ['php', 'phpcs', 'phpmd'],
-    \ 'lua': ['luacheck'],
-    \ 'yml': ['yamllint'],
-    \ }
 
-  let g:ale_lua_luacheck_options="--ignore hs"
-  let g:ale_php_phpcs_standard = '~/.phpcs.xml.dist'
-  let g:ale_php_phpcs_use_global = 1
-" }}}
-" Fixers: {{{
-  let g:ale_fixers = {
-    \ 'php': ['php_cs_fixer'],
-    \ 'javascript': ['prettier'],
-    \ 'html': ['prettier'],
-    \ }
+" Source mappings
+execute 'source ' VimrcPath('mappings.vim')
 
-  augroup fix_on_save
-    autocmd! *
-    autocmd BufEnter *.php call s:fix_php()
-    autocmd BufEnter *.js call s:fix_javascript()
-  augroup END
-
-  function! s:fix_php()
-    if filereadable('.php_cs.dist')
-      let b:ale_fix_on_save = 1
+" Setup function for dynamic sourcing
+function! s:source_config_files_in(folder)
+  for config_file in split(glob(VimrcPath(a:folder . '/*')), '\n')
+    if filereadable(config_file)
+      execute 'source' config_file
     endif
-  endfunction
-
-  function! s:fix_javascript()
-    let b:ale_fix_on_save = 1
-  endfunction
-" }}}
-" }}}
-" Fern: {{{
-    let g:fern#renderer = "nerdfont"
-    let g:fern#default_hidden = 1
-
-    function! s:init_fern() abort
-        nmap <silent> <buffer> <C-n> :<C-u>FernDo close<CR>
-    endfunction
-
-    augroup fern-custom
-      autocmd! *
-      autocmd FileType fern call s:init_fern()
-    augroup END
-
-    " Disable netrw
-    let g:loaded_netrw             = 1
-    let g:loaded_netrwPlugin       = 1
-    let g:loaded_netrwSettings     = 1
-    let g:loaded_netrwFileHandlers = 1
-
-    augroup my-fern-hijack
-      autocmd!
-      autocmd BufEnter * ++nested call s:hijack_directory()
-    augroup END
-
-    function! s:hijack_directory() abort
-      let path = expand('%:p')
-      if !isdirectory(path)
-        return
-      endif
-      bwipeout %
-      execute printf('Fern %s', fnameescape(path))
-    endfunction
-" }}}
-" Nerdcommenter: {{{
-let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
-let g:NERDCompactSexyComs = 1 "  Use compact syntax for prettified multi-line comments
-let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDAltDelims_java = 1 " Set a language to use its alternate delimiters by default
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } } " Add your own custom formats or override the defaults
-let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
-" }}}
-" Peekaboo: {{{
-let g:peekaboo_window = 'vertical botright 80new'
-" }}}
-" Phpactor: {{{
-let g:phpactorPhpBin = '/usr/local/bin/php'
-let g:phpactorBranch = 'develop'
-let g:phpactorOmniAutoClassImport = v:true
-let g:phpactorOmniError = v:true
-let g:vim_jsx_pretty_colorful_config = v:true
-" }}}
-" Sneak: {{{
-let g:sneak#label = 1
-" }}}
-" Vim-Javascript: {{{
-" Let vim-javascript detect which pre-processors to check for
-let g:vue_pre_processors = 'detect_on_enter'
-" }}}
-" Vim-Test: {{{
-let test#enabled_runners = ['php#phpunit']
-let test#strategy = "vtr"
-let test#php#phpunit#executable = 'vendor/bin/phpunit'
-let test#vim#term_position = "belowleft"
-" }}}
-" FZF: {{{
-" command! LS call fzf#run(fzf#wrap'}))
-"
-" if exists('$TMUX')
-  " let g:fzf_layout = { 'tmux': '-p90%,60%' }
-" else
-  " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-" endif
-" }}}
-" Vdebug: {{{
-    let g:vdebug_options = {
-    \    'port': 9001,
-    \    'simplified_status': 1,
-    \    'layout': 'vertical',
-    \}
-" }}}
-" Goyo: {{{
-    let g:goyo_linenr=1
-" }}}
-
-" Mappings  -------------------------------------------------------------------
-" General: {{{
-" Re-source vimrc
-nnoremap <Leader>r :source $MYVIMRC<CR>
-" Easy escaping to normal model
-imap jj <esc>
-cnoremap jj <C-c>
-" Toggle the cursor line highlighting
-nnoremap <Leader>h :set cursorline!<CR>
-" Clear the highlighted search results
-nnoremap <Leader><space> :noh<CR>
-"Delete all buffers
-nmap <Leader>bda :bufdo bd <cr>
-"Move highlighted text
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
-
-" console log helper
-vnoremap L yoconsole.log('<ESC>pa: ', <ESC>pa);<ESC>
-" }}}
-" Fuzzy Finders: {{{
-map <C-p> :Files<cr>
-"}}}
-" Write: {{{
-map <leader>w <ESC>:w!<CR>
-map <leader>wq <ESC>:wq<CR>
-map <leader><leader>q <ESC>:q<CR>
-"}}}
-" Window Management: {{{
-nmap vs :vsplit<cr>
-nmap sp :split<cr>
-"}}}
-" Plugin Specific Mapping: {{{
- " Fern: {{{
-    map <silent> <C-n> :Fern . -drawer<CR>
- " }}}
- " Phpactor: {{{
-  augroup PhpactorMappings
-    au!
-    au FileType php nmap <buffer> <Leader>u :PhpactorImportClass<CR>
-    " Include use statement
-    au FileType php nmap <Leader>u :call phpactor#UseAdd()<CR>
-    " Invoke the context menu
-    au FileType php nmap <Leader>mm :call phpactor#ContextMenu()<CR>
-    " Invoke the navigation menu
-    au FileType php nmap <Leader>nn :call phpactor#Navigate()<CR>
-    " Goto definition of class or class member under the cursor
-    au FileType php nmap <Leader>d :call phpactor#GotoDefinition()<CR>
-    " Goto definition of class or class member under the cursor
-    au FileType php nmap <Leader>dv :call phpactor#GotoDefinitionVsplit()<CR>
-    " Show brief information about the symbol under the cursor
-    au FileType php nmap <Leader>K :call phpactor#Hover()<CR>
-    " Transform the classes in the current file
-    au FileType php nmap <Leader>tt :call phpactor#Transform()<CR>
-    " Generate a new class (replacing the current file)
-    au FileType php nmap <Leader>cc :call phpactor#ClassNew()<CR>
-    " Extract expression (normal mode)
-    au FileType php nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
-    " Extract expression from selection
-    au FileType php vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
-    " Extract method from selection
-    au FileType php vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
-  augroup END
- " }}}
-"}}}
-" Custom Commands -------------------------------------------------------------
-" Editing: {{{
-command! EditVimrc call EditVimConfig('vimrc')
-command! EditKBMappers call EditKBMappers()
-" }}}
-" AutoCommands ----------------------------------------------------------------
-" General: {{{
-augroup phpactor_autocomplete_php
-  autocmd FileType php setlocal omnifunc=phpactor#Complete
-augroup END
-" }}}
-" Shit
-let g:hardtime_default_on = 0
-let g:hardtime_showmsg = 1
-
-" ------------------------------------------------------------------------------
-" # Mapping
-" ------------------------------------------------------------------------------
-" Repeat macros for all selected lines
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
-function! ExecuteMacroOverVisualRange()
-  echo '@'.getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction
-" end repeat macros for all selected lines
-
-nmap <Leader><Leader>v :EditVimrc<CR>
-nmap <Leader><Leader>kb :EditKBMappers<CR>
-
-" Run tests
-" Plugin: test
-nmap <Leader>rt :w<CR>:TestToggleStrategy<CR>
-nmap <Leader>rs :w<CR>:TestSuite<CR>
-nmap <Leader>rf :w<CR>:TestFile<CR>
-nmap <Leader>rl :w<CR>:TestLast<CR>
-nmap <Leader>rn :w<CR>:TestNearest<CR>
-nmap <Leader>rv :w<CR>:TestVisit<CR>
-
-" Debugger
-" Plugin: vdebug
-nnoremap <Leader>B :Breakpoint<CR>
-nnoremap <Leader>V :VdebugStart<CR>
-
-" Coc
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+  endfor
 endfunction
 
-" Find symbol of current document.
-nnoremap <space>o  :<C-u>CocList outline<cr>
+" Dynamic sourcing
+call s:source_config_files_in('local-config')
+call s:source_config_files_in('plugin-config')
 
-" Fugitive
-nmap <Leader>g :Gedit :<CR>
-
-" Select Open Buffers
-nmap <silent> <Leader>b :Buffers<CR>
-
-" Delete Currently Open File and Buffer
-command! DELF :call delete(expand('%')) | bdelete
-
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-nnoremap <silent> <leader>l :call CocActionAsync('doHover')<cr>
-
-nnoremap <leader>bn :bnext<CR>
-nnoremap <leader>bp :bprevious<CR>
-nnoremap <leader>bd :bdelete<CR>
-
-nnoremap <leader>i <C-a>
-
-nnoremap <Leader>if :ALEFix<CR>k
-" Enable Listener
-nmap <silent> <Leader>l :call system('open -g hammerspoon://enablePlayOnNoise')<CR>
-
-" Disable Listener
-nmap <silent> <Leader><Leader>l :call system('open -g hammerspoon://disablePlayOnNoise')<CR>
-
-"Reload Sizzy on Save
-nmap <silent> <Leader>n :w<CR>:call system('open -g hammerspoon://reloadSizzy')<CR>
-
-" Stolen from Jesse Leite:
-" https://github.com/jesseleite/dotfiles/blob/master/vim/local-config/filetype.vim
-augroup framework_filetype_settings
+" Auto sourcing
+augroup autosource_vimrc
   autocmd!
-  autocmd BufRead,BufNewFile *.blade.php setlocal commentstring={{--\ %s\ --}}
-  autocmd BufRead,BufNewFile *.antlers.html setlocal commentstring={{#\ %s\ #}}
+  execute 'autocmd BufWritePost ' . join(g:vimrc_related_paths, ',') . ' nested source ' . $MYVIMRC
 augroup END
-
-" HTML and CSS abbreviation expansion
-" Plugin: emmet
-imap <C-e> <plug>(emmet-expand-abbr)
-" imap <C-y>c  <plug>(emmet-code-pretty)
