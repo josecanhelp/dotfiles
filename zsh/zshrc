@@ -25,7 +25,8 @@ export PATH=${PATH}:~/go/bin
 export PATH=${PATH}:~/.dotfiles/bin
 export PATH=${PATH}:~/.emacs.d/bin
 export PATH=${PATH}:/usr/local/opt/coreutils/libexec/gnubin
-export PATH=${PATH}:~/.local/share/kyrat/bin
+export PATH=${PATH}:/usr/local/aws/bin
+
 
 
 # ------------------------------------------------------------------------------
@@ -60,6 +61,9 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # case-insensitive completio
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)               # Include hidden files.
+
+autoload bashcompinit && bashcompinit
+complete -C '/usr/local/bin/aws_completer' aws
 
 
 # ------------------------------------------------------------------------------
