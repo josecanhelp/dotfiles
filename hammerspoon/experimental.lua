@@ -1,4 +1,14 @@
 --------------------------------------------------------------------------------
 -- Experimental Functionality
 --------------------------------------------------------------------------------
-
+--
+-- My attempt to fix the new functionality of Slack search
+-- and auto select the first option
+-- hs.hotkey.bind({'cmd'}, 'd', function()
+    -- if (hs.application.frontmostApplication():bundleID() == 'com.tinyspeck.slackmacgap') then
+        -- hs.eventtap.keyStroke({'cmd'}, 'k')
+        -- hs.timer.doAfter(.2, function()
+            -- hs.eventtap.keyStroke({}, 'down')
+        -- end)
+    -- end
+-- end)
