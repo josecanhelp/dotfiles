@@ -12,12 +12,16 @@ set expandtab
 set hlsearch 
 " Ignore case of search
 set ignorecase 
+" Case-sensitive search if query uses an uppercase
+set smartcase
+
 " Highlight dynamically as pattern is typed
 set incsearch 
 " Enable mouse scroll
 set mouse=a 
 " Highlight current line
 set cursorline 
+set cursorlineopt=both
 
 set noswapfile
 " Do not wrap the end of the line
@@ -28,7 +32,7 @@ set number
 set norelativenumber 
 
 set shiftwidth=4
-" Show the current mode
+" Hide the current mode from cmd bar
 set noshowmode 
 " Open new files in horizontal splits to the bottom
 set splitbelow 
@@ -47,6 +51,7 @@ set runtimepath+=/usr/local/opt/fzf
 " Add padding to the bottom of the file
 set scrolloff=7 
 
+" Always show window statuses, even if there's only one.
 set laststatus=2
 
 set ttyfast 
@@ -71,4 +76,28 @@ set formatoptions+=j
 " when incrementing and decremeting numbers (Ctrl-A / Ctrl-X), don't assume
 " " numbers that start with 0 are octal. Treat them as base 10.
 set nrformats-=octal
+
+packadd! matchit
+
+" Keep 15 columns next to the cursor when scrolling horizontally.
+set sidescroll=1
+set sidescrolloff=15
+
+" Don't parse modelines (google "vim modeline vulnerability").
+set nomodeline
+
+" Auto center on matched string.
+noremap n nzz
+noremap N Nzz
+
+" Prevent common mistake of pressing q: instead :q
+map q: :q
+
+" Reduce updatetime from 4000 to 300 to avoid issues with coc.nvim
+set updatetime=300
+
+" Auto reload if file was changed somewhere else (for autoread)
+au CursorHold * checktime
+
+set signcolumn=yes
 

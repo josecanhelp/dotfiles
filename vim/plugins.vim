@@ -31,4 +31,14 @@ Plug 'ap/vim-css-color'
 Plug 'edkolev/tmuxline.vim'
 Plug 'takac/vim-hardtime'
 Plug 'mzlogin/vim-markdown-toc'
+Plug 'terryma/vim-smooth-scroll'
+Plug 'tommcdo/vim-exchange'
 
+" Explicit annotation bindings for more accurate go to
+let g:explicit_annotation_bindings = {
+  \ 'fzf': 'fzf.vim',
+  \ 'coc': 'coc.nvim',
+  \ 'writable-search': 'writable_search.vim',
+  \ 'textobj': 'vim-textobj-user',
+  \ 'camel-case-motions': 'CamelCaseMotion',
+  \ }

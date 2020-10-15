@@ -20,7 +20,7 @@ silent! source $VIMRUNTIME/defaults.vim
 " ------------------------------------------------------------------------------
 
 " Parent paths
-let g:dotfiles_path = $HOME . '/.dotfiles'
+let g:dotfiles_path = $HOME . '/dotfiles'
 let g:dotvim_path = $HOME . '/.vim'
 
 " Get path relative to .vimrc file

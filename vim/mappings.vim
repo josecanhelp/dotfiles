@@ -79,9 +79,8 @@ nmap <Leader>' :Marks<CR>
 nmap <Leader>S :Snippets<CR>
 nmap <Leader><Leader>h :Helptags!<CR>
 
-" By default "Y" is the same as "yy", but like "D" is makes sense for "Y" to
-" just yank from the cursor to the end of the line.
-" nmap Y y$
+" Y yanks from the cursor to the end of line as expected. See :help Y.
+nnoremap Y y$
 
 " format (gq) a file (af)
 nmap gqaf :ALEFix<CR>
@@ -99,10 +98,15 @@ map <leader>wq <ESC>:wq<CR>
 nmap <leader>vs :vsplit<cr>
 nmap <leader>sp :split<cr>
 
+" Jump up or down
+nmap <C-j> <C-d>
+nmap <C-k> <C-u>
+
 " File system explorer
 " Plugin: fern
 nmap <Leader>e :FernReveal .<CR>
 nmap <Leader>E :Fern .<CR>
+
 function! FernLocalMappings()
   nmap <buffer><nowait> l <Plug>(fern-action-expand)
   nmap <buffer><nowait> h <Plug>(fern-action-collapse)
@@ -183,9 +187,6 @@ nnoremap <Leader>V :VdebugStart<CR>
 " Fugitive
 nmap <Leader>g :Gedit :<CR>
 
-" Delete Currently Open File and Buffer
-" command! DELF :call delete(expand('%')) | bdelete
-
 " Traverse through buffers
 nnoremap <leader>bn :bnext<CR>
 nnoremap <leader>bp :bprevious<CR>
@@ -206,14 +207,29 @@ nmap [e <plug>(emmet-move-prev)
 imap ;; <Esc>A;<Esc>
 imap ,, <Esc>A,<Esc>
 
+" Wipe all registers
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+
+" Smooth Scrolling
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 20, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 20, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 20, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 20, 4)<CR>
+
+" Allow easy navigation between wrapped lines.
+vmap j gj
+vmap k gk
+nmap j gj
+nmap k gk
+
 " Local: vimrc
 nmap <Leader><Leader>v :EditVimrc<CR>
 nmap <Leader><Leader>vm :EditVimMappings<CR>
 nmap <Leader><Leader>vp :EditVimPlugins<CR>
 function! VimrcLocalMappings()
-  nnoremap <buffer><nowait> <leader>gc :GoToRelatedVimrcConfig<CR>
-  nnoremap <buffer><nowait> <leader>gm :GoToRelatedVimrcMappings<CR>
-  nnoremap <buffer><nowait> <leader>gp :GoToRelatedPlugDefinition<CR>
+  nnoremap <buffer><nowait> <leader>vc :GoToRelatedVimrcConfig<CR>
+  nnoremap <buffer><nowait> <leader>vm :GoToRelatedVimrcMappings<CR>
+  nnoremap <buffer><nowait> <leader>vp :GoToRelatedPlugDefinition<CR>
   nnoremap <buffer><nowait> <leader>pg :GoToPluginUrl<CR>
   nnoremap <buffer><nowait> <leader>py :YankPluginUrl<CR>
   nnoremap <buffer><nowait> <leader>pp :PastePluginFromClipboard<CR>
