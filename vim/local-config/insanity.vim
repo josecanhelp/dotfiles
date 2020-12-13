@@ -2,7 +2,6 @@ syntax on
 filetype plugin on
 " Save on buffer switch
 set autowrite  
-set background=dark
 set backspace=indent,eol,start
 " yanked content is copied to the clipboard
 set clipboard=unnamed 

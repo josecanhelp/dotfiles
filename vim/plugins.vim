@@ -51,3 +51,6 @@ let g:explicit_annotation_bindings = {
 
 " Plugin: ultisnips
 " let g:UltiSnipsSnippetsDir = "~/.vim/ultisnips"
+
+" Disable tmux navigator when zooming the Vim pane
+let g:tmux_navigator_disable_when_zoomed = 1
