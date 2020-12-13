@@ -1,38 +1,36 @@
 {
-    "languageserver": {
-        "intelephense": {
-            "command": "intelephense",
-            "args": ["--stdio"],
-            "filetypes": ["php"],
-            "initializationOptions": {
-                "storagePath": "/tmp/intelephense"
-            }
-        }
-    },
-    "intelephense.files.maxSize": 10000,
-    "intelephense.maxMemory": 2048,
-    "intelephense.telemetry.enabled": false,
-    "intelephense.completion.insertUseDeclaration": true,
-    "intelephense.diagnostics.unusedSymbols": true,
-    "diagnostic-languageserver.filetypes": {
-        "email": "languagetool",
-        "markdown": [ "write-good", "markdownlint" ],
-        "sh": "shellcheck",
-        "php": "phpcs"
-    },
-    "diagnostic-languageserver.formatFiletypes": {
-    },
-    "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx"],
-    "diagnostic.errorSign": "\uf05e",
-    "diagnostic.warningSign": "\uf071",
-    "diagnostic.infoSign": "•",
-    "diagnostic.hintSign": "•",
-    "explorer.width": 30,
-    "tailwindCSS.headwind.runOnSave": true,
-    "explorer.icon.enableNerdfont": true,
-    "explorer.previewAction.onHover": false,
-    "explorer.keyMappings": {
-        "<cr>": ["expandable?", "expand", "open"],
-        "v": "open:vsplit"
+  "languageserver": {
+    "intelephense": {
+      "command": "intelephense",
+      "args": ["--stdio"],
+      "filetypes": ["php"],
+      "initializationOptions": {
+        "storagePath": "/tmp/intelephense"
+      }
     }
+  },
+  "intelephense.files.maxSize": 10000,
+  "intelephense.maxMemory": 2048,
+  "intelephense.telemetry.enabled": false,
+  "intelephense.completion.insertUseDeclaration": true,
+  "intelephense.diagnostics.unusedSymbols": true,
+  "diagnostic-languageserver.filetypes": {
+    "email": "languagetool",
+    "markdown": ["write-good", "markdownlint"],
+    "sh": "shellcheck"
+  },
+  "diagnostic-languageserver.formatFiletypes": {},
+  "diagnostic.errorSign": "\uf05e",
+  "diagnostic.warningSign": "\uf071",
+  "diagnostic.infoSign": "•",
+  "diagnostic.hintSign": "•",
+  "explorer.width": 30,
+  "tailwindCSS.headwind.runOnSave": true,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.previewAction.onHover": false,
+  "explorer.keyMappings": {
+    "<cr>": ["expandable?", "expand", "open"],
+    "v": "open:vsplit"
+  },
+  "json.format.enable": true
 }

@@ -1,5 +1,4 @@
 syntax on
-
 filetype plugin on
 " Save on buffer switch
 set autowrite  
@@ -100,4 +99,3 @@ set updatetime=300
 au CursorHold * checktime
 
 set signcolumn=yes
-

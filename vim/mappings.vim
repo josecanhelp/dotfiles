@@ -58,6 +58,13 @@ vnoremap K :m '<-2<CR>gv=gv
 " Console Log Helper
 vnoremap L yoconsole.log('<ESC>pa: ', <ESC>pa);<ESC>
 
+augroup LogHelperMappings
+  au!
+  au FileType php vnoremap L yodd('<ESC>pa: ', <ESC>pa);<ESC>
+  au FileType js vnoremap L yoconsole.log('<ESC>pa: ', <ESC>pa);<ESC>
+augroup END
+
+
 " FZF fuzzy finders
 " Plugin: fzf
 nmap <Leader>f :GFiles<CR>
@@ -104,7 +111,8 @@ nmap <C-k> <C-u>
 
 " File system explorer
 " Plugin: fern
-nmap <Leader>e :FernReveal .<CR>
+nmap <Leader>e :Fern . -drawer<CR>
+nmap <C-n> :Fern . -drawer<CR>
 nmap <Leader>E :Fern .<CR>
 
 function! FernLocalMappings()
@@ -125,7 +133,6 @@ function! FernLocalMappings()
   nmap <buffer><nowait> x <Plug>(fern-action-clipboard-move)
   nmap <buffer><nowait> p <Plug>(fern-action-clipboard-paste)
   nmap <buffer><nowait> D <Plug>(fern-action-trash)
-  nmap <buffer><nowait> go :call FernActionGithubOpen()<CR>
   nmap <buffer><nowait> g? <Plug>(fern-action-help:all)
 endfunction
 
@@ -222,6 +229,17 @@ vmap k gk
 nmap j gj
 nmap k gk
 
+" Toggle window maximize
+nnoremap <leader>o :MaximizerToggle<CR>
+vnoremap <leader>o :MaximizerToggle<CR>gv
+" inoremap <leader>o <C-o>:MaximizerToggle<CR>
+
+" Snippet
+" Plugin: ultisnips
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+"
 " Local: vimrc
 nmap <Leader><Leader>v :EditVimrc<CR>
 nmap <Leader><Leader>vm :EditVimMappings<CR>

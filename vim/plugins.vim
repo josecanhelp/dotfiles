@@ -33,6 +33,12 @@ Plug 'takac/vim-hardtime'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'tommcdo/vim-exchange'
+Plug 'wellle/targets.vim'
+Plug 'tpope/vim-dispatch'
+Plug 'szw/vim-maximizer'
+" Plug 'SirVer/ultisnips'
+Plug 'branwright1/salvation-vim'
+Plug 'christoomey/vim-tmux-navigator'
 
 " Explicit annotation bindings for more accurate go to
 let g:explicit_annotation_bindings = {
@@ -42,3 +48,6 @@ let g:explicit_annotation_bindings = {
   \ 'textobj': 'vim-textobj-user',
   \ 'camel-case-motions': 'CamelCaseMotion',
   \ }
+
+" Plugin: ultisnips
+" let g:UltiSnipsSnippetsDir = "~/.vim/ultisnips"

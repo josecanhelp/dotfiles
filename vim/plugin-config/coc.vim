@@ -3,13 +3,13 @@ let g:coc_global_extensions = [
       \ 'coc-css',
       \ 'coc-diagnostic',
       \ 'coc-emmet',
-      \ 'coc-eslint',
       \ 'coc-json',
       \ 'coc-pairs',
-      \ 'coc-prettier',
+      \ 'coc-phpls',
       \ 'coc-snippets',
       \ 'coc-tailwindcss',
-      \ 'coc-phpls',
+      \ 'coc-tsserver',
+      \ 'coc-vetur',
       \ ]
 
 " TextEdit might fail if hidden is not set.
@@ -79,7 +79,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+" nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
@@ -132,6 +132,14 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+nmap <expr> <silent> <C-d> <SID>select_current_word()
+function! s:select_current_word()
+  if !get(g:, 'coc_cursors_activated', 0)
+    return "\<Plug>(coc-cursors-word)"
+  endif
+  return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
+endfunc
 
 " Mappings for CoCList
 " Show all diagnostics.
