@@ -158,11 +158,11 @@
 				<key>runningsubtext</key>
 				<string>Loading...</string>
 				<key>script</key>
-				<string>query=$1
+				<string>query="{query}"
 
 php search.php $query {var:token}</string>
 				<key>scriptargtype</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
@@ -218,6 +218,8 @@ php search.php $query {var:token}</string>
 				<false/>
 				<key>clipboardtext</key>
 				<string>https://ram.test/entries/{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
 				<key>transient</key>
 				<false/>
 			</dict>

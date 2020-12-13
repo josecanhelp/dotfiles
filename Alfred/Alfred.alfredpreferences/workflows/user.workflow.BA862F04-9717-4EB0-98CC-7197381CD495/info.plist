@@ -52,6 +52,8 @@
 				<false/>
 				<key>clipboardtext</key>
 				<string>{var:app}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
 				<key>transient</key>
 				<false/>
 			</dict>
@@ -116,7 +118,7 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string>Use a hotkey to copy the focused application's bundle id to the system clipboard.</string>
 	<key>uidata</key>
 	<dict>
 		<key>9B65F29B-02BF-4355-909B-7EC37D53B38B</key>
@@ -144,7 +146,7 @@
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string></string>
+	<string>0.0.1</string>
 	<key>webaddress</key>
 	<string>https://josesoto.com</string>
 </dict>
