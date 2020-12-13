@@ -28,6 +28,7 @@
     ~/.vim/coc-settings.json: vim/coc/settings.json
     ~/.vim: vim/
     ~/.vimrc: vim/vimrc
+    ~/.vim/ultisnips: vim/snippets
     ~/.config/kyrat/vimrc: vim/vimrc
     ~/.zshrc: zsh/zshrc
     ~/.config/kyrat/zshrc: zsh/zshrc

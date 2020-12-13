@@ -39,7 +39,7 @@ hs.application.enableSpotlightForNameSearches(true)
 ----------------------------------------------------------------------------------------------------
 
 -- Goku
-hs.pathwatcher.new(os.getenv('HOME') .. '/.config/karabiner.edn/', function ()
+hs.pathwatcher.new(os.getenv('HOME') .. '/.config/karabiner/', function ()
     local output = hs.execute('/usr/local/bin/goku')
     hs.notify.new({title = 'Karabiner Config', informativeText = output}):send()
 end):start()
@@ -406,6 +406,10 @@ hs.urlevent.bind('expose', function()
     end
 end)
 
+hs.urlevent.bind('reloadHammerspoon', function()
+  hs.reload()
+end)
+
 hs.urlevent.bind('createAnything', function()
     if appIs(omnifocus) then
         hs.eventtap.keyStroke({'ctrl', 'option'}, 'space')
@@ -482,9 +486,12 @@ hs.urlevent.bind('navigateBack', function()
           hs.eventtap.keyStroke({'cmd', 'option'}, 'left')
       elseif appIncludes({finder, slack, brave}) then
           hs.eventtap.keyStroke({'cmd'}, '[')
+    elseif appIncludes({vscode}) then
+        hs.eventtap.keyStroke({'cmd'}, 'k')
+        hs.eventtap.keyStroke({'cmd'}, 'left')
+        hs.eventtap.keyStroke({}, 'escape')
       elseif appIs(iterm) then
-          hs.eventtap.keyStroke({'control'}, 'w', 0)
-          hs.eventtap.keyStroke({}, 'h')
+          hs.eventtap.keyStroke({'control'}, 'h', 0)
       end
     elseif activeModal == 'windowM' then
         hs.eventtap.keyStroke({}, 'a')
@@ -496,9 +503,12 @@ hs.urlevent.bind('navigateForward', function()
         hs.eventtap.keyStroke({'cmd', 'option'}, 'right')
     elseif appIncludes({finder, slack, brave}) then
         hs.eventtap.keyStroke({'cmd'}, ']')
+    elseif appIncludes({vscode}) then
+        hs.eventtap.keyStroke({'cmd'}, 'k')
+        hs.eventtap.keyStroke({'cmd'}, 'right')
+        hs.eventtap.keyStroke({}, 'escape')
     elseif appIs(iterm) then
-        hs.eventtap.keyStroke({'control'}, 'w', 0)
-        hs.eventtap.keyStroke({}, 'l')
+        hs.eventtap.keyStroke({'control'}, 'l', 0)
     end
 end)
 
@@ -507,13 +517,15 @@ hs.urlevent.bind('navigateUpward', function()
         hs.eventtap.keyStroke({'cmd'}, '[')
     elseif appIs(bear) then
         hs.eventtap.keyStroke({''}, 'up')
+    elseif appIncludes({vscode}) then
+        hs.eventtap.keyStroke({'control'}, '`')
+        hs.eventtap.keyStroke({}, 'escape')
     elseif appIs(messages) then
         hs.eventtap.keyStroke({'control', 'shift'}, 'tab')
     elseif appIs(brave) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, ']')
     elseif appIs(iterm) then
-        hs.eventtap.keyStroke({'control'}, 'w', 0)
-        hs.eventtap.keyStroke({}, 'k')
+        hs.eventtap.keyStroke({'control'}, 'k', 0)
     else
         hs.eventtap.keyStroke({'cmd', 'shift'}, '[')
     end
@@ -524,13 +536,14 @@ hs.urlevent.bind('navigateDownward', function()
         hs.eventtap.keyStroke({'cmd'}, ']')
     elseif appIs(bear) then
         hs.eventtap.keyStroke({''}, 'down')
+    elseif appIncludes({vscode}) then
+        hs.eventtap.keyStroke({'control'}, '`')
     elseif appIs(messages) then
         hs.eventtap.keyStroke({'control'}, 'tab')
     elseif appIs(brave) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, '[')
     elseif appIs(iterm) then
-        hs.eventtap.keyStroke({'control'}, 'w', 0)
-        hs.eventtap.keyStroke({}, 'j')
+        hs.eventtap.keyStroke({'control'}, 'j', 0)
     else
         hs.eventtap.keyStroke({'cmd', 'shift'}, ']')
     end
@@ -590,6 +603,36 @@ hs.urlevent.bind('disablePlayOnNoise', function()
         listener:stop()
     end
 end)
+
+-- hs.hotkey.bind({"cmd"}, "w", function()
+    -- if appIs(workspot) then
+      -- hs.eventtap.keyStroke({'ctrl'}, 'F4')
+    -- else
+      -- hs.application.frontmostApplication():focusedWindow():close()
+    -- end
+-- end)
+
+-- hs.hotkey.bind({"cmd"}, "q", function()
+    -- if appIs(workspot) then
+      -- hs.eventtap.keyStroke({'option'}, 'F4')
+    -- else
+      -- hs.application.frontmostApplication():focusedWindow():cwqose()
+    -- end
+-- end)
+
+-- figure out how to pass params with an open -g call
+-- hs.urlevent.bind('openBrave', function(url)
+    -- local status, response, description = hs.osascript.javascript([[
+      -- brave = Application("Brave Browser")
+      -- window = brave.windows[0]
+      -- brave.make({
+      -- new: "tab",
+      -- at: window,
+      -- withProperties: {url: `${url}`}
+      -- });
+      -- brave.open()
+    -- ]])
+  -- end)
 
 ----------------------------------------------------------------------------------------------------
 -- Misc. Functions

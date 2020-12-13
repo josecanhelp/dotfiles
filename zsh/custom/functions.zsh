@@ -71,3 +71,11 @@ function current_repository() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
   echo $(git remote -v | cut -d':' -f 2)
 }
+
+ham() {
+  open -g "hammerspoon://reloadHammerspoon"
+}
+
+refreshCurrentPocDatabase() {
+  docker exec -it postgres2 dropdb -U postgres -p 5432 -i -e poc_current && docker exec -it postgres2 createdb -p 5432 -U postgres poc_current
+}
