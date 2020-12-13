@@ -3,6 +3,7 @@ let g:coc_global_extensions = [
       \ 'coc-css',
       \ 'coc-diagnostic',
       \ 'coc-emmet',
+      \ 'coc-eslint',
       \ 'coc-json',
       \ 'coc-pairs',
       \ 'coc-phpls',
@@ -87,8 +88,6 @@ nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
@@ -102,6 +101,7 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>ac  <Plug>(coc-codeaction)
 " apply autofix to problem on the current line.
 nmap <leader>qf  <plug>(coc-fix-current)
+nmap <leader>of  <plug>(coc-action-quickfixes)
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -133,7 +133,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-nmap <expr> <silent> <C-d> <SID>select_current_word()
+" nmap <expr> <silent> <C-d> <SID>select_current_word()
 function! s:select_current_word()
   if !get(g:, 'coc_cursors_activated', 0)
     return "\<Plug>(coc-cursors-word)"
@@ -143,7 +143,7 @@ endfunc
 
 " Mappings for CoCList
 " Show all diagnostics.
-" nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
 " nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.

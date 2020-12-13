@@ -25,5 +25,9 @@
   "diagnostic.infoSign": "•",
   "diagnostic.hintSign": "•",
   "tailwindCSS.headwind.runOnSave": true,
-  "json.format.enable": true
+  "json.format.enable": true,
+  "eslint.packageManager": "npm",
+  "diagnostic.displayByAle": true,
+  "eslint.run": "onSave",
+  "eslint.autoFixOnSave": true,
 }

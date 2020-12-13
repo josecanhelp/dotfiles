@@ -69,7 +69,7 @@ augroup END
 " Plugin: fzf
 nmap <Leader>f :GFiles<CR>
 nmap <Leader>F :Files<CR>
-map <C-p> :Files<cr>
+map <C-p> :GFiles<cr>
 nmap <Leader>m :GFiles?<CR>
 nmap <Leader>t :BTags<CR>
 nmap <Leader>T :Tags<CR>
@@ -104,10 +104,6 @@ map <leader>wq <ESC>:wq<CR>
 " Split windows
 nmap <leader>vs :vsplit<cr>
 nmap <leader>sp :split<cr>
-
-" Jump up or down
-nmap <C-j> <C-d>
-nmap <C-k> <C-u>
 
 " File system explorer
 " Plugin: fern

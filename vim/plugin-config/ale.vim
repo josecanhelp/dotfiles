@@ -4,7 +4,7 @@ let g:ale_sign_error = '!!'
 let g:ale_sign_style_error = '!!'
 let g:ale_sign_warning = '!'
 let g:ale_sign_style_warning = '!'
-
+let g:ale_disable_lsp = 1
 
   let g:ale_linters = {
     \ 'php': ['php', 'phpcs', 'phpmd'],
@@ -18,7 +18,6 @@ let g:ale_sign_style_warning = '!'
 
   let g:ale_fixers = {
     \ 'php': ['php_cs_fixer'],
-    \ 'javascript': ['prettier'],
     \ 'html': ['prettier'],
     \ }
 
@@ -29,6 +28,6 @@ let g:ale_sign_style_warning = '!'
     endif
   endfunction
 
-  function! s:fix_javascript()
-    let b:ale_fix_on_save = 1
-  endfunction
+  " function! s:fix_javascript()
+    " let b:ale_fix_on_save = 1
+  " endfunction
