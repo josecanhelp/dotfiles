@@ -14,8 +14,8 @@
 
 {:templates {:launch "open -a %s"
              :hs "open -g hammerspoon://%s"}
- :applications {:workspot ["^com\\.workspot\\.osx$"]}
- :devices {:corsair [{:product_id 6933 :vendor_id 6940}]}
+ :applications {:workspot ["^com\\.workspot\\.osx$"] :terminal ["^com\\.googlecode\\.iterm2$"]}
+ :devices {:hp-kb [{:product_id 4170 :vendor_id 1008}]}
  :layers {:hyper-mode {:key :caps_lock :alone {:key :escape} :condi :!workspot}
           :hyper-mode-workspot {:key :caps_lock :alone {:key :escape} :condi :workspot}
           :keypad-mode {:key :fn}}
@@ -57,11 +57,6 @@
                  [:m :!TSm]
                  [:quote :!TSp]
                  [:semicolon :!CTOsemicolon]]}
-        {:des "ASDF Mode"
-         :rules [[{:sim [:a :s :d :f] :simo {:interrupt true
-                                             :dorder :insensitive
-                                             :uorder :insensitive
-                                             :afterup {:set ["asdf-mode" 0]}}} {:set ["asdf-mode" 1]}]]}
         {:des "Simultaneous v + l --> Wave" ; Experimental
          :rules [[{:sim [:v :l] :simo {:interrupt true
                                        :dorder :insensitive
@@ -87,12 +82,6 @@
                  [:backslash [:!Ta :!Sbackslash]] ; Split tmux window vertically
                  [:delete_or_backspace [:!Ta :x :y]] ; Kill a tmux pane without asking for confirmation
                  ]}
-        {:des "ASDF Mode"
-         :rules [:asdf-mode
-                 [:k :up_arrow]
-                 [:h :left_arrow]
-                 [:l :right_arrow]
-                 [:j :down_arrow]]}
         {:des "Z mode for Vim Motions"
          :rules [:z-mode
                  [:i [:hs "slack-rw-wave"]]
@@ -112,6 +101,13 @@
                  [:u :7]
                  [:i :8]
                  [:o :9]]}
+        {:des "Shift -> {} or Shift"
+         :rules [
+                 [:##left_shift :left_shift nil  {:alone [:hs "tabPrevious"]}]
+                 [:##right_shift :right_shift  nil {:alone [:hs "tabNext"]}]]}
+        {:des "Foot pedal"
+         :rules [
+                 [:spacebar :right_control [:hp-kb]]]}
         {:des "Launch Mode for opening up Applications"
          :rules [:launch-mode
                  [:c [:launch "Visual\\ Studio\\ Code"]]

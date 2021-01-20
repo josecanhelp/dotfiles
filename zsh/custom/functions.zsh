@@ -79,3 +79,8 @@ ham() {
 refreshCurrentPocDatabase() {
   docker exec -it postgres2 dropdb -U postgres -p 5432 -i -e poc_current && docker exec -it postgres2 createdb -p 5432 -U postgres poc_current
 }
+
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}

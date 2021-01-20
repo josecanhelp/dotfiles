@@ -6,6 +6,7 @@
 # Plugins were installed via brew.
 #   -- brew install zsh-autosuggestions zsh-syntax-highlighting z.lua
 
+zmodload zsh/zprof
 
 # ------------------------------------------------------------------------------
 # Paths
@@ -95,7 +96,8 @@ bindkey '^e' edit-command-line
 # Z.lua Jump to Directory
 # ------------------------------------------------------------------------------
 
-eval "$(lua /usr/local/Cellar/z.lua/1.8.7/share/z.lua/z.lua --init zsh)"
+eval "$(lua /usr/local/Cellar/z.lua/1.8.11/share/z.lua/z.lua --init zsh)"
+
 export _ZL_ROOT_MARKERS=".git,package.json,composer.json" # Jump to project root with zb
 
 
@@ -139,22 +141,32 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 # ------------------------------------------------------------------------------
 # Node Version Manager
 # ------------------------------------------------------------------------------
-#
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# Add every binary that requires nvm, npm or node to run to an array of node globals
+NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
+NODE_GLOBALS+=("node")
+NODE_GLOBALS+=("nvm")
+NODE_GLOBALS+=("npx")
+
+# Lazy-loading nvm + npm on node globals call
+load_nvm () {
+  export NVM_DIR=~/.nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+  if [ -f "$NVM_DIR/bash_completion" ]; then
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+  fi
+}
+
+# Making node global trigger the lazy loading
+for cmd in "${NODE_GLOBALS[@]}"; do
+  eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; ${cmd} \$@; }"
+done
 
 # ------------------------------------------------------------------------------
 # FZF
 # ------------------------------------------------------------------------------
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# ------------------------------------------------------------------------------
-# Ruby Env
-# ------------------------------------------------------------------------------
-eval "$(rbenv init -)"
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 
 # ------------------------------------------------------------------------------
 # Auto Suggest Settings (Needs to be last)
@@ -164,20 +176,3 @@ export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/h
 
 # Source syntax highlighting plugin
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/usr/local/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/usr/local/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-        . "/usr/local/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/usr/local/Caskroom/miniconda/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-

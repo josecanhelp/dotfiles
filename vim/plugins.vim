@@ -1,5 +1,4 @@
 Plug '/usr/local/opt/fzf'
-Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'dense-analysis/ale'
 Plug 'janko/vim-test'
@@ -37,6 +36,8 @@ Plug 'tpope/vim-dispatch'
 Plug 'szw/vim-maximizer'
 " Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'https://github.com/alok/notational-fzf-vim'
+Plug 'yyq123/vim-syntax-logfile'
 
 " Explicit annotation bindings for more accurate go to
 let g:explicit_annotation_bindings = {

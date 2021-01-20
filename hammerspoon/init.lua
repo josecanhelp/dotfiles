@@ -570,6 +570,20 @@ hs.urlevent.bind('copyAnything', function()
     end
 end)
 
+hs.urlevent.bind('tabPrevious', function()
+    if appIs(iterm) then
+        hs.eventtap.keyStroke({'control'}, 'a')
+        hs.eventtap.keyStroke({}, 'p')
+    end
+end)
+
+hs.urlevent.bind('tabNext', function()
+    if appIs(iterm) then
+        hs.eventtap.keyStroke({'control'}, 'a')
+        hs.eventtap.keyStroke({}, 'n')
+    end
+end)
+
 hs.urlevent.bind('toggleBreakTime', function()
     local status, response, description = hs.osascript.javascript([[
         breaktime = Application("BreakTime")
