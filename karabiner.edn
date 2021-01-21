@@ -107,7 +107,8 @@
                  [:##right_shift :right_shift  nil {:alone [:hs "tabNext"]}]]}
         {:des "Foot pedal"
          :rules [
-                 [:spacebar :right_control [:hp-kb]]]}
+                 [:japanese_kana :right_command [:hp-kb]]
+                 [:japanese_pc_katakana :right_control [:hp-kb]]]}
         {:des "Launch Mode for opening up Applications"
          :rules [:launch-mode
                  [:c [:launch "Visual\\ Studio\\ Code"]]
