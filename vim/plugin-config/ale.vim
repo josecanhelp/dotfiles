@@ -7,7 +7,7 @@ let g:ale_sign_style_warning = '!'
 let g:ale_disable_lsp = 1
 
   let g:ale_linters = {
-    \ 'php': ['php', 'phpcs', 'phpmd'],
+    \ 'php': ['php', 'phpcs', 'phpmd', 'tlint'],
     \ 'lua': ['luacheck'],
     \ 'yml': ['yamllint'],
     \ }
@@ -27,7 +27,3 @@ let g:ale_disable_lsp = 1
       let b:ale_fix_on_save = 1
     endif
   endfunction
-
-  " function! s:fix_javascript()
-    " let b:ale_fix_on_save = 1
-  " endfunction

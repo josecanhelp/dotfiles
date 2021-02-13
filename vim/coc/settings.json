@@ -13,6 +13,7 @@
   "intelephense.maxMemory": 2048,
   "intelephense.telemetry.enabled": false,
   "intelephense.completion.insertUseDeclaration": true,
+  "intelephense.diagnostics.undefinedSymbols": false,
   "intelephense.diagnostics.unusedSymbols": true,
   "diagnostic-languageserver.filetypes": {
     "email": "languagetool",
@@ -29,5 +30,5 @@
   "eslint.packageManager": "npm",
   "diagnostic.displayByAle": true,
   "eslint.run": "onSave",
-  "eslint.autoFixOnSave": true,
+  "eslint.autoFixOnSave": true
 }

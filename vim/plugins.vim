@@ -38,6 +38,9 @@ Plug 'szw/vim-maximizer'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'https://github.com/alok/notational-fzf-vim'
 Plug 'yyq123/vim-syntax-logfile'
+Plug 'tpope/vim-projectionist'
+Plug 'noahfrederick/vim-composer'
+Plug 'noahfrederick/vim-laravel'
 
 " Explicit annotation bindings for more accurate go to
 let g:explicit_annotation_bindings = {
