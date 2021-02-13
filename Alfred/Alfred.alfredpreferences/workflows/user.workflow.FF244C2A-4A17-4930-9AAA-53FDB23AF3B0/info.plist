@@ -25,7 +25,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>FA4CF016-E27A-4B25-890C-2E4BE77F09AE</string>
+				<string>C25342EF-1CB2-487D-8A83-E277D5295CDE</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -35,11 +35,34 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>7405A963-2017-4541-8853-3451DFC389B8</string>
+				<string>B70055B5-F405-4B50-B23C-0FCBBB53E281</string>
 				<key>modifiers</key>
 				<integer>1048576</integer>
 				<key>modifiersubtext</key>
-				<string>Copy the entry URL to your clipboard.</string>
+				<string>Copy URL to clipboard.</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>8546EBA0-C6CD-4636-BF9C-CA1AD33A1184</string>
+				<key>modifiers</key>
+				<integer>131072</integer>
+				<key>modifiersubtext</key>
+				<string>Copy content to clipboard.</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>6CDD323A-C815-4219-A1EC-4B7FBD06236E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>0A682D5B-5995-451F-9E49-5F59BF2C61B8</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -59,11 +82,50 @@
 				<false/>
 			</dict>
 		</array>
+		<key>8546EBA0-C6CD-4636-BF9C-CA1AD33A1184</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6CDD323A-C815-4219-A1EC-4B7FBD06236E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>9DBD8EA4-A6A8-4843-A968-6BBC73C77BD5</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>B0743D9F-97B6-4A19-9F6B-7C90A415B53A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B70055B5-F405-4B50-B23C-0FCBBB53E281</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7405A963-2017-4541-8853-3451DFC389B8</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C25342EF-1CB2-487D-8A83-E277D5295CDE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FA4CF016-E27A-4B25-890C-2E4BE77F09AE</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -119,7 +181,7 @@
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>https://ram.tighten.co/entries/{query}</string>
+				<string>https://ram.tighten.co/entries/{var:split2}</string>
 				<key>utf8</key>
 				<true/>
 			</dict>
@@ -133,62 +195,11 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>ram</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>1</integer>
-				<key>queuemode</key>
-				<integer>2</integer>
-				<key>runningsubtext</key>
-				<string>Loading...</string>
-				<key>script</key>
-				<string>query="{query}"
-
-php search.php $query {var:token}</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string>Search Ram</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>3E48FE9E-87D4-421F-A2CC-6D095DDFF724</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>conditions</key>
 				<array>
 					<dict>
 						<key>inputstring</key>
-						<string>{query}</string>
+						<string>{var:split2}</string>
 						<key>matchcasesensitive</key>
 						<false/>
 						<key>matchmode</key>
@@ -196,7 +207,7 @@ php search.php $query {var:token}</string>
 						<key>matchstring</key>
 						<string>0</string>
 						<key>outputlabel</key>
-						<string>{query}</string>
+						<string>{var:split2}</string>
 						<key>uid</key>
 						<string>51C5743A-22EE-437E-8F21-0E66C9A33010</string>
 					</dict>
@@ -214,10 +225,27 @@ php search.php $query {var:token}</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>delimiter</key>
+				<string>±</string>
+				<key>trimarguments</key>
+				<false/>
+				<key>variableprefix</key>
+				<string>split</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.split</string>
+			<key>uid</key>
+			<string>C25342EF-1CB2-487D-8A83-E277D5295CDE</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>autopaste</key>
 				<false/>
 				<key>clipboardtext</key>
-				<string>https://ram.test/entries/{query}</string>
+				<string>https://ram.test/entries/{var:split2}</string>
 				<key>ignoredynamicplaceholders</key>
 				<false/>
 				<key>transient</key>
@@ -254,11 +282,62 @@ php search.php $query {var:token}</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>103</integer>
+				<key>keyword</key>
+				<string>ram</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>Loading...</string>
+				<key>script</key>
+				<string>query="{query}"
+
+php search.php "{query}" {var:token}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Search Ram</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>3E48FE9E-87D4-421F-A2CC-6D095DDFF724</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>conditions</key>
 				<array>
 					<dict>
 						<key>inputstring</key>
-						<string>{query}</string>
+						<string>{var:split2}</string>
 						<key>matchcasesensitive</key>
 						<false/>
 						<key>matchmode</key>
@@ -266,7 +345,7 @@ php search.php $query {var:token}</string>
 						<key>matchstring</key>
 						<string>0</string>
 						<key>outputlabel</key>
-						<string>{query}</string>
+						<string>{var:split2}</string>
 						<key>uid</key>
 						<string>51C5743A-22EE-437E-8F21-0E66C9A33010</string>
 					</dict>
@@ -278,6 +357,101 @@ php search.php $query {var:token}</string>
 			<string>alfred.workflow.utility.conditional</string>
 			<key>uid</key>
 			<string>7405A963-2017-4541-8853-3451DFC389B8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>delimiter</key>
+				<string>±</string>
+				<key>trimarguments</key>
+				<false/>
+				<key>variableprefix</key>
+				<string>split</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.split</string>
+			<key>uid</key>
+			<string>B70055B5-F405-4B50-B23C-0FCBBB53E281</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{var:split1}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>6CDD323A-C815-4219-A1EC-4B7FBD06236E</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Ram post content copied to clipboard.</string>
+				<key>title</key>
+				<string>Success</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>0A682D5B-5995-451F-9E49-5F59BF2C61B8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>delimiter</key>
+				<string>±</string>
+				<key>trimarguments</key>
+				<false/>
+				<key>variableprefix</key>
+				<string>split</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.split</string>
+			<key>uid</key>
+			<string>8546EBA0-C6CD-4636-BF9C-CA1AD33A1184</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>Ram Search Key Successfully Set!</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>B0743D9F-97B6-4A19-9F6B-7C90A415B53A</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -328,100 +502,116 @@ end run</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string></string>
-				<key>title</key>
-				<string>Ram Search Key Successfully Set!</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>B0743D9F-97B6-4A19-9F6B-7C90A415B53A</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string>Use this workflow to search ram.tighten.co and open a url based on the selected entry.
 
 Run `ramkey` to update the master api key with the appropriate value to access the search feature.
 
-Run `ram` to search with a query of your choice.</string>
+Run `ram` to search with a query of your choice.
+
+Hold command to copy the URL of the post to your clipboard.
+
+Hold shift to copy the contents of the post to your clipboard.</string>
 	<key>uidata</key>
 	<dict>
 		<key>03B339FE-C355-4F53-8B33-FADCF6FE0C9C</key>
 		<dict>
 			<key>xpos</key>
-			<integer>530</integer>
+			<integer>455</integer>
 			<key>ypos</key>
-			<integer>250</integer>
+			<integer>225</integer>
+		</dict>
+		<key>0A682D5B-5995-451F-9E49-5F59BF2C61B8</key>
+		<dict>
+			<key>xpos</key>
+			<integer>505</integer>
+			<key>ypos</key>
+			<integer>340</integer>
 		</dict>
 		<key>1ABD3E75-6E29-4F38-9F2D-8151ED1FE839</key>
 		<dict>
 			<key>xpos</key>
-			<integer>535</integer>
+			<integer>455</integer>
 			<key>ypos</key>
-			<integer>95</integer>
+			<integer>105</integer>
 		</dict>
 		<key>3E48FE9E-87D4-421F-A2CC-6D095DDFF724</key>
 		<dict>
-			<key>note</key>
-			<string>github.com</string>
 			<key>xpos</key>
 			<integer>60</integer>
 			<key>ypos</key>
-			<integer>110</integer>
+			<integer>235</integer>
 		</dict>
-		<key>7405A963-2017-4541-8853-3451DFC389B8</key>
+		<key>6CDD323A-C815-4219-A1EC-4B7FBD06236E</key>
 		<dict>
 			<key>xpos</key>
 			<integer>335</integer>
 			<key>ypos</key>
-			<integer>285</integer>
+			<integer>340</integer>
+		</dict>
+		<key>7405A963-2017-4541-8853-3451DFC389B8</key>
+		<dict>
+			<key>xpos</key>
+			<integer>330</integer>
+			<key>ypos</key>
+			<integer>255</integer>
+		</dict>
+		<key>8546EBA0-C6CD-4636-BF9C-CA1AD33A1184</key>
+		<dict>
+			<key>xpos</key>
+			<integer>255</integer>
+			<key>ypos</key>
+			<integer>370</integer>
 		</dict>
 		<key>9DBD8EA4-A6A8-4843-A968-6BBC73C77BD5</key>
 		<dict>
 			<key>xpos</key>
 			<integer>315</integer>
 			<key>ypos</key>
-			<integer>385</integer>
+			<integer>490</integer>
 		</dict>
 		<key>B0743D9F-97B6-4A19-9F6B-7C90A415B53A</key>
 		<dict>
 			<key>xpos</key>
 			<integer>530</integer>
 			<key>ypos</key>
-			<integer>385</integer>
+			<integer>490</integer>
+		</dict>
+		<key>B70055B5-F405-4B50-B23C-0FCBBB53E281</key>
+		<dict>
+			<key>xpos</key>
+			<integer>255</integer>
+			<key>ypos</key>
+			<integer>265</integer>
+		</dict>
+		<key>C25342EF-1CB2-487D-8A83-E277D5295CDE</key>
+		<dict>
+			<key>xpos</key>
+			<integer>255</integer>
+			<key>ypos</key>
+			<integer>170</integer>
 		</dict>
 		<key>D4D5C28D-4988-43E4-8044-0FFA74ADA254</key>
 		<dict>
 			<key>xpos</key>
 			<integer>60</integer>
 			<key>ypos</key>
-			<integer>385</integer>
+			<integer>490</integer>
 		</dict>
 		<key>DD441847-1CC0-479B-835F-622F29BE8600</key>
 		<dict>
 			<key>xpos</key>
-			<integer>760</integer>
+			<integer>620</integer>
 			<key>ypos</key>
-			<integer>250</integer>
+			<integer>225</integer>
 		</dict>
 		<key>FA4CF016-E27A-4B25-890C-2E4BE77F09AE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>335</integer>
+			<integer>330</integer>
 			<key>ypos</key>
-			<integer>130</integer>
+			<integer>160</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -430,9 +620,11 @@ Run `ram` to search with a query of your choice.</string>
 		<string>correct-horse-battery-staple</string>
 	</dict>
 	<key>variablesdontexport</key>
-	<array/>
+	<array>
+		<string>token</string>
+	</array>
 	<key>version</key>
-	<string>0.0.2</string>
+	<string>0.0.3</string>
 	<key>webaddress</key>
 	<string>https://josesoto.com</string>
 </dict>
