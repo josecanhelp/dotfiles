@@ -13,6 +13,7 @@
 ; ## | optional any
 
 {:templates {:launch "open -a %s"
+             :yabai "/usr/local/bin/yabai -m %s"
              :hs "open -g hammerspoon://%s"}
  :applications {:workspot ["^com\\.workspot\\.osx$"] :terminal ["^com\\.googlecode\\.iterm2$"]}
  :devices {:hp-kb [{:product_id 4170 :vendor_id 1008}]}
@@ -29,7 +30,6 @@
                  [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
                  [:g [:hs "quickSlackReactEmoji"]] ; Wave goodbye to folks in Slack
                  [:h [:hs "navigateBack"]]
-                 [:i :!T9] ; Toggle iTerm with hotkey
                  [:j [:hs "navigateDownward"]]
                  [:k [:hs "navigateUpward"]]
                  [:l [:hs "navigateForward"]]
@@ -47,6 +47,8 @@
                  [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
                  [:semicolon :!!semicolon] ; open Alfred
                  ]}
+        {:des "No Mode"
+         :rules [[:!Wj [:yabai "window --focus north"]]]}
         {:des "Hyper Mode For Workspot"
          :rules [:hyper-mode-workspot
                  [:o :!TSi]
@@ -67,6 +69,39 @@
                                        :dorder :insensitive
                                        :uorder :insensitive
                                        :afterup {:set ["super-duper" 0]}}} {:set ["super-duper" 1]}]]}
+        {:des "Simultaneous w + e --> Yabai Mode"
+         :rules [[{:sim [:w :e] :simo {:interrupt true
+                                       :dorder :insensitive
+                                       :uorder :insensitive
+                                       :afterup {:set ["yabai-mode" 0]}}} {:set ["yabai-mode" 1]}]]}
+        {:des "Yabai Mode"
+         :rules [:yabai-mode
+                 [:r [:yabai "space --balance"]]
+                 [:t [:yabai "space --mirror x-axis"]]
+                 [:q [:yabai "space --mirror y-axis"]]
+                 [:tab [:yabai "space --rotate 90"]]
+                 [:equal_sign [:yabai "window --swap first"]]
+                 [:n [:yabai "space --create"]]
+                 [:x [:yabai "space --destroy"]]
+                 [:!Sp [:yabai "window --space prev"]]
+                 [:!Sn [:yabai "window --space next"]]
+                 [:u [:yabai "window --swap prev"]]
+                 [:d [:yabai "window --swap next"]]
+                 [:o [:yabai "window --toggle zoom-fullscreen"]]
+                 [:p [:yabai "window --toggle zoom-parent"]]
+                 [:backslash [:yabai "window --toggle split"]]
+                 [:!Sh [:yabai "window --swap west"]]
+                 [:!Sj [:yabai "window --swap south"]]
+                 [:!Sk [:yabai "window --swap north"]]
+                 [:!Sl [:yabai "window --swap east"]]
+                 [:!Rh [:yabai "window --warp west"]]
+                 [:!Rj [:yabai "window --warp south"]]
+                 [:!Rk [:yabai "window --warp north"]]
+                 [:!Rl [:yabai "window --warp east"]]
+                 [:h [:yabai "window --focus west"]]
+                 [:j [:yabai "window --focus south"]]
+                 [:k [:yabai "window --focus north"]]
+                 [:l [:yabai "window --focus east"]]]}
         {:des "Super Duper Mode for Traversing Tmux"
          :rules [:super-duper
                  [:f [:!Ta :f :return_or_enter]] ; Find a window
@@ -101,14 +136,10 @@
                  [:u :7]
                  [:i :8]
                  [:o :9]]}
-        {:des "Shift -> {} or Shift"
-         :rules [
-                 [:##left_shift :left_shift nil  {:alone [:hs "tabPrevious"]}]
-                 [:##right_shift :right_shift  nil {:alone [:hs "tabNext"]}]]}
         {:des "Foot pedal"
          :rules [
                  [:japanese_kana :right_command [:hp-kb]]
-                 [:japanese_pc_katakana :right_control [:hp-kb]]]}
+                 [:japanese_pc_katakana :right_option [:hp-kb]]]}
         {:des "Launch Mode for opening up Applications"
          :rules [:launch-mode
                  [:c [:launch "Visual\\ Studio\\ Code"]]
@@ -121,6 +152,7 @@
                  [:r [:launch "Bear"]]
                  [:s [:launch "Slack"]]
                  [:t [:launch "TablePlus"]]
+                 [:w [:launch "Wrike\\ for\\ Mac"]]
                  [:y [:launch "YT\\ Music"]]
                  [:z [:hs "debug-menu"]]
                  [:x [:hs "expose"]]]}]}
