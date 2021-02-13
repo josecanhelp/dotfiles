@@ -59,3 +59,5 @@ alias zb='z -b'      # quickly cd to the parent directory
 alias pb='pianobar'
 alias pad='php artisan dusk'
 alias jig="./vendor/bin/jigsaw"
+alias to="./bin/run"
+alias vimini="vim $(getPhpIni)"
