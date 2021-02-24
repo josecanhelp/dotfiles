@@ -22,7 +22,7 @@ function! EditVimConfig(file)
 endfunction
 
 function! EditKBMappers()
-  execute 'edit ~/.config/karabiner.edn '
+  execute 'edit ~/.config/karabiner/karabiner.edn '
   execute 'vsplit'
   execute 'edit ~/.hammerspoon/init.lua'
 endfunction

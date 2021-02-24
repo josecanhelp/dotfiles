@@ -32,7 +32,7 @@
     ~/.config/kyrat/vimrc: vim/vimrc
     ~/.zshrc: zsh/zshrc
     ~/.config/kyrat/zshrc: zsh/zshrc
-    ~/.config/karabiner.edn: karabiner.edn
+    ~/.config/karabiner/karabiner.edn: karabiner/karabiner.edn
     ~/.config/mutt/muttrc: mutt/muttrc
     ~/.config/mutt/dracula.muttrc: mutt/dracula.muttrc
     /usr/local/share/zsh/site-functions/_docker: /Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion

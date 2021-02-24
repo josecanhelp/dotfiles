@@ -138,6 +138,52 @@ hs.urlevent.bind('openAppModal', function()
 end)
 
 ----------------------------------------------------------------------------------------------------
+-- Yabai Resize Modal
+--
+-- This modal is used to call yabai-specific window resize commands
+----------------------------------------------------------------------------------------------------
+
+spoon.ModalMgr:new("yabaiM")
+local cmodal = spoon.ModalMgr.modal_list["yabaiM"]
+cmodal:bind('', 'escape', 'Deactivate yabaiM', function() spoon.ModalMgr:deactivate({"yabaiM"}) end)
+cmodal:bind('', 'Q', 'Deactivate yabaiM', function() spoon.ModalMgr:deactivate({"yabaiM"}) end)
+cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
+cmodal:bind('', 'j', 'Resize Southward', function() 
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "top:0:100"}):start() 
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "bottom:0:-100"}):start() 
+end)
+cmodal:bind('', 'k', 'Resize Northward', function() 
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "top:0:-100"}):start() 
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "bottom:0:100"}):start() 
+end)
+cmodal:bind('', 'h', 'Resize Westward', function() 
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "left:100:0"}):start() 
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "right:-100:0"}):start() 
+end)
+cmodal:bind('', 'l', 'Resize Eastward', function() 
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "left:-100:0"}):start() 
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "right:100:0"}):start() 
+end)
+
+local modeText = hs.styledtext.new("Resize", {
+    color = {hex = "#000000", alpha = 1},
+    backgroundColor = {hex = "#00FFFF", alpha = 1},
+})
+cmodal.entered = function()
+  activeModal = 'yabaiM'
+    modeMenuBar:setTitle(modeText)
+end
+cmodal.exited = function()
+  activeModal = nil
+  modeMenuBar:setTitle('Normal')
+end
+
+hs.urlevent.bind('openYabaiModal', function()
+    spoon.ModalMgr:deactivateAll()
+    spoon.ModalMgr:activate({"yabaiM"}, "#00FFFF", false)
+end)
+
+----------------------------------------------------------------------------------------------------
 -- Window Modal
 --
 -- This modal is used to manage the positioning of my application windows.
