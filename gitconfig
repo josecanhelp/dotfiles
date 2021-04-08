@@ -44,3 +44,5 @@
 	trustExitCode = true
 [pull]
 	rebase = false
+[color]
+	ui = auto

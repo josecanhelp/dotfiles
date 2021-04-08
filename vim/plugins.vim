@@ -1,6 +1,6 @@
 Plug '/usr/local/opt/fzf'
 Plug 'christoomey/vim-tmux-runner'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 Plug 'janko/vim-test'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-peekaboo'
@@ -41,6 +41,7 @@ Plug 'yyq123/vim-syntax-logfile'
 Plug 'tpope/vim-projectionist'
 Plug 'noahfrederick/vim-composer'
 Plug 'noahfrederick/vim-laravel'
+Plug 'editorconfig/editorconfig-vim'
 
 " Explicit annotation bindings for more accurate go to
 let g:explicit_annotation_bindings = {
@@ -56,3 +57,5 @@ let g:explicit_annotation_bindings = {
 
 " Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
+
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']

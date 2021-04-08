@@ -9,7 +9,7 @@ alias gs="git status"
 alias gco="git checkout"
 alias gsup="git branch --set-upstream-to=origin/$(current_branch)"
 alias guncommit="git reset HEAD~1"
-alias artisan="php artisan"
+# alias artisan="php artisan"
 alias art="php artisan"
 alias tt="cd ~/Code/Tighten/"
 alias jj="cd ~/Code/JoseCanHelp/"
@@ -38,6 +38,8 @@ alias gempty="git commit --allow-empty -m 'Empty Commit'"
 alias phpunit="./vendor/bin/phpunit"
 alias nrs='npm run serve'
 alias nrw='npm run watch'
+alias nrd='npm run dev'
+alias nrb='npm run build'
 alias editzshrc='vim ~/.zshrc'
 alias editalias='vim ~/.oh-my-zsh-custom/custom/aliases.zsh'
 alias vimt="cd ~/Code/Tighten/\$(ls ~/Code/Tighten | fzf) && vim +GFiles"
@@ -61,3 +63,8 @@ alias pad='php artisan dusk'
 alias jig="./vendor/bin/jigsaw"
 alias to="./bin/run"
 alias vimini="vim $(getPhpIni)"
+alias tinkpw="php artisan tinker --execute=\"echo bcrypt('password')\" | pbcopy"
+alias vim="nvim"
+alias lll="ranger"
+alias vimlog="nvim -V9myNvim.log ."
+alias ghopen="gh repo view --web"

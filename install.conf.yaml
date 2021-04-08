@@ -26,12 +26,14 @@
     ~/.config/kyrat/tmux.conf: tmux.conf
     ~/.tmux: tmux/
     ~/.vim/coc-settings.json: vim/coc/settings.json
+    ~/.config/nvim: nvim/
     ~/.vim: vim/
     ~/.vimrc: vim/vimrc
     ~/.vim/ultisnips: vim/snippets
     ~/.config/kyrat/vimrc: vim/vimrc
     ~/.zshrc: zsh/zshrc
     ~/.config/kyrat/zshrc: zsh/zshrc
+    ~/.config/karabiner.edn: karabiner/karabiner.edn
     ~/.config/karabiner/karabiner.edn: karabiner/karabiner.edn
     ~/.config/mutt/muttrc: mutt/muttrc
     ~/.config/mutt/dracula.muttrc: mutt/dracula.muttrc
@@ -42,20 +44,20 @@
 # - create:
     # - ~/Code
 - shell:
-  - description: Hushing login
-    command: "[ -f ~/.hushlogin ] || touch ~/.hushlogin"
+  # - description: Hushing login
+    # command: "[ -f ~/.hushlogin ] || touch ~/.hushlogin"
   # - description: Telling gatekeeper to allow unidentified developers
     # command: "sudo spctl --master-disable"
   # - description: Installing brew
     # command: "[ -x \"$(which brew)\" ] || /usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
-  - description: Updating brew
-    command: "brew update"
+  # - description: Updating brew
+    # command: "brew update"
   # - description: Installing brew bundler
     # command: "brew tap homebrew/bundle"
   # - description: Installing brewfile bundle
     # command: "brew bundle"
-  - description: Removing old brew files
-    command: "brew cleanup"
+  # - description: Removing old brew files
+    # command: "brew cleanup"
   # - description: Adding zsh to list of acceptable shells
     # command: "[[ \"$(ag $(which zsh) /etc/shells)\" ]] || sudo sh -c \"echo $(which zsh) >> /etc/shells\""
   # - description: Making zsh the default shell
@@ -74,9 +76,9 @@
     # command: "valet park ~/Code"
   - description: Clearing sudo credential cache
     command: "sudo --reset-timestamp"
-- pip:
-    file: pip/requirements.txt
-    binary: /usr/local/bin/pip3
-    user: true    # Like --user
-    stdout: false # Print the execution stdout
-    stderr: true  # Print the execution stderr
+# - pip:
+    # file: pip/requirements.txt
+    # binary: /usr/local/bin/pip3
+    # user: true    # Like --user
+    # stdout: false # Print the execution stdout
+    # stderr: true  # Print the execution stderr

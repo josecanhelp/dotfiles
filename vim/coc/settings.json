@@ -15,20 +15,24 @@
   "intelephense.completion.insertUseDeclaration": true,
   "intelephense.diagnostics.undefinedSymbols": false,
   "intelephense.diagnostics.unusedSymbols": true,
-  "diagnostic-languageserver.filetypes": {
-    "email": "languagetool",
-    "markdown": ["write-good", "markdownlint"],
-    "sh": "shellcheck"
-  },
-  "diagnostic-languageserver.formatFiletypes": {},
   "diagnostic.errorSign": "\uf05e",
   "diagnostic.warningSign": "\uf071",
   "diagnostic.infoSign": "•",
   "diagnostic.hintSign": "•",
   "tailwindCSS.headwind.runOnSave": true,
   "json.format.enable": true,
+  "diagnostic.displayByAle": false,
+  "vetur.format.enable": true,
+  "vetur.format.options.tabSize": 2,
+  "vetur.format.options.useTabs": false,
+  "vetur.trace.server": "verbose",
   "eslint.packageManager": "npm",
-  "diagnostic.displayByAle": true,
   "eslint.run": "onSave",
-  "eslint.autoFixOnSave": true
+  "eslint.autoFixOnSave": true,
+  "eslint.format.enable": true,
+  "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "vue"
+  ]
 }

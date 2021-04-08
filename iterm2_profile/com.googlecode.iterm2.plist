@@ -2435,7 +2435,7 @@
 			<key>Initial Text</key>
 			<string>tmux ls &amp;&amp; read tmux_session &amp;&amp; tmux attach -t ${tmux_session:-tighten} || tmux new -s ${tmux_session:-tighten}</string>
 			<key>Initial Use Transparency</key>
-			<true/>
+			<false/>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -2889,7 +2889,7 @@
 			<key>Title Components</key>
 			<integer>1</integer>
 			<key>Transparency</key>
-			<real>0.10988706608408505</real>
+			<real>0.0</real>
 			<key>Unicode Normalization</key>
 			<integer>0</integer>
 			<key>Unicode Version</key>

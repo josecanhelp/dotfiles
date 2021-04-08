@@ -164,6 +164,9 @@ cmodal:bind('', 'l', 'Resize Eastward', function()
     hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "left:-100:0"}):start() 
     hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "right:100:0"}):start() 
 end)
+cmodal:bind('', 'f', 'Set Window to Float', function() 
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--toggle", "float"}):start() 
+end)
 
 local modeText = hs.styledtext.new("Resize", {
     color = {hex = "#000000", alpha = 1},
@@ -503,7 +506,8 @@ hs.urlevent.bind('openAnything', function()
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, 'f')
     elseif appIs(iterm) then
-        hs.eventtap.keyStroke({'ctrl'}, 'p')
+        hs.eventtap.keyStroke({'ctrl'}, 'a')
+        hs.eventtap.keyStroke({}, "'")
     elseif appIs(sketch) then
         triggerAlfredWorkflow('com.tedwise.menubarsearch', 'menubarsearch', 'open recent')
     elseif true then
@@ -516,6 +520,8 @@ hs.urlevent.bind('toggleSidebar', function()
     if appIs(vscode) then
         hs.eventtap.keyStroke({'cmd'}, 'b', 0)
         hs.eventtap.keyStroke({'cmd'}, 'h', 0)
+    elseif appIs(slack) then
+        hs.eventtap.keyStroke({'cmd', 'shift'}, 'd')
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'control'}, '3')
     elseif appIs(phpstorm) then

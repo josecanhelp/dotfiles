@@ -12,7 +12,59 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>91D5DD2E-9CE9-47DD-9F0F-39A1906F69E0</string>
+				<string>41A38261-2747-4179-A38F-8896C54F75DD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>41A38261-2747-4179-A38F-8896C54F75DD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>63C10B5D-A19F-4ED3-862A-85109A0AF4EE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>242950C5-E59D-49C6-AF3C-37913339F014</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>420F600F-9CFB-4C58-A564-E598FD6E9AD3</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>3F9B9C1F-07A0-4A67-96FE-43BEB8EF31B9</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>DDDD6480-DA73-4DEA-9824-F3317EF7D04B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>235E6EA5-6CB1-413C-93F1-3029D2C641B8</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>420F600F-9CFB-4C58-A564-E598FD6E9AD3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D9A92485-716C-45FB-A610-3228E29A2AA4</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -34,11 +86,11 @@
 				<false/>
 			</dict>
 		</array>
-		<key>91D5DD2E-9CE9-47DD-9F0F-39A1906F69E0</key>
+		<key>DDDD6480-DA73-4DEA-9824-F3317EF7D04B</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>63C10B5D-A19F-4ED3-862A-85109A0AF4EE</string>
+				<string>5E81EA73-68DD-4064-AAD6-1B09D365CB30</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -58,27 +110,6 @@
 	<string>Run OSX Commands</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string></string>
-				<key>title</key>
-				<string>{query}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>EA09F097-0E38-42C9-90E2-774089BDC629</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -119,6 +150,27 @@ fi</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>EA09F097-0E38-42C9-90E2-774089BDC629</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -126,7 +178,7 @@ fi</string>
 				<key>fixedorder</key>
 				<false/>
 				<key>items</key>
-				<string>[{"title":"Toggle Desktop Icons","arg":"desktopIconToggle","subtitle":"Turn desktop icon visibility on or off."}]</string>
+				<string>[{"title":"Toggle Desktop Icons","arg":"desktopIconToggle","subtitle":"Turn desktop icon visibility on or off."},{"title":"Turn Yabai On","arg":"yabaion"},{"title":"Turn Yabai Off","arg":"yabaioff"}]</string>
 				<key>keyword</key>
 				<string>osx</string>
 				<key>runningsubtext</key>
@@ -148,21 +200,154 @@ fi</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>inputstring</key>
-				<string>{query}</string>
-				<key>matchcasesensitive</key>
-				<true/>
-				<key>matchmode</key>
-				<integer>0</integer>
-				<key>matchstring</key>
-				<string>desktopIconToggle</string>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>brew services start yabai
+yabai -m config window_opacity on
+yabai -m config active_window_opacity 1.0
+yabai -m config normal_window_opacity 0.9</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>5</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>91D5DD2E-9CE9-47DD-9F0F-39A1906F69E0</string>
+			<string>420F600F-9CFB-4C58-A564-E598FD6E9AD3</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>Yabai Enabled</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>D9A92485-716C-45FB-A610-3228E29A2AA4</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{query}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>desktopIconToggle</string>
+						<key>outputlabel</key>
+						<string>desktopIconToggle</string>
+						<key>uid</key>
+						<string>242950C5-E59D-49C6-AF3C-37913339F014</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string>{query}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>yabaion</string>
+						<key>outputlabel</key>
+						<string>yabaion</string>
+						<key>uid</key>
+						<string>3F9B9C1F-07A0-4A67-96FE-43BEB8EF31B9</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string>{query}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>yabaioff</string>
+						<key>outputlabel</key>
+						<string>yabaioff</string>
+						<key>uid</key>
+						<string>235E6EA5-6CB1-413C-93F1-3029D2C641B8</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>else</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>41A38261-2747-4179-A38F-8896C54F75DD</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>Yabai Disabled</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>5E81EA73-68DD-4064-AAD6-1B09D365CB30</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>yabai -m config active_window_opacity 1.0
+yabai -m config normal_window_opacity 1.0
+yabai -m config window_opacity off
+brew services stop yabai</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>5</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>DDDD6480-DA73-4DEA-9824-F3317EF7D04B</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -176,34 +361,58 @@ fi</string>
 			<key>note</key>
 			<string>List Filter Input: Create a pre-set list of options to show in Alfred's results.</string>
 			<key>xpos</key>
-			<integer>80</integer>
+			<integer>45</integer>
 			<key>ypos</key>
-			<integer>215</integer>
+			<integer>75</integer>
+		</dict>
+		<key>41A38261-2747-4179-A38F-8896C54F75DD</key>
+		<dict>
+			<key>xpos</key>
+			<integer>235</integer>
+			<key>ypos</key>
+			<integer>210</integer>
+		</dict>
+		<key>420F600F-9CFB-4C58-A564-E598FD6E9AD3</key>
+		<dict>
+			<key>xpos</key>
+			<integer>455</integer>
+			<key>ypos</key>
+			<integer>145</integer>
+		</dict>
+		<key>5E81EA73-68DD-4064-AAD6-1B09D365CB30</key>
+		<dict>
+			<key>xpos</key>
+			<integer>610</integer>
+			<key>ypos</key>
+			<integer>315</integer>
 		</dict>
 		<key>63C10B5D-A19F-4ED3-862A-85109A0AF4EE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>425</integer>
+			<integer>430</integer>
 			<key>ypos</key>
-			<integer>215</integer>
+			<integer>10</integer>
 		</dict>
-		<key>91D5DD2E-9CE9-47DD-9F0F-39A1906F69E0</key>
+		<key>D9A92485-716C-45FB-A610-3228E29A2AA4</key>
 		<dict>
-			<key>colorindex</key>
-			<integer>12</integer>
-			<key>note</key>
-			<string>Filter Utility: Stop the stream continuing based on a filter.</string>
 			<key>xpos</key>
-			<integer>295</integer>
+			<integer>640</integer>
 			<key>ypos</key>
-			<integer>245</integer>
+			<integer>150</integer>
+		</dict>
+		<key>DDDD6480-DA73-4DEA-9824-F3317EF7D04B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>330</integer>
 		</dict>
 		<key>EA09F097-0E38-42C9-90E2-774089BDC629</key>
 		<dict>
 			<key>xpos</key>
-			<integer>620</integer>
+			<integer>635</integer>
 			<key>ypos</key>
-			<integer>215</integer>
+			<integer>10</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
