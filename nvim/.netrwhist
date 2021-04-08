@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =8
+let g:netrw_dirhist_8='/Users/jose/dotfiles'
+let g:netrw_dirhist_7='/Users/jose/.config/nvim/plugin'
+let g:netrw_dirhist_6='/Users/jose/.config/nvim'
+let g:netrw_dirhist_5='/Users/jose/.config/nvim/local'
+let g:netrw_dirhist_4='/Users/jose/Code/Tighten/Dudek/scvha-hcp-admin/app/routes'
+let g:netrw_dirhist_3='/Users/jose/Code/Tighten/Dudek/scvha-hcp-admin/app'
+let g:netrw_dirhist_2='/Users/jose/Code/Tighten/Dudek/budgeting-tool/app'
+let g:netrw_dirhist_1='/Users/jose/.config/nvim'
