@@ -505,9 +505,6 @@ hs.urlevent.bind('openAnything', function()
         hs.eventtap.keyStroke({'cmd'}, 'o')
     elseif appIs(bear) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, 'f')
-    elseif appIs(iterm) then
-        hs.eventtap.keyStroke({'ctrl'}, 'a')
-        hs.eventtap.keyStroke({}, "'")
     elseif appIs(sketch) then
         triggerAlfredWorkflow('com.tedwise.menubarsearch', 'menubarsearch', 'open recent')
     elseif true then

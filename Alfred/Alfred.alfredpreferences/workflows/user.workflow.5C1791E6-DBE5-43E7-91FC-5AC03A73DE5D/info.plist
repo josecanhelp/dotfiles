@@ -61,7 +61,7 @@
 				<string>Searching...</string>
 				<key>script</key>
 				<string>source ~/.zshrc
-alias | jq -nR '{
+alias | $(which jq) -nR '{
     "items": [
         inputs |
         select(length&gt;0) |

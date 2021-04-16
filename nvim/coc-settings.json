@@ -1,0 +1,38 @@
+{
+  "languageserver": {
+    "intelephense": {
+      "command": "intelephense",
+      "args": ["--stdio"],
+      "filetypes": ["php"],
+      "initializationOptions": {
+        "storagePath": "/tmp/intelephense"
+      }
+    }
+  },
+  "intelephense.files.maxSize": 10000,
+  "intelephense.maxMemory": 2048,
+  "intelephense.telemetry.enabled": false,
+  "intelephense.completion.insertUseDeclaration": true,
+  "intelephense.diagnostics.undefinedSymbols": false,
+  "intelephense.diagnostics.unusedSymbols": true,
+  "diagnostic.errorSign": "\uf05e",
+  "diagnostic.warningSign": "\uf071",
+  "diagnostic.infoSign": "•",
+  "diagnostic.hintSign": "•",
+  "tailwindCSS.headwind.runOnSave": true,
+  "json.format.enable": true,
+  "diagnostic.displayByAle": true,
+  "vetur.format.enable": true,
+  "vetur.format.options.tabSize": 2,
+  "vetur.format.options.useTabs": false,
+  "vetur.trace.server": "verbose",
+  "eslint.packageManager": "npm",
+  "eslint.run": "onSave",
+  "eslint.autoFixOnSave": true,
+  "eslint.format.enable": true,
+  "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "vue"
+  ]
+}

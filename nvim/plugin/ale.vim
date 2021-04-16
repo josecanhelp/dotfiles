@@ -1,9 +1,9 @@
 
 let g:ale_sign_column_always = 1
-let g:ale_sign_error = 'XX'
-let g:ale_sign_style_error = 'XX'
-let g:ale_sign_warning = 'x'
-let g:ale_sign_style_warning = 'x'
+let g:ale_sign_error = 'a!'
+let g:ale_sign_style_error = 'a!'
+let g:ale_sign_warning = '!'
+let g:ale_sign_style_warning = '!'
 "let g:ale_disable_lsp = 1
 
   let g:ale_linters = {
