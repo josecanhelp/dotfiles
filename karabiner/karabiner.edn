@@ -1,0 +1,162 @@
+; !  | means mandatory
+; #  | means optional
+; C  | left_command
+; T  | left_control
+; O  | left_option
+; S  | left_shift
+; F  | fn
+; Q  | right_command
+; W  | right_control
+; E  | right_option
+; R  | right_shift
+; !! | mandatory command + control + optional + shift (hyper)
+; ## | optional any
+
+{:templates {:launch "open -a %s"
+             :yabai "/usr/local/bin/yabai -m %s"
+             :hs "open -g hammerspoon://%s"}
+ :applications {:workspot ["^com\\.workspot\\.osx$"] :terminal ["^com\\.googlecode\\.iterm2$"]}
+ :devices {:hp-kb [{:product_id 4170 :vendor_id 1008}]}
+ :layers {:hyper-mode {:key :caps_lock :alone {:key :escape} :condi :!workspot}
+          :hyper-mode-workspot {:key :caps_lock :alone {:key :escape} :condi :workspot}
+          :keypad-mode {:key :fn}}
+ :simlayers {:z-mode {:key :z}
+             :launch-mode {:key :quote}}
+ :simlayer-threshold 350
+ :main [{:des "Hyper Mode"
+         :rules [:hyper-mode
+                 ; [:0 :f12] ; view desktop
+                 [:a :!!a] ; get app bundle ID from Alfred
+                 [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
+                 [:g [:hs "quickSlackReactEmoji"]] ; Wave goodbye to folks in Slack
+                 [:h [:hs "navigateBack"]]
+                 [:j [:hs "navigateDownward"]]
+                 [:k [:hs "navigateUpward"]]
+                 [:l [:hs "navigateForward"]]
+                 [:m [:hs "toggleSidebar"]]
+                 [:n [:hs "createAnything"]]
+                 [:delete_or_backspace [:hs "deleteAnything"]]
+                 [:o [:hs "openAnything"]]
+                 [:p :!Cv] ; Paste
+                 [:q :!Cw] ; Close the current window
+                 ; [:r [:hs "openYabaiModal"]] ; trigger yabaiM Modal in hammerspoon
+                 [:v :!Oj] ; Show all open apps in hammerspoon overlay
+                 [:w [:hs "openWindowModal"]] ; Window Management
+                 [:y [:hs "copyAnything"]]
+                 ; [:x [:hs "enableLayoutM"]]
+                 [:quote [:hs "openCommandPalette"]]
+                 [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
+                 [:semicolon :!!semicolon] ; open Alfred
+                 ]}
+        {:des "No Mode"
+         :rules [[:!Wj [:yabai "window --focus north"]]]}
+        {:des "Hyper Mode For Workspot"
+         :rules [:hyper-mode-workspot
+                 [:o :!TSi]
+                 [:h :!TSh]
+                 [:j :!TSj]
+                 [:k :!TSk]
+                 [:l :!TSl]
+                 [:m :!TSm]
+                 [:quote :!TSp]
+                 [:semicolon :!CTOsemicolon]]}
+        {:des "Simultaneous v + l --> Wave" ; Experimental
+         :rules [[{:sim [:v :l] :simo {:interrupt true
+                                       :dorder :insensitive
+                                       :uorder :insensitive
+                                       :afterup {:set ["auto-wave" 0]}}} {:set ["auto-wave" 1]}]]}
+        {:des "Simultaneous s + d --> Super Duper Mode"
+         :rules [[{:sim [:s :d] :simo {:interrupt true
+                                       :dorder :insensitive
+                                       :uorder :insensitive
+                                       :afterup {:set ["super-duper" 0]}}} {:set ["super-duper" 1]}]]}
+        {:des "Simultaneous w + e --> Yabai Mode"
+         :rules [[{:sim [:w :e] :simo {:interrupt true
+                                       :dorder :insensitive
+                                       :uorder :insensitive
+                                       :afterup {:set ["yabai-mode" 0]}}} {:set ["yabai-mode" 1]}]]}
+        {:des "Yabai Mode"
+         :rules [:yabai-mode
+                 [:r [:hs "openYabaiModal"]] ; trigger yabaiM Modal in hammerspoon
+                 [:t [:yabai "space --balance"]]
+                 ; [:t [:yabai "space --mirror x-axis"]]
+                 [:q [:yabai "space --mirror y-axis"]]
+                 [:tab [:yabai "space --rotate 90"]]
+                 [:equal_sign [:yabai "window --swap first"]]
+                 [:n [:yabai "space --create"]]
+                 [:x [:yabai "space --destroy"]]
+                 [:!Sp [:yabai "window --space prev"]]
+                 [:!Sn [:yabai "window --space next"]]
+                 [:u [:yabai "window --swap prev"]]
+                 [:d [:yabai "window --swap next"]]
+                 [:o [:yabai "window --toggle zoom-fullscreen"]]
+                 [:p [:yabai "window --toggle zoom-parent"]]
+                 [:backslash [:yabai "window --toggle split"]]
+                 [:!Sh [:yabai "window --swap west"]]
+                 [:!Sj [:yabai "window --swap south"]]
+                 [:!Sk [:yabai "window --swap north"]]
+                 [:!Sl [:yabai "window --swap east"]]
+                 [:!Rh [:yabai "window --warp west"]]
+                 [:!Rj [:yabai "window --warp south"]]
+                 [:!Rk [:yabai "window --warp north"]]
+                 [:!Rl [:yabai "window --warp east"]]
+                 [:h [:yabai "window --focus west"]]
+                 [:j [:yabai "window --focus south"]]
+                 [:k [:yabai "window --focus north"]]
+                 [:l [:yabai "window --focus east"]]]}
+        {:des "Super Duper Mode for Traversing Tmux"
+         :rules [:super-duper
+                 [:f [:!Ta :f :return_or_enter]] ; Find a window
+                 [:up_arrow [:!Ta :p]] ; Switch to the previous tmux window 
+                 [:down_arrow [:!Ta :n]] ; Switch the the next tmux window
+                 [:j [:!Ta :j]] ; Focus on the pane below current pane
+                 [:k [:!Ta :k]] ; Focus on the pane above current pane
+                 [:h [:!Ta :h]] ; Focus on the pane to the left of the current pane
+                 [:l [:!Ta :l]] ; Focus on the pane to the right of the current pane
+                 [:o [:!Ta :z]] ; Zoom on current pane
+                 [:r [:!Ta :r]] ; Reload the Matrix
+                 [:hyphen [:!Ta :hyphen]] ; Split tmux window horizontally
+                 [:backslash [:!Ta :!Sbackslash]] ; Split tmux window vertically
+                 [:delete_or_backspace [:!Ta :x :y]] ; Kill a tmux pane without asking for confirmation
+                 [:y [:!Ta :!Sopen_bracket]] ; Kill a tmux pane without asking for confirmation
+                 ]}
+        {:des "Z mode for Vim Motions"
+         :rules [:z-mode
+                 [:i [:hs "slack-rw-wave"]]
+                 [:k :up_arrow]
+                 [:h :left_arrow]
+                 [:l :right_arrow]
+                 [:j :down_arrow]]}
+        {:des "Keypad mode for 10-key on small keyboards"
+         :rules [:keypad-mode
+                 [:spacebar :0]
+                 [:m :1]
+                 [:comma :2]
+                 [:period :3]
+                 [:j :4]
+                 [:k :5]
+                 [:l :6]
+                 [:u :7]
+                 [:i :8]
+                 [:o :9]]}
+        {:des "Foot pedal"
+         :rules [
+                 [:japanese_kana :right_command [:hp-kb]]
+                 [:japanese_pc_katakana :right_option [:hp-kb]]]}
+        {:des "Launch Mode for opening up Applications"
+         :rules [:launch-mode
+                 [:c [:launch "Visual\\ Studio\\ Code"]]
+                 [:d [:launch "Discord"]]
+                 [:f [:launch "Brave\\ Browser"]]
+                 [:h [:launch "Sketch"]]
+                 [:i [:launch "iterm"]]
+                 [:m [:launch "Messages"]]
+                 [:n [:launch "monday\\.com"]]
+                 [:o [:launch "OmniFocus"]]
+                 [:r [:launch "Bear"]]
+                 [:s [:launch "Slack"]]
+                 [:t [:launch "TablePlus"]]
+                 [:w [:launch "Wrike\\ for\\ Mac"]]
+                 [:y [:launch "YT\\ Music"]]
+                 [:z [:hs "debug-menu"]]
+                 [:x [:hs "expose"]]]}]}
