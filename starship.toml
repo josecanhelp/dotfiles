@@ -2,9 +2,8 @@
 add_newline = false
 
 [character]
-symbol = "❯"
-use_symbol_for_status = false
-style_failure =  "bold red"
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
 
 # Disable the package module, hiding it from the prompt completely
 [package]

@@ -21,7 +21,6 @@
   pretty = "format:%Cblue%h%Creset %Creset%Cgreen%cn, %cr%Creset : %s%Creset%C(red)%d%Creset"
 [status]
   short  = true
-  branch = true
 [help]
   autocorrect = 1
 [core]
@@ -46,3 +45,5 @@
 	rebase = false
 [color]
 	ui = auto
+[init]
+	defaultBranch = main

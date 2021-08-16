@@ -76,13 +76,28 @@ ham() {
   open -g "hammerspoon://reloadHammerspoon"
 }
 
-refreshCurrentPocDatabase() {
-  docker exec -it postgres2 dropdb -U postgres -p 5432 -i -e poc_current && docker exec -it postgres2 createdb -p 5432 -U postgres poc_current
-}
-
 timezsh() {
   shell=${1-$SHELL}
   for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
+
+yabaion() {
+    brew services start yabai
+    yabai -m config window_opacity on
+    yabai -m config active_window_opacity 1.0
+    yabai -m config normal_window_opacity 0.9
+}
+
+yabaioff() {
+    yabai -m config active_window_opacity 1.0
+    yabai -m config normal_window_opacity 1.0
+    yabai -m config window_opacity off
+    brew services stop yabai
+}
+
+vamos() {
+    tmux send-keys 'vim .' C-m
+    tmux split-window -v -p 15
 }
 
 _-accept-line () {

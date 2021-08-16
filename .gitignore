@@ -5,5 +5,4 @@ not-public
 tmux/plugins/*
 vim/plugged
 tmux/resurrect
-karabiner/*
 karabiner.edn.bak

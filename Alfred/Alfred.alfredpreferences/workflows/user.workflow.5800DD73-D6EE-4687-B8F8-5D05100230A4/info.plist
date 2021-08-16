@@ -278,7 +278,7 @@ echo $(date +"%Y-%m-%d")</string>
 				<key>fixedorder</key>
 				<false/>
 				<key>items</key>
-				<string>[{"title":"Cenitoria Melton","arg":"Keep Rocking.\n\n\nCo-authored-by: Cenitoria Melton &lt;cenitoria@tighten.co&gt;","subtitle":"The cool one."},{"title":"Matt Stauffer","arg":"Commit message here.\n\n\nCo-authored-by: Matt Stauffer &lt;matt@tighten.co&gt;","subtitle":"1\/2 Santa Boss"}]</string>
+				<string>[{"title":"Cenitoria Melton","arg":"Keep Rocking.\n\n\nCo-authored-by: Cenitoria Melton &lt;cenitoria@tighten.co&gt;","subtitle":"The cool one."},{"title":"Matt Stauffer","arg":"Commit message here.\n\n\nCo-authored-by: Matt Stauffer &lt;matt@tighten.co&gt;","subtitle":"1\/2 Santa Boss"},{"title":"Andrew Morgan","arg":"Keep Rocking\n\n\nCo-authored-by: Andrew Morgan &lt;andrew@tighten.co&gt;"}]</string>
 				<key>keyword</key>
 				<string>coauth</string>
 				<key>runningsubtext</key>

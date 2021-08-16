@@ -99,7 +99,7 @@ bindkey '^e' edit-command-line
 # Z.lua Jump to Directory
 # ------------------------------------------------------------------------------
 
-eval "$(lua /usr/local/Cellar/z.lua/1.8.11/share/z.lua/z.lua --init zsh)"
+eval "$(lua /usr/local/Cellar/z.lua/1.8.13/share/z.lua/z.lua --init zsh)"
 
 export _ZL_ROOT_MARKERS=".git,package.json,composer.json" # Jump to project root with zb
 
@@ -183,4 +183,4 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/d
 export PATH="/usr/local/opt/php@7.4/bin:$PATH"
 export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
 [ -f "/Users/jose/.ghcup/env" ] && source "/Users/jose/.ghcup/env" # ghcup-env
-if [ -e /Users/jose/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/jose/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+export PATH="/usr/local/opt/node@14/bin:$PATH"

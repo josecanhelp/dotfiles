@@ -490,9 +490,9 @@ hs.urlevent.bind('openAnything', function()
         hs.eventtap.keyStroke({'cmd'}, 'p')
     elseif appIs(simulator) then
         hs.eventtap.keyStroke({'ctrl, shift, cmd'}, 'h')
-    elseif appIncludes({discord}) then
+    elseif appIncludes({discord, superhuman}) then
         hs.eventtap.keyStroke({'cmd'}, 'k')
-    elseif appIncludes({slack}) then
+    elseif appIncludes({slack, monday}) then
         hs.eventtap.keyStroke({'cmd'}, 'k')
         hs.eventtap.keyStroke({}, 'down')
     elseif appIs(phpstorm) then
@@ -504,7 +504,7 @@ hs.urlevent.bind('openAnything', function()
     elseif appIs(omnifocus) then
         hs.eventtap.keyStroke({'cmd'}, 'o')
     elseif appIs(bear) then
-        hs.eventtap.keyStroke({'cmd', 'shift'}, 'f')
+        hs.eventtap.keystroke({'cmd', 'shift'}, 'f')
     elseif appIs(sketch) then
         triggerAlfredWorkflow('com.tedwise.menubarsearch', 'menubarsearch', 'open recent')
     elseif true then

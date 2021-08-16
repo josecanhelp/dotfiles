@@ -43,6 +43,7 @@ set undofile "Persistent undo
 set updatetime=300 "Reduce updatetime from 4000 to 300 to avoid issues with coc.nvim
 set wildignore+=*/node_modules/** "Ignore these folders during fuzzy search
 set wildignore+=*/vendor/** "Ignore these folders during fuzzy search
+set updatetime=100
 " set completeopt=menuone,noselect "compe recommendation
 
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}

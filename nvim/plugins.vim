@@ -118,6 +118,10 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " https://github.com/kshenoy/vim-signature
 Plug 'kshenoy/vim-signature'
 
+" Replaces git-gutter
+" https://github.com/mhinz/vim-signify
+Plug 'mhinz/vim-signify'
+
 " ------------------------------------------------------------------------------
 " # Quick Configs
 " ------------------------------------------------------------------------------
@@ -126,3 +130,11 @@ Plug 'kshenoy/vim-signature'
 
 " Config: highlightedyank
 let g:highlightedyank_highlight_duration = 1000
+
+" Config: signify
+let g:signify_sign_add = '┃'
+let g:signify_sign_change = '┃'
+
+hi SignifySignAdd ctermbg=none ctermfg=green
+hi SignifySignChange ctermbg=none ctermfg=yellow
+hi SignifySignDelete ctermbg=none ctermfg=red

@@ -19,6 +19,7 @@ let g:ale_sign_style_warning = '!'
   let g:ale_fixers = {
     \ 'php': ['php_cs_fixer'],
     \ 'html': ['eslint'],
+    \ 'javascript': ['eslint'],
     \ }
 
 

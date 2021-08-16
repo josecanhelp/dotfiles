@@ -205,9 +205,9 @@ fi</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>brew services start yabai
-yabai -m config window_opacity on
-yabai -m config active_window_opacity 1.0
+				<string>brew services start yabai &amp;&amp;
+yabai -m config window_opacity on &amp;&amp;
+yabai -m config active_window_opacity 1.0 &amp;&amp;
 yabai -m config normal_window_opacity 0.9</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
