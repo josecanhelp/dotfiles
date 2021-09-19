@@ -52,7 +52,7 @@ Plug 'lambdalisue/nerdfont.vim'
 Plug 'neovim/nvim-lspconfig'
 
 " Auto completion
-" Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/nvim-compe'
 "
 " https://github.com/ludovicchabant/vim-gutentags
 Plug 'ludovicchabant/vim-gutentags'
