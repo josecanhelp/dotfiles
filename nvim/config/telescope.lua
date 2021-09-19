@@ -1,10 +1,14 @@
+--------------------------------------------------------------------------------
+-- Telescope Config
+--------------------------------------------------------------------------------
+
 local telescope = require('telescope')
 local actions = require('telescope.actions')
-local builtin = require('telescope.builtin')
 
 telescope.setup {
   defaults = {
     prompt_prefix = '  ',
+    sorting_strategy = "ascending",
     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
     mappings = {
       i = {
@@ -13,15 +17,29 @@ telescope.setup {
       },
     },
     file_ignore_patterns = { 'node_modules' },
-  }
+  },
+  pickers = {
+    find_files = {
+      prompt_title = 'All Files',
+      find_command = {'rg', '--files', '--no-ignore', '--hidden'},
+    },
+    current_buffer_fuzzy_find = {
+      prompt_title = 'Current Buffer Lines',
+    },
+    oldfiles = {
+      prompt_title = 'History',
+    },
+  },
 }
 
-telescope.load_extension('fzy_native')
+telescope.load_extension('fzf')
 telescope.load_extension('sourcery')
 
 --------------------------------------------------------------------------------
 -- Custom Finders
 --------------------------------------------------------------------------------
+
+local builtin = require('telescope.builtin')
 
 builtin.all_files = function ()
   builtin.find_files({

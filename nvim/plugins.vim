@@ -44,6 +44,12 @@ Plug 'lambdalisue/fern.vim', {'on': 'Fern'}
 " https://github.com/lambdalisue/nerdfont.vim
 Plug 'lambdalisue/nerdfont.vim'
 
+" Neovim LSP
+Plug 'neovim/nvim-lspconfig'
+
+" Auto completion
+Plug 'hrsh7th/nvim-compe'
+"
 " https://github.com/ludovicchabant/vim-gutentags
 Plug 'ludovicchabant/vim-gutentags'
 
@@ -54,6 +60,11 @@ Plug 'tjdevries/nlua.nvim'
 Plug 'phpactor/phpactor', {'branch': 'develop', 'for': 'php', 'do': 'composer install --no-dev -o'}
 
 " Syntax highlighting for a bunch of languages
+" https://github.com/tree-sitter/tree-sitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/playground'
+"
 " https://github.com/sheerun/vim-polyglot
 Plug 'sheerun/vim-polyglot',
 
@@ -94,8 +105,10 @@ Plug 'nvim-lua/plenary.nvim'
 
 " Telescope fuzzy finder
 " https://github.com/nvim-telescope/telescope.nvim
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Momentary yank highlighting
 Plug 'machakann/vim-highlightedyank'
@@ -121,6 +134,11 @@ Plug 'kshenoy/vim-signature'
 " Replaces git-gutter
 " https://github.com/mhinz/vim-signify
 Plug 'mhinz/vim-signify'
+
+" HTML/CSS expand abbreviation magic
+Plug 'mattn/emmet-vim'
+
+Plug 'https://github.com/josecanhelp/vim-clarity'
 
 " ------------------------------------------------------------------------------
 " # Quick Configs

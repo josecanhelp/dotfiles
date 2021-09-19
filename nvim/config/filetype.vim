@@ -8,3 +8,6 @@ augroup framework_filetype_settings
   autocmd FileType scss setl iskeyword+=@-@
 augroup END
 
+" auto format rust files
+au BufEnter *.rs if !exists('b:ale_fix_on_save') | let b:ale_fix_on_save = 1 | endif
+

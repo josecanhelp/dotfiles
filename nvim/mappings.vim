@@ -273,3 +273,4 @@ endfunction
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 nmap <Leader>p :Prettier<CR>
+

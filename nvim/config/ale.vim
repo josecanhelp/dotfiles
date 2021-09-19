@@ -24,6 +24,7 @@ let g:ale_fixers = {
 \ 'html': ['eslint'],
 \ 'javascript': ['eslint'],
 \ 'vue': ['eslint'], 
+\ 'rust': ['rustfmt'],
 \ }
 
 
