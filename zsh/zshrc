@@ -29,7 +29,8 @@ export PATH=${PATH}:/usr/local/aws/bin
 export PATH=${PATH}:~/.rbenv/versions/bin
 export PATH=${PATH}:~/.local/bin
 export PATH=${PATH}:/usr/local/opt
-
+export PATH=${PATH}:~/.local/share/solana/install/active_release/bin
+export PATH=${PATH}:/.cargo/bin
 
 
 # ------------------------------------------------------------------------------
@@ -180,7 +181,7 @@ source $HOME/dotfiles/zsh/custom/artisan.plugin.zsh
 #
 # Source syntax highlighting plugin
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-export PATH="/usr/local/opt/php@7.4/bin:$PATH"
-export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
+# export PATH="/usr/local/opt/php@7.4/bin:$PATH"
+# export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
 [ -f "/Users/jose/.ghcup/env" ] && source "/Users/jose/.ghcup/env" # ghcup-env
 export PATH="/usr/local/opt/node@14/bin:$PATH"
