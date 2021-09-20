@@ -9,5 +9,5 @@ augroup framework_filetype_settings
 augroup END
 
 " auto format rust files
-au BufEnter *.rs if !exists('b:ale_fix_on_save') | let b:ale_fix_on_save = 1 | endif
-
+" au BufEnter *.rs if !exists('b:ale_fix_on_save') | let b:ale_fix_on_save = 1 | endif
+autocmd BufWritePre *.tsx lua vim.lsp.buf.formatting_sync(nil, 100)

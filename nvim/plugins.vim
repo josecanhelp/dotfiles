@@ -25,6 +25,9 @@ Plug 'itchyny/lightline.vim'
 " https://github.com/vim-test/vim-test
 Plug 'janko/vim-test'
 
+" Snippets
+Plug 'SirVer/ultisnips'
+
 " https://github.com/jesseleite/vim-sourcery
 Plug 'jesseleite/vim-sourcery'
 
@@ -48,11 +51,8 @@ Plug 'kabouzeid/nvim-lspinstall'
 " https://github.com/lambdalisue/nerdfont.vim
 Plug 'lambdalisue/nerdfont.vim'
 
-" Neovim LSP
-Plug 'neovim/nvim-lspconfig'
-
 " Auto completion
-" Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/nvim-compe'
 "
 " https://github.com/ludovicchabant/vim-gutentags
 Plug 'ludovicchabant/vim-gutentags'
@@ -113,6 +113,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'fhill2/telescope-ultisnips.nvim'
 
 " Momentary yank highlighting
 Plug 'machakann/vim-highlightedyank'
@@ -137,6 +138,16 @@ Plug 'mattn/emmet-vim'
 
 Plug 'https://github.com/josecanhelp/vim-clarity'
 
+" Closing tag annotations
+Plug 'code-biscuits/nvim-biscuits'
+
+
+" Prettier 
+" https://github.com/prettier/vim-prettier
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+
 " ------------------------------------------------------------------------------
 " # Quick Configs
 " ------------------------------------------------------------------------------
@@ -153,3 +164,6 @@ let g:signify_sign_change = '┃'
 hi SignifySignAdd ctermbg=none ctermfg=green
 hi SignifySignChange ctermbg=none ctermfg=yellow
 hi SignifySignDelete ctermbg=none ctermfg=red
+"
+" Config: ultisnips
+let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"

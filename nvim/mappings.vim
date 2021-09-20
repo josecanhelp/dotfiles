@@ -197,6 +197,13 @@ nnoremap <leader>k <cmd>lua vim.lsp.buf.document_symbol()<CR>
 noremap <leader>ld <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 nnoremap <leader>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 
+" Snippet
+" Mappings: ultisnips
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipEditSplit = "vertical"
+
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'

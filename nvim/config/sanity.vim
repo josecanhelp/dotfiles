@@ -6,7 +6,6 @@ syntax on
 filetype plugin on
 filetype indent on
 packadd! matchit
-map q: :q
 set autoread "if an open file changes while loaded in a buffer, update the buffer with the file contents
 set autowrite "Save on buffer switch
 set backspace=indent,eol,start
@@ -28,7 +27,7 @@ set nrformats-=octal "when incrementing and decremeting numbers (Ctrl-A / Ctrl-X
 set number "Enable line numbers
 set runtimepath+=/usr/local/opt/fzf
 set scrolloff=7 "Add padding to the bottom of the file
-set shiftwidth=4
+set shiftwidth=2
 set sidescroll=1 "Keep 15 columns next to the cursor when scrolling horizontally.
 set sidescrolloff=15
 set signcolumn=yes
@@ -36,7 +35,7 @@ set smartcase "Case-sensitive search if query uses an uppercase
 set splitbelow "Open new files in horizontal splits to the bottom
 set splitright "Open new files in vertical splits to the right
 set synmaxcol=210 " Do not process syntax on really long lines
-set tabstop=4
+set tabstop=2
 set ttyfast 
 set undodir=$HOME/.nvim_undo/ "Persistent undo
 set undofile "Persistent undo
@@ -46,8 +45,6 @@ set wildignore+=*/vendor/** "Ignore these folders during fuzzy search
 set updatetime=100
 " set completeopt=menuone,noselect "compe recommendation
 
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-"
 " Automatically resize vim's windows when resizing vim
 augroup equalize_windows_on_resize
   autocmd!
