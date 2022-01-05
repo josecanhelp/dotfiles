@@ -7,6 +7,12 @@ Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'}
 " FZF
 Plug '/usr/local/opt/fzf'
 
+" PHP refactoring and introspection
+Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
+
+" Peek into registers
+Plug 'junegunn/vim-peekaboo'
+
 " https://github.com/ap/vim-css-color
 Plug 'ap/vim-css-color'
 

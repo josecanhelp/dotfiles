@@ -233,27 +233,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>keyword</key>
-				<string>lipsum</string>
-				<key>subtext</key>
-				<string>Generate {query} sentences</string>
-				<key>text</key>
-				<string>Sentences</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>1029C7B6-DB95-4448-B3C5-C33F3DA0F894</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -273,6 +252,27 @@
 			<string>BACA329C-E588-479B-9FDC-35863B7E37F6</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>lipsum</string>
+				<key>subtext</key>
+				<string>Generate {query} sentences</string>
+				<key>text</key>
+				<string>Sentences</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>1029C7B6-DB95-4448-B3C5-C33F3DA0F894</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -387,6 +387,8 @@
 			<integer>210</integer>
 		</dict>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
 	<string>2.2.0</string>
 	<key>webaddress</key>

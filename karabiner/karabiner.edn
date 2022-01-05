@@ -151,12 +151,8 @@
                  [:h [:launch "Sketch"]]
                  [:i [:launch "iterm"]]
                  [:m [:launch "Messages"]]
-                 [:n [:launch "monday\\.com"]]
                  [:o [:launch "OmniFocus"]]
                  [:r [:launch "Bear"]]
                  [:s [:launch "Slack"]]
-                 [:t [:launch "TablePlus"]]
-                 [:w [:launch "Wrike\\ for\\ Mac"]]
-                 [:y [:launch "YT\\ Music"]]
                  [:z [:hs "debug-menu"]]
                  [:x [:hs "expose"]]]}]}

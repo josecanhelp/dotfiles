@@ -269,6 +269,10 @@ EOB"do shell script deviceselectedXML</string>
 			<real>110</real>
 		</dict>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string></string>
 	<key>webaddress</key>
 	<string>ricardosampayo.com</string>
 </dict>

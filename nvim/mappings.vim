@@ -36,6 +36,10 @@ nnoremap <Leader>h :set cursorline!<CR>
 " Clear the highlighted search results
 nnoremap <Leader><space> :noh<CR>
 
+" Set or unset the vertical highlight
+nnoremap <Leader>v :set cuc<CR>
+nnoremap <Leader><space>v :set nocuc<CR>
+
 " Move highlighted text
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
@@ -50,6 +54,9 @@ augroup END
 
 " Y yanks from the cursor to the end of line as expected. See :help Y.
 nnoremap Y y$
+
+" D deletes to the end of the line
+nnoremap D d$
 
 " Split windows
 nnoremap <leader>vs :vsplit<cr>
@@ -190,7 +197,7 @@ nnoremap gD <cmd>lua vim.lsp.buf.declaration()<cr>
 nnoremap gd <cmd>lua vim.lsp.buf.definition()<cr>
 nnoremap K <cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap gi <cmd>lua vim.lsp.buf.implementation()<cr>
-noremap D <cmd>lua vim.lsp.buf.type_definition()<cr>
+" noremap D <cmd>lua vim.lsp.buf.type_definition()<cr>
 nnoremap <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 vnoremap <leader>F <cmd>lua vim.lsp.buf.range_formatting()<CR>
 nnoremap <leader>k <cmd>lua vim.lsp.buf.document_symbol()<CR>
@@ -202,7 +209,7 @@ nnoremap <leader>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:UltiSnipEditSplit = "vertical"
+let g:UltiSnipEditSplit = "<s->"
 
 function! s:check_back_space() abort
     let col = col('.') - 1

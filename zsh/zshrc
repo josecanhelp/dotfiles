@@ -143,29 +143,6 @@ ZSH_AUTOSUGGEST_USE_ASYNC=true
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 
 # ------------------------------------------------------------------------------
-# Node Version Manager
-# ------------------------------------------------------------------------------
-
-# Add every binary that requires nvm, npm or node to run to an array of node globals
-NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
-NODE_GLOBALS+=("node")
-NODE_GLOBALS+=("nvm")
-NODE_GLOBALS+=("npx")
-
-# Lazy-loading nvm + npm on node globals call
-load_nvm () {
-  export NVM_DIR=~/.nvm
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-  if [ -f "$NVM_DIR/bash_completion" ]; then
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-  fi
-}
-
-# Making node global trigger the lazy loading
-for cmd in "${NODE_GLOBALS[@]}"; do eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; ${cmd} \$@; }"
-done
-
-# ------------------------------------------------------------------------------
 # FZF
 # ------------------------------------------------------------------------------
 
@@ -178,10 +155,10 @@ done
 export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
 
 source $HOME/dotfiles/zsh/custom/artisan.plugin.zsh
-#
+
 # Source syntax highlighting plugin
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-# export PATH="/usr/local/opt/php@7.4/bin:$PATH"
-# export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
+
 [ -f "/Users/jose/.ghcup/env" ] && source "/Users/jose/.ghcup/env" # ghcup-env
-export PATH="/usr/local/opt/node@14/bin:$PATH"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

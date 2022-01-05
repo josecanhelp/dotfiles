@@ -16,7 +16,7 @@ telescope.setup {
         ["<C-q>"] = actions.send_to_qflist,
       },
     },
-    file_ignore_patterns = { 'node_modules' },
+    file_ignore_patterns = { 'node_modules', 'vendor' },
   },
   pickers = {
     find_files = {

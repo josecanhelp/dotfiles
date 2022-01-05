@@ -59,6 +59,18 @@
 				<key>vitoclose</key>
 				<false/>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>7DCBCE52-C7FE-4FEE-B152-81906B0D8491</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>D0AFDCC5-D08D-495B-AFE5-0E5A02C24849</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
 		</array>
 		<key>420F600F-9CFB-4C58-A564-E598FD6E9AD3</key>
 		<array>
@@ -178,7 +190,7 @@ fi</string>
 				<key>fixedorder</key>
 				<false/>
 				<key>items</key>
-				<string>[{"title":"Toggle Desktop Icons","arg":"desktopIconToggle","subtitle":"Turn desktop icon visibility on or off."},{"title":"Turn Yabai On","arg":"yabaion"},{"title":"Turn Yabai Off","arg":"yabaioff"}]</string>
+				<string>[{"title":"Toggle Desktop Icons","arg":"desktopIconToggle","subtitle":"Turn desktop icon visibility on or off."},{"title":"Turn Yabai On","arg":"yabaion"},{"title":"Turn Yabai Off","arg":"yabaioff"},{"title":"Start Day","arg":"startDay"}]</string>
 				<key>keyword</key>
 				<string>osx</string>
 				<key>runningsubtext</key>
@@ -291,6 +303,20 @@ yabai -m config normal_window_opacity 0.9</string>
 						<key>uid</key>
 						<string>235E6EA5-6CB1-413C-93F1-3029D2C641B8</string>
 					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>startDay</string>
+						<key>outputlabel</key>
+						<string>startDay</string>
+						<key>uid</key>
+						<string>D0AFDCC5-D08D-495B-AFE5-0E5A02C24849</string>
+					</dict>
 				</array>
 				<key>elselabel</key>
 				<string>else</string>
@@ -349,6 +375,24 @@ brew services stop yabai</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>paths</key>
+				<array>
+					<string>/Applications/Spotify.app</string>
+					<string>/Applications/Brave Browser.app</string>
+				</array>
+				<key>toggle</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.launchfiles</string>
+			<key>uid</key>
+			<string>7DCBCE52-C7FE-4FEE-B152-81906B0D8491</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -392,6 +436,13 @@ brew services stop yabai</string>
 			<integer>430</integer>
 			<key>ypos</key>
 			<integer>10</integer>
+		</dict>
+		<key>7DCBCE52-C7FE-4FEE-B152-81906B0D8491</key>
+		<dict>
+			<key>xpos</key>
+			<integer>325</integer>
+			<key>ypos</key>
+			<integer>525</integer>
 		</dict>
 		<key>D9A92485-716C-45FB-A610-3228E29A2AA4</key>
 		<dict>
