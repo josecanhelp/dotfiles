@@ -410,39 +410,6 @@ spoon.ModalMgr.supervisor:enter()
 -- depending on the app in focus at the time of invocation.
 ----------------------------------------------------------------------------------------------------
 
--- This is almost unfair
-hs.urlevent.bind('quickSlackReactEmoji', function()
-    refocus = false
-
-    if not appIs(slack) then
-        refocus = true
-        focusedApp = hs.window.focusedWindow():application():bundleID()
-        hs.application.launchOrFocus("slack")
-    end
-
-    hs.eventtap.keyStrokes('+:wave::skin-tone-4:')
-    hs.timer.doAfter(.2, function()
-        hs.eventtap.keyStroke({}, 'return')
-        hs.timer.doAfter(.2, function()
-          if refocus then
-              hs.application.launchOrFocusByBundleID(focusedApp)
-          end
-        end)
-    end)
-end)
-
-hs.urlevent.bind('slack-rw-wave', function()
-    if  appIs(slack) then
-        hs.eventtap.keyStroke({}, 'r')
-        hs.timer.doAfter(.2, function()
-            hs.eventtap.keyStroke({}, 'w')
-        end)
-        hs.timer.doAfter(.2, function()
-            hs.eventtap.keyStroke({}, 'return')
-        end)
-    end
-end)
-
 hs.urlevent.bind('debug-menu', function()
     if  appIs(simulator) then
         hs.eventtap.keyStroke({'ctrl, cmd'}, 'z')
@@ -630,7 +597,7 @@ hs.urlevent.bind('tabPrevious', function()
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({}, 'p')
     elseif appIs(vscode) then
-        hs.eventtap.keyStroke({'ctrl', 'shift'}, '-', 0)
+        hs.eventtap.keyStroke({'cmd', 'option'}, 'left')
     end
 end)
 
@@ -639,7 +606,7 @@ hs.urlevent.bind('tabNext', function()
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({}, 'n')
     elseif appIs(vscode) then
-        hs.eventtap.keyStroke({'ctrl'}, '-', 0)
+        hs.eventtap.keyStroke({'cmd', 'option'}, 'right')
     end
 end)
 
