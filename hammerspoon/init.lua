@@ -246,7 +246,7 @@ positions = {
 }
 
 -- Splits (from positions above) that I'll make available to the modal keybindings
-lrsplits = { 'tenths2', 'tenths3', 'tenths4', 'tenths5' }
+lrsplits = { 'tenths5', 'tenths4', 'tenths3', 'tenths2' }
 tbsplits = { 'fourths1', 'fourths2', 'fourths3', 'fourths4' }
 
 if spoon.WinWin then
