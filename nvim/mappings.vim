@@ -59,8 +59,8 @@ nnoremap Y y$
 nnoremap D d$
 
 " Split windows
-nnoremap <leader>vs :vsplit<cr>
-nnoremap <leader>sp :split<cr>
+nnoremap <Leader>vs :vsplit<cr>
+nnoremap <Leader>sp :split<cr>
 
 " Repeat macros for all selected lines
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
@@ -89,9 +89,9 @@ nmap j gj
 nmap k gk
 
 " Traverse through buffers
-nnoremap <leader>bn :bnext<CR>
-nnoremap <leader>bp :bprevious<CR>
-nnoremap <leader>bd :bdelete<CR>
+nnoremap <Leader>bn :bnext<CR>
+nnoremap <Leader>bp :bprevious<CR>
+nnoremap <Leader>bd :bdelete<CR>
 
 " Mappings: commentary
 nnoremap <Leader>ci :Commentary<CR>
@@ -126,8 +126,8 @@ endfunction
 nnoremap<Leader>g :Gedit :<CR>
 
 " Mappings: maximizer
-nnoremap <leader>o :MaximizerToggle<CR>
-vnoremap <leader>o :MaximizerToggle<CR>gv
+nnoremap <Leader>o :MaximizerToggle<CR>
+vnoremap <Leader>o :MaximizerToggle<CR>gv
 
 " Mappings: phpactor
 augroup PhpactorMappings
@@ -165,11 +165,11 @@ function! SourceryMappings()
 endfunction
 
 " Mapping: telescope
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-nnoremap <leader>fm <cmd>lua require('telescope.builtin').marks()<cr>
+nnoremap <Leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <Leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <Leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <Leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <Leader>fm <cmd>lua require('telescope.builtin').marks()<cr>
 nnoremap <Leader>H <Cmd>Telescope help_tags<CR>
 nnoremap <Leader>so <Cmd>Telescope sourcery<CR>
 nnoremap <Leader>do <Cmd>Telescope dotfiles<CR>
@@ -197,12 +197,11 @@ nnoremap gD <cmd>lua vim.lsp.buf.declaration()<cr>
 nnoremap gd <cmd>lua vim.lsp.buf.definition()<cr>
 nnoremap K <cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap gi <cmd>lua vim.lsp.buf.implementation()<cr>
-" noremap D <cmd>lua vim.lsp.buf.type_definition()<cr>
-nnoremap <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
-vnoremap <leader>F <cmd>lua vim.lsp.buf.range_formatting()<CR>
-nnoremap <leader>k <cmd>lua vim.lsp.buf.document_symbol()<CR>
-noremap <leader>ld <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-nnoremap <leader>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap <Leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
+vnoremap <Leader>F <cmd>lua vim.lsp.buf.range_formatting()<CR>
+nnoremap <Leader>k <cmd>lua vim.lsp.buf.document_symbol()<CR>
+noremap <Leader>ld <cmd>lua vim.diagnostic.get()<CR>
+nnoremap <leader>q <cmd>lua vim.diagnostic.setloclist()<CR>
 
 " Snippet
 " Mappings: ultisnips

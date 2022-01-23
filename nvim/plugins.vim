@@ -52,7 +52,6 @@ Plug 'lambdalisue/fern.vim', {'on': 'Fern'}
 
 " Neovim LSP
 Plug 'neovim/nvim-lspconfig'
-Plug 'kabouzeid/nvim-lspinstall'
 
 " https://github.com/lambdalisue/nerdfont.vim
 Plug 'lambdalisue/nerdfont.vim'
@@ -172,4 +171,4 @@ hi SignifySignChange ctermbg=none ctermfg=yellow
 hi SignifySignDelete ctermbg=none ctermfg=red
 "
 " Config: ultisnips
-let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
+let g:UltiSnipsSnippetsDir = "~/.config/nvim/UltiSnips"

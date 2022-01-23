@@ -608,6 +608,12 @@ hs.urlevent.bind('openCommandPalette', function()
     end
 end)
 
+hs.urlevent.bind('openProjectSelector', function()
+    if appIs(vscode) then
+        hs.eventtap.keyStroke({'cmd', 'option'}, 'p')
+    end
+end)
+
 hs.urlevent.bind('copyAnything', function()
     local text = getSelectedText(true)
     if text then
@@ -623,6 +629,8 @@ hs.urlevent.bind('tabPrevious', function()
     if appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({}, 'p')
+    elseif appIs(vscode) then
+        hs.eventtap.keyStroke({'ctrl', 'shift'}, '-', 0)
     end
 end)
 
@@ -630,6 +638,8 @@ hs.urlevent.bind('tabNext', function()
     if appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({}, 'n')
+    elseif appIs(vscode) then
+        hs.eventtap.keyStroke({'ctrl'}, '-', 0)
     end
 end)
 

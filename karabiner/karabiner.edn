@@ -37,7 +37,7 @@
                  [:n [:hs "createAnything"]]
                  [:delete_or_backspace [:hs "deleteAnything"]]
                  [:o [:hs "openAnything"]]
-                 [:p :!Cv] ; Paste
+                 [:p [:hs "openProjectSelector"]]
                  [:q :!Cw] ; Close the current window
                  ; [:r [:hs "openYabaiModal"]] ; trigger yabaiM Modal in hammerspoon
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
@@ -107,8 +107,8 @@
         {:des "Super Duper Mode for Traversing Tmux"
          :rules [:super-duper
                  [:f [:!Ta :f :return_or_enter]] ; Find a window
-                 [:up_arrow [:!Ta :p]] ; Switch to the previous tmux window 
-                 [:down_arrow [:!Ta :n]] ; Switch the the next tmux window
+                 [:up_arrow [:hs "tabPrevious"]] ; Switch to the previous tmux window 
+                 [:down_arrow [:hs "tabNext"]] ; Switch to the next tmux window 
                  [:j [:!Ta :j]] ; Focus on the pane below current pane
                  [:k [:!Ta :k]] ; Focus on the pane above current pane
                  [:h [:!Ta :h]] ; Focus on the pane to the left of the current pane
