@@ -1,6 +1,6 @@
 {
   "alfredsnippet" : {
-    "snippet" : "tmux ls && read tmux_session && tmux attach -t ${tmux_session:-tmg} || tmux new -s ${tmux_session:-tmg}",
+    "snippet" : "tmux ls && read tmux_session && tmux attach -t ${tmux_session:-jch} || tmux new -s ${tmux_session:-jch}",
     "uid" : "EBFD6D8B-997D-48F9-A58F-0CA923058C3E",
     "name" : "Open Tmux Select Session",
     "keyword" : "::open"
