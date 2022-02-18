@@ -14,67 +14,25 @@
     ~/.config:
       recursive: true
 - link:
+    /Users/jose/Library/Application\ Scripts/com.excitedpixel.breaktime/start-break.sh: BreakTime/start-break.sh
+    /usr/local/share/zsh/site-functions/_docker-compose: /Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion
+    /usr/local/share/zsh/site-functions/_docker: /Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion
     ~/.bin: bin/
-    ~/.ctags.d: ctags
-    ~/.ctags: ctags
+    ~/.config/karabiner.edn: karabiner/karabiner.edn
+    ~/.config/karabiner/karabiner.edn: karabiner/karabiner.edn
+    ~/.config/kyrat/zshrc: zsh/zshrc
+    ~/.config/mutt/dracula.muttrc: mutt/dracula.muttrc
+    ~/.config/mutt/muttrc: mutt/muttrc
+    ~/.config/nvim: nvim/
+    ~/.config/starship.toml: starship.toml
     ~/.dotfiles: ''
     ~/.gitconfig: gitconfig
     ~/.hammerspoon: hammerspoon
     ~/.hushlogin: hushlogin
-    ~/.ideavimrc: ideavimrc
     ~/.tmux.conf: tmux.conf
-    ~/.config/kyrat/tmux.conf: tmux.conf
     ~/.tmux: tmux/
-    ~/.vim/coc-settings.json: vim/coc/settings.json
-    ~/.config/nvim: nvim/
+    ~/.yabairc: yabairc
     ~/.zshrc: zsh/zshrc
-    ~/.config/kyrat/zshrc: zsh/zshrc
-    ~/.config/karabiner.edn: karabiner/karabiner.edn
-    ~/.config/karabiner/karabiner.edn: karabiner/karabiner.edn
-    ~/.config/mutt/muttrc: mutt/muttrc
-    ~/.config/mutt/dracula.muttrc: mutt/dracula.muttrc
-    /usr/local/share/zsh/site-functions/_docker: /Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion
-    /usr/local/share/zsh/site-functions/_docker-compose: /Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion
-    /Users/jose/Library/Application\ Scripts/com.excitedpixel.breaktime/start-break.sh: BreakTime/start-break.sh
-    ~/.config/starship.toml: starship.toml
-# - create:
-    # - ~/Code
 - shell:
-  # - description: Hushing login
-    # command: "[ -f ~/.hushlogin ] || touch ~/.hushlogin"
-  # - description: Telling gatekeeper to allow unidentified developers
-    # command: "sudo spctl --master-disable"
-  # - description: Installing brew
-    # command: "[ -x \"$(which brew)\" ] || /usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
-  # - description: Updating brew
-    # command: "brew update"
-  # - description: Installing brew bundler
-    # command: "brew tap homebrew/bundle"
-  # - description: Installing brewfile bundle
-    # command: "brew bundle"
-  # - description: Removing old brew files
-    # command: "brew cleanup"
-  # - description: Adding zsh to list of acceptable shells
-    # command: "[[ \"$(ag $(which zsh) /etc/shells)\" ]] || sudo sh -c \"echo $(which zsh) >> /etc/shells\""
-  # - description: Making zsh the default shell
-    # command: "sudo chsh -s $(which zsh)"
-  # - description: Compiling antibody bundles
-    # command: "sh zsh/bundles_compile"
-  # - description: Installing vim-plug
-    # command: "[ -f ~/.vim/autoload/plug.vim ] || curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-  # - description: Installing vim plugins
-    # command: "vim +PlugInstall +qa"
-  # - description: Installing global composer dependencies
-    # command: "sh composer/global_install"
-  # - description: Initializing valet
-    # command: "sudo valet install"
-  # - description: Parking valet on code directory
-    # command: "valet park ~/Code"
   - description: Clearing sudo credential cache
     command: "sudo --reset-timestamp"
-# - pip:
-    # file: pip/requirements.txt
-    # binary: /usr/local/bin/pip3
-    # user: true    # Like --user
-    # stdout: false # Print the execution stdout
-    # stderr: true  # Print the execution stderr
