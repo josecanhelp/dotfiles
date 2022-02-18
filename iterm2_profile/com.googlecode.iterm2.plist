@@ -8,6 +8,8 @@
 	<true/>
 	<key>BadgeRightMargin</key>
 	<integer>10</integer>
+	<key>Command</key>
+	<string></string>
 	<key>CompactMinimalTabBarHeight</key>
 	<real>22</real>
 	<key>Control</key>
@@ -2433,7 +2435,7 @@
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Text</key>
-			<string>tmux ls &amp;&amp; read tmux_session &amp;&amp; tmux attach -t ${tmux_session:-jch} || tmux new -s ${tmux_session:-jch}</string>
+			<string></string>
 			<key>Initial Use Transparency</key>
 			<false/>
 			<key>Jobs to Ignore</key>

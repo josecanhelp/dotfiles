@@ -55,6 +55,12 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 source $HOME/dotfiles/zsh/custom/functions.zsh
 source $HOME/dotfiles/zsh/custom/aliases.zsh
 
+# ------------------------------------------------------------------------------
+# Ensure tmux is running
+# ------------------------------------------------------------------------------
+if [ -z "$TMUX" ]; then
+  tmux ls && read tmux_session && tmux attach -t ${tmux_session:-jch} || tmux new -s ${tmux_session:-jch}
+fi
 
 # ------------------------------------------------------------------------------
 # Auto-Tab / Completion
