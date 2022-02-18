@@ -37,7 +37,7 @@
                  [:n [:hs "createAnything"]]
                  [:delete_or_backspace [:hs "deleteAnything"]]
                  [:o [:hs "openAnything"]]
-                 [:p [:hs "openProjectSelector"]]
+                 [:p [:hs "openProjectSelector"]] ; Paste
                  [:q :!Cw] ; Close the current window
                  ; [:r [:hs "openYabaiModal"]] ; trigger yabaiM Modal in hammerspoon
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
@@ -111,8 +111,8 @@
                  [:down_arrow [:hs "tabNext"]] ; Switch to the next tmux window 
                  [:j [:!Ta :j]] ; Focus on the pane below current pane
                  [:k [:!Ta :k]] ; Focus on the pane above current pane
-                 [:h [:!Ta :h]] ; Focus on the pane to the left of the current pane
-                 [:l [:!Ta :l]] ; Focus on the pane to the right of the current pane
+                 [:h [:hs "superDuperLeft"]] ; Focus on the pane to the left of the current pane
+                 [:l [:hs "superDuperRight"]] ; Focus on the pane to the right of the current pane
                  [:o [:!Ta :z]] ; Zoom on current pane
                  [:r [:!Ta :r]] ; Reload the Matrix
                  [:hyphen [:!Ta :hyphen]] ; Split tmux window horizontally
