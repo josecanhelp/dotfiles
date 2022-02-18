@@ -175,6 +175,10 @@
 				<false/>
 				<key>focusedappvariablename</key>
 				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -457,7 +461,7 @@ https://github.com/jsumners/alfred-emoji/issues
 		<string></string>
 	</dict>
 	<key>version</key>
-	<string>1.10.0</string>
+	<string>1.11.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/jsumners/alfred-emoji</string>
 </dict>
