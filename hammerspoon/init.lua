@@ -610,6 +610,25 @@ hs.urlevent.bind('tabNext', function()
     end
 end)
 
+
+hs.urlevent.bind('superDuperLeft', function()
+    if appIs(iterm) then
+        hs.eventtap.keyStroke({'control'}, 'a')
+        hs.eventtap.keyStroke({}, 'h')
+    elseif appIs(vscode) then
+        hs.eventtap.keyStroke({'cmd', 'option'}, 'left')
+    end
+end)
+hs.urlevent.bind('superDuperRight', function()
+    if appIs(iterm) then
+        hs.eventtap.keyStroke({'control'}, 'a')
+        hs.eventtap.keyStroke({}, 'l')
+    elseif appIs(vscode) then
+        hs.eventtap.keyStroke({'cmd', 'option'}, 'right')
+    end
+end)
+
+
 hs.urlevent.bind('toggleBreakTime', function()
     local status, response, description = hs.osascript.javascript([[
         breaktime = Application("BreakTime")
