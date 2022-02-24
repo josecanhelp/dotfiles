@@ -2,13 +2,10 @@
 " # Plugins
 " ------------------------------------------------------------------------------
 " Human readable vim startup time profiling
-Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'}
+" Plug 'tweekmonster/startuptime.vim', {'on': 'StartupTime'}
 
 " FZF
 Plug '/usr/local/opt/fzf'
-
-" PHP refactoring and introspection
-Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
 
 " Peek into registers
 Plug 'junegunn/vim-peekaboo'
@@ -29,7 +26,7 @@ Plug 'https://github.com/alok/notational-fzf-vim'
 Plug 'itchyny/lightline.vim'
 
 " https://github.com/vim-test/vim-test
-Plug 'janko/vim-test'
+" Plug 'janko/vim-test'
 
 " Snippets
 Plug 'SirVer/ultisnips'
@@ -38,29 +35,36 @@ Plug 'SirVer/ultisnips'
 Plug 'jesseleite/vim-sourcery'
 
 " https://github.com/junegunn/goyo.vim
-Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/goyo.vim'
 
 " https://github.com/justinmk/vim-sneak
 Plug 'justinmk/vim-sneak'
 
-" https://github.com/lambdalisue/fern-renderer-nerdfont.vim
-Plug 'lambdalisue/fern-renderer-nerdfont.vim', {'on': 'Fern'}
-
 " File system explorer
 " https://github.com/lambdalisue/fern.vim
-Plug 'lambdalisue/fern.vim', {'on': 'Fern'}
+Plug 'lambdalisue/fern.vim'
+
+" Make Fern the default file explorer instead of Netrw
+" https://github.com/lambdalisue/fern-hijack.vim
+" Plug 'lambdalisue/fern-hijack.vim'
+
+" Make nerdfont available
+" https://github.com/lambdalisue/nerdfont.vim
+Plug 'lambdalisue/nerdfont.vim'
+
+" Use nerdfont to render Fern
+" https://github.com/lambdalisue/fern-renderer-nerdfont.vim
+Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+" Plug 'antoinemadec/FixCursorHold.nvim'
 
 " Neovim LSP
 Plug 'neovim/nvim-lspconfig'
-
-" https://github.com/lambdalisue/nerdfont.vim
-Plug 'lambdalisue/nerdfont.vim'
 
 " Auto completion
 Plug 'hrsh7th/nvim-compe'
 "
 " https://github.com/ludovicchabant/vim-gutentags
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 
 " https://github.com/tjdevries/nlua.nvim
 Plug 'tjdevries/nlua.nvim'
@@ -73,9 +77,10 @@ Plug 'phpactor/phpactor', {'branch': 'develop', 'for': 'php', 'do': 'composer in
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/playground'
-"
+
+" Fallback for languages without good treesitter implementations
 " https://github.com/sheerun/vim-polyglot
-Plug 'sheerun/vim-polyglot',
+Plug 'sheerun/vim-polyglot'
 
 " https://github.com/szw/vim-maximizer
 Plug 'szw/vim-maximizer'
@@ -86,7 +91,8 @@ Plug 'terryma/vim-smooth-scroll'
 " https://github.com/tmsvg/pear-tree
 Plug 'tmsvg/pear-tree'
 
-" Code commenting - https://github.com/tpope/vim-commentary
+" Code commenting
+" https://github.com/tpope/vim-commentary
 Plug 'tpope/vim-commentary'
 
 " Run commands in the background asynchronously
@@ -107,18 +113,16 @@ Plug 'vim-vdebug/vdebug', {'on': ['Breakpoint', 'VdebugStart']}
 Plug 'wellle/targets.vim' 
 
 " https://github.com/nvim-lua/popup.nvim
-Plug 'nvim-lua/popup.nvim'
+" Plug 'nvim-lua/popup.nvim'
 
 " https://github.com/nvim-lua/plenary.nvim
 Plug 'nvim-lua/plenary.nvim'
 
 " Telescope fuzzy finder
 " https://github.com/nvim-telescope/telescope.nvim
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'fhill2/telescope-ultisnips.nvim'
+" Plug 'fhill2/telescope-ultisnips.nvim'
 
 " Momentary yank highlighting
 Plug 'machakann/vim-highlightedyank'
@@ -131,6 +135,7 @@ Plug 'sickill/vim-pasta'
 " https://github.com/junegunn/fzf.vim
 Plug 'junegunn/fzf.vim'
 
+" Place, toggle and display marks
 " https://github.com/kshenoy/vim-signature
 Plug 'kshenoy/vim-signature'
 
@@ -139,19 +144,17 @@ Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-signify'
 
 " HTML/CSS expand abbreviation magic
-Plug 'mattn/emmet-vim'
+" Plug 'mattn/emmet-vim'
 
 Plug 'https://github.com/josecanhelp/vim-clarity'
 
 " Closing tag annotations
 Plug 'code-biscuits/nvim-biscuits'
 
+Plug 'sbdchd/neoformat'
+Plug 'skywind3000/asyncrun.vim'
 
-" Prettier 
-" https://github.com/prettier/vim-prettier
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+Plug 'jesseleite/vim-tinkeray'
 
 " ------------------------------------------------------------------------------
 " # Quick Configs

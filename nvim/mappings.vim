@@ -124,6 +124,7 @@ endfunction
 
 " Mappings: fugitive
 nnoremap<Leader>g :Gedit :<CR>
+nnoremap<Leader>gp :Git pull<CR>
 
 " Mappings: maximizer
 nnoremap <Leader>o :MaximizerToggle<CR>
@@ -166,6 +167,7 @@ endfunction
 
 " Mapping: telescope
 nnoremap <Leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <Leader>fr <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <Leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <Leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <Leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
@@ -214,3 +216,7 @@ function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+" Tinkeray
+" Mappings: tinkeray
+nmap <Leader>t <Plug>TinkerayOpen

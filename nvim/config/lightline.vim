@@ -1,17 +1,32 @@
 let g:lightline = {
-      \ 'colorscheme': 'powerline',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+  \ 'mode_map': {
+      \ 'n' : 'N',
+      \ 'i' : 'I',
+      \ 'R' : 'R',
+      \ 'v' : 'V',
+      \ 'V' : 'VL',
+      \ "\<C-v>": 'VB',
+      \ 'c' : 'C',
+      \ 's' : 'S',
+      \ 'S' : 'SL',
+      \ "\<C-s>": 'SB',
+      \ 't': 'T',
       \ },
-      \ 'component_function': {
-      \   'fugitive': 'LightLineFugitive',
-      \   'readonly': 'LightLineReadonly',
-      \   'modified': 'LightLineModified'
-      \ },
-      \ 'separator': { 'left': '⮀', 'right': '' },
-      \ 'subseparator': { 'left': '⮁', 'right': '|' }
-      \ }
+  \ 'colorscheme': 'powerline',
+  \ 'active': {
+  \ 'left': [ [ 'mode', 'paste' ],
+    \ [ 'fugitive', 'readonly', 'relativepath', 'modified' ] ],
+   \ 'right': [ [ 'percent' ], [ 'filetype' ] ],
+  \ },
+  \ 'component_function': {
+    \ 'fugitive': 'LightLineFugitive',
+    \ 'readonly': 'LightLineReadonly',
+    \ 'modified': 'LightLineModified',
+  \   'filename': 'LightlineFilename',
+  \ },
+  \ 'separator': { 'left': '⮀', 'right': '' },
+  \ 'subseparator': { 'left': '⮁', 'right': '|' }
+\ }
 
 function! LightLineModified()
   if &filetype == "help"
@@ -23,6 +38,12 @@ function! LightLineModified()
   else
     return ""
   endif
+endfunction
+
+function! LightlineFilename()
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let modified = &modified ? ' +' : ''
+  return filename . modified
 endfunction
 
 function! LightLineReadonly()
