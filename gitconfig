@@ -25,7 +25,7 @@
   autocorrect = 1
 [core]
 	editor = vim
-	excludesfile = /Users/jose/.gitignore_global
+	excludesfile = /Users/jose/.gitignore
 [credential]
     helper = osxkeychain
  [alias]
