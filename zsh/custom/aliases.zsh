@@ -73,6 +73,7 @@ alias forceprune="docker volume prune --force && docker system prune --force"
 alias pest="./vendor/bin/pest"
 alias dcu="docker-compose up"
 alias dcd="docker-compose down"
-alias sail="./vendor/bin/sail"
 alias smfs="./vendor/bin/sail artisan migrate:fresh --seed"
 alias stp="./vendor/bin/sail test -p"
+alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
+alias gdesc="git log --no-merges --pretty=format:'- %s' master.. | pbcopy"

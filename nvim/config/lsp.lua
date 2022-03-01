@@ -21,3 +21,6 @@ lspconfig.html.setup({
 
 -- Tailwind
 lspconfig.tailwindcss.setup { }
+
+-- Clojure/EDN
+lspconfig.clojure_lsp.setup{}

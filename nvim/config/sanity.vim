@@ -59,5 +59,3 @@ augroup neovim_last_position
     \ |   exe "normal! g`\""
     \ | endif
 augroup END
-
-" let g:tinkeray#tinker_command = 'cp -r /Users/jose/.local/share/nvim/site/autoload/vim-tinkeray/bin/tinkeray.php wrappertinkeray.php && ./vendor/bin/sail exec -T -u sail laravel.test php artisan tinker wrappertinkeray.php'
