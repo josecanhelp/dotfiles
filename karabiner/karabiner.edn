@@ -18,17 +18,14 @@
  :applications {:workspot ["^com\\.workspot\\.osx$"] :terminal ["^com\\.googlecode\\.iterm2$"]}
  :devices {:hp-kb [{:product_id 4170 :vendor_id 1008}]}
  :layers {:hyper-mode {:key :caps_lock :alone {:key :escape} :condi :!workspot}
-          :hyper-mode-workspot {:key :caps_lock :alone {:key :escape} :condi :workspot}
           :keypad-mode {:key :fn}}
  :simlayers {:z-mode {:key :z}
              :launch-mode {:key :quote}}
  :simlayer-threshold 350
  :main [{:des "Hyper Mode"
          :rules [:hyper-mode
-                 ; [:0 :f12] ; view desktop
                  [:a :!!a] ; get app bundle ID from Alfred
                  [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
-                 [:g [:hs "quickSlackReactEmoji"]] ; Wave goodbye to folks in Slack
                  [:h [:hs "navigateBack"]]
                  [:j [:hs "navigateDownward"]]
                  [:k [:hs "navigateUpward"]]
@@ -39,27 +36,15 @@
                  [:o [:hs "openAnything"]]
                  [:p [:hs "openProjectSelector"]] ; Paste
                  [:q :!Cw] ; Close the current window
-                 ; [:r [:hs "openYabaiModal"]] ; trigger yabaiM Modal in hammerspoon
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
                  [:w [:hs "openWindowModal"]] ; Window Management
                  [:y [:hs "copyAnything"]]
-                 ; [:x [:hs "enableLayoutM"]]
                  [:quote [:hs "openCommandPalette"]]
                  [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
                  [:semicolon :!!semicolon] ; open Alfred
                  ]}
         {:des "No Mode"
          :rules [[:!Wj [:yabai "window --focus north"]]]}
-        {:des "Hyper Mode For Workspot"
-         :rules [:hyper-mode-workspot
-                 [:o :!TSi]
-                 [:h :!TSh]
-                 [:j :!TSj]
-                 [:k :!TSk]
-                 [:l :!TSl]
-                 [:m :!TSm]
-                 [:quote :!TSp]
-                 [:semicolon :!CTOsemicolon]]}
         {:des "Simultaneous v + l --> Wave" ; Experimental
          :rules [[{:sim [:v :l] :simo {:interrupt true
                                        :dorder :insensitive
@@ -77,6 +62,7 @@
                                        :afterup {:set ["yabai-mode" 0]}}} {:set ["yabai-mode" 1]}]]}
         {:des "Yabai Mode"
          :rules [:yabai-mode
+
                  [:r [:hs "openYabaiModal"]] ; trigger yabaiM Modal in hammerspoon
                  [:t [:yabai "space --balance"]]
                  ; [:t [:yabai "space --mirror x-axis"]]
@@ -113,6 +99,7 @@
                  [:k [:!Ta :k]] ; Focus on the pane above current pane
                  [:h [:hs "superDuperLeft"]] ; Focus on the pane to the left of the current pane
                  [:l [:hs "superDuperRight"]] ; Focus on the pane to the right of the current pane
+                 [:n [:!Ta :z]] ; Zoom on current pane
                  [:o [:!Ta :z]] ; Zoom on current pane
                  [:r [:!Ta :r]] ; Reload the Matrix
                  [:hyphen [:!Ta :hyphen]] ; Split tmux window horizontally
@@ -140,18 +127,15 @@
                  [:i :8]
                  [:o :9]]}
         {:des "Foot pedal"
-         :rules [
-                 [:japanese_kana :right_command [:hp-kb]]
+         :rules [[:japanese_kana :right_command [:hp-kb]]
                  [:japanese_pc_katakana :right_option [:hp-kb]]]}
         {:des "Launch Mode for opening up Applications"
          :rules [:launch-mode
                  [:c [:launch "Visual\\ Studio\\ Code"]]
                  [:d [:launch "Discord"]]
                  [:f [:launch "Brave\\ Browser"]]
-                 [:h [:launch "Sketch"]]
                  [:i [:launch "iterm"]]
                  [:m [:launch "Messages"]]
-                 [:o [:launch "OmniFocus"]]
                  [:r [:launch "Bear"]]
                  [:s [:launch "Slack"]]
                  [:z [:hs "debug-menu"]]
