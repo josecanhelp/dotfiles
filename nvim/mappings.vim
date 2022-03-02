@@ -137,7 +137,7 @@ augroup PhpactorMappings
     " Include use statement
     au FileType php nmap <Leader>u :call phpactor#UseAdd()<CR>
     " Invoke the context menu
-    au FileType php nmap <Leader>mm :call phpactor#ContextMenu()<CR>
+    au FileType php nmap <Leader><Leader>k :call phpactor#ContextMenu()<CR>
     " Invoke the navigation menu
     au FileType php nmap <Leader>nn :call phpactor#Navigate()<CR>
     " Goto definition of class or class member under the cursor
@@ -172,6 +172,12 @@ nnoremap <Leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <Leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <Leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <Leader>fm <cmd>lua require('telescope.builtin').marks()<cr>
+
+nnoremap <Leader>k <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
+nnoremap <Leader>K <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
+nnoremap <Leader>l <cmd>lua require('telescope.builtin').builtin()<cr>
+
+
 nnoremap <Leader>H <Cmd>Telescope help_tags<CR>
 nnoremap <Leader>so <Cmd>Telescope sourcery<CR>
 nnoremap <Leader>do <Cmd>Telescope dotfiles<CR>
@@ -201,16 +207,15 @@ nnoremap K <cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap gi <cmd>lua vim.lsp.buf.implementation()<cr>
 nnoremap <Leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 vnoremap <Leader>F <cmd>lua vim.lsp.buf.range_formatting()<CR>
-nnoremap <Leader>k <cmd>lua vim.lsp.buf.document_symbol()<CR>
 noremap <Leader>ld <cmd>lua vim.diagnostic.get()<CR>
 nnoremap <leader>q <cmd>lua vim.diagnostic.setloclist()<CR>
 
 " Snippet
 " Mappings: ultisnips
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:UltiSnipEditSplit = "<s->"
+let g:UltiSnipsExpandTrigger="<space>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsEditSplit="vertical"
 
 function! s:check_back_space() abort
     let col = col('.') - 1

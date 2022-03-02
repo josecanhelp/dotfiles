@@ -5,6 +5,8 @@ lspconfig.intelephense.setup{
   init_options = {licenceKey = "00R7CVDYEXOB400"},
 }
 
+lspconfig.phpactor.setup{}
+
 -- Vue
 lspconfig.vuels.setup { }
 
