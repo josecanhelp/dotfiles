@@ -15,9 +15,9 @@
 {:templates {:launch "open -a %s"
              :yabai "/usr/local/bin/yabai -m %s"
              :hs "open -g hammerspoon://%s"}
- :applications {:workspot ["^com\\.workspot\\.osx$"] :terminal ["^com\\.googlecode\\.iterm2$"]}
+ :applications {:terminal ["^com\\.googlecode\\.iterm2$"]}
  :devices {:hp-kb [{:product_id 4170 :vendor_id 1008}]}
- :layers {:hyper-mode {:key :caps_lock :alone {:key :escape} :condi :!workspot}
+ :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}
           :keypad-mode {:key :fn}}
  :simlayers {:z-mode {:key :z}
              :launch-mode {:key :quote}}
@@ -34,7 +34,7 @@
                  [:n [:hs "createAnything"]]
                  [:delete_or_backspace [:hs "deleteAnything"]]
                  [:o [:hs "openAnything"]]
-                 [:p [:hs "openProjectSelector"]] ; Paste
+                 [:p [:hs "openProjectSelector"]]
                  [:q :!Cw] ; Close the current window
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
                  [:w [:hs "openWindowModal"]] ; Window Management
@@ -45,11 +45,6 @@
                  ]}
         {:des "No Mode"
          :rules [[:!Wj [:yabai "window --focus north"]]]}
-        {:des "Simultaneous v + l --> Wave" ; Experimental
-         :rules [[{:sim [:v :l] :simo {:interrupt true
-                                       :dorder :insensitive
-                                       :uorder :insensitive
-                                       :afterup {:set ["auto-wave" 0]}}} {:set ["auto-wave" 1]}]]}
         {:des "Simultaneous s + d --> Super Duper Mode"
          :rules [[{:sim [:s :d] :simo {:interrupt true
                                        :dorder :insensitive
@@ -99,7 +94,7 @@
                  [:k [:!Ta :k]] ; Focus on the pane above current pane
                  [:h [:hs "superDuperLeft"]] ; Focus on the pane to the left of the current pane
                  [:l [:hs "superDuperRight"]] ; Focus on the pane to the right of the current pane
-                 [:n [:!Ta :z]] ; Zoom on current pane
+                 [:n [:!Ta :comma]] ; Quick rename tmux window
                  [:o [:!Ta :z]] ; Zoom on current pane
                  [:r [:!Ta :r]] ; Reload the Matrix
                  [:hyphen [:!Ta :hyphen]] ; Split tmux window horizontally
@@ -114,21 +109,6 @@
                  [:h :left_arrow]
                  [:l :right_arrow]
                  [:j :down_arrow]]}
-        {:des "Keypad mode for 10-key on small keyboards"
-         :rules [:keypad-mode
-                 [:spacebar :0]
-                 [:m :1]
-                 [:comma :2]
-                 [:period :3]
-                 [:j :4]
-                 [:k :5]
-                 [:l :6]
-                 [:u :7]
-                 [:i :8]
-                 [:o :9]]}
-        {:des "Foot pedal"
-         :rules [[:japanese_kana :right_command [:hp-kb]]
-                 [:japanese_pc_katakana :right_option [:hp-kb]]]}
         {:des "Launch Mode for opening up Applications"
          :rules [:launch-mode
                  [:c [:launch "Visual\\ Studio\\ Code"]]
