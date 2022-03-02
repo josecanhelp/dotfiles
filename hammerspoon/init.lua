@@ -578,6 +578,10 @@ end)
 hs.urlevent.bind('openProjectSelector', function()
     if appIs(vscode) then
         hs.eventtap.keyStroke({'cmd', 'option'}, 'p')
+    elseif appIs(iterm) then
+        hs.eventtap.keyStroke({'ctrl'}, 'a')
+        hs.eventtap.keyStroke({}, 'f')
+        hs.eventtap.keyStroke({}, 'return')
     end
 end)
 
