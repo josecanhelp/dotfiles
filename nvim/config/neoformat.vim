@@ -9,6 +9,7 @@ let g:neoformat_php_phpcsfixer = {
   \ }
 
 let g:neoformat_enabled_php = ['phpcsfixer']
+let g:neoformat_enabled_json = ['fixjson']
 let g:neoformat_enabled_javascript = ['prettier']
 
 " ------------------------------------------------------------------------------
@@ -18,4 +19,5 @@ let g:neoformat_enabled_javascript = ['prettier']
 augroup neoformat_on_save
   autocmd!
   autocmd BufWritePre *.php,*.js,*.vue undojoin | Neoformat
+  autocmd BufWritePre *.json undojoin | Neoformat
 augroup END

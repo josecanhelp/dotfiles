@@ -59,3 +59,16 @@ augroup neovim_last_position
     \ |   exe "normal! g`\""
     \ | endif
 augroup END
+
+augroup CustomMovement
+	autocmd!
+	autocmd FileType php vnoremap <buffer> iv :<c-u>call SelectPhpVariable()<CR>
+  autocmd FileType php onoremap <buffer> iv :<c-u>call SelectPhpVariable()<CR>
+augroup END
+
+function! SelectPhpVariable()
+	" Move forward, then back to the $. This ensures we capture a) the
+	" current variable, even if the cursor is on the $; and b) the whole
+	" of the variable.
+	normal! eF$ve
+endfunction

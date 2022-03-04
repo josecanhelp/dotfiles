@@ -170,7 +170,8 @@ nnoremap <Leader>fa <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <Leader>ff <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <Leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <Leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <Leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <Leader>fH <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <Leader>fh <cmd>lua require('telescope.builtin').project_history()<cr>
 nnoremap <Leader>fm <cmd>lua require('telescope.builtin').marks()<cr>
 
 nnoremap <Leader>k <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
@@ -212,7 +213,7 @@ nnoremap <leader>q <cmd>lua vim.diagnostic.setloclist()<CR>
 
 " Snippet
 " Mappings: ultisnips
-let g:UltiSnipsExpandTrigger="<space>"
+let g:UltiSnipsExpandTrigger="<c-e>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"

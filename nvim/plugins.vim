@@ -17,7 +17,7 @@ Plug 'ap/vim-css-color'
 Plug 'christoomey/vim-tmux-navigator'
 
 " https://github.com/edkolev/tmuxline.vim
-Plug 'edkolev/tmuxline.vim'
+" Plug 'edkolev/tmuxline.vim'
 
 " https://github.com/alok/notational-fzf-vim
 Plug 'https://github.com/alok/notational-fzf-vim'
@@ -58,7 +58,8 @@ Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 " Plug 'antoinemadec/FixCursorHold.nvim'
 
 " Neovim LSP
-Plug 'neovim/nvim-lspconfig'
+" Plug 'neovim/nvim-lspconfig'
+Plug '/Users/jose/Code/JoseCanHelp/nvim-lspconfig/'
 
 " Auto completion
 Plug 'hrsh7th/nvim-compe'
@@ -155,6 +156,9 @@ Plug 'sbdchd/neoformat'
 Plug 'skywind3000/asyncrun.vim'
 
 Plug 'jesseleite/vim-tinkeray'
+
+Plug 'github/copilot.vim'
+Plug 'tpope/vim-rhubarb'
 
 " ------------------------------------------------------------------------------
 " # Quick Configs

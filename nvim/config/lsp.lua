@@ -26,3 +26,6 @@ lspconfig.tailwindcss.setup { }
 
 -- Clojure/EDN
 lspconfig.clojure_lsp.setup{}
+
+-- Clarity
+lspconfig.clarity_lsp.setup{}
