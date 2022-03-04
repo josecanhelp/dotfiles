@@ -13,7 +13,8 @@ telescope.setup {
     mappings = {
       i = {
         ["<Esc>"] = actions.close,
-        ["<C-q>"] = actions.send_to_qflist,
+        ["<C-a>"] = actions.toggle_all,
+        ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
       },
     },
     file_ignore_patterns = { 'node_modules', 'vendor' },
@@ -28,6 +29,13 @@ telescope.setup {
     },
     oldfiles = {
       prompt_title = 'History',
+    },
+    buffers = {
+      mappings = {
+        i = {
+          ["<C-x>"] = "delete_buffer",
+        }
+      }
     },
   },
 }
