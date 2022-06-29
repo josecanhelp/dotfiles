@@ -39,8 +39,10 @@
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
                  [:w [:hs "openWindowModal"]] ; Window Management
                  [:y [:hs "copyAnything"]]
+                 ; [:r :!SCf11] ; Specific to Eclipse (RUN)
                  [:quote [:hs "openCommandPalette"]]
                  [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
+                 [:r :!!p] ; open Raycast
                  [:semicolon :!!semicolon] ; open Alfred
                  ]}
         {:des "No Mode"

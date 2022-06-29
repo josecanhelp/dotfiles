@@ -33,6 +33,9 @@ export PATH=${PATH}:~/.local/share/solana/install/active_release/bin
 export PATH=${PATH}:/.cargo/bin
 export PATH=${PATH}:~/nvim-osx64/bin
 
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+
 # ------------------------------------------------------------------------------
 # General Settings
 # ------------------------------------------------------------------------------
@@ -106,7 +109,7 @@ bindkey '^e' edit-command-line
 # Z.lua Jump to Directory
 # ------------------------------------------------------------------------------
 
-eval "$(lua /usr/local/Cellar/z.lua/1.8.13/share/z.lua/z.lua --init zsh)"
+eval "$(lua /usr/local/Cellar/z.lua/1.8.15/share/z.lua/z.lua --init zsh)"
 
 export _ZL_ROOT_MARKERS=".git,package.json,composer.json" # Jump to project root with zb
 
@@ -184,3 +187,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

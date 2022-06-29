@@ -93,6 +93,14 @@ nnoremap <Leader>bn :bnext<CR>
 nnoremap <Leader>bp :bprevious<CR>
 nnoremap <Leader>bd :bdelete<CR>
 
+" Hardhat Test Runner Helper
+nnoremap <Leader>hh :Dispatch npx hardhat test<CR>
+
+augroup QuickNodeRun
+    au!
+    au FileType javascript nnoremap <Leader><Leader>j :Dispatch node %<CR>
+augroup END
+
 " Mappings: commentary
 nnoremap <Leader>ci :Commentary<CR>
 vnoremap <Leader>ci :Commentary<CR>
@@ -206,10 +214,11 @@ nnoremap gD <cmd>lua vim.lsp.buf.declaration()<cr>
 nnoremap gd <cmd>lua vim.lsp.buf.definition()<cr>
 nnoremap K <cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap gi <cmd>lua vim.lsp.buf.implementation()<cr>
-nnoremap <Leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
-vnoremap <Leader>F <cmd>lua vim.lsp.buf.range_formatting()<CR>
+" nnoremap <Leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
+" vnoremap <Leader>F <cmd>lua vim.lsp.buf.range_formatting()<CR>
 noremap <Leader>ld <cmd>lua vim.diagnostic.get()<CR>
 nnoremap <leader>q <cmd>lua vim.diagnostic.setloclist()<CR>
+" nnoremap <leader>ca <cmd>lua vim.lsp.buf.code_action({diagnostics={},only={"quickfix.import_class"}})<CR>
 
 " Snippet
 " Mappings: ultisnips
@@ -226,3 +235,7 @@ endfunction
 " Tinkeray
 " Mappings: tinkeray
 nmap <Leader>t <Plug>TinkerayOpen
+
+" Mappings: neoformat
+nmap <Leader>f :Neoformat<CR>
+

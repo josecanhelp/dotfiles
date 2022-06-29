@@ -3,4 +3,4 @@ call plug#begin('~/.local/share/nvim/site/autoload')
 call plug#end()
 
 call sourcery#init()
-call tinkeray#set_sail('redeeem.test')
+call tinkeray#set_sail()

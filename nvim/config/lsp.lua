@@ -5,10 +5,13 @@ lspconfig.intelephense.setup{
   init_options = {licenceKey = "00R7CVDYEXOB400"},
 }
 
-lspconfig.phpactor.setup{}
+-- lspconfig.phpactor.setup { }
 
 -- Vue
 lspconfig.vuels.setup { }
+
+-- React
+-- lspconfig.react.setup { }
 
 -- Yaml
 lspconfig.yamlls.setup { }
@@ -22,10 +25,15 @@ lspconfig.html.setup({
 })
 
 -- Tailwind
-lspconfig.tailwindcss.setup { }
+lspconfig.tailwindcss.setup({
+  filetypes = {'html', 'blade', 'antlers', 'vue'}
+})
 
 -- Clojure/EDN
-lspconfig.clojure_lsp.setup{}
+lspconfig.clojure_lsp.setup { }
 
 -- Clarity
-lspconfig.clarity_lsp.setup{}
+lspconfig.clarity_lsp.setup { }
+
+-- Solidity
+lspconfig.solidity_ls.setup { }

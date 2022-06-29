@@ -1,24 +1,9 @@
-let test#enabled_runners = ['php#phpunit', 'javascript#mocha']
-let test#strategy = "dispatch"
-let test#php#phpunit#executable = 'vendor/bin/phpunit'
+" ------------------------------------------------------------------------------
+" # Vim-Test Settings
+" ------------------------------------------------------------------------------
 
-let g:test#php#phpunit#options = {
-  \ 'nearest': '--no-coverage',
-  \ 'file':    '--no-coverage',
-  \}
-
-augroup Test
-  autocmd!
-  autocmd BufNewFile,BufRead *Test.php :compiler phpunit
-augroup END
-
-let g:dispatch_compilers = {
-  \ './bin/phpunit': 'phpunit',
-  \ './vendor/bin/phpunit': 'phpunit',
-  \}
-
-" let test#strategy = {
-"   \ 'nearest': 'neovim',
-"   \ 'file':    'dispatch',
-"   \ 'suite':   'dispatch',
-" \}
+let g:test#enabled_runners = ['php#pest']
+let g:test#neovim#start_normal = 1
+let g:test#neovim#term_position = "20"
+let g:test#php#pest#sail = 1
+let g:test#strategy = "neovim"

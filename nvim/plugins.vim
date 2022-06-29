@@ -26,7 +26,8 @@ Plug 'https://github.com/alok/notational-fzf-vim'
 Plug 'itchyny/lightline.vim'
 
 " https://github.com/vim-test/vim-test
-" Plug 'janko/vim-test'
+" Plug 'vim-test/vim-test'
+Plug '/Users/jose/Code/JoseCanHelp/vim-test'
 
 " Snippets
 Plug 'SirVer/ultisnips'
@@ -71,7 +72,7 @@ Plug 'hrsh7th/nvim-compe'
 Plug 'tjdevries/nlua.nvim'
 
 " https://github.com/phpactor/phpactor
-Plug 'phpactor/phpactor', {'branch': 'develop', 'for': 'php', 'do': 'composer install --no-dev -o'}
+Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
 
 " Syntax highlighting for a bunch of languages
 " https://github.com/tree-sitter/tree-sitter
@@ -155,7 +156,9 @@ Plug 'code-biscuits/nvim-biscuits'
 Plug 'sbdchd/neoformat'
 Plug 'skywind3000/asyncrun.vim'
 
-Plug 'jesseleite/vim-tinkeray'
+" Plug 'jesseleite/vim-tinkeray'
+
+Plug '/Users/jose/Code/JoseCanHelp/vim-tinkeray'
 
 Plug 'github/copilot.vim'
 Plug 'tpope/vim-rhubarb'
