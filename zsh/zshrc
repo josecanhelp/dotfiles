@@ -61,8 +61,13 @@ source $HOME/dotfiles/zsh/custom/aliases.zsh
 # ------------------------------------------------------------------------------
 # Ensure tmux is running
 # ------------------------------------------------------------------------------
-if [ -z "$TMUX" ]; then
-  tmux ls && read tmux_session && tmux attach -t ${tmux_session:-jch} || tmux new -s ${tmux_session:-jch}
+if [ "$TERM_PROGRAM" = "vscode" ]
+then
+  # do nothing
+else 
+  if [ -z "$TMUX" ]; then
+    tmux ls && read tmux_session && tmux attach -t ${tmux_session:-jch} || tmux new -s ${tmux_session:-jch}
+  fi
 fi
 
 # ------------------------------------------------------------------------------
