@@ -42,8 +42,9 @@
                  ; [:r :!SCf11] ; Specific to Eclipse (RUN)
                  [:quote [:hs "openCommandPalette"]]
                  [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
-                 [:r :!!p] ; open Raycast
-                 [:semicolon :!!semicolon] ; open Alfred
+                 ; [:r :!!p] ; open Raycast
+                 [:semicolon :!!p] ; open Raycast
+                 [:r :!!semicolon] ; open Alfred
                  ]}
         {:des "No Mode"
          :rules [[:!Wj [:yabai "window --focus north"]]]}
@@ -99,8 +100,10 @@
                  [:n [:!Ta :comma]] ; Quick rename tmux window
                  [:o [:!Ta :z]] ; Zoom on current pane
                  [:r [:!Ta :r]] ; Reload the Matrix
-                 [:hyphen [:!Ta :hyphen]] ; Split tmux window horizontally
-                 [:backslash [:!Ta :!Sbackslash]] ; Split tmux window vertically
+                 ; [:hyphen [:!Ta :hyphen]] ; Split tmux window horizontally
+                 [:hyphen [:hs "splitHorizontally"]] ; Split tmux window horizontally
+                 ; [:backslash [:!Ta :!Sbackslash]] ; Split tmux window vertically
+                 [:backslash [:hs "splitVertically"]] ; Split tmux window vertically
                  [:delete_or_backspace [:!Ta :x :y]] ; Kill a tmux pane without asking for confirmation
                  [:y [:!Ta :!Sopen_bracket]] ; Kill a tmux pane without asking for confirmation
                  ]}
@@ -118,7 +121,9 @@
                  [:f [:launch "Brave\\ Browser"]]
                  [:i [:launch "iterm"]]
                  [:m [:launch "Messages"]]
-                 [:r [:launch "Bear"]]
+                 [:o [:launch "Obsidian"]]
+                 [:b [:launch "Obsidian"]]
+                 [:r [:launch "Microsoft\\ Teams"]]
                  [:s [:launch "Slack"]]
-                 [:z [:hs "debug-menu"]]
-                 [:x [:hs "expose"]]]}]}
+                 [:t [:launch "Microsoft\\ To\\ Do"]]
+                 ]}]}

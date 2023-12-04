@@ -13,6 +13,11 @@ let g:lightline = {
       \ 't': 'T',
       \ },
   \ 'colorscheme': 'powerline',
+  \ 'inactive': {
+  \ 'left': [ [ 'mode', 'paste' ],
+    \ [ 'fugitive', 'readonly', 'relativepath', 'modified' ] ],
+   \ 'right': [ [ 'percent' ], [ 'filetype' ] ],
+  \ },
   \ 'active': {
   \ 'left': [ [ 'mode', 'paste' ],
     \ [ 'fugitive', 'readonly', 'relativepath', 'modified' ] ],

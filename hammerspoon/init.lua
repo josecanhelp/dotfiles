@@ -109,7 +109,7 @@ if not hsapp_list then
         {key = 'm', name = 'Messages'},
         {key = 'n', id = 'com.apple.ActivityMonitor'},
         {key = 'p', name = 'Paw'},
-        {key = 'r', name = 'Bear'},
+        {key = 'o', name = 'Obsidian'},
         {key = 's', name = 'Simulator'},
         {key = 't', name = 'TablePlus'},
         {key = 'y', id = 'com.apple.systempreferences'},
@@ -148,24 +148,24 @@ local cmodal = spoon.ModalMgr.modal_list["yabaiM"]
 cmodal:bind('', 'escape', 'Deactivate yabaiM', function() spoon.ModalMgr:deactivate({"yabaiM"}) end)
 cmodal:bind('', 'Q', 'Deactivate yabaiM', function() spoon.ModalMgr:deactivate({"yabaiM"}) end)
 cmodal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
-cmodal:bind('', 'j', 'Resize Southward', function() 
-    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "top:0:100"}):start() 
-    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "bottom:0:-100"}):start() 
+cmodal:bind('', 'j', 'Resize Southward', function()
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "top:0:100"}):start()
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "bottom:0:-100"}):start()
 end)
-cmodal:bind('', 'k', 'Resize Northward', function() 
-    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "top:0:-100"}):start() 
-    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "bottom:0:100"}):start() 
+cmodal:bind('', 'k', 'Resize Northward', function()
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "top:0:-100"}):start()
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "bottom:0:100"}):start()
 end)
-cmodal:bind('', 'h', 'Resize Westward', function() 
-    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "left:100:0"}):start() 
-    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "right:-100:0"}):start() 
+cmodal:bind('', 'h', 'Resize Westward', function()
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "left:100:0"}):start()
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "right:-100:0"}):start()
 end)
-cmodal:bind('', 'l', 'Resize Eastward', function() 
-    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "left:-100:0"}):start() 
-    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "right:100:0"}):start() 
+cmodal:bind('', 'l', 'Resize Eastward', function()
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "left:-100:0"}):start()
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--resize", "right:100:0"}):start()
 end)
-cmodal:bind('', 'f', 'Set Window to Float', function() 
-    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--toggle", "float"}):start() 
+cmodal:bind('', 'f', 'Set Window to Float', function()
+    hs.task.new("/usr/local/bin/yabai", nil, {"-m", "window", "--toggle", "float"}):start()
 end)
 
 local modeText = hs.styledtext.new("Resize", {
@@ -455,6 +455,10 @@ end)
 hs.urlevent.bind('openAnything', function()
     if appIncludes({vscode, tableplus, fork}) then
         hs.eventtap.keyStroke({'cmd'}, 'p')
+    elseif appIs(teams) then
+        hs.eventtap.keyStroke({'cmd'}, 'e')
+    elseif appIs(eclipse) then
+        hs.eventtap.keyStroke({'cmd, shift'}, 'r')
     elseif appIs(simulator) then
         hs.eventtap.keyStroke({'ctrl, shift, cmd'}, 'h')
     elseif appIncludes({discord, superhuman}) then
@@ -468,7 +472,7 @@ hs.urlevent.bind('openAnything', function()
         triggerAlfredSearch('o')
     elseif appIncludes({brave}) then
         hs.eventtap.keyStroke({'shift'}, 't') -- Open Vomnibar in Vimium
-    elseif appIs(omnifocus) then
+    elseif appIncludes({omnifocus, obsidian}) then
         hs.eventtap.keyStroke({'cmd'}, 'o')
     elseif appIs(bear) then
         hs.eventtap.keystroke({'cmd', 'shift'}, 'f')
@@ -493,6 +497,8 @@ hs.urlevent.bind('toggleSidebar', function()
     elseif appIs(sketch) then
         hs.eventtap.keyStroke({'cmd', 'option'}, '1')
         hs.eventtap.keyStroke({'cmd', 'option'}, '2')
+    elseif appIs(obsidian) then
+        hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 'm')
     elseif appIs(omnifocus) then
         hs.eventtap.keyStroke({'cmd', 'option'}, 's')
     end
@@ -504,12 +510,14 @@ hs.urlevent.bind('navigateBack', function()
           hs.eventtap.keyStroke({'cmd', 'option'}, 'left')
       elseif appIncludes({finder, slack, brave}) then
           hs.eventtap.keyStroke({'cmd'}, '[')
-    elseif appIncludes({vscode}) then
-        hs.eventtap.keyStroke({'cmd'}, 'k')
-        hs.eventtap.keyStroke({'cmd'}, 'left')
-        hs.eventtap.keyStroke({}, 'escape')
-      elseif appIs(iterm) then
-          hs.eventtap.keyStroke({'control'}, 'h', 0)
+        elseif appIncludes({vscode}) then
+            hs.eventtap.keyStroke({'cmd'}, 'k')
+            hs.eventtap.keyStroke({'cmd'}, 'left')
+            hs.eventtap.keyStroke({}, 'escape')
+        elseif appIncludes({obsidian}) then
+            hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 'a')
+          elseif appIs(iterm) then
+              hs.eventtap.keyStroke({'control'}, 'h', 0)
       end
     elseif activeModal == 'windowM' then
         hs.eventtap.keyStroke({}, 'a')
@@ -525,6 +533,8 @@ hs.urlevent.bind('navigateForward', function()
         hs.eventtap.keyStroke({'cmd'}, 'k')
         hs.eventtap.keyStroke({'cmd'}, 'right')
         hs.eventtap.keyStroke({}, 'escape')
+    elseif appIncludes({obsidian}) then
+        hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 'd')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'l', 0)
     end
@@ -544,6 +554,8 @@ hs.urlevent.bind('navigateUpward', function()
         hs.eventtap.keyStroke({'cmd', 'shift'}, ']')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'k', 0)
+    elseif appIs(obsidian) then
+        hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 'w')
     else
         hs.eventtap.keyStroke({'cmd', 'shift'}, '[')
     end
@@ -562,6 +574,8 @@ hs.urlevent.bind('navigateDownward', function()
         hs.eventtap.keyStroke({'cmd', 'shift'}, '[')
     elseif appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'j', 0)
+    elseif appIncludes({obsidian}) then
+        hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 's')
     else
         hs.eventtap.keyStroke({'cmd', 'shift'}, ']')
     end
@@ -570,6 +584,11 @@ end)
 hs.urlevent.bind('openCommandPalette', function()
     if appIs(vscode) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, 'p')
+    elseif appIs(teams) then
+        hs.eventtap.keyStroke({'cmd'}, 'e')
+        hs.eventtap.keyStroke({}, '/')
+    elseif appIncludes({obsidian}) then
+        hs.eventtap.keyStroke({'cmd'}, 'p')
     else
         triggerAlfredWorkflow('com.tedwise.menubarsearch', 'menubarsearch')
     end
@@ -623,12 +642,31 @@ hs.urlevent.bind('superDuperLeft', function()
         hs.eventtap.keyStroke({'cmd', 'option'}, 'left')
     end
 end)
+
 hs.urlevent.bind('superDuperRight', function()
     if appIs(iterm) then
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({}, 'l')
     elseif appIs(vscode) then
         hs.eventtap.keyStroke({'cmd', 'option'}, 'right')
+    end
+end)
+
+hs.urlevent.bind('splitVertically', function()
+    if appIs(iterm) then
+        hs.eventtap.keyStroke({'control'}, 'a')
+        hs.eventtap.keyStroke({'shift'}, '\\')
+    elseif appIs(obsidian) then
+        hs.eventtap.keyStroke({'cmd', 'option', 'control'}, '\\')
+    end
+end)
+
+hs.urlevent.bind('splitHorizontally', function()
+    if appIs(iterm) then
+        hs.eventtap.keyStroke({'control'}, 'a')
+        hs.eventtap.keyStroke({}, '-')
+    elseif appIs(obsidian) then
+        hs.eventtap.keyStroke({'cmd', 'option', 'control'}, '-')
     end
 end)
 

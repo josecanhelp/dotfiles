@@ -1,5 +1,6 @@
 # Don't print a new line at the start of the prompt
 add_newline = false
+command_timeout = 500
 
 [character]
 success_symbol = "[❯](bold green)"
@@ -16,7 +17,11 @@ disabled = true
 disabled = true
 
 [python]
-disabled = true
+disabled = false
 
 [nodejs]
-disabled = true
+symbol = "⬢ "
+
+[conda]
+format = '[$symbol$environment](dimmed green) '
+symbol = "🅒 "

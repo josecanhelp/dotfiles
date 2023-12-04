@@ -59,8 +59,9 @@ Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 " Plug 'antoinemadec/FixCursorHold.nvim'
 
 " Neovim LSP
-" Plug 'neovim/nvim-lspconfig'
-Plug '/Users/jose/Code/JoseCanHelp/nvim-lspconfig/'
+Plug 'neovim/nvim-lspconfig'
+" Plug '/Users/jose/Code/JoseCanHelp/nvim-lspconfig/' "was using this for
+" clarity before it was merged
 
 " Auto completion
 Plug 'hrsh7th/nvim-compe'
@@ -162,6 +163,14 @@ Plug '/Users/jose/Code/JoseCanHelp/vim-tinkeray'
 
 Plug 'github/copilot.vim'
 Plug 'tpope/vim-rhubarb'
+
+" SchemaStore - json schemas
+" https://github.com/b0o/schemastore.nvim
+Plug 'b0o/schemastore.nvim'
+
+" Zen Mode
+" https://github.com/folke/zen-mode.nvim
+Plug 'folke/zen-mode.nvim'
 
 " ------------------------------------------------------------------------------
 " # Quick Configs
