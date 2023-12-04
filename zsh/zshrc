@@ -19,36 +19,36 @@ export PATH=${PATH}:/usr/sbin
 export PATH=${PATH}:/bin
 export PATH=${PATH}:/sbin
 export PATH=${PATH}:~/.composer/vendor/bin
-export PATH=${PATH}:~/Library/Android/sdk
-export PATH=${PATH}:~/Library/Android/sdk/platform-tools
-export PATH=${PATH}:~/go/bin
 export PATH=${PATH}:~/.dotfiles/bin
-export PATH=${PATH}:~/.emacs.d/bin
+export PATH=${PATH}:~/.dotfiles/bin/jdt-java-lang-server/bin
 export PATH=${PATH}:/usr/local/opt/coreutils/libexec/gnubin
 export PATH=${PATH}:/usr/local/aws/bin
 export PATH=${PATH}:~/.rbenv/versions/bin
 export PATH=${PATH}:~/.local/bin
 export PATH=${PATH}:/usr/local/opt
-export PATH=${PATH}:~/.local/share/solana/install/active_release/bin
-export PATH=${PATH}:/.cargo/bin
 export PATH=${PATH}:~/nvim-osx64/bin
+export PATH=${PATH}:/opt/homebrew/lib
+export PATH=${PATH}:/Users/jose/dotfiles/bin/apache-maven-3.9.4/bin
+export PATH=${PATH}:/opt/homebrew/opt/node@18/bin
 
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
 
 # ------------------------------------------------------------------------------
 # General Settings
 # ------------------------------------------------------------------------------
 
 export EDITOR=nvim
-# export VISUAL=nvim
-# export PAGER=more
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES # Required for iterm shell integration
 export LANG=en_US.UTF-8
-# HISTSIZE=10000
-# SAVEHIST=10000
-# HISTFILE=~/.cache/zsh/history
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+export SAM_CLI_TELEMETRY=0
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_351.jdk/Contents/Home"
+
+# ------------------------------------------------------------------------------
+# AWS Code Artifact Token
+# Used to publish and pull from private NPM repositories
+# ------------------------------------------------------------------------------
+
+export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain converge --domain-owner 420280777025 --region us-east-1 --query authorizationToken --output text`
 
 
 # ------------------------------------------------------------------------------
@@ -59,14 +59,14 @@ source $HOME/dotfiles/zsh/custom/functions.zsh
 source $HOME/dotfiles/zsh/custom/aliases.zsh
 
 # ------------------------------------------------------------------------------
-# Ensure tmux is running
+# Ensure tmux is running for non-vscode terminals
 # ------------------------------------------------------------------------------
 if [ "$TERM_PROGRAM" = "vscode" ]
 then
   # do nothing
-else 
+else
   if [ -z "$TMUX" ]; then
-    tmux ls && read tmux_session && tmux attach -t ${tmux_session:-jch} || tmux new -s ${tmux_session:-jch}
+    tmux ls && read tmux_session && tmux attach -t ${tmux_session} || tmux new -s ${tmux_session}
   fi
 fi
 
@@ -114,7 +114,7 @@ bindkey '^e' edit-command-line
 # Z.lua Jump to Directory
 # ------------------------------------------------------------------------------
 
-eval "$(lua /usr/local/Cellar/z.lua/1.8.15/share/z.lua/z.lua --init zsh)"
+eval "$(lua /opt/homebrew/Cellar/z.lua/1.8.16/share/z.lua/z.lua --init zsh)"
 
 export _ZL_ROOT_MARKERS=".git,package.json,composer.json" # Jump to project root with zb
 
@@ -138,13 +138,13 @@ if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
 fi
 
 # Auto-completion
-[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "/opt/homebrew/Cellar/fzf/0.42.0/shell/completion.zsh" 2> /dev/null
 
 # GitHub CLI completion
 eval "$(gh completion -s zsh)"
 
 # Key bindings
-source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+source "/opt/homebrew/Cellar/fzf/0.42.0/shell/key-bindings.zsh"
 
 # ------------------------------------------------------------------------------
 # Auto Suggest Settings
@@ -154,13 +154,14 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion) # First search history, then direc
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 # Source autosuggestion plugin
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 
 # ------------------------------------------------------------------------------
 # FZF
 # ------------------------------------------------------------------------------
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 
 # ------------------------------------------------------------------------------
 # Auto Suggest Settings (Needs to be last)
@@ -173,26 +174,23 @@ source $HOME/dotfiles/zsh/custom/artisan.plugin.zsh
 # Source syntax highlighting plugin
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
-[ -f "/Users/jose/.ghcup/env" ] && source "/Users/jose/.ghcup/env" # ghcup-env
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/jose/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/jose/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/jose/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/jose/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/jose/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/jose/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/jose/miniconda3/bin:$PATH"
+        export PATH="/Users/jose/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
