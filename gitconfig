@@ -1,20 +1,9 @@
 [user]
 	name = Jose Soto
 	email = josecanhelp@gmail.com
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustexitcode = true
-[merge]
-	tool = Kaleidoscope
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-[difftool]
-	prompt = false
 [mergetool]
 	prompt = false
 	keepBackup = false
-[diff]
-	tool = Kaleidoscope
 [github]
   user = josecanhelp
 [format]
@@ -25,22 +14,14 @@
   autocorrect = 1
 [core]
 	editor = vim
-	excludesfile = /Users/jose/.gitignore
+	excludesfile = /Users/jose/.gitignore_global
 [credential]
     helper = osxkeychain
- [alias]
-    fix-staged = "!git diff-index --cached --name-status HEAD | grep -ve '^D' | cut -f2 | xargs -n1 php-cs-fixer fix --verbose --config=/Users/jose/.php_cs.dist"
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[difftool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
 [pull]
 	rebase = false
 [color]
