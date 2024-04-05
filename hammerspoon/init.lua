@@ -466,7 +466,7 @@ hs.urlevent.bind('openAnything', function()
     elseif appIncludes({slack, monday}) then
         hs.eventtap.keyStroke({'cmd'}, 'k')
         hs.eventtap.keyStroke({}, 'down')
-    elseif appIs(phpstorm) then
+    elseif appIncludes({phpstorm, xcode}) then
         hs.eventtap.keyStroke({'cmd, shift'}, 'o')
     elseif appIs(finder) then
         triggerAlfredSearch('o')
