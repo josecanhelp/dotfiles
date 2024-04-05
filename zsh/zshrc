@@ -6,49 +6,53 @@
 # Plugins were installed via brew.
 #   -- brew install zsh-autosuggestions zsh-syntax-highlighting z.lua
 
-zmodload zsh/zprof
+# zmodload zsh/zprof
 
 # ------------------------------------------------------------------------------
 # Paths
 # ------------------------------------------------------------------------------
 
-export PATH=${PATH}:/usr/local/bin
-export PATH=${PATH}:/usr/local/sbin
-export PATH=${PATH}:/usr/bin
-export PATH=${PATH}:/usr/sbin
 export PATH=${PATH}:/bin
+export PATH=${PATH}:/opt/homebrew/lib
 export PATH=${PATH}:/sbin
+export PATH=${PATH}:/usr/bin
+export PATH=${PATH}:/usr/local/aws/bin
+export PATH=${PATH}:/usr/local/bin
+export PATH=${PATH}:/usr/local/opt
+export PATH=${PATH}:/usr/local/opt/coreutils/libexec/gnubin
+export PATH=${PATH}:/usr/local/sbin
+export PATH=${PATH}:/usr/sbin
 export PATH=${PATH}:~/.composer/vendor/bin
 export PATH=${PATH}:~/.dotfiles/bin
+export PATH=${PATH}:~/.dotfiles/bin/apache-maven-3.9.6/bin
 export PATH=${PATH}:~/.dotfiles/bin/jdt-java-lang-server/bin
-export PATH=${PATH}:/usr/local/opt/coreutils/libexec/gnubin
-export PATH=${PATH}:/usr/local/aws/bin
-export PATH=${PATH}:~/.rbenv/versions/bin
 export PATH=${PATH}:~/.local/bin
-export PATH=${PATH}:/usr/local/opt
+export PATH=${PATH}:~/.rbenv/versions/bin
 export PATH=${PATH}:~/nvim-osx64/bin
-export PATH=${PATH}:/opt/homebrew/lib
-export PATH=${PATH}:/Users/jose/dotfiles/bin/apache-maven-3.9.4/bin
 export PATH=${PATH}:/opt/homebrew/opt/node@18/bin
-
+export PATH=${PATH}:~/go/bin
 
 # ------------------------------------------------------------------------------
 # General Settings
 # ------------------------------------------------------------------------------
 
 export EDITOR=nvim
+# export VISUAL=nvim
+# export PAGER=more
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES # Required for iterm shell integration
 export LANG=en_US.UTF-8
+# HISTSIZE=10000
+# SAVEHIST=10000
+# HISTFILE=~/.cache/zsh/history
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 export SAM_CLI_TELEMETRY=0
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_351.jdk/Contents/Home"
 
 # ------------------------------------------------------------------------------
 # AWS Code Artifact Token
 # Used to publish and pull from private NPM repositories
 # ------------------------------------------------------------------------------
 
-export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain converge --domain-owner 420280777025 --region us-east-1 --query authorizationToken --output text`
+# export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain converge --domain-owner 420280777025 --region us-east-1 --query authorizationToken --output text`
 
 
 # ------------------------------------------------------------------------------
@@ -59,17 +63,32 @@ source $HOME/dotfiles/zsh/custom/functions.zsh
 source $HOME/dotfiles/zsh/custom/aliases.zsh
 
 # ------------------------------------------------------------------------------
-# Ensure tmux is running for non-vscode terminals
+# TMUX
 # ------------------------------------------------------------------------------
-if [ "$TERM_PROGRAM" = "vscode" ]
-then
-  # do nothing
-else
-  if [ -z "$TMUX" ]; then
-    tmux ls && read tmux_session && tmux attach -t ${tmux_session} || tmux new -s ${tmux_session}
-  fi
-fi
+# Exit if inside Visual Studio Code's terminal or already in a tmux session
+# if [ "$TERM_PROGRAM" = "vscode" ] || [ -n "$TMUX" ]; then
+#   exit 0
+# fi
 
+# # Attempt to list tmux sessions. If successful, prompt user to select one, else create a new one.
+# if tmux ls 2>/dev/null; then
+#   echo "Enter the name of the tmux session to attach to (or press Enter to select the first one):"
+#   read -r tmux_session
+#   # If user did not enter a name, select the first session automatically
+#   if [ -z "$tmux_session" ]; then
+#     tmux_session=$(tmux ls | cut -d: -f1 | head -n1)
+#   fi
+#   tmux attach -t "$tmux_session" 2>/dev/null || tmux new -s "$tmux_session"
+# else
+#   echo "No existing tmux sessions. Creating a new one."
+#   # Prompt for session name in case of creating a new one
+#   read -r tmux_session
+#   if [ -z "$tmux_session" ]; then
+#     # Default session name if none is provided
+#     tmux_session="default"
+#   fi
+#   tmux new -s "$tmux_session"
+# fi
 # ------------------------------------------------------------------------------
 # Auto-Tab / Completion
 # ------------------------------------------------------------------------------
@@ -85,12 +104,12 @@ _comp_options+=(globdots)               # Include hidden files.
 autoload bashcompinit && bashcompinit
 complete -C '/usr/local/bin/aws_completer' aws
 
-
 # ------------------------------------------------------------------------------
 # Starship Prompt
 # ------------------------------------------------------------------------------
 
 eval "$(starship init zsh)"
+
 
 # ------------------------------------------------------------------------------
 # Vim Mode
@@ -114,9 +133,9 @@ bindkey '^e' edit-command-line
 # Z.lua Jump to Directory
 # ------------------------------------------------------------------------------
 
-eval "$(lua /opt/homebrew/Cellar/z.lua/1.8.16/share/z.lua/z.lua --init zsh)"
+# eval "$(lua /opt/homebrew/Cellar/z.lua/1.8.16/share/z.lua/z.lua --init zsh)"
 
-export _ZL_ROOT_MARKERS=".git,package.json,composer.json" # Jump to project root with zb
+# export _ZL_ROOT_MARKERS=".git,package.json,composer.json" # Jump to project root with zb
 
 
 # ------------------------------------------------------------------------------
@@ -138,13 +157,13 @@ if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
 fi
 
 # Auto-completion
-[[ $- == *i* ]] && source "/opt/homebrew/Cellar/fzf/0.42.0/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "/opt/homebrew/Cellar/fzf/0.49.0/shell/completion.zsh" 2> /dev/null
 
 # GitHub CLI completion
-eval "$(gh completion -s zsh)"
+# eval "$(gh completion -s zsh)"
 
 # Key bindings
-source "/opt/homebrew/Cellar/fzf/0.42.0/shell/key-bindings.zsh"
+source "/opt/homebrew/Cellar/fzf/0.49.0/shell/key-bindings.zsh"
 
 # ------------------------------------------------------------------------------
 # Auto Suggest Settings
@@ -169,7 +188,7 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/nu
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
 
-source $HOME/dotfiles/zsh/custom/artisan.plugin.zsh
+# source $HOME/dotfiles/zsh/custom/artisan.plugin.zsh
 
 # Source syntax highlighting plugin
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
@@ -177,20 +196,10 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/d
 
 # tabtab source for packages
 # uninstall by removing these lines
-[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+# [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
 
+# source /Users/jose/.docker/init-zsh.sh || true # Added by Docker Desktop
+export HOMEBREW_GITHUB_API_TOKEN=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
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/jose/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/jose/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/jose/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/jose/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+# export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_351.jdk/Contents/Home"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"
