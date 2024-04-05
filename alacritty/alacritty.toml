@@ -1,0 +1,27 @@
+[env]
+TERM = "alacritty"
+
+live_config_reload = "true"
+
+[font]
+size = 14
+
+[font.bold]
+style = "Regular"
+
+[font.glyph_offset]
+y = 7
+
+[font.normal]
+family = "Monolisa"
+
+[font.offset]
+y = 10
+
+[window]
+decorations = "none"
+dynamic_padding = true
+
+[window.padding]
+x = 0
+y = 0
