@@ -199,7 +199,6 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/d
 # [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
 
 # source /Users/jose/.docker/init-zsh.sh || true # Added by Docker Desktop
-export HOMEBREW_GITHUB_API_TOKEN=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
 
 # export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_351.jdk/Contents/Home"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"
