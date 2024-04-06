@@ -516,7 +516,7 @@ hs.urlevent.bind('navigateBack', function()
             hs.eventtap.keyStroke({}, 'escape')
         elseif appIncludes({obsidian}) then
             hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 'a')
-          elseif appIs(iterm) then
+          elseif appIncludes({iterm, alacritty}) then
               hs.eventtap.keyStroke({'control'}, 'h', 0)
       end
     elseif activeModal == 'windowM' then
@@ -535,7 +535,7 @@ hs.urlevent.bind('navigateForward', function()
         hs.eventtap.keyStroke({}, 'escape')
     elseif appIncludes({obsidian}) then
         hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 'd')
-    elseif appIs(iterm) then
+    elseif appIncludes({iterm, alacritty}) then
         hs.eventtap.keyStroke({'control'}, 'l', 0)
     end
 end)
@@ -552,7 +552,7 @@ hs.urlevent.bind('navigateUpward', function()
         hs.eventtap.keyStroke({'control', 'shift'}, 'tab')
     elseif appIs(brave) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, ']')
-    elseif appIs(iterm) then
+    elseif appIncludes({iterm, alacritty}) then
         hs.eventtap.keyStroke({'control'}, 'k', 0)
     elseif appIs(obsidian) then
         hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 'w')
@@ -572,7 +572,7 @@ hs.urlevent.bind('navigateDownward', function()
         hs.eventtap.keyStroke({'control'}, 'tab')
     elseif appIs(brave) then
         hs.eventtap.keyStroke({'cmd', 'shift'}, '[')
-    elseif appIs(iterm) then
+    elseif appIncludes({iterm, alacritty}) then
         hs.eventtap.keyStroke({'control'}, 'j', 0)
     elseif appIncludes({obsidian}) then
         hs.eventtap.keyStroke({'cmd', 'option', 'control'}, 's')
@@ -597,7 +597,7 @@ end)
 hs.urlevent.bind('openProjectSelector', function()
     if appIs(vscode) then
         hs.eventtap.keyStroke({'cmd', 'option'}, 'p')
-    elseif appIs(iterm) then
+    elseif appIncludes({iterm, alacritty}) then
         hs.eventtap.keyStroke({'ctrl'}, 'a')
         hs.eventtap.keyStroke({}, 'f')
         hs.eventtap.keyStroke({}, 'return')
@@ -616,7 +616,7 @@ hs.urlevent.bind('copyAnything', function()
 end)
 
 hs.urlevent.bind('tabPrevious', function()
-    if appIs(iterm) then
+    if appIncludes({iterm, alacritty}) then
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({}, 'p')
     elseif appIs(vscode) then
@@ -625,7 +625,7 @@ hs.urlevent.bind('tabPrevious', function()
 end)
 
 hs.urlevent.bind('tabNext', function()
-    if appIs(iterm) then
+    if appIncludes({iterm, alacritty}) then
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({}, 'n')
     elseif appIs(vscode) then
@@ -635,7 +635,7 @@ end)
 
 
 hs.urlevent.bind('superDuperLeft', function()
-    if appIs(iterm) then
+    if appIncludes({iterm, alacritty}) then
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({}, 'h')
     elseif appIs(vscode) then
@@ -644,7 +644,7 @@ hs.urlevent.bind('superDuperLeft', function()
 end)
 
 hs.urlevent.bind('superDuperRight', function()
-    if appIs(iterm) then
+    if appIncludes({iterm, alacritty}) then
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({}, 'l')
     elseif appIs(vscode) then
@@ -653,7 +653,7 @@ hs.urlevent.bind('superDuperRight', function()
 end)
 
 hs.urlevent.bind('splitVertically', function()
-    if appIs(iterm) then
+    if appIncludes({iterm, alacritty}) then
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({'shift'}, '\\')
     elseif appIs(obsidian) then
@@ -662,7 +662,7 @@ hs.urlevent.bind('splitVertically', function()
 end)
 
 hs.urlevent.bind('splitHorizontally', function()
-    if appIs(iterm) then
+    if appIncludes({iterm, alacritty}) then
         hs.eventtap.keyStroke({'control'}, 'a')
         hs.eventtap.keyStroke({}, '-')
     elseif appIs(obsidian) then

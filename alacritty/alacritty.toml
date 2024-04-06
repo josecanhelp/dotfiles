@@ -4,7 +4,7 @@ TERM = "alacritty"
 live_config_reload = "true"
 
 [font]
-size = 14
+size = 16
 
 [font.bold]
 style = "Regular"
@@ -13,10 +13,10 @@ style = "Regular"
 y = 7
 
 [font.normal]
-family = "Monolisa"
+family = "FiraCode Nerd Font Mono"
 
 [font.offset]
-y = 10
+y = 17
 
 [window]
 decorations = "none"
@@ -25,3 +25,7 @@ dynamic_padding = true
 [window.padding]
 x = 0
 y = 0
+
+[shell]
+program = "/bin/zsh"
+args = ["-l", "-c", "tmux attach || tmux"]
