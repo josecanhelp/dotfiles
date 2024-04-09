@@ -6,6 +6,7 @@ tmux/plugins/*
 vim/plugged
 tmux/resurrect
 karabiner.edn.bak
+alacritty/alacritty-theme/
 bin/apache-maven-3.9.6/LICENSE
 bin/apache-maven-3.9.6/NOTICE
 bin/apache-maven-3.9.6/README.txt
@@ -95,3 +96,5 @@ bin/apache-maven-3.9.6/lib/ext/redisson/README.txt
 bin/apache-maven-3.9.6/lib/jansi-native/README.txt
 bin/apache-maven-3.9.6/lib/jansi-native/Windows/x86/jansi.dll
 bin/apache-maven-3.9.6/lib/jansi-native/Windows/x86_64/jansi.dll
+nvim-old/
+nvim/.undo/

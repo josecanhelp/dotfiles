@@ -1,3 +1,5 @@
+import = [ "~/dotfiles/alacritty/alacritty-theme/themes/seashells.toml" ]
+
 [env]
 TERM = "alacritty"
 
@@ -16,7 +18,7 @@ y = 7
 family = "FiraCode Nerd Font Mono"
 
 [font.offset]
-y = 17
+y = 16
 
 [window]
 decorations = "none"
@@ -29,3 +31,4 @@ y = 0
 [shell]
 program = "/bin/zsh"
 args = ["-l", "-c", "tmux attach || tmux"]
+
