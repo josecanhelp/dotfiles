@@ -116,6 +116,7 @@
                  [:j :down_arrow]]}
         {:des "Launch Mode for opening up Applications"
          :rules [:launch-mode
+                 [:a [:launch "Alacritty"]]
                  [:c [:launch "Visual\\ Studio\\ Code"]]
                  [:d [:launch "Discord"]]
                  [:f [:launch "Brave\\ Browser"]]

@@ -8,7 +8,6 @@ return {
   html = {
     filetypes = { 'html', 'blade', 'antlers' },
   },
-  antlersls = true,
   tailwindcss = true,
   volar = {
     filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },

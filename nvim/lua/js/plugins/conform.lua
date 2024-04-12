@@ -25,6 +25,14 @@ return {
       json = { 'fixjson', 'pint' },
       html = { 'htmlbeautifier' },
       sql = { 'sqlfmt' },
+      xml = { 'xmlformat' },
+      ant = { 'xmlformat' },
+    },
+    formatters = {
+      xmlformat = {
+        command = "xmlformat",
+        args = { "--blanks", "--indent", "4", "-" },
+      }
     },
     format_on_save = {
       lsp_fallback = true,

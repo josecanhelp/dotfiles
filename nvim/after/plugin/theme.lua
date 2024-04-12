@@ -1,11 +1,10 @@
-
 -- Highlight briefly on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('highlight_on_yank', { clear = true }),
-  callback = function ()
+  callback = function()
     vim.highlight.on_yank {
       higroup = 'IncSearch',
-      timeout = 150,
+      timeout = 300,
       on_macro = true
     }
   end

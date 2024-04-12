@@ -40,6 +40,7 @@ vim.api.nvim_create_autocmd({"FileType"}, {
         vim.keymap.set('v', 'L', "yodd('<ESC>pa: ', <ESC>pa);<ESC>", {buffer = true})
     end,
 })
+
 vim.api.nvim_create_autocmd({"FileType"}, {
     pattern = {"javascript", "jsx", "typescript", "tsx"},
     callback = function()
