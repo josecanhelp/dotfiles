@@ -18,7 +18,7 @@ y = 7
 family = "FiraCode Nerd Font Mono"
 
 [font.offset]
-y = 16
+y = 12
 
 [window]
 decorations = "none"
