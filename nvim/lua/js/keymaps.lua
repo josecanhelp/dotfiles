@@ -24,27 +24,27 @@ vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 
 -- Normal mode mapping for Commentary
-vim.keymap.set('n', '<Leader>ci', ':Commentary<CR>', {silent = true})
+vim.keymap.set('n', '<Leader>ci', ':Commentary<CR>', { silent = true })
 
 -- Visual mode mapping for Commentary
-vim.keymap.set('v', '<Leader>ci', ':Commentary<CR>', {silent = true})
+vim.keymap.set('v', '<Leader>ci', ':Commentary<CR>', { silent = true })
 
 vim.keymap.set('n', '<Leader>g', ':Gedit :<CR>')
 vim.keymap.set('n', '<Leader>gp', ':Git pull<CR>')
 
 -- Console Log Helper
 -- For different file types, use autocmds to set mappings conditionally
-vim.api.nvim_create_autocmd({"FileType"}, {
+vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = "php",
     callback = function()
-        vim.keymap.set('v', 'L', "yodd('<ESC>pa: ', <ESC>pa);<ESC>", {buffer = true})
+        vim.keymap.set('v', 'L', "yodd('<ESC>pa: ', <ESC>pa);<ESC>", { buffer = true })
     end,
 })
 
-vim.api.nvim_create_autocmd({"FileType"}, {
-    pattern = {"javascript", "jsx", "typescript", "tsx"},
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = { "javascript", "jsx", "typescript", "tsx" },
     callback = function()
-        vim.keymap.set('v', 'L', "yoconsole.log('<ESC>pa: ', <ESC>pa);<ESC>", {buffer = true})
+        vim.keymap.set('v', 'L', "yoconsole.log('<ESC>pa: ', <ESC>pa);<ESC>", { buffer = true })
     end,
 })
 
@@ -59,8 +59,8 @@ vim.keymap.set('n', '<Leader>vs', ':vsplit<CR>')
 vim.keymap.set('n', '<Leader>sp', ':split<CR>')
 
 -- Allow easy navigation between wrapped lines.
-vim.keymap.set({'v', 'n'}, 'j', 'gj')
-vim.keymap.set({'v', 'n'}, 'k', 'gk')
+vim.keymap.set({ 'v', 'n' }, 'j', 'gj')
+vim.keymap.set({ 'v', 'n' }, 'k', 'gk')
 
 -- Traverse through buffers
 vim.keymap.set('n', '<Leader>bn', ':bnext<CR>')
@@ -91,19 +91,4 @@ vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
 vim.keymap.set('n', '<leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>')
 vim.keymap.set('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
 
-
--- Toggle maximize current window
-_G.window_sizes = {}
-vim.keymap.set('n', '<Leader>o', function()
-    local winid = vim.fn.win_getid()
-    if _G.window_sizes[winid] then
-        local size = _G.window_sizes[winid]
-        vim.cmd(size.cmd .. ' ' .. size.size)
-        _G.window_sizes[winid] = nil
-    else
-        local cmd = vim.fn.winnr() == vim.fn.winnr('j') and 'resize' or 'vertical resize'
-        local size = cmd == 'resize' and vim.api.nvim_win_get_height(0) or vim.api.nvim_win_get_width(0)
-        _G.window_sizes[winid] = {cmd = cmd, size = size}
-        vim.cmd(cmd .. ' | 999')
-    end
-end, {desc = 'Toggle maximize split'})
+vim.keymap.set('n', '<leader>o', "<cmd>lua require('maximize').toggle()<CR>")

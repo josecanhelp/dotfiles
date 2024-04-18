@@ -13,9 +13,6 @@ disabled = true
 [aws]
 disabled = true
 
-[php]
-disabled = true
-
 [python]
 disabled = false
 

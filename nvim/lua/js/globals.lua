@@ -13,14 +13,14 @@ if ok then
 end
 
 -- Print tables and objects
-P = function (v)
+P = function(v)
   print(vim.inspect(v))
 
   return v
 end
 
 -- Clear module cache
-RELOAD = function (...)
+RELOAD = function(...)
   local ok, plenary_reload = pcall(require, "plenary.reload")
 
   if ok then
@@ -31,14 +31,14 @@ RELOAD = function (...)
 end
 
 -- Clear module cache and require
-R = function (name)
+R = function(name)
   RELOAD(name)
 
   return require(name)
 end
 
 -- Defer require until exported function is called
-require_on_exported_call = function (require_path)
+require_on_exported_call = function(require_path)
   return setmetatable({}, {
     __index = function(_, k)
       return function(...)
@@ -48,3 +48,14 @@ require_on_exported_call = function (require_path)
   })
 end
 
+-- Highlight briefly on yank
+vim.api.nvim_create_autocmd('TextYankPost', {
+  group = vim.api.nvim_create_augroup('highlight_on_yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank {
+      higroup = 'IncSearch',
+      timeout = 300,
+      on_macro = true
+    }
+  end
+})

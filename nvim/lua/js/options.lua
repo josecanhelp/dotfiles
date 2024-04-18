@@ -40,4 +40,3 @@ vim.opt.smartindent = true
 -- vim.opt.titlestring = 'vim (' .. vim.fn.substitute(vim.fn.getcwd(), '^.*/', '', '') .. ')'
 vim.opt.exrc = true
 vim.opt.secure = true
-

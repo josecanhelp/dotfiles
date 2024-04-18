@@ -4,7 +4,6 @@
 
 return {
   intelephense = true,
-  -- phpactor = true,
   html = {
     filetypes = { 'html', 'blade', 'antlers' },
   },
@@ -20,20 +19,10 @@ return {
   lua_ls = {
     settings = {
       Lua = {
-        -- runtime = {
-        --   version = 'LuaJIT',
-        --   path = vim.split(package.path, ';'),
-        -- },
         diagnostics = {
           globals = { 'vim', 'Ray', 'hs', 'spoon' },
           disable = { "lowercase-global" },
         },
-        -- workspace = {
-        --   library = {
-        --     [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-        --     [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-        --   },
-        -- },
       },
     },
   },
