@@ -1,3 +1,5 @@
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # ------------------------------------------------------------------------------
 # Zshrc
 # ------------------------------------------------------------------------------
@@ -24,13 +26,14 @@ export PATH=${PATH}:/usr/local/sbin
 export PATH=${PATH}:/usr/sbin
 export PATH=${PATH}:~/.composer/vendor/bin
 export PATH=${PATH}:~/.dotfiles/bin
-export PATH=${PATH}:~/.dotfiles/bin/apache-maven-3.9.6/bin
+export PATH=${PATH}:~/.dotfiles/bin/apache-maven-3.9.9/bin
 export PATH=${PATH}:~/.dotfiles/bin/jdt-java-lang-server/bin
 export PATH=${PATH}:~/.local/bin
 export PATH=${PATH}:~/.rbenv/versions/bin
 export PATH=${PATH}:~/nvim-osx64/bin
 export PATH=${PATH}:/opt/homebrew/opt/node@18/bin
 export PATH=${PATH}:~/go/bin
+export PATH=${PATH}:/opt/homebrew/opt/mysql-client/bin
 
 # ------------------------------------------------------------------------------
 # General Settings
@@ -157,13 +160,13 @@ if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
 fi
 
 # Auto-completion
-[[ $- == *i* ]] && source "/opt/homebrew/Cellar/fzf/0.49.0/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "/opt/homebrew/Cellar/fzf/0.55.0/shell/completion.zsh" 2> /dev/null
 
 # GitHub CLI completion
 # eval "$(gh completion -s zsh)"
 
 # Key bindings
-source "/opt/homebrew/Cellar/fzf/0.49.0/shell/key-bindings.zsh"
+source "/opt/homebrew/Cellar/fzf/0.55.0/shell/key-bindings.zsh"
 
 # ------------------------------------------------------------------------------
 # Auto Suggest Settings
@@ -180,6 +183,12 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/nu
 # ------------------------------------------------------------------------------
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# ------------------------------------------------------------------------------
+# FNM Fast Node Manager
+# ------------------------------------------------------------------------------
+
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 
 # ------------------------------------------------------------------------------
@@ -202,3 +211,6 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/d
 
 # export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_351.jdk/Contents/Home"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

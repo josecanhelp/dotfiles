@@ -24,7 +24,6 @@
  :simlayer-threshold 350
  :main [{:des "Hyper Mode"
          :rules [:hyper-mode
-                 [:a :!!a] ; get app bundle ID from Alfred
                  [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
                  [:h [:hs "navigateBack"]]
                  [:j [:hs "navigateDownward"]]
@@ -44,7 +43,6 @@
                  [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
                  ; [:r :!!p] ; open Raycast
                  [:semicolon :!!p] ; open Raycast
-                 [:r :!!semicolon] ; open Alfred
                  ]}
         {:des "No Mode"
          :rules [[:!Wj [:yabai "window --focus north"]]]}
@@ -60,39 +58,17 @@
                                        :afterup {:set ["yabai-mode" 0]}}} {:set ["yabai-mode" 1]}]]}
         {:des "Yabai Mode"
          :rules [:yabai-mode
-
-                 [:r [:hs "openYabaiModal"]] ; trigger yabaiM Modal in hammerspoon
-                 [:t [:yabai "space --balance"]]
-                 ; [:t [:yabai "space --mirror x-axis"]]
-                 [:q [:yabai "space --mirror y-axis"]]
-                 [:tab [:yabai "space --rotate 90"]]
-                 [:equal_sign [:yabai "window --swap first"]]
-                 [:n [:yabai "space --create"]]
-                 [:x [:yabai "space --destroy"]]
-                 [:!Sp [:yabai "window --space prev"]]
-                 [:!Sn [:yabai "window --space next"]]
-                 [:u [:yabai "window --swap prev"]]
-                 [:d [:yabai "window --swap next"]]
-                 [:o [:yabai "window --toggle zoom-fullscreen"]]
-                 [:p [:yabai "window --toggle zoom-parent"]]
-                 [:backslash [:yabai "window --toggle split"]]
-                 [:!Sh [:yabai "window --swap west"]]
-                 [:!Sj [:yabai "window --swap south"]]
-                 [:!Sk [:yabai "window --swap north"]]
-                 [:!Sl [:yabai "window --swap east"]]
-                 [:!Rh [:yabai "window --warp west"]]
-                 [:!Rj [:yabai "window --warp south"]]
-                 [:!Rk [:yabai "window --warp north"]]
-                 [:!Rl [:yabai "window --warp east"]]
-                 [:h [:yabai "window --focus west"]]
-                 [:j [:yabai "window --focus south"]]
-                 [:k [:yabai "window --focus north"]]
-                 [:l [:yabai "window --focus east"]]]}
+                 [:m [:!OSreturn_or_enter]]
+                 [:o [:!OSd]]
+                 [:r [:!TSr]]
+                 [:l [:!COTl]]
+                 [:h [:!COTh]]
+                 ]}
         {:des "Super Duper Mode for Traversing Tmux"
          :rules [:super-duper
                  [:f [:!Ta :f :return_or_enter]] ; Find a window
-                 [:up_arrow [:hs "tabPrevious"]] ; Switch to the previous tmux window 
-                 [:down_arrow [:hs "tabNext"]] ; Switch to the next tmux window 
+                 [:up_arrow [:hs "tabPrevious"]] ; Switch to the previous tmux window
+                 [:down_arrow [:hs "tabNext"]] ; Switch to the next tmux window
                  [:j [:!Ta :j]] ; Focus on the pane below current pane
                  [:k [:!Ta :k]] ; Focus on the pane above current pane
                  [:h [:hs "superDuperLeft"]] ; Focus on the pane to the left of the current pane
@@ -123,8 +99,8 @@
                  [:i [:launch "iterm"]]
                  [:m [:launch "Messages"]]
                  [:o [:launch "Obsidian"]]
+                 [:p [:launch "Postman"]]
                  [:b [:launch "Obsidian"]]
-                 [:r [:launch "Microsoft\\ Teams"]]
+                 [:t [:launch "Microsoft\\ Teams"]]
                  [:s [:launch "Slack"]]
-                 [:t [:launch "Microsoft\\ To\\ Do"]]
                  ]}]}
