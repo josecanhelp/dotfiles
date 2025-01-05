@@ -586,8 +586,7 @@ end)
 
 hs.urlevent.bind('superDuperLeft', function()
     if appIncludes({ iterm, alacritty }) then
-        hs.eventtap.keyStroke({ 'control' }, 'a')
-        hs.eventtap.keyStroke({}, 'h')
+        hs.eventtap.keyStroke({ 'control' }, 'h')
     elseif appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd', 'option' }, 'left')
     end
@@ -595,10 +594,25 @@ end)
 
 hs.urlevent.bind('superDuperRight', function()
     if appIncludes({ iterm, alacritty }) then
-        hs.eventtap.keyStroke({ 'control' }, 'a')
-        hs.eventtap.keyStroke({}, 'l')
+        hs.eventtap.keyStroke({ 'control' }, 'l')
     elseif appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd', 'option' }, 'right')
+    end
+end)
+
+hs.urlevent.bind('superDuperUp', function()
+    if appIncludes({ iterm, alacritty }) then
+        hs.eventtap.keyStroke({ 'control' }, 'j')
+    elseif appIs(vscode) then
+        hs.eventtap.keyStroke({ 'cmd', 'option' }, 'up')
+    end
+end)
+
+hs.urlevent.bind('superDuperDown', function()
+    if appIncludes({ iterm, alacritty }) then
+        hs.eventtap.keyStroke({ 'control' }, 'k')
+    elseif appIs(vscode) then
+        hs.eventtap.keyStroke({ 'cmd', 'option' }, 'down')
     end
 end)
 

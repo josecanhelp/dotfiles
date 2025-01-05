@@ -19,8 +19,6 @@ M.setup = function()
   vim.keymap.set('n', '<Leader>ia', vim.lsp.buf.code_action, { buffer = true })
   vim.keymap.set('n', '<Leader>ie', vim.diagnostic.open_float, { buffer = true })
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = true })
-  vim.keymap.set('n', '[d', vim.lsp.diagnostic.goto_prev { buffer = true })
-  vim.keymap.set('n', ']d', vim.lsp.diagnostic.goto_next, { buffer = true })
 end
 
 return M

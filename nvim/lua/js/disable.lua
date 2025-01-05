@@ -1,7 +1,3 @@
---------------------------------------------------------------------------------
--- Disable Builtin BramVim Plugins (but RIP to an absolute legend 💔)
---------------------------------------------------------------------------------
-
 vim.g.loaded_gzip = 1
 vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
@@ -17,9 +13,3 @@ vim.g.loaded_rrhelper = 1
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrwSettings = 1
-
--- These ones seem kinda useful, but they're probably unecessary with treesitter?
--- TODO: Explore this more, and maybe I can disable these too
--- vim.g.loaded_matchit = 1
--- vim.g.loaded_matchparen = 1
-

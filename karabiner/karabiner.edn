@@ -19,8 +19,7 @@
  :devices {:hp-kb [{:product_id 4170 :vendor_id 1008}]}
  :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}
           :keypad-mode {:key :fn}}
- :simlayers {:z-mode {:key :z}
-             :launch-mode {:key :quote}}
+ :simlayers {:launch-mode {:key :quote}}
  :simlayer-threshold 350
  :main [{:des "Hyper Mode"
          :rules [:hyper-mode
@@ -44,8 +43,6 @@
                  ; [:r :!!p] ; open Raycast
                  [:semicolon :!!p] ; open Raycast
                  ]}
-        {:des "No Mode"
-         :rules [[:!Wj [:yabai "window --focus north"]]]}
         {:des "Simultaneous s + d --> Super Duper Mode"
          :rules [[{:sim [:s :d] :simo {:interrupt true
                                        :dorder :insensitive
@@ -69,27 +66,18 @@
                  [:f [:!Ta :f :return_or_enter]] ; Find a window
                  [:up_arrow [:hs "tabPrevious"]] ; Switch to the previous tmux window
                  [:down_arrow [:hs "tabNext"]] ; Switch to the next tmux window
-                 [:j [:!Ta :j]] ; Focus on the pane below current pane
-                 [:k [:!Ta :k]] ; Focus on the pane above current pane
+                 [:j [:hs "superDuperDown"]] ; Focus on the pane below current pane
+                 [:k [:hs "superDuperUp"]] ; Focus on the pane above current pane
                  [:h [:hs "superDuperLeft"]] ; Focus on the pane to the left of the current pane
                  [:l [:hs "superDuperRight"]] ; Focus on the pane to the right of the current pane
                  [:n [:!Ta :comma]] ; Quick rename tmux window
                  [:o [:!Ta :z]] ; Zoom on current pane
                  [:r [:!Ta :r]] ; Reload the Matrix
-                 ; [:hyphen [:!Ta :hyphen]] ; Split tmux window horizontally
                  [:hyphen [:hs "splitHorizontally"]] ; Split tmux window horizontally
-                 ; [:backslash [:!Ta :!Sbackslash]] ; Split tmux window vertically
                  [:backslash [:hs "splitVertically"]] ; Split tmux window vertically
                  [:delete_or_backspace [:!Ta :x :y]] ; Kill a tmux pane without asking for confirmation
                  [:y [:!Ta :!Sopen_bracket]] ; Kill a tmux pane without asking for confirmation
                  ]}
-        {:des "Z mode for Vim Motions"
-         :rules [:z-mode
-                 [:i [:hs "slack-rw-wave"]]
-                 [:k :up_arrow]
-                 [:h :left_arrow]
-                 [:l :right_arrow]
-                 [:j :down_arrow]]}
         {:des "Launch Mode for opening up Applications"
          :rules [:launch-mode
                  [:a [:launch "Alacritty"]]

@@ -90,5 +90,7 @@ vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
 vim.keymap.set('n', '<leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>')
 vim.keymap.set('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
-
 vim.keymap.set('n', '<leader>o', "<cmd>lua require('maximize').toggle()<CR>")
+
+-- nvim-tree mappings
+vim.keymap.set('n', '<leader>e', ":NvimTreeToggle<CR>")
