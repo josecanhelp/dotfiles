@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
--- Wiring Up Lsps
+-- Wiring Up LSPs
 --------------------------------------------------------------------------------
 
 local servers = require('js.lspconfig.servers') -- Check this out for individual server configs
