@@ -66,10 +66,10 @@
                  [:f [:!Ta :f :return_or_enter]] ; Find a window
                  [:up_arrow [:hs "tabPrevious"]] ; Switch to the previous tmux window
                  [:down_arrow [:hs "tabNext"]] ; Switch to the next tmux window
-                 [:j [:hs "superDuperDown"]] ; Focus on the pane below current pane
-                 [:k [:hs "superDuperUp"]] ; Focus on the pane above current pane
-                 [:h [:hs "superDuperLeft"]] ; Focus on the pane to the left of the current pane
-                 [:l [:hs "superDuperRight"]] ; Focus on the pane to the right of the current pane
+                 [:j [:hs "navigateDownward"]] ; Focus on the pane below current pane
+                 [:k [:hs "navigateUpward"]] ; Focus on the pane above current pane
+                 [:h [:hs "navigateBack"]] ; Focus on the pane to the left of the current pane
+                 [:l [:hs "navigateForward"]] ; Focus on the pane to the right of the current pane
                  [:n [:!Ta :comma]] ; Quick rename tmux window
                  [:o [:!Ta :z]] ; Zoom on current pane
                  [:r [:!Ta :r]] ; Reload the Matrix

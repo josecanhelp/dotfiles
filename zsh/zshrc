@@ -1,5 +1,6 @@
 # Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
+
 # ------------------------------------------------------------------------------
 # Zshrc
 # ------------------------------------------------------------------------------
@@ -34,29 +35,16 @@ export PATH=${PATH}:~/nvim-osx64/bin
 export PATH=${PATH}:/opt/homebrew/opt/node@18/bin
 export PATH=${PATH}:~/go/bin
 export PATH=${PATH}:/opt/homebrew/opt/mysql-client/bin
+export PATH=${PATH}:/Users/jose/dotfiles/bin/nvim-macos-arm64/bin
+export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES # Required for iterm shell integration
 
 # ------------------------------------------------------------------------------
 # General Settings
 # ------------------------------------------------------------------------------
 
 export EDITOR=nvim
-# export VISUAL=nvim
-# export PAGER=more
-export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES # Required for iterm shell integration
 export LANG=en_US.UTF-8
-# HISTSIZE=10000
-# SAVEHIST=10000
-# HISTFILE=~/.cache/zsh/history
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 export SAM_CLI_TELEMETRY=0
-
-# ------------------------------------------------------------------------------
-# AWS Code Artifact Token
-# Used to publish and pull from private NPM repositories
-# ------------------------------------------------------------------------------
-
-# export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain converge --domain-owner 420280777025 --region us-east-1 --query authorizationToken --output text`
-
 
 # ------------------------------------------------------------------------------
 # Source External ZSH Files
@@ -65,33 +53,6 @@ export SAM_CLI_TELEMETRY=0
 source $HOME/dotfiles/zsh/custom/functions.zsh
 source $HOME/dotfiles/zsh/custom/aliases.zsh
 
-# ------------------------------------------------------------------------------
-# TMUX
-# ------------------------------------------------------------------------------
-# Exit if inside Visual Studio Code's terminal or already in a tmux session
-# if [ "$TERM_PROGRAM" = "vscode" ] || [ -n "$TMUX" ]; then
-#   exit 0
-# fi
-
-# # Attempt to list tmux sessions. If successful, prompt user to select one, else create a new one.
-# if tmux ls 2>/dev/null; then
-#   echo "Enter the name of the tmux session to attach to (or press Enter to select the first one):"
-#   read -r tmux_session
-#   # If user did not enter a name, select the first session automatically
-#   if [ -z "$tmux_session" ]; then
-#     tmux_session=$(tmux ls | cut -d: -f1 | head -n1)
-#   fi
-#   tmux attach -t "$tmux_session" 2>/dev/null || tmux new -s "$tmux_session"
-# else
-#   echo "No existing tmux sessions. Creating a new one."
-#   # Prompt for session name in case of creating a new one
-#   read -r tmux_session
-#   if [ -z "$tmux_session" ]; then
-#     # Default session name if none is provided
-#     tmux_session="default"
-#   fi
-#   tmux new -s "$tmux_session"
-# fi
 # ------------------------------------------------------------------------------
 # Auto-Tab / Completion
 # ------------------------------------------------------------------------------
@@ -162,9 +123,6 @@ fi
 # Auto-completion
 [[ $- == *i* ]] && source "/opt/homebrew/Cellar/fzf/0.57.0/shell/completion.zsh" 2> /dev/null
 
-# GitHub CLI completion
-# eval "$(gh completion -s zsh)"
-
 # Key bindings
 source "/opt/homebrew/Cellar/fzf/0.57.0/shell/key-bindings.zsh"
 
@@ -197,17 +155,8 @@ eval "$(fnm env --use-on-cd --shell zsh)"
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
 
-# source $HOME/dotfiles/zsh/custom/artisan.plugin.zsh
-
 # Source syntax highlighting plugin
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-
-
-# tabtab source for packages
-# uninstall by removing these lines
-# [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
-
-# source /Users/jose/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 # export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_351.jdk/Contents/Home"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"

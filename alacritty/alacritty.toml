@@ -31,4 +31,3 @@ y = 0
 [shell]
 program = "/bin/zsh"
 args = ["-l", "-c", "tmux attach || tmux"]
-
