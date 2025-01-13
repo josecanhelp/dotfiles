@@ -37,6 +37,8 @@ export PATH=${PATH}:~/go/bin
 export PATH=${PATH}:/opt/homebrew/opt/mysql-client/bin
 export PATH=${PATH}:/Users/jose/dotfiles/bin/nvim-macos-arm64/bin
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES # Required for iterm shell integration
+export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
+
 
 # ------------------------------------------------------------------------------
 # General Settings
