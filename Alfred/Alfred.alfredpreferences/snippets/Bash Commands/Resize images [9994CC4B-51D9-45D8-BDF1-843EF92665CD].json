@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "sips -Z 500 *.png",
-    "dontautoexpand" : true,
-    "uid" : "9994CC4B-51D9-45D8-BDF1-843EF92665CD",
-    "name" : "Resize images",
-    "keyword" : "resize images sips"
-  }
-}

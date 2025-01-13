@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "for f in * ; do mv -- \"$f\" \"{cursor}_$f\" ; done",
-    "dontautoexpand" : true,
-    "uid" : "22B57255-968E-497B-A389-3A3A9F326B9C",
-    "name" : "Prefix files",
-    "keyword" : ">prefix"
-  }
-}

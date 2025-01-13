@@ -1,8 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "vim ~\/dotfiles\/zsh\/custom\/functions.zsh",
-    "uid" : "8DC311FC-6421-489C-A26C-858464981F68",
-    "name" : "Edit My ZSH Functions",
-    "keyword" : "::functions"
-  }
-}

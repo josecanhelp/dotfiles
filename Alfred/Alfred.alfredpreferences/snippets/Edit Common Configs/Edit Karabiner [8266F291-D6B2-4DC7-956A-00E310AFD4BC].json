@@ -1,8 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "vim ~\/.config\/karabiner.edn",
-    "uid" : "8266F291-D6B2-4DC7-956A-00E310AFD4BC",
-    "name" : "Edit Karabiner",
-    "keyword" : "::k"
-  }
-}

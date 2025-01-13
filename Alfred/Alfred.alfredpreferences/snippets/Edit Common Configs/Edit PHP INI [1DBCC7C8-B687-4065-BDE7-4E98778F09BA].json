@@ -1,8 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "vim $(getPhpIni)",
-    "uid" : "1DBCC7C8-B687-4065-BDE7-4E98778F09BA",
-    "name" : "Edit PHP INI",
-    "keyword" : "::ini"
-  }
-}

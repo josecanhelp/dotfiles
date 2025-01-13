@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "identify *searchterm{cursor}*",
-    "dontautoexpand" : true,
-    "uid" : "BB826C0D-D332-4A24-92C1-D91C974D29F4",
-    "name" : "Get image dimensions",
-    "keyword" : ">dimensions"
-  }
-}

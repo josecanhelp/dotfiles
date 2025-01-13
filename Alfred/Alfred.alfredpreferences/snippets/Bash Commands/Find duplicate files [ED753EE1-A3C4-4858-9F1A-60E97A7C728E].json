@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "fdupes -r .",
-    "dontautoexpand" : true,
-    "uid" : "ED753EE1-A3C4-4858-9F1A-60E97A7C728E",
-    "name" : "Find duplicate files",
-    "keyword" : ">finddupes"
-  }
-}

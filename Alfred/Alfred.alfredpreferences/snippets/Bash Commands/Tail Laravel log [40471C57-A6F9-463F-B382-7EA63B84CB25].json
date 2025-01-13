@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "tail -F -n 200 storage\/logs\/laravel*.log",
-    "dontautoexpand" : true,
-    "uid" : "40471C57-A6F9-463F-B382-7EA63B84CB25",
-    "name" : "Tail Laravel log",
-    "keyword" : "llog"
-  }
-}

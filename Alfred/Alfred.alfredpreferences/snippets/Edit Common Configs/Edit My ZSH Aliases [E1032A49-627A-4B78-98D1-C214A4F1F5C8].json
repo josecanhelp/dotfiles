@@ -1,8 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "vim ~\/dotfiles\/zsh\/custom\/aliases.zsh",
-    "uid" : "E1032A49-627A-4B78-98D1-C214A4F1F5C8",
-    "name" : "Edit My ZSH Aliases",
-    "keyword" : "::alias"
-  }
-}

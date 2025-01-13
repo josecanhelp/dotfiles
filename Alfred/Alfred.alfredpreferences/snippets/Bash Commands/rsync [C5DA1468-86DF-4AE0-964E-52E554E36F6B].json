@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "rsync -azvP --dry-run --delete --exclude 'Folder' \/local\/folder\/ \/target\/folder\/",
-    "dontautoexpand" : true,
-    "uid" : "C5DA1468-86DF-4AE0-964E-52E554E36F6B",
-    "name" : "rsync",
-    "keyword" : "rsync"
-  }
-}

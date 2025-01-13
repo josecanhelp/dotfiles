@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "find . -type f -name \"*.ext\" | xargs sed -i '' 's\/these code\/this code\/g'",
-    "dontautoexpand" : true,
-    "uid" : "6BF281C0-3435-4A18-A712-F7BEF349222D",
-    "name" : "Find & replace in files",
-    "keyword" : ">findreplace"
-  }
-}

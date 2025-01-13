@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "composer create-project --prefer-dist laravel\/laravel <myapp>",
-    "dontautoexpand" : true,
-    "uid" : "35665A7F-EAF0-4353-9FE9-9943B6409A3F",
-    "name" : "Create Laravel project",
-    "keyword" : "laravelnew"
-  }
-}

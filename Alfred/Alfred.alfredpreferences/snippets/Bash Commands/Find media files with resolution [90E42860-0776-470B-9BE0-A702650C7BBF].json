@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "#!\/bin\/sh\n\nif [ -z $1 ]; then\n\t# Find files that haven't been marked with any resolution\n\tfind . -type f \\( -name '*.avi' -or -name '*.m4v' -or -name '*.mkv' -or -name '*.mp4' \\) | egrep -v \"(\\[\\d+p)\"\nelse\n\tfind . -type f \\( -name '*.avi' -or -name '*.m4v' -or -name '*.mkv' -or -name '*.mp4' \\) | grep \"$1\"\nfi\n",
-    "dontautoexpand" : true,
-    "uid" : "90E42860-0776-470B-9BE0-A702650C7BBF",
-    "name" : "Find media files with resolution",
-    "keyword" : "findresolution"
-  }
-}

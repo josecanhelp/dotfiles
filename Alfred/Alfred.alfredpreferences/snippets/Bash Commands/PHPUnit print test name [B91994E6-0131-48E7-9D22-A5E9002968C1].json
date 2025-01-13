@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "phpunit --testdox",
-    "dontautoexpand" : true,
-    "uid" : "B91994E6-0131-48E7-9D22-A5E9002968C1",
-    "name" : "PHPUnit print test name",
-    "keyword" : "phpunit -v"
-  }
-}

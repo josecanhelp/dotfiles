@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "sudo lsof -nP -i4TCP:9000 | grep LISTEN",
-    "dontautoexpand" : true,
-    "uid" : "A3A681C0-D151-418D-8308-442034AD6DCE",
-    "name" : "Find port listener",
-    "keyword" : ">port"
-  }
-}

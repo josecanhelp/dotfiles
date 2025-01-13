@@ -13,10 +13,8 @@
 ; ## | optional any
 
 {:templates {:launch "open -a %s"
-             :yabai "/usr/local/bin/yabai -m %s"
              :hs "open -g hammerspoon://%s"}
  :applications {:terminal ["^com\\.googlecode\\.iterm2$"]}
- :devices {:hp-kb [{:product_id 4170 :vendor_id 1008}]}
  :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}
           :keypad-mode {:key :fn}}
  :simlayers {:launch-mode {:key :quote}}
@@ -48,19 +46,6 @@
                                        :dorder :insensitive
                                        :uorder :insensitive
                                        :afterup {:set ["super-duper" 0]}}} {:set ["super-duper" 1]}]]}
-        {:des "Simultaneous w + e --> Yabai Mode"
-         :rules [[{:sim [:w :e] :simo {:interrupt true
-                                       :dorder :insensitive
-                                       :uorder :insensitive
-                                       :afterup {:set ["yabai-mode" 0]}}} {:set ["yabai-mode" 1]}]]}
-        {:des "Yabai Mode"
-         :rules [:yabai-mode
-                 [:m [:!OSreturn_or_enter]]
-                 [:o [:!OSd]]
-                 [:r [:!TSr]]
-                 [:l [:!COTl]]
-                 [:h [:!COTh]]
-                 ]}
         {:des "Super Duper Mode for Traversing Tmux"
          :rules [:super-duper
                  [:f [:!Ta :f :return_or_enter]] ; Find a window
@@ -82,9 +67,7 @@
          :rules [:launch-mode
                  [:a [:launch "Alacritty"]]
                  [:c [:launch "Visual\\ Studio\\ Code"]]
-                 [:d [:launch "Discord"]]
                  [:f [:launch "Brave\\ Browser"]]
-                 [:i [:launch "iterm"]]
                  [:m [:launch "Messages"]]
                  [:o [:launch "Obsidian"]]
                  [:p [:launch "Postman"]]

@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "ln -s <realfile> <symlink>",
-    "dontautoexpand" : true,
-    "uid" : "BA1F9E59-7986-4F1A-8911-2AD8123F0972",
-    "name" : "Symlink",
-    "keyword" : ">symlink"
-  }
-}

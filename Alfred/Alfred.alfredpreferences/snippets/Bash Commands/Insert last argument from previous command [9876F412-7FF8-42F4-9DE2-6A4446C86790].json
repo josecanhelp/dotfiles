@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "⌥ + .",
-    "dontautoexpand" : true,
-    "uid" : "9876F412-7FF8-42F4-9DE2-6A4446C86790",
-    "name" : "Insert last argument from previous command",
-    "keyword" : ""
-  }
-}

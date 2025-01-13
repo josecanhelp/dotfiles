@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "find . -name '.DS_Store' -type f -delete",
-    "dontautoexpand" : true,
-    "uid" : "99A0A2CE-CFED-479D-B3EE-810C298E2FEC",
-    "name" : "Delete .DS_Store files (recursively)",
-    "keyword" : "rmdsstore"
-  }
-}

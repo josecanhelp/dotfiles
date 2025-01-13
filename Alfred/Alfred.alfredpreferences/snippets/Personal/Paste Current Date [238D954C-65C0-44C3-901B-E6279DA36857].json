@@ -1,8 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "{date:short}",
-    "uid" : "238D954C-65C0-44C3-901B-E6279DA36857",
-    "name" : "Paste Current Date",
-    "keyword" : "::date"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "sudo mtr -rw sarabine.com",
-    "dontautoexpand" : true,
-    "uid" : "A133C5BB-AB1D-4B49-9721-18C3BB9935CB",
-    "name" : "MTR Packet Loss",
-    "keyword" : ">mtr"
-  }
-}

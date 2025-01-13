@@ -1,8 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "source ~\/.zshrc",
-    "uid" : "21D58266-A33B-4E81-A94F-137528364824",
-    "name" : "Re-source ZSHRC",
-    "keyword" : "::source"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "mysql -uroot -e 'set global general_log = on;'\nsudo tail -f \/var\/lib\/mysql\/local.log\n\n# mysql -uroot -e 'set global general_log = off;'",
-    "dontautoexpand" : true,
-    "uid" : "61F2862A-ECD1-4873-8190-5F0B43184D3A",
-    "name" : "MariaDB Query Log",
-    "keyword" : "querylog"
-  }
-}

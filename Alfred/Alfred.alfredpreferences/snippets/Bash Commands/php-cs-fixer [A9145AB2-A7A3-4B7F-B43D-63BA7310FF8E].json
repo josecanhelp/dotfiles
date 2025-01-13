@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "php-cs-fixer fix folder\/ --level=psr2 --fixers=single_quote,newline_after_open_tag,blankline_after_open_tag,short_array_syntax,function_typehint_space,remove_leading_slash_use,remove_lines_between_uses,whitespacy_lines",
-    "dontautoexpand" : true,
-    "uid" : "A9145AB2-A7A3-4B7F-B43D-63BA7310FF8E",
-    "name" : "php-cs-fixer",
-    "keyword" : "php-cs-fixer"
-  }
-}
