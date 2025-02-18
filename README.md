@@ -16,10 +16,6 @@ If you happen to copy anything from this repository or if you are inspired by th
 
 I use the [dotbot](https://github.com/anishathalye/dotbot) framework to manage symlinks and new system initialization. I highly recommned using this framework because it mostly stays out of my way, provides an easy to understand yaml config file, and I don't have to maintain my own scripts.
 
-## Brew
-
-New `brewfile` is generated using `brew bundle dump`. However, I do need to manualy enter the `mas`-related apps since they were not originally installed via brew bundle.
-
 ## Vim
 
 ### Managing Plugins
