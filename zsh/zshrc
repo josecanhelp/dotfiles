@@ -12,6 +12,12 @@
 # zmodload zsh/zprof
 
 # ------------------------------------------------------------------------------
+# Sensitive Values
+# ------------------------------------------------------------------------------
+[ -f ~/.secrets ] && source ~/.secrets
+
+
+# ------------------------------------------------------------------------------
 # Paths
 # ------------------------------------------------------------------------------
 
@@ -173,3 +179,9 @@ export PATH="/Users/jose/Library/Application Support/Herd/bin/":$PATH
 
 # Herd injected PHP 8.2 configuration.
 export HERD_PHP_82_INI_SCAN_DIR="/Users/jose/Library/Application Support/Herd/config/php/82/"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/jose/dotfiles/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jose/dotfiles/bin/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/jose/dotfiles/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jose/dotfiles/bin/google-cloud-sdk/completion.zsh.inc'; fi

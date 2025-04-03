@@ -364,18 +364,6 @@ spoon.ModalMgr.supervisor:enter()
 -- depending on the app in focus at the time of invocation.
 ----------------------------------------------------------------------------------------------------
 
-hs.urlevent.bind('debug-menu', function()
-    if appIs(simulator) then
-        hs.eventtap.keyStroke({ 'ctrl, cmd' }, 'z')
-    end
-end)
-
-hs.urlevent.bind('expose', function()
-    if appIs(simulator) then
-        hs.eventtap.keyStroke({ 'ctrl, shift, cmd' }, 'h')
-    end
-end)
-
 hs.urlevent.bind('reloadHammerspoon', function()
     hs.reload()
 end)
@@ -387,16 +375,6 @@ hs.urlevent.bind('createAnything', function()
         hs.eventtap.keyStroke({ 'cmd' }, 'n')
     elseif appIs(brave) then
         hs.eventtap.keyStroke({ 'cmd' }, 't')
-    end
-end)
-
-hs.urlevent.bind('deleteAnything', function()
-    if appIs(bear) then
-        -- Delete the currently opened note and go back to default screen
-        hs.eventtap.keyStroke({ 'shift', 'cmd', 'option' }, 'i')
-        local noteId = hs.pasteboard.getContents();
-        hs.urlevent.openURL('bear://x-callback-url/trash?id=' .. noteId)
-        hs.urlevent.openURL('bear://x-callback-url/search')
     end
 end)
 
@@ -413,8 +391,6 @@ hs.urlevent.bind('openAnything', function()
         hs.eventtap.keyStroke({ 'cmd' }, 'e')
     elseif appIs(eclipse) then
         hs.eventtap.keyStroke({ 'cmd, shift' }, 'r')
-    elseif appIs(simulator) then
-        hs.eventtap.keyStroke({ 'ctrl, shift, cmd' }, 'h')
     elseif appIncludes({ discord, superhuman }) then
         hs.eventtap.keyStroke({ 'cmd' }, 'k')
     elseif appIncludes({ slack, monday }) then
@@ -427,7 +403,9 @@ hs.urlevent.bind('openAnything', function()
     elseif appIncludes({ omnifocus, obsidian }) then
         hs.eventtap.keyStroke({ 'cmd' }, 'o')
     elseif appIs(bear) then
-        hs.eventtap.keystroke({ 'cmd', 'shift' }, 'f')
+        hs.eventtap.keyStroke({ 'cmd', 'shift' }, 'f')
+    elseif appIs(intellij) then
+        hs.eventtap.keyStroke({ 'cmd' }, 't')
     elseif true then
         bundleId = getBundleId();
         hs.notify.new(function() hs.pasteboard.setContents(bundleId) end,
@@ -541,6 +519,8 @@ hs.urlevent.bind('openCommandPalette', function()
         hs.eventtap.keyStroke({}, '/')
     elseif appIncludes({ obsidian }) then
         hs.eventtap.keyStroke({ 'cmd' }, 'p')
+    elseif appIs(intellij) then
+        hs.eventtap.keyStroke({ 'cmd', 'shift' }, 'a')
     end
 end)
 

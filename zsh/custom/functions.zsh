@@ -52,6 +52,11 @@ timezsh() {
   for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
 }
 
+codeartifact() {
+  export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain converge --domain-owner 420280777025 --region us-east-1 --query authorizationToken --output text)
+  echo "CodeArtifact token refreshed."
+}
+
 yabaion() {
     brew services start yabai
     yabai -m config window_opacity on

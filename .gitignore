@@ -10,3 +10,4 @@ tmux/plugins/*
 tmux/resurrect
 vim/.netrwhist
 vim/plugged
+bin/google-cloud-sdk/*

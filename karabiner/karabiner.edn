@@ -28,17 +28,14 @@
                  [:l [:hs "navigateForward"]]
                  [:m [:hs "toggleSidebar"]]
                  [:n [:hs "createAnything"]]
-                 [:delete_or_backspace [:hs "deleteAnything"]]
                  [:o [:hs "openAnything"]]
                  [:p [:hs "openProjectSelector"]]
                  [:q :!Cw] ; Close the current window
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
                  [:w [:hs "openWindowModal"]] ; Window Management
                  [:y [:hs "copyAnything"]]
-                 ; [:r :!SCf11] ; Specific to Eclipse (RUN)
                  [:quote [:hs "openCommandPalette"]]
                  [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
-                 ; [:r :!!p] ; open Raycast
                  [:semicolon :!!p] ; open Raycast
                  ]}
         {:des "Simultaneous s + d --> Super Duper Mode"
