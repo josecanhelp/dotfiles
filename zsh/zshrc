@@ -38,7 +38,6 @@ export PATH=${PATH}:~/.dotfiles/bin/jdt-java-lang-server/bin
 export PATH=${PATH}:~/.local/bin
 export PATH=${PATH}:~/.rbenv/versions/bin
 export PATH=${PATH}:~/nvim-osx64/bin
-export PATH=${PATH}:/opt/homebrew/opt/node@18/bin
 export PATH=${PATH}:~/go/bin
 export PATH=${PATH}:/opt/homebrew/opt/mysql-client/bin
 export PATH=${PATH}:/Users/jose/dotfiles/bin/nvim-macos-arm64/bin
@@ -149,13 +148,6 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/nu
 # ------------------------------------------------------------------------------
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# ------------------------------------------------------------------------------
-# FNM Fast Node Manager
-# ------------------------------------------------------------------------------
-
-eval "$(fnm env --use-on-cd --shell zsh)"
-
 
 # ------------------------------------------------------------------------------
 # Auto Suggest Settings (Needs to be last)
