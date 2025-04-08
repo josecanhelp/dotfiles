@@ -11,16 +11,35 @@
 ; R  | right_shift
 ; !! | mandatory command + control + optional + shift (hyper)
 ; ## | optional any
-
 {:templates {:launch "open -a %s"
              :hs "open -g hammerspoon://%s"}
  :applications {:terminal ["^com\\.googlecode\\.iterm2$"]}
- :layers {:hyper-mode {:key :caps_lock :alone {:key :escape}}
+ :layers {:hyper-mode-escape {:key :escape :alone {:key :escape}}
+          :hyper-mode-caps {:key :caps_lock :alone {:key :escape}}
           :keypad-mode {:key :fn}}
  :simlayers {:launch-mode {:key :quote}}
  :simlayer-threshold 350
- :main [{:des "Hyper Mode"
-         :rules [:hyper-mode
+ :main [{:des "Hyper Mode (Escape Key)"
+         :rules [:hyper-mode-escape
+                 [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
+                 [:h [:hs "navigateBack"]]
+                 [:j [:hs "navigateDownward"]]
+                 [:k [:hs "navigateUpward"]]
+                 [:l [:hs "navigateForward"]]
+                 [:m [:hs "toggleSidebar"]]
+                 [:n [:hs "createAnything"]]
+                 [:o [:hs "openAnything"]]
+                 [:p [:hs "openProjectSelector"]]
+                 [:q :!Cw] ; Close the current window
+                 [:v :!Oj] ; Show all open apps in hammerspoon overlay
+                 [:w [:hs "openWindowModal"]] ; Window Management
+                 [:y [:hs "copyAnything"]]
+                 [:quote [:hs "openCommandPalette"]]
+                 [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
+                 [:semicolon :!!p] ; open Raycast
+                 ]}
+        {:des "Hyper Mode (Caps Lock Key)"
+         :rules [:hyper-mode-caps
                  [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
                  [:h [:hs "navigateBack"]]
                  [:j [:hs "navigateDownward"]]
@@ -70,5 +89,4 @@
                  [:p [:launch "Postman"]]
                  [:b [:launch "Obsidian"]]
                  [:t [:launch "Microsoft\\ Teams"]]
-                 [:s [:launch "Slack"]]
-                 ]}]}
+                 [:s [:launch "Slack"]]]}]}
