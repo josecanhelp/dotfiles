@@ -23,6 +23,7 @@
          :rules [:hyper-mode-escape
                  [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
                  [:h [:hs "navigateBack"]]
+                 [:i [:!COi]]
                  [:j [:hs "navigateDownward"]]
                  [:k [:hs "navigateUpward"]]
                  [:l [:hs "navigateForward"]]
@@ -31,6 +32,8 @@
                  [:o [:hs "openAnything"]]
                  [:p [:hs "openProjectSelector"]]
                  [:q :!Cw] ; Close the current window
+                 [:f [:hs "openFocusModal"]] ; Focus Management
+                 [:s [:hs "openSpacesModal"]] ; Spaces Management
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
                  [:w [:hs "openWindowModal"]] ; Window Management
                  [:y [:hs "copyAnything"]]
@@ -50,6 +53,8 @@
                  [:o [:hs "openAnything"]]
                  [:p [:hs "openProjectSelector"]]
                  [:q :!Cw] ; Close the current window
+                 [:f [:hs "openFocusModal"]] ; Focus Management
+                 [:s [:hs "openSpacesModal"]] ; Spaces Management
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
                  [:w [:hs "openWindowModal"]] ; Window Management
                  [:y [:hs "copyAnything"]]
@@ -89,4 +94,5 @@
                  [:p [:launch "Postman"]]
                  [:b [:launch "Obsidian"]]
                  [:t [:launch "Microsoft\\ Teams"]]
-                 [:s [:launch "Slack"]]]}]}
+                 [:s [:launch "Slack"]]]}
+]}

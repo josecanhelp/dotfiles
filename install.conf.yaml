@@ -15,6 +15,7 @@
       recursive: true
 - link:
     ~/.bin: bin/
+    ~/.amethyst.yml: amethyst/amethyst.yml
     ~/.config/alacritty/alacritty.toml: alacritty/alacritty.toml
     ~/.config/karabiner.edn: karabiner/karabiner.edn
     ~/.config/karabiner/karabiner.edn: karabiner/karabiner.edn

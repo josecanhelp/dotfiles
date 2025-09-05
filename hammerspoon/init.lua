@@ -65,10 +65,37 @@ for _, v in pairs(hspoon_list) do
 end
 
 ----------------------------------------------------------------------------------------------------
--- Add a menubar item to track currently enabled Mode (Modal)
+-- Add menubar items to track currently enabled Mode (Modal) and current space
 ----------------------------------------------------------------------------------------------------
 
 local modeMenuBar = hs.menubar.new():setTitle('Normal');
+local spaceMenuBar = hs.menubar.new():setTitle('Space 1');
+
+-- Function to update space indicator
+local function updateSpaceIndicator()
+    local currentSpace = hs.spaces.focusedSpace()
+    local allSpaces = hs.spaces.allSpaces()
+    local spaceIndex = 1
+
+    -- Find the index of the current space
+    for screen, screenSpaces in pairs(allSpaces) do
+        for i, spaceId in ipairs(screenSpaces) do
+            if spaceId == currentSpace then
+                spaceIndex = i
+                break
+            end
+        end
+    end
+
+    spaceMenuBar:setTitle('Space ' .. spaceIndex)
+end
+
+-- Update space indicator on startup
+updateSpaceIndicator()
+
+-- Watch for space changes
+local spaceWatcher = hs.spaces.watcher.new(updateSpaceIndicator)
+spaceWatcher:start()
 
 ----------------------------------------------------------------------------------------------------
 -- App Modal
@@ -135,6 +162,330 @@ end
 hs.urlevent.bind('openAppModal', function()
     spoon.ModalMgr:deactivateAll()
     spoon.ModalMgr:activate({ "appM" }, "#0000FF", false)
+end)
+
+----------------------------------------------------------------------------------------------------
+-- Focus Modal
+--
+-- This modal is used to focus on windows in different directions using vim keybindings.
+----------------------------------------------------------------------------------------------------
+
+-- Window highlighting using canvas rectangles
+local windowBorders = {}
+
+local function hideWindowBorders()
+    for _, border in ipairs(windowBorders) do
+        if border then
+            border:hide()
+            border:delete()
+        end
+    end
+    windowBorders = {}
+    print("Cleared all window borders")
+end
+
+local function showWindowBorder(window)
+    hideWindowBorders()
+    local frame = window:frame()
+    local borderWidth = 4
+
+    print("Showing border for window:", window:title())
+    print("Window frame:", frame.x, frame.y, frame.w, frame.h)
+
+    -- Create 4 rectangles for top, bottom, left, right borders
+    local borders = {
+        -- Top border
+        hs.canvas.new({x = frame.x - borderWidth, y = frame.y - borderWidth,
+                      w = frame.w + 2*borderWidth, h = borderWidth}),
+        -- Bottom border
+        hs.canvas.new({x = frame.x - borderWidth, y = frame.y + frame.h,
+                      w = frame.w + 2*borderWidth, h = borderWidth}),
+        -- Left border
+        hs.canvas.new({x = frame.x - borderWidth, y = frame.y,
+                      w = borderWidth, h = frame.h}),
+        -- Right border
+        hs.canvas.new({x = frame.x + frame.w, y = frame.y,
+                      w = borderWidth, h = frame.h})
+    }
+
+    for i, border in ipairs(borders) do
+        border:appendElements({
+            type = "rectangle",
+            fillColor = {red = 0.8, green = 0.2, blue = 0.2, alpha = 0.8},
+            strokeColor = {red = 0.8, green = 0.2, blue = 0.2, alpha = 0.8}
+        })
+        border:show()
+        table.insert(windowBorders, border)
+        print("Created border", i, "at", border:frame().x, border:frame().y)
+    end
+end
+
+-- Directional window focusing
+local function focusWindowInDirection(direction)
+    local currentWindow = hs.window.focusedWindow()
+    if not currentWindow then
+        print("No current window focused")
+        return
+    end
+
+    local targetWindows = currentWindow[direction](currentWindow)
+    print("Direction:", direction, "Found windows:", targetWindows and #targetWindows or 0)
+
+    if targetWindows and #targetWindows > 0 then
+        targetWindows[1]:focus()
+        print("Focused window:", targetWindows[1]:title())
+        -- Show border around the newly focused window
+        showWindowBorder(targetWindows[1])
+        -- Stay in focus mode - don't deactivate modal
+    else
+        print("No target window found in direction:", direction)
+    end
+end
+
+-- Modal setup - now that border functions are defined
+spoon.ModalMgr:new("focusM")
+local focusModal = spoon.ModalMgr.modal_list["focusM"]
+
+local focusModeText = hs.styledtext.new("Focus", {
+    color = { hex = "#FFFFFF", alpha = 1 },
+    backgroundColor = { hex = "#8B4513", alpha = 1 },
+})
+focusModal.entered = function()
+    activeModal = 'focusM'
+    modeMenuBar:setTitle(focusModeText)
+    -- Highlight the currently focused window when entering focus mode
+    local currentWindow = hs.window.focusedWindow()
+    if currentWindow then
+        showWindowBorder(currentWindow)
+    end
+end
+focusModal.exited = function()
+    activeModal = nil
+    modeMenuBar:setTitle('Normal')
+    hideWindowBorders()
+end
+
+-- Modal bindings
+focusModal:bind('', 'escape', 'Deactivate focusM', function() spoon.ModalMgr:deactivate({ "focusM" }) end)
+focusModal:bind('', 'Q', 'Deactivate focusM', function() spoon.ModalMgr:deactivate({ "focusM" }) end)
+focusModal:bind('', 'return', 'Deactivate focusM', function() spoon.ModalMgr:deactivate({ "focusM" }) end)
+focusModal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
+
+focusModal:bind('', 'h', 'Focus Left Window', function()
+    focusWindowInDirection('windowsToWest')
+end)
+focusModal:bind('', 'j', 'Focus Down Window', function()
+    focusWindowInDirection('windowsToSouth')
+end)
+focusModal:bind('', 'k', 'Focus Up Window', function()
+    focusWindowInDirection('windowsToNorth')
+end)
+focusModal:bind('', 'l', 'Focus Right Window', function()
+    focusWindowInDirection('windowsToEast')
+end)
+focusModal:bind('', 'space', 'Swap Focused with Main Window', function()
+    hs.eventtap.keyStroke({'shift', 'option'}, 'return')
+end)
+
+-- URL event to activate focus modal
+hs.urlevent.bind('openFocusModal', function()
+    spoon.ModalMgr:deactivateAll()
+    spoon.ModalMgr:activate({ "focusM" }, "#8B4513", false)
+end)
+
+----------------------------------------------------------------------------------------------------
+-- Spaces Modal
+--
+-- This modal is used to navigate between macOS spaces using vim keybindings and number keys.
+----------------------------------------------------------------------------------------------------
+
+-- Space navigation functions using hs.spaces API
+local function getAllSpacesForScreen()
+    local screen = hs.screen.mainScreen()
+    local screenUUID = screen:getUUID()
+    return hs.spaces.allSpaces()[screenUUID] or {}
+end
+
+local function getCurrentSpaceIndex()
+    local currentSpace = hs.spaces.focusedSpace()
+    local allSpaces = getAllSpacesForScreen()
+
+    for i, spaceId in ipairs(allSpaces) do
+        if spaceId == currentSpace then
+            return i
+        end
+    end
+    return 1
+end
+
+local function switchToSpace(spaceNumber)
+    print("Switching to space:", spaceNumber)
+    local allSpaces = getAllSpacesForScreen()
+    local targetSpaceId = allSpaces[tonumber(spaceNumber)]
+
+    if targetSpaceId then
+        hs.spaces.gotoSpace(targetSpaceId)
+        print("Switched to space", spaceNumber)
+    else
+        print("Space", spaceNumber, "does not exist")
+    end
+
+    -- Update space indicator after a brief delay
+    hs.timer.doAfter(0.2, updateSpaceIndicator)
+end
+
+local function moveToAdjacentSpace(direction)
+    print("Moving to", direction, "space")
+    local currentIndex = getCurrentSpaceIndex()
+    local allSpaces = getAllSpacesForScreen()
+    local targetIndex = currentIndex
+
+    if direction == "left" then
+        targetIndex = math.max(1, currentIndex - 1)
+    elseif direction == "right" then
+        targetIndex = math.min(#allSpaces, currentIndex + 1)
+    end
+
+    if targetIndex ~= currentIndex then
+        local targetSpaceId = allSpaces[targetIndex]
+        hs.spaces.gotoSpace(targetSpaceId)
+        print("Moved from space", currentIndex, "to space", targetIndex)
+    else
+        print("Already at", direction == "left" and "first" or "last", "space")
+    end
+
+    -- Update space indicator after a brief delay
+    hs.timer.doAfter(0.2, updateSpaceIndicator)
+end
+
+-- Modal setup
+spoon.ModalMgr:new("spacesM")
+local spacesModal = spoon.ModalMgr.modal_list["spacesM"]
+
+local spacesModeText = hs.styledtext.new("Spaces", {
+    color = { hex = "#FFFFFF", alpha = 1 },
+    backgroundColor = { hex = "#800080", alpha = 1 },
+})
+spacesModal.entered = function()
+    activeModal = 'spacesM'
+    modeMenuBar:setTitle(spacesModeText)
+end
+spacesModal.exited = function()
+    activeModal = nil
+    modeMenuBar:setTitle('Normal')
+end
+
+-- Modal bindings
+spacesModal:bind('', 'escape', 'Deactivate spacesM', function() spoon.ModalMgr:deactivate({ "spacesM" }) end)
+spacesModal:bind('', 'return', 'Deactivate spacesM', function() spoon.ModalMgr:deactivate({ "spacesM" }) end)
+spacesModal:bind('', 'tab', 'Toggle Cheatsheet', function() spoon.ModalMgr:toggleCheatsheet() end)
+
+-- Directional space navigation
+spacesModal:bind('', 'h', 'Move to Left Space', function()
+    moveToAdjacentSpace("left")
+end)
+spacesModal:bind('', 'l', 'Move to Right Space', function()
+    moveToAdjacentSpace("right")
+end)
+
+-- Throw window left/right (using existing Amethyst shortcuts)
+spacesModal:bind('shift', 'h', 'Throw Window Left', function()
+    print("Throwing window to left space")
+    hs.eventtap.keyStroke({'option', 'shift', 'control'}, 'left')
+end)
+spacesModal:bind('shift', 'l', 'Throw Window Right', function()
+    print("Throwing window to right space")
+    hs.eventtap.keyStroke({'option', 'shift', 'control'}, 'right')
+end)
+
+-- Function to throw focused window to a space using Amethyst's built-in commands
+local function throwWindowToSpace(spaceNumber)
+    print("Throwing focused window to space:", spaceNumber)
+    local focusedWindow = hs.window.focusedWindow()
+
+    if not focusedWindow then
+        print("No focused window to move")
+        return
+    end
+
+    -- Temporarily deactivate modal to ensure keystroke reaches Amethyst
+    spoon.ModalMgr:deactivate({ "spacesM" })
+
+    -- Small delay then send Amethyst's throw-space command
+    hs.timer.doAfter(0.1, function()
+        hs.eventtap.keyStroke({'option', 'shift', 'control'}, tostring(spaceNumber))
+        print("Sent Option+Shift+Control+" .. spaceNumber .. " to throw window", focusedWindow:title())
+
+        -- Reactivate the modal after a brief delay
+        hs.timer.doAfter(0.2, function()
+            spoon.ModalMgr:activate({ "spacesM" }, "#800080", false)
+        end)
+    end)
+end
+
+-- Grow/shrink pane controls using Amethyst commands
+spacesModal:bind('', '=', 'Grow Main Pane', function()
+    print("Growing main pane")
+    hs.eventtap.keyStroke({'option', 'shift'}, 'l')
+end)
+spacesModal:bind('', '-', 'Shrink Main Pane', function()
+    print("Shrinking main pane")
+    hs.eventtap.keyStroke({'option', 'shift'}, 'h')
+end)
+
+-- Layout cycling using Amethyst commands
+spacesModal:bind('', 'space', 'Cycle Layout', function()
+    print("Cycling to next layout")
+    hs.eventtap.keyStroke({'option', 'shift'}, 'space')
+end)
+
+-- Swap window in direction using Amethyst commands
+spacesModal:bind('cmd', 'j', 'Swap Window CCW', function()
+    print("Swapping window counter-clockwise")
+    hs.eventtap.keyStroke({'option', 'shift', 'control'}, 'j')
+end)
+spacesModal:bind('cmd', 'k', 'Swap Window CW', function()
+    print("Swapping window clockwise")
+    hs.eventtap.keyStroke({'option', 'shift', 'control'}, 'k')
+end)
+
+-- Direct layout selection
+spacesModal:bind('', 'a', 'Select Tall Layout', function()
+    hs.eventtap.keyStroke({'option', 'shift'}, 'a')
+end)
+spacesModal:bind('', 's', 'Select Wide Layout', function()
+    hs.eventtap.keyStroke({'option', 'shift'}, 's')
+end)
+spacesModal:bind('', 'd', 'Select Fullscreen Layout', function()
+    hs.eventtap.keyStroke({'option', 'shift'}, 'd')
+end)
+spacesModal:bind('', 'f', 'Select Column Layout', function()
+    hs.eventtap.keyStroke({'option', 'shift'}, 'f')
+end)
+spacesModal:bind('', 'b', 'Select BSP Layout', function()
+    hs.eventtap.keyStroke({'option', 'shift'}, 'b')
+end)
+
+-- Direct space navigation by number
+local spaceNumbers = {'1', '2', '3', '4', '5', '6', '7', '8', '9'}
+for _, num in ipairs(spaceNumbers) do
+    -- Switch to space (no modifier)
+    spacesModal:bind('', num, 'Switch to Space ' .. num, function()
+        switchToSpace(num)
+        spoon.ModalMgr:deactivate({ "spacesM" })
+    end)
+
+    -- Throw window to space (with shift)
+    spacesModal:bind('shift', num, 'Throw Window to Space ' .. num, function()
+        throwWindowToSpace(num)
+        -- Don't deactivate modal so you can throw multiple windows or switch after
+    end)
+end
+
+-- URL event to activate spaces modal
+hs.urlevent.bind('openSpacesModal', function()
+    spoon.ModalMgr:deactivateAll()
+    spoon.ModalMgr:activate({ "spacesM" }, "#800080", false)
 end)
 
 ----------------------------------------------------------------------------------------------------
@@ -633,6 +984,90 @@ hs.urlevent.bind('toggleBreakTime', function()
         btNotify:send()
     end
 end)
+
+----------------------------------------------------------------------------------------------------
+-- Amethyst Window Event Integration
+--
+-- Watch for window close events and automatically trigger Amethyst's reevaluation
+-- to eliminate the delay when windows are closed and need layout adjustment
+----------------------------------------------------------------------------------------------------
+
+local function triggerAmethystReevaluation()
+    -- Trigger Amethyst's reevaluate-windows command using the configured shortcut
+    hs.eventtap.keyStroke({'cmd', 'option', 'shift', 'ctrl'}, 'z')
+end
+
+local function isAmethystManagedWindow(window)
+    if not window then return false end
+
+    local app = window:application()
+    if not app then return false end
+
+    -- Skip certain system apps that shouldn't trigger reevaluation
+    local skipApps = {
+        'Hammerspoon',
+        'Raycast',
+        'Alfred',
+        'PopClip',
+        'Bartender 4',
+        'System Preferences',
+        'Activity Monitor'
+    }
+
+    local appName = app:name()
+    for _, skipApp in ipairs(skipApps) do
+        if appName == skipApp then
+            return false
+        end
+    end
+
+    -- Only consider windows that are actually manageable by tiling window managers
+    return window:isStandard() and window:isVisible()
+end
+
+-- Track visible window count to detect changes
+local lastWindowCount = 0
+
+local function updateWindowCount()
+    local currentCount = #hs.window.visibleWindows()
+    if currentCount ~= lastWindowCount then
+        print("Window count changed from", lastWindowCount, "to", currentCount)
+        lastWindowCount = currentCount
+        -- Trigger reevaluation after a short delay
+        hs.timer.doAfter(0.2, triggerAmethystReevaluation)
+    end
+end
+
+-- Window filter to watch for window events
+local windowWatcher = hs.window.filter.new():setDefaultFilter{}
+
+windowWatcher:subscribe(hs.window.filter.windowDestroyed, function(window, appName, event)
+    print("Window destroyed:", appName)
+    updateWindowCount()
+end)
+
+windowWatcher:subscribe(hs.window.filter.windowHidden, function(window, appName, event)
+    print("Window hidden:", appName)
+    updateWindowCount()
+end)
+
+windowWatcher:subscribe(hs.window.filter.windowMinimized, function(window, appName, event)
+    print("Window minimized:", appName)
+    updateWindowCount()
+end)
+
+windowWatcher:subscribe(hs.window.filter.windowCreated, function(window, appName, event)
+    print("Window created:", appName)
+    updateWindowCount()
+end)
+
+windowWatcher:subscribe(hs.window.filter.windowVisible, function(window, appName, event)
+    print("Window visible:", appName)
+    updateWindowCount()
+end)
+
+-- Initialize the window count
+lastWindowCount = #hs.window.visibleWindows()
 
 ----------------------------------------------------------------------------------------------------
 -- Misc. Functions

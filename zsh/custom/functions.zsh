@@ -57,6 +57,50 @@ codeartifact() {
   echo "CodeArtifact token refreshed."
 }
 
+# Function to open Bitbucket URL from local git repository
+bbopen() {
+    # Check if current directory is a git repository
+    if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+        echo "Error: Not a git repository"
+        return 1
+    fi
+
+    # Get the remote URL (prioritize origin)
+    local remote_url=$(git remote get-url origin 2>/dev/null || git remote get-url $(git remote | head -n 1) 2>/dev/null)
+    
+    if [ -z "$remote_url" ]; then
+        echo "Error: No remote repository found"
+        return 1
+    fi
+
+    # Check if it's a Bitbucket URL
+    if ! echo "$remote_url" | grep -q "bitbucket"; then
+        echo "Error: Remote URL does not appear to be a Bitbucket repository"
+        return 1
+    fi
+
+    # Convert SSH URL to HTTPS URL if necessary
+    if [[ "$remote_url" == git@* ]]; then
+        # Format: git@bitbucket.org:username/repo.git
+        local domain=$(echo "$remote_url" | cut -d '@' -f 2 | cut -d ':' -f 1)
+        local path=$(echo "$remote_url" | cut -d ':' -f 2)
+        path=${path%.git}  # Remove .git suffix if present
+        remote_url="https://$domain/$path"
+    elif [[ "$remote_url" == https://* ]]; then
+        # Format: https://username@bitbucket.org/username/repo.git
+        remote_url=${remote_url%.git}  # Remove .git suffix if present
+    fi
+
+    echo "Opening Bitbucket URL: $remote_url"
+    
+    # Use the full path to the open command
+    /usr/bin/open "$remote_url" || {
+        echo "Error: Could not open URL with /usr/bin/open"
+        echo "Please open this URL manually: $remote_url"
+        return 1
+    }
+}
+
 yabaion() {
     brew services start yabai
     yabai -m config window_opacity on
