@@ -115,6 +115,10 @@ yabaioff() {
     brew services stop yabai
 }
 
+ abc() {
+    clear && docker run --rm -it -e WELCOME_TEXT="${1:-ABC}" abc
+  }
+
 _-accept-line () {
     emulate -L zsh
     local -a WORDS
