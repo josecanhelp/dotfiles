@@ -21,45 +21,45 @@
  :simlayer-threshold 350
  :main [{:des "Hyper Mode (Escape Key)"
          :rules [:hyper-mode-escape
-                 [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
-                 [:h [:hs "navigateBack"]]
+                 [:b [:hs "togglebreaktime"]] ; Toggle BreakTime on/off
+                 [:h [:hs "navigateback"]]
                  [:i [:!COi]]
-                 [:j [:hs "navigateDownward"]]
-                 [:k [:hs "navigateUpward"]]
-                 [:l [:hs "navigateForward"]]
-                 [:m [:hs "toggleSidebar"]]
-                 [:n [:hs "createAnything"]]
-                 [:o [:hs "openAnything"]]
-                 [:p [:hs "openProjectSelector"]]
+                 [:j [:hs "navigatedownward"]]
+                 [:k [:hs "navigateupward"]]
+                 [:l [:hs "navigateforward"]]
+                 [:m [:hs "togglesidebar"]]
+                 [:n [:hs "createanything"]]
+                 [:o [:hs "openanything"]]
+                 [:p [:hs "openprojectselector"]]
                  [:q :!Cw] ; Close the current window
-                 [:f [:hs "openFocusModal"]] ; Focus Management
-                 [:s [:hs "openSpacesModal"]] ; Spaces Management
+                 [:f [:hs "openfocusmodal"]] ; Focus Management
+                 [:s [:hs "openspacesmodal"]] ; Spaces Management
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
-                 [:w [:hs "openWindowModal"]] ; Window Management
-                 [:y [:hs "copyAnything"]]
-                 [:quote [:hs "openCommandPalette"]]
-                 [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
+                 [:w [:hs "openwindowmodal"]] ; Window Management
+                 [:y [:hs "copyanything"]]
+                 [:quote [:hs "opencommandpalette"]]
+                 [:return_or_enter [:hs "openappmodal"]] ; trigger appM Modal in hammerspoon
                  [:semicolon :!!p] ; open Raycast
                  ]}
         {:des "Hyper Mode (Caps Lock Key)"
          :rules [:hyper-mode-caps
-                 [:b [:hs "toggleBreakTime"]] ; Toggle BreakTime on/off
-                 [:h [:hs "navigateBack"]]
-                 [:j [:hs "navigateDownward"]]
-                 [:k [:hs "navigateUpward"]]
-                 [:l [:hs "navigateForward"]]
-                 [:m [:hs "toggleSidebar"]]
-                 [:n [:hs "createAnything"]]
-                 [:o [:hs "openAnything"]]
-                 [:p [:hs "openProjectSelector"]]
+                 [:b [:hs "togglebreaktime"]] ; Toggle BreakTime on/off
+                 [:h [:hs "navigateback"]]
+                 [:j [:hs "navigatedownward"]]
+                 [:k [:hs "navigateupward"]]
+                 [:l [:hs "navigateforward"]]
+                 [:m [:hs "togglesidebar"]]
+                 [:n [:hs "createanything"]]
+                 [:o [:hs "openanything"]]
+                 [:p [:hs "openprojectselector"]]
                  [:q :!Cw] ; Close the current window
-                 [:f [:hs "openFocusModal"]] ; Focus Management
-                 [:s [:hs "openSpacesModal"]] ; Spaces Management
+                 [:f [:hs "openfocusmodal"]] ; Focus Management
+                 [:s [:hs "openspacesmodal"]] ; Spaces Management
                  [:v :!Oj] ; Show all open apps in hammerspoon overlay
-                 [:w [:hs "openWindowModal"]] ; Window Management
-                 [:y [:hs "copyAnything"]]
-                 [:quote [:hs "openCommandPalette"]]
-                 [:return_or_enter [:hs "openAppModal"]] ; trigger appM Modal in hammerspoon
+                 [:w [:hs "openwindowmodal"]] ; Window Management
+                 [:y [:hs "copyanything"]]
+                 [:quote [:hs "opencommandpalette"]]
+                 [:return_or_enter [:hs "openappmodal"]] ; trigger appM Modal in hammerspoon
                  [:semicolon :!!p] ; open Raycast
                  ]}
         {:des "Simultaneous s + d --> Super Duper Mode"
@@ -70,17 +70,17 @@
         {:des "Super Duper Mode for Traversing Tmux"
          :rules [:super-duper
                  [:f [:!Ta :f :return_or_enter]] ; Find a window
-                 [:up_arrow [:hs "tabPrevious"]] ; Switch to the previous tmux window
-                 [:down_arrow [:hs "tabNext"]] ; Switch to the next tmux window
-                 [:j [:hs "navigateDownward"]] ; Focus on the pane below current pane
-                 [:k [:hs "navigateUpward"]] ; Focus on the pane above current pane
-                 [:h [:hs "navigateBack"]] ; Focus on the pane to the left of the current pane
-                 [:l [:hs "navigateForward"]] ; Focus on the pane to the right of the current pane
+                 [:up_arrow [:hs "tabprevious"]] ; Switch to the previous tmux window
+                 [:down_arrow [:hs "tabnext"]] ; Switch to the next tmux window
+                 [:j [:hs "navigatedownward"]] ; Focus on the pane below current pane
+                 [:k [:hs "navigateupward"]] ; Focus on the pane above current pane
+                 [:h [:hs "navigateback"]] ; Focus on the pane to the left of the current pane
+                 [:l [:hs "navigateforward"]] ; Focus on the pane to the right of the current pane
                  [:n [:!Ta :comma]] ; Quick rename tmux window
                  [:o [:!Ta :z]] ; Zoom on current pane
                  [:r [:!Ta :r]] ; Reload the Matrix
-                 [:hyphen [:hs "splitHorizontally"]] ; Split tmux window horizontally
-                 [:backslash [:hs "splitVertically"]] ; Split tmux window vertically
+                 [:hyphen [:hs "splithorizontally"]] ; Split tmux window horizontally
+                 [:backslash [:hs "splitvertically"]] ; Split tmux window vertically
                  [:delete_or_backspace [:!Ta :x :y]] ; Kill a tmux pane without asking for confirmation
                  [:y [:!Ta :!Sopen_bracket]] ; Kill a tmux pane without asking for confirmation
                  ]}

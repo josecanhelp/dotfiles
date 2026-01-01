@@ -159,7 +159,7 @@ for _, v in ipairs(hsapp_list) do
     end
 end
 
-hs.urlevent.bind('openAppModal', function()
+hs.urlevent.bind('openappmodal', function()
     spoon.ModalMgr:deactivateAll()
     spoon.ModalMgr:activate({ "appM" }, "#0000FF", false)
 end)
@@ -288,7 +288,7 @@ focusModal:bind('', 'space', 'Swap Focused with Main Window', function()
 end)
 
 -- URL event to activate focus modal
-hs.urlevent.bind('openFocusModal', function()
+hs.urlevent.bind('openfocusmodal', function()
     spoon.ModalMgr:deactivateAll()
     spoon.ModalMgr:activate({ "focusM" }, "#8B4513", false)
 end)
@@ -400,7 +400,7 @@ for _, num in ipairs(spaceNumbers) do
 end
 
 -- URL event to activate spaces modal
-hs.urlevent.bind('openSpacesModal', function()
+hs.urlevent.bind('openspacesmodal', function()
     spoon.ModalMgr:deactivateAll()
     spoon.ModalMgr:activate({ "spacesM" }, "#800080", false)
 end)
@@ -530,7 +530,7 @@ if spoon.WinWin then
     cmodal:bind('', '`', 'Center Cursor', function() spoon.WinWin:centerCursor() end)
 
     -- Listen for this binding invocation to activate modal
-    hs.urlevent.bind('openWindowModal', function()
+    hs.urlevent.bind('openwindowmodal', function()
         spoon.ModalMgr:deactivateAll()
         spoon.ModalMgr:activate({ "windowM" }, "#FFA500")
     end)
@@ -598,7 +598,7 @@ function setLayoutAndDeactivate(layoutKey, saveCurrentLayout)
     spoon.ModalMgr:deactivate({ "layoutM" })
 end
 
-hs.urlevent.bind('enableLayoutM', function()
+hs.urlevent.bind('enablelayoutm', function()
     spoon.ModalMgr:deactivateAll()
     spoon.ModalMgr:activate({ "layoutM" }, "#FF00FF", false)
 end)
@@ -632,11 +632,11 @@ spoon.ModalMgr.supervisor:enter()
 -- depending on the app in focus at the time of invocation.
 ----------------------------------------------------------------------------------------------------
 
-hs.urlevent.bind('reloadHammerspoon', function()
+hs.urlevent.bind('reloadhammerspoon', function()
     hs.reload()
 end)
 
-hs.urlevent.bind('createAnything', function()
+hs.urlevent.bind('createanything', function()
     if appIs(omnifocus) then
         hs.eventtap.keyStroke({ 'ctrl', 'option' }, 'space')
     elseif appIs(bear) then
@@ -646,13 +646,13 @@ hs.urlevent.bind('createAnything', function()
     end
 end)
 
-hs.urlevent.bind('closeAnything', function()
+hs.urlevent.bind('closeanything', function()
     if appIncludes({ brave }) then
         hs.eventtap.keyStroke({ 'cmd' }, 'w')
     end
 end)
 
-hs.urlevent.bind('openAnything', function()
+hs.urlevent.bind('openanything', function()
     if appIncludes({ vscode, tableplus, fork }) then
         hs.eventtap.keyStroke({ 'cmd' }, 'p')
     elseif appIs(teams) then
@@ -682,7 +682,7 @@ hs.urlevent.bind('openAnything', function()
     end
 end)
 
-hs.urlevent.bind('toggleSidebar', function()
+hs.urlevent.bind('togglesidebar', function()
     if appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd' }, 'b', 0)
         hs.eventtap.keyStroke({ 'cmd' }, 'h', 0)
@@ -702,7 +702,7 @@ hs.urlevent.bind('toggleSidebar', function()
     end
 end)
 
-hs.urlevent.bind('navigateBack', function()
+hs.urlevent.bind('navigateback', function()
     if (activeModal == nil) then
         if appIncludes({ bear, spotify }) then
             hs.eventtap.keyStroke({ 'cmd', 'option' }, 'left')
@@ -722,7 +722,7 @@ hs.urlevent.bind('navigateBack', function()
     end
 end)
 
-hs.urlevent.bind('navigateForward', function()
+hs.urlevent.bind('navigateforward', function()
     if appIncludes({ bear, spotify }) then
         hs.eventtap.keyStroke({ 'cmd', 'option' }, 'right')
     elseif appIncludes({ finder, slack, brave }) then
@@ -738,7 +738,7 @@ hs.urlevent.bind('navigateForward', function()
     end
 end)
 
-hs.urlevent.bind('navigateUpward', function()
+hs.urlevent.bind('navigateupward', function()
     if appIs(tableplus) then
         hs.eventtap.keyStroke({ 'cmd' }, '[')
     elseif appIs(bear) then
@@ -759,7 +759,7 @@ hs.urlevent.bind('navigateUpward', function()
     end
 end)
 
-hs.urlevent.bind('navigateDownward', function()
+hs.urlevent.bind('navigatedownward', function()
     if appIs(tableplus) then
         hs.eventtap.keyStroke({ 'cmd' }, ']')
     elseif appIs(bear) then
@@ -779,7 +779,7 @@ hs.urlevent.bind('navigateDownward', function()
     end
 end)
 
-hs.urlevent.bind('openCommandPalette', function()
+hs.urlevent.bind('opencommandpalette', function()
     if appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd', 'shift' }, 'p')
     elseif appIs(teams) then
@@ -792,7 +792,7 @@ hs.urlevent.bind('openCommandPalette', function()
     end
 end)
 
-hs.urlevent.bind('openProjectSelector', function()
+hs.urlevent.bind('openprojectselector', function()
     if appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd', 'option' }, 'p')
     elseif appIncludes({ iterm, alacritty }) then
@@ -802,7 +802,7 @@ hs.urlevent.bind('openProjectSelector', function()
     end
 end)
 
-hs.urlevent.bind('copyAnything', function()
+hs.urlevent.bind('copyanything', function()
     local text = getSelectedText(true)
     if text then
         -- Already in clipboard, do not reset
@@ -813,7 +813,7 @@ hs.urlevent.bind('copyAnything', function()
     end
 end)
 
-hs.urlevent.bind('tabPrevious', function()
+hs.urlevent.bind('tabprevious', function()
     if appIncludes({ iterm, alacritty }) then
         hs.eventtap.keyStroke({ 'control' }, 'a')
         hs.eventtap.keyStroke({}, 'p')
@@ -822,7 +822,7 @@ hs.urlevent.bind('tabPrevious', function()
     end
 end)
 
-hs.urlevent.bind('tabNext', function()
+hs.urlevent.bind('tabnext', function()
     if appIncludes({ iterm, alacritty }) then
         hs.eventtap.keyStroke({ 'control' }, 'a')
         hs.eventtap.keyStroke({}, 'n')
@@ -832,7 +832,7 @@ hs.urlevent.bind('tabNext', function()
 end)
 
 
-hs.urlevent.bind('superDuperLeft', function()
+hs.urlevent.bind('superduperleft', function()
     if appIncludes({ iterm, alacritty }) then
         hs.eventtap.keyStroke({ 'control' }, 'h')
     elseif appIs(vscode) then
@@ -840,7 +840,7 @@ hs.urlevent.bind('superDuperLeft', function()
     end
 end)
 
-hs.urlevent.bind('superDuperRight', function()
+hs.urlevent.bind('superduperright', function()
     if appIncludes({ iterm, alacritty }) then
         hs.eventtap.keyStroke({ 'control' }, 'l')
     elseif appIs(vscode) then
@@ -848,7 +848,7 @@ hs.urlevent.bind('superDuperRight', function()
     end
 end)
 
-hs.urlevent.bind('superDuperUp', function()
+hs.urlevent.bind('superduperup', function()
     if appIncludes({ iterm, alacritty }) then
         hs.eventtap.keyStroke({ 'control' }, 'j')
     elseif appIs(vscode) then
@@ -856,7 +856,7 @@ hs.urlevent.bind('superDuperUp', function()
     end
 end)
 
-hs.urlevent.bind('superDuperDown', function()
+hs.urlevent.bind('superduperdown', function()
     if appIncludes({ iterm, alacritty }) then
         hs.eventtap.keyStroke({ 'control' }, 'k')
     elseif appIs(vscode) then
@@ -864,7 +864,7 @@ hs.urlevent.bind('superDuperDown', function()
     end
 end)
 
-hs.urlevent.bind('splitVertically', function()
+hs.urlevent.bind('splitvertically', function()
     if appIncludes({ iterm, alacritty }) then
         hs.eventtap.keyStroke({ 'control' }, 'a')
         hs.eventtap.keyStroke({ 'shift' }, '\\')
@@ -873,7 +873,7 @@ hs.urlevent.bind('splitVertically', function()
     end
 end)
 
-hs.urlevent.bind('splitHorizontally', function()
+hs.urlevent.bind('splithorizontally', function()
     if appIncludes({ iterm, alacritty }) then
         hs.eventtap.keyStroke({ 'control' }, 'a')
         hs.eventtap.keyStroke({}, '-')
@@ -883,7 +883,7 @@ hs.urlevent.bind('splitHorizontally', function()
 end)
 
 
-hs.urlevent.bind('toggleBreakTime', function()
+hs.urlevent.bind('togglebreaktime', function()
     local status, response, description = hs.osascript.javascript([[
         breaktime = Application("BreakTime")
         breaktime.enabled = !breaktime.enabled()
