@@ -28,6 +28,9 @@ dynamic_padding = true
 x = 0
 y = 0
 
+[bell]
+command = { program = "osascript", args = ["-e", "display notification \"Claude requires your attention\" with title \"Claude Code\""] }
+
 [shell]
 program = "/bin/zsh"
 args = ["-l", "-c", "tmux attach || tmux"]

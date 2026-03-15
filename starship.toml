@@ -14,7 +14,15 @@ disabled = true
 disabled = true
 
 [python]
-disabled = false
+symbol = "🐍 "
+# Show version + venv name when active, e.g. 🐍 3.12.10 (mcp-servers)
+# Parenthesized venv name only appears when a virtualenv is activated
+format = 'via [$symbol$version( \($virtualenv\))]($style) '
+style = "yellow bold"
+# Only show this module when inside a Python project — avoids showing system
+# Python everywhere. uv.lock added so uv projects are detected reliably.
+detect_files = ["pyproject.toml", ".python-version", "uv.lock", "requirements.txt", "Pipfile"]
+detect_folders = [".venv"]
 
 [nodejs]
 symbol = "⬢ "
