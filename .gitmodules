@@ -1,18 +1,9 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "tmux/plugins/tmux-yank"]
-	path = tmux/plugins/tmux-yank
-	url = https://github.com/tmux-plugins/tmux-yank.git
-[submodule "themes/tomorrow-theme"]
-	path = themes/tomorrow-theme
-	url = https://github.com/chriskempson/tomorrow-theme.git
-[submodule "themes/fonts"]
-	path = themes/fonts
-	url = https://github.com/powerline/fonts.git
-[submodule "themes/powerline-fonts"]
-	path = themes/powerline-fonts
-	url = https://github.com/powerline/fonts.git
 [submodule "dotbot-pip"]
 	path = dotbot-pip
 	url = https://github.com/sobolevn/dotbot-pip.git
+[submodule "themes/tomorrow-theme"]
+	path = themes/tomorrow-theme
+	url = https://github.com/chriskempson/tomorrow-theme.git
