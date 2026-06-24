@@ -1,7 +1,8 @@
 *.log
 .DS_Store
 alacritty/alacritty-theme/
-bin/apache-maven-3.9.6/*
+bin/apache-maven-3.9.9/*
+.claude/
 bin/nvim-macos-arm64/*
 karabiner.edn.bak
 not-public
