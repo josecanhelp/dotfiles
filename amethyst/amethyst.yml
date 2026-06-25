@@ -31,7 +31,6 @@ layouts:
   # - floating
   # - widescreen-tall
   # - widescreen-tall-right
-  - bsp
 
 # First mod (default option + shift).
 mod1:
@@ -267,7 +266,7 @@ relaunch-amethyst:
   key: z
 
 # disable screen padding on builtin display
-disable-padding-on-builtin-display: false
+disable-padding-on-builtin-display: true
 
 # Boolean flag for whether or not to add margins between windows (default false).
 window-margins: true
@@ -279,7 +278,7 @@ smart-window-margins: true
 # window-margins: true
 # window-margin-size: 5
 # The size of the margins between windows (in px, default 0).
-window-margin-size: 10
+window-margin-size: 30
 
 # The max number of windows that may be visible on a screen at one time before
 # additional windows are minimized. A value of 0 disables the feature.
@@ -322,7 +321,7 @@ mouse-resizes-windows: true
 enables-layout-hud: true
 
 # true to display the name of the layout when moving to a new space (default true).
-enables-layout-hud-on-space-change: true
+enables-layout-hud-on-space-change: false
 
 # true to get updates to beta versions of the software (default false).
 use-canary-build: false

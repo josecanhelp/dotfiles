@@ -1,3 +1,4 @@
+[general]
 import = [ "~/dotfiles/alacritty/alacritty-theme/themes/seashells.toml" ]
 
 [env]
@@ -21,16 +22,13 @@ family = "FiraCode Nerd Font Mono"
 y = 12
 
 [window]
-decorations = "none"
+decorations = "Full"
 dynamic_padding = true
 
 [window.padding]
 x = 0
 y = 0
 
-[bell]
-command = { program = "osascript", args = ["-e", "display notification \"Claude requires your attention\" with title \"Claude Code\""] }
-
-[shell]
+[terminal.shell]
 program = "/bin/zsh"
 args = ["-l", "-c", "tmux attach || tmux"]
