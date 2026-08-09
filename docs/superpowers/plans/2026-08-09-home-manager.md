@@ -555,6 +555,21 @@ Record the counts and values. Step 9 diffs against this.
 ```nix
   programs.zsh = {
     enable = true;
+
+    # Write ~/.zshrc, not ~/.config/zsh/.zshrc.
+    #
+    # home-manager 26.05 changed this default: with `xdg.enable = true` and
+    # stateVersion >= 26.05 it now uses $XDG_CONFIG_HOME/zsh and sets ZDOTDIR
+    # to point there. That also moves where zsh looks for .zprofile, and
+    # ~/.zprofile here is load-bearing: it runs `brew shellenv` and the
+    # Amazon Q blocks. Under the XDG layout zsh would look for
+    # ~/.config/zsh/.zprofile, find nothing, and /opt/homebrew/bin would
+    # silently drop off PATH, taking themekit, ecsplorer, msodbcsql17 and
+    # the cask CLIs with it.
+    #
+    # This is the module's own documented way to keep the previous layout.
+    dotDir = config.home.homeDirectory;
+
     enableCompletion = true;
     autosuggestion = {
       enable = true;
