@@ -1,9 +1,3 @@
-[submodule "dotbot"]
-	path = dotbot
-	url = https://github.com/anishathalye/dotbot
-[submodule "dotbot-pip"]
-	path = dotbot-pip
-	url = https://github.com/sobolevn/dotbot-pip.git
 [submodule "themes/tomorrow-theme"]
 	path = themes/tomorrow-theme
 	url = https://github.com/chriskempson/tomorrow-theme.git

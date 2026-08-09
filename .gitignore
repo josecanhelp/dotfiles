@@ -1,6 +1,5 @@
 *.log
 .DS_Store
-alacritty/alacritty-theme/
 .claude/
 karabiner.edn.bak
 not-public

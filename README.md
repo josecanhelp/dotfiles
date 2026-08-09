@@ -16,7 +16,7 @@ If you happen to copy anything from this repository or if you are inspired by th
 
 1. **Install [Determinate Nix](https://docs.determinate.systems/)**. Everything else depends on it. Note this repo sets `nix.enable = false` because Determinate manages the daemon itself, and nix-darwin should not fight it.
 
-2. **Clone this repo to `~/dotfiles`.** The path matters: `zsh/zshrc` and the dotbot links both reference it.
+2. **Clone this repo to `~/dotfiles`.** The path matters: home-manager's links reference it.
 
    ```sh
    git clone --recursive git@github.com:josecanhelp/dotfiles.git ~/dotfiles
@@ -30,13 +30,7 @@ If you happen to copy anything from this repository or if you are inspired by th
 
    To add a machine, add one line to `darwinConfigurations` in `flake.nix`.
 
-4. **Link the dotfiles** that Nix does not manage yet.
-
-   ```sh
-   cd ~/dotfiles && ./install
-   ```
-
-5. **Create `~/.secrets`** if you need it. It is sourced by `zsh/zshrc` and deliberately kept out of this repo.
+4. **Create `~/.secrets`** if you need it. It is sourced by zsh and deliberately kept out of this repo.
 
 Nix only reads files that git tracks. If you add something to `nix/` and the
 rebuild claims it does not exist, you forgot to `git add` it.
@@ -49,9 +43,9 @@ Three systems, in descending order of how much I trust them:
 |---|---|---|
 | **nix-darwin** | CLI packages, language runtimes, fonts, macOS system settings | `nix/packages.nix`, `nix/configuration.nix` |
 | **nix-homebrew** | Homebrew itself, plus GUI casks and the few formulae nixpkgs lacks | `nix/configuration.nix` |
-| **dotbot** | Symlinking config files into `$HOME` | `install.conf.yaml` |
+| **home-manager** | Symlinking config files into `$HOME`, plus zsh, git, starship, alacritty | `nix/home.nix` |
 
-The plan is for home-manager to take over that third row. Until then, `./install` is still a required step on a new machine.
+Every file is managed by one of these three. A new machine needs nothing beyond a clone and a rebuild.
 
 `nix/verify.sh` asserts that the packages actually resolve from Nix rather than
 Homebrew, which matters because Homebrew's `brew shellenv` prepends itself to
