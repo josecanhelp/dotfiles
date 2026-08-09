@@ -90,6 +90,29 @@ let
   ];
 in
 {
+  # Exceptions: deliberately NOT migrated. `brew leaves` should return
+  # exactly this list. Recorded here rather than omitted silently, so the
+  # reason survives.
+  #
+  #   ant       apacheAnt evaluates unavailable on aarch64-darwin.
+  #             Remains a brew formula.
+  #   pipx      python3.13-pipx-1.8.0 fails its checkPhase in this
+  #             nixpkgs (7 tests in tests/test_package_specifier.py assert
+  #             on "pkg@ url" but a newer packaging library normalizes to
+  #             "pkg @ url"). pipx itself is fine. To pull it in anyway:
+  #               (pipx.overridePythonAttrs (_: { doCheck = false; }))
+  #   pytorch   python3Packages.torch exists and is available on darwin,
+  #             but is heavy and rarely wanted globally. Use a devshell.
+  #   ruby      `ruby` resolves to /usr/bin/ruby (system 2.6.10) because
+  #             brew's ruby is keg-only and was never linked. Adding nix
+  #             ruby 3.4.9 would change a command that works today.
+  #
+  # Also intentionally dropped, with no brew formula left behind:
+  #   nvm            No nixpkgs equivalent by design. nodejs_22 is global;
+  #                  use devshells for per-project versions. ~/.nvm remains
+  #                  on disk, unused.
+  #   python@3.10    Removed from nixpkgs 26.05.
+  #   bpytop, sha2   Superseded by btop and coreutils respectively.
   environment.systemPackages =
     cli ++ media ++ shell ++ vendored ++ languages ++ services;
 }
