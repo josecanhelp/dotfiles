@@ -30,6 +30,41 @@
   # dependencies, and stay unmanaged.
   fonts.packages = with pkgs; [ nerd-fonts.fira-code ];
 
+  # macOS settings that previously existed only in this machine's
+  # preference database. Every value below was read off the running system
+  # rather than chosen, so activation is a no-op today.
+  #
+  # Note these are now enforced: change one in System Settings and the next
+  # `darwin-rebuild switch` puts it back. Change it here instead.
+  system.defaults = {
+    dock = {
+      autohide = true;
+      tilesize = 36;
+      mru-spaces = false;      # required by Amethyst; stops spaces reordering
+      wvous-br-corner = 5;     # bottom-right hot corner starts the screen saver
+    };
+
+    finder = {
+      ShowPathbar = true;
+      FXPreferredViewStyle = "Nlsv";   # list view
+      _FXSortFoldersFirst = true;
+      ShowHardDrivesOnDesktop = true;
+    };
+
+    NSGlobalDomain = {
+      # Fast key repeat. Below macOS's own slider minimum, and the first
+      # thing you would notice missing on a new machine.
+      KeyRepeat = 2;
+      InitialKeyRepeat = 15;
+      # Off means holding a key repeats it instead of showing the accent
+      # picker, which is what makes vim navigation usable.
+      ApplePressAndHoldEnabled = false;
+      AppleShowAllExtensions = true;
+    };
+
+    screencapture.location = "~/Screenshots";
+  };
+
   # nix-homebrew manages the Homebrew installation itself.
   # This block declares what Homebrew installs.
   homebrew = {
