@@ -56,29 +56,44 @@ thing itself rather than a proxy for it.
 `/opt/homebrew/opt/goku/bin/gokuw`, which the packages migration deleted along
 with the formula.
 
-`launchctl` shows PID 7508 alive, and a first pass read that as "still working,
-dies at next reboot." **That reading was wrong.** The supervisor survives, but
-it is not doing its job. Its child is
-`watchexec -r -e edn -w ~/.config/karabiner.edn goku`, whose environment is:
+Three separate readings of this were produced during the audit and **all three
+were partly wrong**, so here is what was actually measured.
+
+Both processes are alive:
+
+```
+7508  /bin/sh /opt/homebrew/opt/goku/bin/gokuw
+7532  watchexec -r -e edn -w /Users/jose/.config/karabiner.edn goku
+```
+
+So it is not true that the job died, and not true that the watcher never
+started. But PID 7532's environment is:
 
 ```
 PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 ```
 
-No `/run/current-system/sw/bin`, so the Nix goku is unreachable from that job.
-`~/Library/Logs/goku.log` is a wall of the consequence:
+and **neither `goku` nor `watchexec` exists anywhere on that PATH**. Verified
+directly rather than inferred:
 
 ```
-/opt/homebrew/opt/goku/bin/gokuw: line 2: watchexec: command not found
+$ env -i PATH="/opt/homebrew/bin:...:/sbin" sh -c 'command -v goku'
+goku: NOT FOUND on this PATH
 ```
 
-So auto-compilation of `karabiner.edn` is dead **now**. The reboot only removes
-the last cosmetic evidence.
+So the watcher is running but **cannot execute the command it exists to run**.
+When an `.edn` edit fires it, the `goku` invocation will fail. Auto-compilation
+is dead now, not at the next reboot.
 
-Note the practical impact is currently latent rather than visible:
-`karabiner.edn` has not been edited since 2026-01-01, and `karabiner.json` was
-compiled 2026-08-06, so the two agree today. The breakage bites on the *next*
-edit, which would silently do nothing.
+`~/Library/Logs/goku.log` corroborates the history: **4.3 million lines** of
+`gokuw: line 2: watchexec: command not found`, which stopped growing on Aug 8
+at 21:57 when the current supervisor pair came up. That log is also worth
+deleting on its own merits.
+
+The practical impact is currently latent: `karabiner.edn` has not been edited
+since 2026-01-01 and `karabiner.json` was compiled 2026-08-06, so the two agree
+today. The breakage bites on the *next* Karabiner edit, which will silently do
+nothing.
 
 There is also a **duplicate registration**: a root-owned
 `/Library/LaunchDaemons/homebrew.mxcl.goku.plist` (916 B, Apr 2025) in a
@@ -159,8 +174,9 @@ documented exceptions in `packages.nix`, but they are documented in a
 fresh machine gets none of them.
 
 Declared but absent from `brew leaves`: `themekit`, `ecsplorer`,
-`msodbcsql17`. These are fine. `brew leaves` omits third-party tap formulae,
-the same blind spot that hid tools from an earlier audit.
+`msodbcsql17`. These are fine, all three are installed. `brew leaves` simply
+does not list them despite all three being marked `installed_on_request`. See
+Tier 6, where that unreliability is the finding rather than a footnote.
 
 ### 6. Hostname is assumed, never set
 
@@ -618,12 +634,116 @@ Windsurf, or VSCodium despite `~/.cursor-tutor` ×3 on disk.
 
 ---
 
-## Not yet reported
+## Tier 6: CLI tools
 
-One audit is still outstanding: **global package managers**. A spot check found
-`composer global` has `takeout`, `~/.gem` has user gems, and yarn globals
-include `cdk`, `create-next-app`, `create-playwright`, `create-vite`, `cva`.
-Not enumerated properly, and nixpkgs availability not resolved.
+### `brew leaves` is not trustworthy here. Use `brew list --formula --full-name`
+
+`brew leaves` returns exactly `ant pipx pytorch ruby`. Yet `themekit`,
+`ecsplorer`, and `msodbcsql17` are all installed **and** all marked
+`installed_on_request=true` in their install receipts. They simply do not
+appear.
+
+The mechanism was not pinned down. One plausible explanation, that brew
+refuses to load untrusted tap formulae in an ordinary shell, did not reproduce:
+`brew info shopify/shopify/themekit` works fine here. What is certain is the
+observable behavior, and it matters more than the cause: **formulae can be
+installed, requested, and invisible to `brew leaves`.**
+
+This is not academic. It is how three real formulae stayed hidden through an
+entire migration. Always enumerate with `brew list --formula --full-name`.
+
+### Three formulae nobody documented
+
+| Formula | Installed | nixpkgs | Verdict |
+|---|---|---|---|
+| `ghostscript` | 10.07.1 | 10.07.1, exact match | Migrate. Provides `gs`, `ps2pdf` |
+| `tesseract` | 5.5.3 | 5.5.2 | Migrate. Real CLI |
+| `node@16` | 16.20.2_1 | not in nixpkgs | **Broken. Delete, do not migrate** |
+
+`node@16` fails outright:
+
+```
+dyld[]: Library not loaded: /opt/homebrew/opt/brotli/lib/libbrotlidec.1.dylib
+```
+
+The migration removed brotli underneath it. It cannot run.
+
+Of 70 installed formulae, 16 are installed-on-request and 54 are
+dependency-only. `brew leaves --installed-as-dependency` is empty, so there is
+nothing to autoremove.
+
+### 64 broken shims in `/opt/homebrew/bin`
+
+Sixty-four files there have a shebang pointing at an interpreter that no longer
+exists, mostly `python@3.11` and `python@3.14`. Every one fails with "bad
+interpreter." Among them: `poetry`, `virtualenv`, `playwright`, `uvicorn`,
+`httpx`, `fastmcp`, `mcp`, `keyring`, `dulwich`, `pip`.
+
+These need deleting, not migrating. The only judgement call is `poetry`, which
+is in nixpkgs if it is still wanted.
+
+### Loose binaries worth migrating
+
+All verified present in the pinned nixpkgs. Note how often the attribute name
+differs from the binary name, which is exactly where a guess fails:
+
+| Binary | Version | nixpkgs attribute | Note |
+|---|---|---|---|
+| `aws` | 2.24.15 | `awscli2` | **x86_64 under Rosetta.** Native win as well as a declaration win |
+| `sam` | 1.150.1 | `aws-sam-cli` | |
+| `session-manager-plugin` | 1.2.694.0 | `ssm-session-manager-plugin` | attribute differs |
+| `composer` | 2.6.5 (Oct 2023) | `php83Packages.composer` | namespaced; no top-level attribute |
+| `wp` | 2.9.0 (Nov 2023) | `wp-cli` | attribute differs from binary |
+| `go` | 1.22.1 | `go` (1.26.5) | well behind |
+| `sentry-cli` | 2.58.2 | `sentry-cli` (2.58.2) | exact match, clean swap |
+| `liquibase` | | `liquibase` | if still used |
+
+**`cdk` is a trap.** The nixpkgs attribute is `aws-cdk-cli`. Plain `cdk` in
+nixpkgs is the Curses Development Kit, an unrelated library. Relevant given the
+CDK conventions in CLAUDE.md.
+
+### Do not remove `/usr/local/bin/node`
+
+It looks like a redundant third Node, shadowed by the declared `nodejs_22`, and
+an obvious cleanup target. **It is load-bearing.** The Homebridge root daemon
+hard-codes that exact absolute path:
+
+```
+/usr/local/bin/node /opt/homebrew/lib/node_modules/homebridge-config-ui-x/dist/bin/hb-service.js run -I -U /Users/jose/.homebridge
+```
+
+Deleting it silently kills Homebridge at its next restart. Annotate it before
+anyone tidies loose binaries.
+
+### npm globals (21) and yarn globals (5)
+
+The npm tree at `/opt/homebrew/lib/node_modules` is orphaned from the deleted
+brew `node` but still shimmed onto PATH ahead of `/usr/local/bin`. In nixpkgs
+and worth moving: `typescript`, `typescript-language-server`, `prettier`,
+`intelephense`, `vscode-langservers-extracted`, `http-server`, `turbo`, `yo`,
+`mapscii`, `aws-cdk` (as `aws-cdk-cli`).
+
+Worth noting: **`intelephense` is installed here as an npm global**, a PHP
+language server, while VS Code has no PHP extension at all. Those two facts
+sit oddly together and suggest the PHP tooling story is split across editors.
+
+Stale duplicates to drop: `@anthropic-ai/claude-code` 2.0.8 (the live copy is
+`~/.local/bin/claude` 2.1.226), `vscode-json-languageserver` (redundant with
+`vscode-langservers-extracted`), and `corepack` 0.17.1.
+
+yarn globals live at `~/.config/yarn/global` from the old brew yarn, not the
+Nix yarn's `~/.local/share/yarn/global`, which is empty. `aws-cdk` there is the
+`cdk` that actually wins on PATH. `create-next-app`, `create-playwright`, and
+`create-vite` are one-shot scaffolders better served by `npx`.
+
+`composer global` has `tightenco/takeout`, not in nixpkgs, leave it. `gem`,
+`cargo`, `go`, `pipx`, and `uv tool` have nothing user-installed.
+
+### One thing that needs you
+
+`/usr/local/bin/1password-mcp` is a root-owned symlink, mode `lrwx------`, and
+its target cannot be read without elevation. The auditor correctly declined to
+escalate. If you want it identified, that needs a `sudo ls -l` from you.
 
 ---
 
