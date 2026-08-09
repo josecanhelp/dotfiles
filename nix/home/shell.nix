@@ -43,19 +43,28 @@
   programs.zsh = {
     enable = true;
 
-    # Write ~/.zshrc, not ~/.config/zsh/.zshrc.
+    # Write ~/.zshrc and ~/.zprofile, not ~/.config/zsh/.
     #
     # home-manager 26.05 changed this default: with `xdg.enable = true` and
     # stateVersion >= 26.05 it now uses $XDG_CONFIG_HOME/zsh and sets ZDOTDIR
-    # to point there. That also moves where zsh looks for .zprofile, and
-    # ~/.zprofile here is load-bearing: it runs `brew shellenv` and the
-    # Amazon Q blocks. Under the XDG layout zsh would look for
-    # ~/.config/zsh/.zprofile, find nothing, and /opt/homebrew/bin would
-    # silently drop off PATH, taking themekit, ecsplorer, msodbcsql17 and
-    # the cask CLIs with it.
-    #
-    # This is the module's own documented way to keep the previous layout.
+    # to point there. Keeping the traditional layout matters because zsh
+    # resolves .zprofile relative to ZDOTDIR too, and macOS itself writes to
+    # ~/ rather than the XDG path. This is the module's own documented way
+    # to keep the previous layout.
     dotDir = config.home.homeDirectory;
+
+    # ~/.zprofile, login shells only, before .zshrc.
+    #
+    # This is the whole reason /opt/homebrew/bin is on PATH, and 362 brew
+    # binaries hang off it, pipx and ecsplorer among them. Note that
+    # `brew shellenv` PREPENDS, so Nix loses precedence right here; the
+    # final `export PATH` in initContent below runs later and takes it back.
+    #
+    # Previously an untracked ~/.zprofile written by the Homebrew installer.
+    profileExtra = ''
+      # Set PATH, MANPATH, etc., for Homebrew.
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    '';
 
     enableCompletion = true;
     autosuggestion = {
