@@ -13,6 +13,7 @@ in
     ./shell.nix
     ./alacritty.nix
     ./tmux.nix
+    ./nvim.nix
   ];
 
   home.stateVersion = "26.05";
@@ -30,8 +31,6 @@ in
   };
 
   xdg.configFile = {
-    # lazy.nvim writes lazy-lock.json here.
-    "nvim".source = link "nvim";
     # Linked to both paths because goku searches both. Dropping either one
     # silently stops the .edn from compiling to karabiner.json.
     "karabiner.edn".source = link "karabiner/karabiner.edn";

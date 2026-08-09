@@ -66,7 +66,6 @@
     defaultKeymap = "viins";
 
     sessionVariables = {
-      EDITOR = "nvim";
       LANG = "en_US.UTF-8";
       SAM_CLI_TELEMETRY = "0";
       KEYTIMEOUT = "1";
@@ -165,7 +164,6 @@
       mfs = "sail artisan migrate:fresh";
       mfss = "sail artisan migrate:fresh --seed";
       arl = "sail artisan route:list";
-      vim = "nvim";
       python = "python3";
     };
 
