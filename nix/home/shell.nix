@@ -120,7 +120,7 @@
       nrd = "npm run dev";
       nrb = "npm run build";
       # Was `vim ~/.zshrc`, which home-manager now generates read-only.
-      editzshrc = "vim ~/dotfiles/nix/home.nix";
+      editzshrc = "vim ~/dotfiles/nix/home/shell.nix";
       mutt = "neomutt";
       dockerps = "docker ps --format \"table {{.ID}}\\t{{.Names}}\\t{{.Image}}\\t{{.Ports}}\"";
       dp = "dockerps";
@@ -130,10 +130,6 @@
       l = "ls -alh";
       src = "exec zsh";
       ".." = "cd ..";
-      zz = "z -c";
-      zi = "z -i";
-      zf = "z -I";
-      zb = "z -b";
       pb = "pianobar";
       pad = "php artisan dusk";
       jig = "./vendor/bin/jigsaw";

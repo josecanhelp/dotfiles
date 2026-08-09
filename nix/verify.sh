@@ -12,7 +12,7 @@ batch1=(rg fzf jq tree htop wget pstree watchexec nmap pandoc typst
         actionlint git-filter-repo joker yt-dlp ranger jadx gh telnet
         sha256sum btop pkgconf ffmpeg magick pdfinfo pdftotext
         rsvg-convert woff2_compress cjpeg)
-batch2=(git tmux starship z.lua)
+batch2=(git tmux starship)
 batch3=(gcloud bq gsutil mvn nvim)
 # ruby intentionally absent: stays as system /usr/bin/ruby 2.6.10.
 # pipx intentionally absent: fails to build in nixpkgs, stays on Homebrew.
@@ -23,7 +23,10 @@ batch5=(mariadb redis-server minikube helm az svn qemu-system-aarch64)
 batch6=(goku stripe shopify uv uvx)
 
 # Paths home-manager should symlink back into ~/dotfiles.
-links=("$HOME/.tmux.conf" "$HOME/.tmux" "$HOME/.hammerspoon"
+# ~/.tmux.conf and ~/.tmux are deliberately absent: programs.tmux generates
+# ~/.config/tmux/tmux.conf instead, and ~/.tmux is now a real directory
+# holding resurrect state rather than a link into the repo.
+links=("$HOME/.hammerspoon"
        "$HOME/.amethyst.yml" "$HOME/.hushlogin" "$HOME/.bin"
        "$HOME/.config/nvim" "$HOME/.config/karabiner.edn"
        "$HOME/.config/karabiner/karabiner.edn")

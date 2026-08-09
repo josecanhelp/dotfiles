@@ -35,7 +35,7 @@
     users.jose = import ./home;
   };
 
-  # programs.alacritty in nix/home.nix hard-requires "FiraCode Nerd Font
+  # programs.alacritty in nix/home/alacritty.nix hard-requires "FiraCode Nerd
   # Mono". Without this it was only present as a manual install in
   # ~/Library/Fonts, so a fresh machine rendered every prompt glyph as a
   # box. The other ~289 fonts there are design assets, not terminal

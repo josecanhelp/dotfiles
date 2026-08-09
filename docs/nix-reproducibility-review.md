@@ -160,9 +160,13 @@ Note `msodbcsql17` pairs with `unixODBC`, which **is** in nixpkgs. Worth
 checking whether the brew formula is still needed once unixODBC comes
 from Nix.
 
-Also: of your 10 taps, `candid82/brew`, `homebrew/services`, and
-`homebrew/core`/`homebrew/cask` now supply nothing. `candid82/brew` was
-for `joker`, which moved to nixpkgs. Vestigial taps can be dropped.
+**Resolved.** Four vestigial taps removed: `candid82/brew` (was `joker`),
+`homebrew/services`, `stripe/stripe-cli`, and `yqrashawn/goku` (the last two
+because this migration moved their formulae into nixpkgs). `homebrew/core`
+and `homebrew/cask` stay: they are the default taps supplying the 13 casks,
+and appear to supply "nothing" only because default-tap packages are not
+listed with a tap prefix. `nikitabobko/tap` (AeroSpace) also supplies
+nothing and is a candidate for removal, left in place pending a decision.
 
 ### 7. `~/.local/bin` tools
 
@@ -184,7 +188,9 @@ These are the remaining sub-projects from the original decomposition:
 - ~~**home-manager, retiring dotbot.**~~ **Done.** 13 imperative symlinks
   became 9 home-manager links plus 4 `programs.*` modules (zsh, git,
   starship, alacritty). `./install` and both submodules are gone.
-- **tmux declarative.** All 6 plugins are in `nixpkgs.tmuxPlugins`.
+- ~~**tmux declarative.**~~ **Done.** `programs.tmux` with 4 plugins from
+  nixpkgs. tpm, all plugin directories, and `tmux.conf` are gone; resurrect
+  state moved to `~/.tmux/resurrect`, outside the repo. Only nvim remains.
 - **nvim declarative.** 31 of 33 plugins in nixpkgs; the real work is
   replacing mason with nixpkgs-provided LSP servers.
 
@@ -194,7 +200,7 @@ These are the remaining sub-projects from the original decomposition:
 
 Worth writing down so nobody "fixes" these later:
 
-- `~/.secrets`, sourced from `programs.zsh.initContent` in `nix/home.nix`,
+- `~/.secrets`, sourced from `programs.zsh.initContent` in `nix/home/shell.nix`,
   correctly outside the repo
 - `~/.ssh/config`, `~/.aws/config`, `~/.docker/config.json` — machine and
   credential specific

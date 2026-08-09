@@ -43,7 +43,7 @@ Three systems, in descending order of how much I trust them:
 |---|---|---|
 | **nix-darwin** | CLI packages, language runtimes, fonts, macOS system settings | `nix/packages.nix`, `nix/configuration.nix` |
 | **nix-homebrew** | Homebrew itself, plus GUI casks and the few formulae nixpkgs lacks | `nix/configuration.nix` |
-| **home-manager** | Symlinking config files into `$HOME`, plus zsh, git, starship, alacritty | `nix/home.nix` |
+| **home-manager** | Symlinking config files into `$HOME`, plus zsh, git, starship, alacritty, tmux | `nix/home/` |
 
 Every file is managed by one of these three. A new machine needs nothing beyond a clone and a rebuild.
 
