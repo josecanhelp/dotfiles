@@ -3,8 +3,8 @@
 # ------------------------------------------------------------------------------
 # This file configures all of the settings for zsh.
 # Alias and Functions files are sourced from external paths.
-# Plugins were installed via brew.
-#   -- brew install zsh-autosuggestions zsh-syntax-highlighting z.lua
+# Plugins come from nixpkgs, declared in nix/packages.nix and sourced from
+# /run/current-system/sw/share below.
 
 # zmodload zsh/zprof
 
@@ -18,14 +18,9 @@
 # Paths
 # ------------------------------------------------------------------------------
 
-export PATH=${PATH}:/usr/local/aws/bin
-export PATH=${PATH}:/usr/local/opt
-export PATH=${PATH}:/usr/local/opt/coreutils/libexec/gnubin
 export PATH=${PATH}:~/.composer/vendor/bin
 export PATH=${PATH}:~/.dotfiles/bin
 export PATH=${PATH}:~/.local/bin
-export PATH=${PATH}:~/go/bin
-export PATH=${PATH}:/opt/homebrew/opt/mysql-client/bin
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES # Required for iterm shell integration
 
 
@@ -88,7 +83,8 @@ bindkey '^e' edit-command-line
 # Z.lua Jump to Directory
 # ------------------------------------------------------------------------------
 
-# eval "$(lua /opt/homebrew/Cellar/z.lua/1.8.16/share/z.lua/z.lua --init zsh)"
+# z-lua now comes from nixpkgs and is on PATH, so no Cellar path needed.
+# eval "$(z.lua --init zsh)"
 
 # export _ZL_ROOT_MARKERS=".git,package.json,composer.json" # Jump to project root with zb
 
