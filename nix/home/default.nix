@@ -12,6 +12,7 @@ in
     ./git.nix
     ./shell.nix
     ./alacritty.nix
+    ./tmux.nix
   ];
 
   home.stateVersion = "26.05";
@@ -21,9 +22,6 @@ in
   xdg.enable = true;
 
   home.file = {
-    ".tmux.conf".source = link "tmux.conf";
-    # tpm writes plugins/ here, so it must stay out-of-store.
-    ".tmux".source = link "tmux";
     # Hammerspoon writes Spoons/ here.
     ".hammerspoon".source = link "hammerspoon";
     ".amethyst.yml".source = link "amethyst/amethyst.yml";
