@@ -14,7 +14,9 @@ batch1=(rg fzf jq tree htop wget pstree watchexec nmap pandoc typst
         rsvg-convert woff2_compress cjpeg)
 batch2=(git tmux starship z.lua)
 batch3=(gcloud bq gsutil mvn nvim)
-batch4=(php python3 node ruby dotnet yarn pipx ttx)
+# ruby intentionally absent: stays as system /usr/bin/ruby 2.6.10.
+# pipx intentionally absent: fails to build in nixpkgs, stays on Homebrew.
+batch4=(php python3 node dotnet yarn ttx)
 batch5=(mariadb redis-server minikube helm az svn qemu-system-aarch64)
 
 fail=0

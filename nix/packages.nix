@@ -51,7 +51,34 @@ let
     maven
     neovim
   ];
+
+  languages = with pkgs; [
+    # dotnet-sdk_9, not dotnet-sdk: the unversioned attribute is the 8.x
+    # LTS (8.0.423), which would downgrade the 9.0.105 installed via brew.
+    dotnet-sdk_9
+    # nodejs_22 (current LTS line), not bare `nodejs`: that resolves to
+    # 24.18.0, four majors past the v20.19.1 nvm had pinned. 22 moves
+    # forward without the jump that breaks native modules.
+    nodejs_22
+    php83
+    # pipx omitted: python3.13-pipx-1.8.0 fails to build in this nixpkgs.
+    # Its test suite asserts on "black@ https://..." but a newer packaging
+    # library normalizes to "black @ https://...", so 7 tests in
+    # tests/test_package_specifier.py fail. pipx itself is fine; only the
+    # checkPhase breaks. Stays on Homebrew. To pull it in anyway:
+    #   (pipx.overridePythonAttrs (_: { doCheck = false; }))
+    # python314, not python312: /opt/homebrew/bin/python3 was already
+    # 3.14.6 via brew's python@3.14 (installed as a dependency, so it
+    # never showed up in `brew leaves`). python312 would have been a
+    # silent two-version downgrade.
+    python314
+    python3Packages.fonttools   # provides ttx, pyftsubset
+    yarn
+    # ruby deliberately omitted. `ruby` resolves to /usr/bin/ruby (system
+    # 2.6.10) because brew's ruby formula is keg-only and was never linked.
+    # Adding nix ruby 3.4.9 would change a command that works today.
+  ];
 in
 {
-  environment.systemPackages = cli ++ media ++ shell ++ vendored;
+  environment.systemPackages = cli ++ media ++ shell ++ vendored ++ languages;
 }

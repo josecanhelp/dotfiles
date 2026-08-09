@@ -27,7 +27,6 @@ export PATH=${PATH}:~/.local/bin
 export PATH=${PATH}:~/go/bin
 export PATH=${PATH}:/opt/homebrew/opt/mysql-client/bin
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES # Required for iterm shell integration
-export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
 
 
 # ------------------------------------------------------------------------------
@@ -131,10 +130,9 @@ source /run/current-system/sw/share/zsh-syntax-highlighting/zsh-syntax-highlight
 # export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_351.jdk/Contents/Home"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# nvm removed: node now comes from nixpkgs (see nix/packages.nix).
+# ~/.nvm is left on disk untouched; deleting it is a separate decision.
+# For per-project node versions, use a devshell or direnv.
 
 
 export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
