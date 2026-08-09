@@ -55,13 +55,17 @@ check_link() {
     fail=1
     return
   fi
-  target="$(readlink "$p")"
+  # Resolve the WHOLE chain, not the first hop. mkOutOfStoreSymlink produces
+  # ~/.x -> store/home-manager-files/.x -> store/hm_x -> ~/dotfiles/x, so the
+  # first hop is always a store path even when it is working correctly. Only
+  # the final target tells you whether the file is editable or read-only.
+  target="$(readlink -f "$p")"
   case "$target" in
     "$HOME"/dotfiles/*)
       printf 'OK        %-34s -> %s\n' "$p" "$target"
       ;;
     /nix/store/*)
-      printf 'IN STORE  %-34s -> %s (mkOutOfStoreSymlink missed)\n' "$p" "$target"
+      printf 'IN STORE  %-34s -> %s (read-only: mkOutOfStoreSymlink missed)\n' "$p" "$target"
       fail=1
       ;;
     *)
