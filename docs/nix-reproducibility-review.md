@@ -187,7 +187,9 @@ The four sub-projects from the original decomposition:
 
 - ~~**home-manager, retiring dotbot.**~~ **Done.** 13 imperative symlinks
   became 9 home-manager links plus 4 `programs.*` modules (zsh, git,
-  starship, alacritty). `./install` and both submodules are gone.
+  starship, alacritty). `./install` and both dotbot submodules are gone.
+  `themes/tomorrow-theme` was removed afterwards as unreferenced, so the
+  repo now has no submodules and no `.gitmodules` at all.
 - ~~**tmux declarative.**~~ **Done.** `programs.tmux` with 4 plugins from
   nixpkgs. tpm, all plugin directories, and `tmux.conf` are gone; resurrect
   state moved to `~/.tmux/resurrect`, outside the repo. Only nvim remains.
