@@ -123,7 +123,45 @@ Caveat: the `REM-` prefix suggests corporate MDM assigns this name. Declaring
 it is harmless if MDM agrees and will fight MDM if IT ever renames the
 machine. Worth a comment in the config.
 
-### 6. Two declared casks whose apps are gone
+### 6. The declared tmux config depends on an undeclared file
+
+`nix/home/tmux.nix:106-108` declares:
+
+```
+# The marker itself is set by ~/.claude/notify.sh (Claude Code hooks).
+set-hook -g session-window-changed 'set-option -w @claude_alert ""'
+```
+
+`~/.claude/notify.sh` exists on disk (797 B, executable) and is **not tracked
+in this repo**. `git ls-files` has no match for it.
+
+So a declared piece of config depends on an undeclared file. On a fresh
+machine the hook installs and clears a marker nothing ever sets. Half a
+feature, silently.
+
+Fix by declaring `notify.sh`, either through `programs.claude-code.hooks` or
+as a plain `home.file`. The lighter route is fine; what matters is that the
+two halves ship together. Note `settings.json` also references it by absolute
+`/Users/jose/` path, so that path assumption travels with it.
+
+### 7. `~/.nix-profile` is dangling, and `shell.nix` puts it on PATH
+
+`~/.nix-profile` points at `~/.local/state/nix/profiles/profile`, which does
+not exist. Meanwhile `nix/home/shell.nix:231` ends with:
+
+```sh
+export PATH="/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH"
+```
+
+That middle entry resolves to nothing. Harmless today because
+`/run/current-system/sw/bin` carries everything, but the line is misleading
+and `verify.sh:46` accepts `$HOME/.nix-profile/bin/*` as a valid Nix path in a
+case that can now never match.
+
+Either remove the entry or fix the profile link. Do not leave it as is: the
+next person to debug a PATH problem will lose time on it.
+
+### 8. Two declared casks whose apps are gone
 
 | Cask | Caskroom record | App | State |
 |---|---|---|---|
@@ -339,21 +377,89 @@ and `defaults write` cannot set them. Not declarable.
 
 ---
 
+---
+
+## Tier 4: home directory config
+
+125 dot entries at the top level of `$HOME`, 35 in `~/.config`. Of those, 7
+plus 7 are already managed and verified intact, including the dual
+`karabiner.edn` link that `default.nix` documents as load-bearing for goku.
+
+The 215 MB in `~/.config` is three directories (`gcloud` 91 M, `raycast`
+91 M, `yarn` 32 M), all credentials and payloads. **Actual config in
+`~/.config` totals under 250 KB.** Size was a red herring.
+
+### Candidates with a home-manager module
+
+| Path | Tool | Option |
+|---|---|---|
+| `~/.claude/{settings.json,CLAUDE.md,notify.sh,agents,commands,skills}` | Claude Code | `programs.claude-code.*` |
+| `~/Library/Application Support/Code/User/settings.json` | VS Code | `programs.vscode.profiles.default.userSettings` |
+| `…/keybindings.json`, `…/snippets/`, `…/mcp.json` | VS Code | `keybindings`, `languageSnippets`, `userMcp` |
+| `~/.vscode/extensions/` (55 extensions, 1.6 GB) | VS Code | `…extensions`, declare the list not the payload |
+| `~/.codex/{config.toml,AGENTS.md,hooks.json}` | Codex CLI | `programs.codex.*` |
+| `~/.config/gh/config.yml` | GitHub CLI | `programs.gh.settings` |
+| `~/.config/htop/htoprc` | htop | `programs.htop.settings` |
+
+Only declare the small files under `~/.claude`, not the 367 MB of project
+history and telemetry. Same for `~/.codex`, where 1.1 GB is sqlite logs.
+
+`programs.htop.settings` has the same tradeoff as alacritty: htop rewrites
+`htoprc` on quit, so declaring it makes the file read-only and htop can no
+longer persist UI changes.
+
+### Modules that would replace config already hand-written here
+
+Cheaper than the rows above, because the config already exists in this repo
+and would shrink:
+
+- **`programs.fzf`.** `shell.nix` currently sets five `FZF_*` variables through
+  `sessionVariables` plus a manual `eval "$(fzf --zsh)"`, with a comment
+  explaining a quoting workaround. The module sets all of them natively and the
+  workaround disappears. `fzf` is already in `packages.nix`. Best value-per-line
+  in this section.
+- `programs.btop`, `programs.ranger`: both tools are declared with no config
+  yet. Nothing to migrate today, worth knowing for when they get configured.
+- `programs.java` would replace the hand-set `JAVA_HOME` in `shell.nix`, but it
+  points `JAVA_HOME` at a nixpkgs JDK rather than the system one. That is a
+  behavior change, not a capture. Only do it if moving the JDK to Nix is the
+  actual goal.
+
+### The five loose files, individually
+
+Each turned out different, and three of the five are not what they look like:
+
+| File | Verdict |
+|---|---|
+| `~/.mailmap` | **Declare it.** 6 hand-written author mappings for Converge colleagues including 3 of Jose's own identities. Currently **inert**: `git config --global --get mailmap.file` exits 1, so git never reads it. Needs `home.file` plus `programs.git.settings.mailmap.file`. Declaring it makes it work for the first time. |
+| `~/.gitignore_global` | **Delete.** Fully superseded by `programs.git.ignores`, which already generates byte-identical content at `~/.config/git/ignore`. Confirmed inert. |
+| `~/.npmrc` | **Split, do not commit.** Contains a live `_authToken` for `registry.marmelab.com`. The registry lines belong in `programs.npm.npmrc`; the token belongs in `~/.secrets` or `NPM_TOKEN`. Also carries a stale `python=/opt/homebrew/bin/python3` now that `python314` comes from nixpkgs. |
+| `~/.yarnrc` | **Leave alone.** Autogenerated, self-declares "DO NOT EDIT". `programs.yarn` does **not** apply: it writes `.yarnrc.yml` for Yarn Berry, a different file in a different format. |
+| `~/.prettierrc` | Empty config, `{"plugins": [], "overrides": []}`. Completeness only. |
+
+### Also worth knowing
+
+- `~/.config/wireshark/preferences` is 225 KB but mostly a default dump. Diff
+  before declaring; probably not worth it.
+- iTerm2 preferences (28 KB) have no home-manager module. The clean route is
+  iTerm2's own "load preferences from a custom folder" plus a `defaults write`.
+  Real work, moderate payoff, and Alacritty is the primary terminal.
+- Amethyst's and Karabiner's plists are redundant with the already-declared
+  `.amethyst.yml` and `.edn`. Leave both alone.
+- 16 credential files were catalogued and are listed in the source audit. None
+  belong in the repo. The notable one is `~/.npmrc` above, because it is the
+  only credential mixed into a file that also holds real config.
+
+---
+
 ## Not yet reported
 
-Three audits are still outstanding and this document should not be read as
-complete without them:
+Two audits are still outstanding:
 
-- **`~/.config` per-entry classification.** 215 MB, not enumerated. The most
-  likely source of further `programs.*` wins.
-- **Global package managers** beyond the spot check that found `composer
-  global` has `takeout` and `~/.gem` has user gems.
-- **VS Code extensions**, a concrete `programs.vscode` win, and JetBrains.
-- **Docker/OrbStack, kube, and cloud CLI state.**
-
-Small config files sitting untracked in `$HOME` that are near-certain
-candidates: `~/.gitignore_global` (absorbable straight into `programs.git`),
-`~/.mailmap`, `~/.prettierrc`, `~/.npmrc`, `~/.yarnrc`.
+- **Global package managers.** Spot check found `composer global` has
+  `takeout` and `~/.gem` has user gems; not enumerated properly.
+- **Language runtimes, Docker/cloud state, and the VS Code extension ID list.**
+  The extension count is known (55), the IDs are not.
 
 ---
 
@@ -361,9 +467,13 @@ candidates: `~/.gitignore_global` (absorbable straight into `programs.git`),
 
 Not reproducibility, but the disk is at 97% and this surfaced during the audit.
 
+### Caches and state (safe to clear, will regenerate)
+
 | Path | Size |
 |---|---|
-| `~/.cache` | 34 GB |
+| `~/.cache` | **34 GB** |
+| `~/.npm` | **29 GB** |
+| `~/.Trash` | **19 GB** |
 | `~/.m2` | 3.9 GB |
 | `~/.android` | 3.7 GB |
 | `~/.local` | 2.1 GB |
@@ -371,36 +481,70 @@ Not reproducibility, but the disk is at 97% and this surfaced during the audit.
 | `~/.docker` | 1.8 GB |
 | `~/.codex` | 1.1 GB |
 | `~/.minikube` | 785 MB |
-| `~/.homebridge` | 401 MB (Homebridge is not installed) |
 | `~/.bun` | 384 MB |
-| `~/.claude` | 368 MB |
 
-Orphaned state from software that is gone: `.eclipse`, `.p2`, `.sts4`,
-`.oracle_jre_usage`, `.knime`, `.putty`, `.vnc`, `.mono`, `.redhat`,
-`.ServiceHub`, `.templateengine`, `.installbuilder`, `.nemo`, `.ipython`,
-three copies of `.cursor-tutor` (Cursor is not installed), `.vim` and
-`.viminfo`.
+Those top three are **82 GB**. Emptying the Trash alone reclaims 19 GB, and
+`npm cache clean --force` another 29 GB, with no consequence beyond slower
+first installs. Against 44 GB free on a 927 GB disk, this is the fastest
+possible win and needs no config change at all.
 
-Cruft: seven stale `.zcompdump*` files including one from a previous hostname
-`jose-m1.local`, two `.zshrc` backups, three `.claude.json` backup and temp
-files.
+### Orphaned by uninstalled software
 
-`~/.cache` alone takes the disk from 97% to about 93%.
+| Path | Left behind by | Size |
+|---|---|---|
+| `~/.ScreamingFrogSEOSpider` | Screaming Frog, app absent | **1.6 GB** |
+| `~/.homebridge/homebridge.log` | Homebridge, unrotated and **still growing** | **396 MB** |
+| `~/.sts4` | Spring Tools 4 | 11 MB |
+| `~/.cursor-tutor` ×3 | Cursor tutorial, Cursor not installed | 1.5 MB |
+| `~/.ServiceHub`, `~/.config/Microsoft*`, `~/.config/xbuild` | Visual Studio for Mac, discontinued | 2 MB |
+
+Note the Homebridge log implies **Homebridge is still running**, via a
+brew-installed `hb-service` that is not declared in `configuration.nix`. That
+is a second undeclared service alongside goku, and the log needs rotation
+regardless.
+
+Smaller orphans: `.zowe`, `.gk`, `.continue`, `.zlua`, `.putty`, `.knime`,
+`.vnc`, `.vim`, `.viminfo`, `.hgignore_global`, `.gitflow_export` (points at
+an uninstalled Sourcetree), `~/.config/fish/` (a conda block plus dead Fig
+hooks), `~/.config/bpytop/` (replaced by btop), `~/.config/github-copilot/`,
+`~/.config/git/ignore.hm-bak` (migration leftover), and the AeroSpace pair.
+
+**`~/.tcshrc` and `~/.xonshrc` both contain `conda init` blocks** pointing at
+the deleted `~/anaconda3`. Same class as the `~/.bash_profile` removed on
+2026-08-09 and missed at the time because only bash and zsh were checked.
+
+Cruft: six stale `.zcompdump*` files including one from a **different machine**
+(`jose-m1.local`), two `.zshrc` backups, three `.claude.json` backup and temp
+files (one of them 0 bytes).
 
 ---
 
 ## Suggested order
 
-1. **Tier 1 items 1 and 2.** goku is a live regression with a known fix.
-2. **Tier 1 items 4, 5, 6.** Small edits that make a fresh machine viable,
-   plus a decision on barrier and drawio.
+**Free, immediate, no config change:** empty the Trash and run `npm cache
+clean --force`. 48 GB, zero risk. Do this first regardless of everything else.
+
+Then:
+
+1. **Tier 1 items 1, 2, 6.** goku and `notify.sh` are both live regressions
+   where declared config depends on something that is gone or was never
+   declared. Item 2 is a one-line deletion.
+2. **Tier 1 items 4, 5, 7, 8.** Small edits that make a fresh machine viable,
+   plus decisions on barrier/drawio and the dangling `.nix-profile` PATH entry.
 3. **`karabiner-elements`, `hammerspoon`, `shottr`.** Highest value per line:
-   config or login-item entries already exist, the apps do not.
-4. **The macOS Dock settings.** Second-biggest single gap, one block of config.
-5. **The remaining casks**, in batches, verifying each activation.
-6. **`masApps`**, after resolving the OneDrive duplicate.
-7. **The activation-script settings**, carefully, given the `-dict-add`
+   config or login-item entries already exist here, the applications do not.
+4. **`programs.fzf` and `~/.mailmap`.** Both small. fzf deletes existing config
+   rather than adding any; mailmap starts working for the first time.
+5. **The macOS Dock settings.** Biggest single settings gap, one block.
+6. **The remaining casks**, in batches, verifying each activation.
+7. **`programs.vscode`**, once the extension IDs are resolved.
+8. **`masApps`**, after resolving the OneDrive duplicate.
+9. **The activation-script settings**, carefully, given the `-dict-add`
    requirement.
+
+A cleanup pass on the junk list is worth folding in wherever convenient; none
+of it is urgent, but `~/.tcshrc` and `~/.xonshrc` should go with the rest of
+the anaconda removal since they were missed the first time.
 
 Casks are low risk to add in batches: `homebrew.onActivation.cleanup` is
 `"none"`, so declaring an already-installed app is a no-op rather than a

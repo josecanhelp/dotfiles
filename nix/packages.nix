@@ -113,8 +113,8 @@ in
   #
   # Also intentionally dropped, with no brew formula left behind:
   #   nvm            No nixpkgs equivalent by design. nodejs_22 is global;
-  #                  use devshells for per-project versions. ~/.nvm remains
-  #                  on disk, unused.
+  #                  use devshells for per-project versions. ~/.nvm was
+  #                  deleted on 2026-08-09; nothing references it.
   #   python@3.10    Removed from nixpkgs 26.05.
   #   bpytop, sha2   Superseded by btop and coreutils respectively.
   environment.systemPackages =
