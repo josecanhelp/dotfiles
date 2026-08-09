@@ -245,8 +245,11 @@ follows is the remainder, each re-verified against the current tree on
   `openanything` sent a bare `r` to Eclipse and a bare `o` to PhpStorm and
   Xcode instead of Cmd+Shift. Lines `750,771` passed `{ '' }` where `{}`
   was meant; harmless, but now consistent with the other 12 uses.
-- **Amethyst binds `mod1+t` twice**, to `toggle-float` (`amethyst.yml:239`)
-  and `toggle-tiling` (`:249`). Last parsed wins; the other is dead.
+- ~~**Amethyst binds `mod1+t` twice.**~~ **Fixed 2026-08-09.**
+  `toggle-float` keeps `mod1+t`; `toggle-tiling` moved to `mod2+t`, which
+  is also Amethyst's own default for that action. Note this may change
+  what `mod1+t` does for you, since it was previously ambiguous which of
+  the two won registration.
 - **`select-bsp-layout` is bound** (`amethyst.yml:224`) but `bsp` is not in
   the active `layouts` list, so the binding does nothing.
 
@@ -270,8 +273,9 @@ follows is the remainder, each re-verified against the current tree on
   `bundleId` (683), plus all 16 functions in `helpers.lua`.
 - `hammerspoon/chain.lua:30` reads `lastSeenAt` before it is assigned at
   `:39`. Works only because Lua returns nil for undeclared globals.
-- `zsh/custom/functions.zsh:8` `openpr()` rewrites git remotes to `http://`
-  rather than `https://`.
+- ~~`openpr()` rewrites git remotes to `http://`.~~ **Fixed 2026-08-09.**
+  Now `https://`, and its three variables are `local` rather than leaking
+  into the interactive shell.
 - `programs.git` sets no commit signing.
 
 ---

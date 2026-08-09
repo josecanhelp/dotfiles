@@ -5,7 +5,8 @@ function mkd() {
 
 # Open the pull request url for your current directory's branch (base branch defaults to main)
 function openpr() {
-  github_url=`git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#http://#' -e 's@com:@com/@' -e 's%\.git$%%' | awk '/github/'`;
+  local github_url branch_name pr_url
+  github_url=`git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#https://#' -e 's@com:@com/@' -e 's%\.git$%%' | awk '/github/'`;
   branch_name=`git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3,4`;
   pr_url=$github_url"/compare/main..."$branch_name
   open $pr_url;

@@ -246,8 +246,11 @@ display-current-layout:
   key: i
 
 # Turn on or off tiling entirely.
+# mod2, not mod1: mod1+t is toggle-float above, and two actions on one combo
+# means whichever Amethyst registers last silently wins. mod2+t is also
+# Amethyst's own default for this action.
 toggle-tiling:
-  mod: mod1
+  mod: mod2
   key: t
 
 # Rerun the current layout's algorithm.
