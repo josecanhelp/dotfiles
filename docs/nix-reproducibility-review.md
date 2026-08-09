@@ -205,11 +205,51 @@ Worth writing down so nobody "fixes" these later:
 
 - `~/.secrets`, sourced from `programs.zsh.initContent` in `nix/home/shell.nix`,
   correctly outside the repo
-- `~/.ssh/config`, `~/.aws/config`, `~/.docker/config.json` — machine and
+- `~/.ssh/config`, `~/.aws/config`, `~/.docker/config.json`: machine and
   credential specific
-- `~/.zprofile` — untracked, bracketed by Amazon Q blocks that say to
+- `~/.zprofile`, untracked, bracketed by Amazon Q blocks that say to
   leave them at top and bottom
 - The 289 non-terminal fonts in `~/Library/Fonts`
+
+---
+
+## Known issues, not yet fixed
+
+Carried over from a May 2026 review of the pre-Nix repo. Everything that
+review found in `zsh/zshrc`, `nvim/lua/js/`, `install`, `install.conf.yaml`,
+and `tmux.conf` is moot, because the migration deleted those files. What
+follows is the remainder, each re-verified against the current tree on
+2026-08-09.
+
+### Real bugs
+
+- **Hammerspoon hotkeys silently do nothing.** `hammerspoon/init.lua:666,673`
+  pass `{ 'cmd, shift' }`, a single string, where `hs.eventtap.keyStroke`
+  expects `{ 'cmd', 'shift' }`. Neither modifier is applied. Lines `750,771`
+  pass `{ '' }` where an empty `{}` is meant.
+- **Amethyst binds `mod1+t` twice**, to `toggle-float` (`amethyst.yml:239`)
+  and `toggle-tiling` (`:249`). Last parsed wins; the other is dead.
+- **`select-bsp-layout` is bound** (`amethyst.yml:224`) but `bsp` is not in
+  the active `layouts` list, so the binding does nothing.
+
+### Cleanup
+
+- `hammerspoon/experimental.lua` is entirely commented-out dead code.
+- `karabiner/karabiner.edn.bak` is a stale backup.
+- `raycast-scripts/` is empty.
+- `hammerspoon/init.lua:137,143` reference React Native Debugger and Paw;
+  Paw has been EOL since 2022.
+
+### Fragile, works today
+
+- Globals leaking to `_G` in `hammerspoon/init.lua`: `positions` (434),
+  `lrsplits`/`tbsplits` (473, 474), `currentLayout`/`layouts` (570, 572),
+  `bundleId` (683), plus all 16 functions in `helpers.lua`.
+- `hammerspoon/chain.lua:30` reads `lastSeenAt` before it is assigned at
+  `:39`. Works only because Lua returns nil for undeclared globals.
+- `zsh/custom/functions.zsh:8` `openpr()` rewrites git remotes to `http://`
+  rather than `https://`.
+- `programs.git` sets no commit signing.
 
 ---
 

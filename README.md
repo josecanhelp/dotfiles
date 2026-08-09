@@ -147,6 +147,5 @@ Karabiner's config is written as `karabiner/karabiner.edn` and compiled into the
 
 ## Notes to self
 
-- `docs/nix-reproducibility-review.md` tracks what is still not declarative.
-- `docs/dotfiles-review.md` is an older audit with findings still worth working through.
-- `docs/superpowers/specs/` and `docs/superpowers/plans/` hold the migration specs and plans.
+- `docs/nix-reproducibility-review.md` tracks what is still not declarative, plus known issues not yet fixed.
+- `docs/keyboard-workflow.md` explains the Karabiner and Hammerspoon layering.
