@@ -32,7 +32,7 @@
     # on `! -L`, so an existing SYMLINK is never backed up and activation
     # fails with "would be clobbered". Delete conflicting symlinks by hand.
     backupFileExtension = "hm-bak";
-    users.jose = import ./home.nix;
+    users.jose = import ./home;
   };
 
   # programs.alacritty in nix/home.nix hard-requires "FiraCode Nerd Font

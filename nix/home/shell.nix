@@ -1,81 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 
-let
-  dotfiles = "${config.home.homeDirectory}/dotfiles";
-  # Out-of-store symlink: points at the live repo, so edits take effect
-  # immediately with no rebuild. A plain `source = ./path` would copy into
-  # /nix/store and make the file read-only.
-  link = path: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${path}";
-in
 {
-  home.stateVersion = "26.05";
-
-  # XDG is off by default on darwin. Without this, every xdg.configFile
-  # entry below silently does nothing.
-  xdg.enable = true;
-
-  home.file = {
-    ".tmux.conf".source = link "tmux.conf";
-    # tpm writes plugins/ here, so it must stay out-of-store.
-    ".tmux".source = link "tmux";
-    # Hammerspoon writes Spoons/ here.
-    ".hammerspoon".source = link "hammerspoon";
-    ".amethyst.yml".source = link "amethyst/amethyst.yml";
-    ".hushlogin".source = link "hushlogin";
-    ".bin".source = link "bin";
-  };
-
-  xdg.configFile = {
-    # lazy.nvim writes lazy-lock.json here.
-    "nvim".source = link "nvim";
-    # Linked to both paths because goku searches both. Dropping either one
-    # silently stops the .edn from compiling to karabiner.json.
-    "karabiner.edn".source = link "karabiner/karabiner.edn";
-    "karabiner/karabiner.edn".source = link "karabiner/karabiner.edn";
-  };
-
-  programs.git = {
-    enable = true;
-    # Generates the entire [filter "lfs"] block.
-    lfs.enable = true;
-    # Writes ~/.config/git/ignore, which git reads via XDG. This replaces
-    # ~/.gitignore_global, which was never tracked in this repo and would
-    # be missing on a new machine. core.excludesfile is dropped, not
-    # repointed, because it hardcoded /Users/jose.
-    ignores = [
-      ".DS_Store"
-      ".vscode/*"
-      ".secrets"
-      "CLAUDE.md"
-      "scratch*.md"
-      "**/.claude/settings.local.json"
-    ];
-    # `settings` is the current option. userName, userEmail and extraConfig
-    # were renamed into it; the compatibility shims still work but emit a
-    # deprecation trace on every rebuild.
-    settings = {
-      user = {
-        name = "Jose Soto";
-        email = "josecanhelp@gmail.com";
-      };
-      github.user = "josecanhelp";
-      init.defaultBranch = "main";
-      pull.rebase = false;
-      color.ui = "auto";
-      status.short = true;
-      help.autocorrect = 1;
-      core.editor = "vim";
-      credential.helper = "osxkeychain";
-      mergetool = {
-        prompt = false;
-        keepBackup = false;
-      };
-      # Percent signs are literal in Nix, but keep this on one line so the
-      # colour codes are not broken by wrapping.
-      format.pretty = "format:%Cblue%h%Creset %Creset%Cgreen%cn, %cr%Creset : %s%Creset%C(red)%d%Creset";
-    };
-  };
-
   programs.starship = {
     enable = true;
     # Adds the init line to the .zshrc home-manager generates. This only
@@ -111,53 +36,6 @@ in
       conda = {
         format = "[$symbol$environment](dimmed green) ";
         symbol = "🅒 ";
-      };
-    };
-  };
-
-  programs.alacritty = {
-    enable = true;
-    # Alacritty itself comes from the Homebrew cask. `package = null` is
-    # supported (the option is declared nullable) and installs nothing,
-    # while still writing the config file.
-    #
-    # Do NOT use `enable = false` here: the module body is wrapped in
-    # `lib.mkIf cfg.enable`, so disabling it writes no config at all.
-    package = null;
-    settings = {
-      general = {
-        # Do NOT use the module's `theme` option here. With `package = null`
-        # it evaluates `cfg.package.version` unguarded and dies with
-        # "expected a set but found null" (alacritty.nix:95). The module's
-        # own docs point at settings.general.import for this case.
-        #
-        # Comes from nixpkgs and is versioned by flake.lock, so a fresh
-        # clone resolves it. The theme used to be a gitignored git clone
-        # under alacritty/, which by definition was never reproducible.
-        import = [
-          "${pkgs.alacritty-theme}/share/alacritty-theme/seashells.toml"
-        ];
-        # Boolean, and under [general]. The hand-written TOML this replaced
-        # had it stranded under [env] with no table header, so it parsed as
-        # env.live_config_reload = "true" (a string) and never worked.
-        live_config_reload = true;
-      };
-      env.TERM = "alacritty";
-      font = {
-        size = 16;
-        normal.family = "FiraCode Nerd Font Mono";
-        bold.style = "Regular";
-        glyph_offset.y = 7;
-        offset.y = 12;
-      };
-      window = {
-        decorations = "Full";
-        dynamic_padding = true;
-        padding = { x = 0; y = 0; };
-      };
-      terminal.shell = {
-        program = "/bin/zsh";
-        args = [ "-l" "-c" "tmux attach || tmux" ];
       };
     };
   };
@@ -309,7 +187,14 @@ in
         fpath=(${config.home.homeDirectory}/.docker/completions $fpath)
       '')
 
-      ''
+      # mkOrder 1100, not a bare string. programs.starship contributes its
+      # init snippet to zsh.initContent at the default priority 1000 with no
+      # mkOrder of its own. A bare string here is also 1000, so the two tie
+      # and the winner is decided by module-encounter order, which changes
+      # if this module's position in the imports tree ever moves. 1100 puts
+      # starship first deterministically, matching the pre-split output, and
+      # stays below the mkAfter block's 1500.
+      (lib.mkOrder 1100 ''
         source $HOME/dotfiles/zsh/custom/functions.zsh
 
         zstyle ':completion:*' verbose yes
@@ -331,7 +216,7 @@ in
         bindkey '^e' edit-command-line
 
         eval "$(fzf --zsh)"
-      ''
+      '')
 
       (lib.mkAfter ''
         export PATH=''${PATH}:~/.composer/vendor/bin
