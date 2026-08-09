@@ -16,7 +16,6 @@
 require('helpers')
 require('appBundles')
 local chain = require('chain')
-require('experimental')
 
 ----------------------------------------------------------------------------------------------------
 -- Local State

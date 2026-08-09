@@ -252,9 +252,14 @@ follows is the remainder, each re-verified against the current tree on
 
 ### Cleanup
 
-- `hammerspoon/experimental.lua` is entirely commented-out dead code.
-- `karabiner/karabiner.edn.bak` is a stale backup.
-- `raycast-scripts/` is empty.
+- ~~`hammerspoon/experimental.lua`~~, ~~`karabiner/karabiner.edn.bak`~~,
+  ~~`raycast-scripts/`~~. **Done 2026-08-09.** `experimental.lua` was 14
+  lines of fully commented-out code but was still `require`d from
+  `init.lua`, so the file and the require had to go together. The stale
+  `.bak` was from April 2025 and its camelCase `:hs` handler names no
+  longer matched `init.lua`'s lowercase `urlevent.bind` names. Note that
+  `karabiner/format` regenerates a `.bak` on every run by design, so the
+  `.gitignore` entry stays. `raycast-scripts/` was already gone.
 - `hammerspoon/init.lua:137,143` reference React Native Debugger and Paw;
   Paw has been EOL since 2022.
 
