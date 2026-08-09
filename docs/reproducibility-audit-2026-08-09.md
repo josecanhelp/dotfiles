@@ -18,7 +18,9 @@
 | **Declared but the app is missing** | **2** |
 
 Plus 16 macOS settings that are deliberate, undeclared, and expressible in
-nix-darwin, and five things that are already broken or break on next boot.
+nix-darwin, 54 undeclared VS Code extensions, and **nine** things that are
+already broken or that break on a fresh machine. Three of the nine are
+launchd jobs failing silently right now.
 
 ## Confidence
 
@@ -37,37 +39,66 @@ An earlier draft of this document claimed the 13 declared casks exactly
 matched the 13 installed, with no drift. **That was wrong**, and the way it
 was wrong is instructive: comparing Caskroom directory names to the declared
 list only proves Homebrew's *records* agree with the config. It says nothing
-about whether the applications still exist. See Tier 1 item 6.
+about whether the applications still exist. See Tier 1 item 9.
+
+The goku finding was corrected the same way. A first pass read a live PID as
+"still working, dies at reboot." Reading the job's actual child process and log
+showed it has been failing for days. Both corrections came from checking the
+thing itself rather than a proxy for it.
 
 ---
 
 ## Tier 1: broken, or breaks on a fresh machine
 
-### 1. The goku LaunchAgent is running on borrowed time
+### 1. goku is already broken, not "will break"
 
 `~/Library/LaunchAgents/homebrew.mxcl.goku.plist` runs
-`/opt/homebrew/opt/goku/bin/gokuw`, which no longer exists. The packages
-migration moved goku to Nix and removed the Homebrew formula.
+`/opt/homebrew/opt/goku/bin/gokuw`, which the packages migration deleted along
+with the formula.
 
-`launchctl list` shows it with PID 7508, so it is running right now. It
-survives only because the process started at login while the old binary still
-existed. **It will not come back after the next reboot.**
+`launchctl` shows PID 7508 alive, and a first pass read that as "still working,
+dies at next reboot." **That reading was wrong.** The supervisor survives, but
+it is not doing its job. Its child is
+`watchexec -r -e edn -w ~/.config/karabiner.edn goku`, whose environment is:
 
-`gokuw` watches `karabiner.edn` and recompiles it into the `karabiner.json`
-that Karabiner-Elements actually reads. Without it, edits to `karabiner.edn`
-silently stop taking effect and `goku` must be run by hand.
+```
+PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin
+```
 
-Nix already provides it at `/run/current-system/sw/bin/gokuw`. Fix by
-declaring it and deleting the Homebrew plist:
+No `/run/current-system/sw/bin`, so the Nix goku is unreachable from that job.
+`~/Library/Logs/goku.log` is a wall of the consequence:
+
+```
+/opt/homebrew/opt/goku/bin/gokuw: line 2: watchexec: command not found
+```
+
+So auto-compilation of `karabiner.edn` is dead **now**. The reboot only removes
+the last cosmetic evidence.
+
+Note the practical impact is currently latent rather than visible:
+`karabiner.edn` has not been edited since 2026-01-01, and `karabiner.json` was
+compiled 2026-08-06, so the two agree today. The breakage bites on the *next*
+edit, which would silently do nothing.
+
+There is also a **duplicate registration**: a root-owned
+`/Library/LaunchDaemons/homebrew.mxcl.goku.plist` (916 B, Apr 2025) in a
+failing respawn loop, `last exit code = 78: EX_CONFIG`. Nothing should have
+registered goku as a system daemon. Delete it.
+
+The fix must set PATH explicitly, because `gokuw` is a two-line shell wrapper
+that calls both `watchexec` and `goku` by bare name. Declaring only the program
+path reproduces the same failure with prettier paths. Both binaries are in Nix
+(`/run/current-system/sw/bin/watchexec` confirmed present):
 
 ```nix
 launchd.user.agents.goku = {
-  command = "${pkgs.goku}/bin/gokuw";
   serviceConfig = {
-    KeepAlive = true;
+    ProgramArguments = [ "${pkgs.goku}/bin/gokuw" ];
     RunAtLoad = true;
-    StandardOutPath = "/tmp/goku.out.log";
-    StandardErrorPath = "/tmp/goku.err.log";
+    KeepAlive = true;
+    StandardErrorPath = "/Users/jose/Library/Logs/goku.log";
+    EnvironmentVariables.PATH =
+      "${pkgs.goku}/bin:${pkgs.watchexec}/bin:/usr/bin:/bin";
   };
 };
 ```
@@ -78,7 +109,35 @@ launchd.user.agents.goku = {
 `/opt/homebrew/opt/php@8.1/sbin/php-fpm`, removed in the migration. Not
 loaded. php is now 8.3.32 from Nix. The plist is inert and should be deleted.
 
-### 3. Dangling `~/.aerospace.toml`
+### 3. A third broken launchd job, from our own tmux migration
+
+`Tmux.Start.plist` is registered in the user domain with **no file in
+`~/Library/LaunchAgents`**, because tmux-continuum registers it dynamically.
+A directory listing misses it entirely. `launchctl list` shows
+`LastExitStatus = 1`, failing at every login.
+
+Its target is
+`~/.tmux/plugins/tmux-continuum/scripts/handle_tmux_automatic_start/osx_alacritty_start_tmux.sh`,
+a tpm path. `~/.tmux/` now contains only `resurrect/`; the whole `plugins/`
+tree went away when tpm was retired and plugins moved to nixpkgs.
+
+Meanwhile `nix/home/tmux.nix:51-52` still declares:
+
+```
+set -g @continuum-boot 'on'
+set -g @continuum-boot-options 'alacritty,fullscreen'
+```
+
+So the declared config asks continuum to register a boot agent, and a stale
+tpm-era registration is what actually sits in launchd. Either re-register from
+the nixpkgs plugin path or drop `@continuum-boot`, but the current state is a
+login-time failure nobody sees.
+
+**All three broken jobs share a root cause worth noting:** `brew services list`
+returns empty with exit 0. No `brew` command surfaces any of them, which is
+exactly why they went unnoticed through the whole migration.
+
+### 4. Dangling `~/.aerospace.toml`
 
 Symlink dated 2025-08-13 pointing at
 `/Users/jose/dotfiles/aerospace/aerospace.toml`, deleted when AeroSpace was
@@ -89,7 +148,7 @@ The general lesson matters more than this one file: **dotbot-era symlinks in
 `$HOME` are invisible to home-manager.** Anything dotbot linked that
 home-manager does not now declare will dangle forever with no warning.
 
-### 4. Four Homebrew formulae are used but not declared
+### 5. Four Homebrew formulae are used but not declared
 
 `brew leaves --installed-on-request` and the `homebrew.brews` list in
 `configuration.nix` are **disjoint sets**.
@@ -103,7 +162,7 @@ Declared but absent from `brew leaves`: `themekit`, `ecsplorer`,
 `msodbcsql17`. These are fine. `brew leaves` omits third-party tap formulae,
 the same blind spot that hid tools from an earlier audit.
 
-### 5. Hostname is assumed, never set
+### 6. Hostname is assumed, never set
 
 `flake.nix` keys its configuration on `REM-JoseS-MBP1` and
 `scutil --get ComputerName` returns that today, but `configuration.nix` has no
@@ -123,7 +182,7 @@ Caveat: the `REM-` prefix suggests corporate MDM assigns this name. Declaring
 it is harmless if MDM agrees and will fight MDM if IT ever renames the
 machine. Worth a comment in the config.
 
-### 6. The declared tmux config depends on an undeclared file
+### 7. The declared tmux config depends on an undeclared file
 
 `nix/home/tmux.nix:106-108` declares:
 
@@ -144,7 +203,7 @@ as a plain `home.file`. The lighter route is fine; what matters is that the
 two halves ship together. Note `settings.json` also references it by absolute
 `/Users/jose/` path, so that path assumption travels with it.
 
-### 7. `~/.nix-profile` is dangling, and `shell.nix` puts it on PATH
+### 8. `~/.nix-profile` is dangling, and `shell.nix` puts it on PATH
 
 `~/.nix-profile` points at `~/.local/state/nix/profiles/profile`, which does
 not exist. Meanwhile `nix/home/shell.nix:231` ends with:
@@ -153,15 +212,26 @@ not exist. Meanwhile `nix/home/shell.nix:231` ends with:
 export PATH="/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH"
 ```
 
-That middle entry resolves to nothing. Harmless today because
-`/run/current-system/sw/bin` carries everything, but the line is misleading
-and `verify.sh:46` accepts `$HOME/.nix-profile/bin/*` as a valid Nix path in a
-case that can now never match.
+That middle entry resolves to nothing.
 
-Either remove the entry or fix the profile link. Do not leave it as is: the
-next person to debug a PATH problem will lose time on it.
+**Do not "fix" this by recreating the profile.** The dangling link is expected:
+`configuration.nix:29` sets `home-manager.useUserPackages = true`, which
+installs home-manager packages into `/etc/profiles/per-user/$USER` rather than
+`~/.nix-profile`. That directory exists, is populated, and is already on PATH.
+`/nix/var/nix/profiles/per-user/jose` is absent for the same reason.
 
-### 8. Two declared casks whose apps are gone
+So nothing is broken; the PATH entry is simply vestigial. zsh does not error on
+nonexistent PATH directories. The correct cleanup is to drop it, leaving:
+
+```sh
+export PATH="/run/current-system/sw/bin:$PATH"
+```
+
+which still satisfies the "Nix must win over Homebrew" intent documented above
+it. `verify.sh:46` also accepts `$HOME/.nix-profile/bin/*` as a valid Nix path
+in a case that can never match, and can lose that branch too.
+
+### 9. Two declared casks whose apps are gone
 
 | Cask | Caskroom record | App | State |
 |---|---|---|---|
@@ -452,14 +522,108 @@ Each turned out different, and three of the five are not what they look like:
 
 ---
 
+---
+
+## Tier 5: runtimes, editors, services
+
+### Runtimes that are declared and working
+
+php 8.3.32, node 22.23.1, python 3.14.6, dotnet 9.0.316, maven, minikube,
+helm, gcloud, azure-cli, mariadb, redis: all from Nix, all declared. Ruby
+correctly falls through to the system 2.6.10 per the documented exception.
+
+### Runtimes that are not
+
+| Tool | Source | Issue |
+|---|---|---|
+| **Java 17** | manual Oracle installer | `shell.nix:78` hard-codes `JAVA_HOME=/Library/Java/.../jdk-17.jdk`, a path **Nix does not create**. A fresh machine gets a dangling `JAVA_HOME`. Six JVMs are installed; `java_home` defaults to 22 while the config forces 17. |
+| **Go 1.22.1** | golang.org pkg | `/usr/local/go`, on PATH via `/etc/paths.d/go` |
+| **Composer 2.6.5** | loose phar, Oct 2023 | Nearly three years old, and this is a Laravel-primary machine. `php83Packages.composer` is in nixpkgs |
+| **AWS CLI 2.24.15** | AWS pkg installer | **Mach-O x86_64, running under Rosetta.** `nixpkgs.awscli2` is both a declaration win and a native-arch win |
+| **AWS SAM CLI** | AWS pkg installer | `nixpkgs.aws-sam-cli` exists |
+| **AWS CDK** | yarn global | outside both Nix and Homebrew, and CDK is in the CLAUDE.md conventions |
+| **11 legacy .NET SDKs** | Microsoft pkg | 6.0.x and 7.0.x in `/usr/local/share/dotnet`, reachable only by absolute path |
+| **Docker Desktop** | direct download | provides `docker` and the compose plugin, no cask declared. Daemon not currently running |
+
+If `awscli2` moves to Nix, `shell.nix:206` hard-codes
+`complete -C '/usr/local/bin/aws_completer' aws` and must change to the store
+path or completion silently breaks.
+
+### Two live breakages in declared packages
+
+- **`npm ls -g` fails.** `nodejs_22` resolves to `nodejs-slim`, which omits the
+  npm lib tree, so global npm installs error with ENOENT on the store path.
+  A real consequence of the `nodejs_22` choice that the migration notes do not
+  mention.
+- **`/opt/homebrew/bin/pip` is broken.** Its shebang points at
+  `python@3.11`, which no longer exists. "bad interpreter."
+
+### Version managers: none
+
+nvm, rbenv, pyenv, jenv, sdkman, asdf, mise, volta, direnv: all absent.
+`~/.nvm` is genuinely gone, verified four ways.
+
+**A trap for anyone re-checking this:** a non-clean shell still shows
+`~/.nvm/versions/node/v20.19.1/bin`, `~/.rbenv/versions/bin`,
+`~/dotfiles/bin/google-cloud-sdk/bin`, `/opt/homebrew/opt/php@8.3/bin`, and
+`~/nvim-osx64/bin` in `$PATH`. **None of those directories exist.** It is
+inherited environment from processes started before the migration, not
+config. Always test with
+`env -i HOME=/Users/jose /bin/zsh -lic 'echo $PATH'`.
+
+Worth considering: `packages.nix` recommends devshells for per-project
+versions, but without `direnv` nothing enters them automatically.
+
+### VS Code: 54 extensions, none declared
+
+Neither the app nor its extensions are declared. `programs.vscode` handles
+`extensions`, `userSettings`, and `keybindings`.
+
+**Do not declare the current list verbatim.** It is heavily
+Java/Spring/.NET/mainframe weighted (`vscjava.*` ×7, `vmware.vscode-spring-boot`,
+`redhat.java`, `ibm.zopeneditor`, `zowe.*`, `ms-mssql.*`), which does not match
+a PHP/Laravel/Vue focus. And there is **no PHP extension at all** and no Vue
+extension. Declaring it faithfully would reproduce a stale, mismatched set.
+Prune first.
+
+Several IDs are marketplace-only and absent from `nixpkgs.vscode-extensions`,
+so a faithful declaration realistically needs the `nix-vscode-extensions` flake
+input. The full list is in the source audit.
+
+Also note home-manager makes `settings.json` a read-only store symlink by
+default, so in-app settings changes stop persisting.
+
+### Dead editor state
+
+**No JetBrains IDE is installed**, verified three ways, yet config remains for
+`IdeaIC2024.3`, `IntelliJIdea2024.3`, and `IntelliJIdea2023.2`. Not realistically
+declarable anyway (per-release versioned dirs, machine state mixed with
+preferences, no home-manager module). Delete or mark intentionally unmanaged.
+
+Sublime Text **is** installed and undeclared. Codex.app too. No Cursor, Zed,
+Windsurf, or VSCodium despite `~/.cursor-tutor` ×3 on disk.
+
+### Other services worth a decision
+
+- **Homebridge is running** via `/Library/LaunchDaemons/com.homebridge.server.plist`.
+  Correction to an earlier note: `hb-service` is **not** a brew formula. It is
+  an npm global (`homebridge-config-ui-x`) in brew's `node_modules`, so it
+  **cannot** be declared via `homebrew.brews`. It also runs on a **third** node
+  (`/usr/local/bin/node` v22.14.0, root-owned, from a nodejs.org pkg) and its
+  baked PATH is a fossil full of directories that no longer exist.
+- **FileZilla Server is running** an FTP daemon (PID 837). Worth a conscious
+  keep or remove decision.
+- **`de.beyondco.herd.helper`** is orphaned: Laravel Herd's app is gone, but
+  the privileged helper and support dir remain, including a bundled php82.
+
+---
+
 ## Not yet reported
 
-Two audits are still outstanding:
-
-- **Global package managers.** Spot check found `composer global` has
-  `takeout` and `~/.gem` has user gems; not enumerated properly.
-- **Language runtimes, Docker/cloud state, and the VS Code extension ID list.**
-  The extension count is known (55), the IDs are not.
+One audit is still outstanding: **global package managers**. A spot check found
+`composer global` has `takeout`, `~/.gem` has user gems, and yarn globals
+include `cdk`, `create-next-app`, `create-playwright`, `create-vite`, `cva`.
+Not enumerated properly, and nixpkgs availability not resolved.
 
 ---
 
@@ -526,20 +690,21 @@ clean --force`. 48 GB, zero risk. Do this first regardless of everything else.
 
 Then:
 
-1. **Tier 1 items 1, 2, 6.** goku and `notify.sh` are both live regressions
-   where declared config depends on something that is gone or was never
-   declared. Item 2 is a one-line deletion.
-2. **Tier 1 items 4, 5, 7, 8.** Small edits that make a fresh machine viable,
-   plus decisions on barrier/drawio and the dangling `.nix-profile` PATH entry.
-3. **`karabiner-elements`, `hammerspoon`, `shottr`.** Highest value per line:
+1. **The three broken launchd jobs (items 1, 2, 3).** goku is the only finding
+   where something the repo explicitly depends on is silently not working
+   today. Items 2 and 3 are cheap once you are in there.
+2. **Item 7, `notify.sh`.** Declared config depending on an undeclared file.
+3. **Items 4, 5, 6, 8, 9.** Small edits that make a fresh machine viable, plus
+   decisions on barrier/drawio and the vestigial `.nix-profile` PATH entry.
+4. **`karabiner-elements`, `hammerspoon`, `shottr`.** Highest value per line:
    config or login-item entries already exist here, the applications do not.
-4. **`programs.fzf` and `~/.mailmap`.** Both small. fzf deletes existing config
+5. **`programs.fzf` and `~/.mailmap`.** Both small. fzf deletes existing config
    rather than adding any; mailmap starts working for the first time.
-5. **The macOS Dock settings.** Biggest single settings gap, one block.
-6. **The remaining casks**, in batches, verifying each activation.
-7. **`programs.vscode`**, once the extension IDs are resolved.
-8. **`masApps`**, after resolving the OneDrive duplicate.
-9. **The activation-script settings**, carefully, given the `-dict-add`
+6. **The macOS Dock settings.** Biggest single settings gap, one block.
+7. **The remaining casks**, in batches, verifying each activation.
+8. **`programs.vscode`**, once the extension IDs are resolved.
+9. **`masApps`**, after resolving the OneDrive duplicate.
+10. **The activation-script settings**, carefully, given the `-dict-add`
    requirement.
 
 A cleanup pass on the junk list is worth folding in wherever convenient; none
