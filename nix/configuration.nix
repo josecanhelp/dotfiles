@@ -7,7 +7,8 @@
   nix.enable = false;
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.hostPlatform = "aarch64-darwin"; # use x86_64-darwin for Intel CPU
+  # nixpkgs.hostPlatform is set per host by mkHost in flake.nix, so this
+  # module stays architecture-agnostic.
 
   system.primaryUser = "jose";
   system.stateVersion = 6;

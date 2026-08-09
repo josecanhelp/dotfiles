@@ -9,10 +9,15 @@
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }: {
-    darwinConfigurations."REM-JoseS-MBP1" = nix-darwin.lib.darwinSystem {
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
+  let
+    # Everything shared by every machine. Host-specific settings go in the
+    # `extraModules` list of the individual host below, not in here.
+    mkHost = { system ? "aarch64-darwin", extraModules ? [ ] }:
+      nix-darwin.lib.darwinSystem {
       modules = [
         ./nix/configuration.nix
+        { nixpkgs.hostPlatform = system; }
         nix-homebrew.darwinModules.nix-homebrew
         {
           nix-homebrew = {
@@ -40,7 +45,20 @@
             ];
           };
         }
-      ];
+      ] ++ extraModules;
+    };
+  in
+  {
+    darwinConfigurations = {
+      # Add a machine by adding a line here. The attribute name must match
+      # the hostname you pass to `darwin-rebuild switch --flake .#<name>`.
+      #
+      #   "OtherMac" = mkHost { };
+      #   "IntelMac" = mkHost { system = "x86_64-darwin"; };
+      #
+      # Host-specific tweaks:
+      #   "WorkMac" = mkHost { extraModules = [ ./nix/hosts/work.nix ]; };
+      "REM-JoseS-MBP1" = mkHost { };
     };
   };
 }
