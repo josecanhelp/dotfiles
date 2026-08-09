@@ -75,9 +75,11 @@ mental model.
 Minimum viable bootstrap section:
 
 1. Install Determinate Nix
-2. `git clone` this repo to `~/dotfiles`
+2. `git clone --recursive` this repo to `~/dotfiles`
 3. `sudo darwin-rebuild switch --flake ~/dotfiles#<hostname>`
-4. `./install` for dotbot links (until home-manager replaces it)
+
+**Resolved.** `README.md` now carries exactly this section, and step 4 is
+gone: home-manager owns the links, so there is no imperative step left.
 
 ---
 
@@ -179,9 +181,9 @@ named in the README bootstrap so a fresh machine gets them.
 
 These are the remaining sub-projects from the original decomposition:
 
-- **home-manager, retiring dotbot.** Removes 13 imperative symlinks, the
-  `./install` step, and two submodules (`dotbot`, `dotbot-pip`). This is
-  the single biggest reproducibility win left.
+- ~~**home-manager, retiring dotbot.**~~ **Done.** 13 imperative symlinks
+  became 9 home-manager links plus 4 `programs.*` modules (zsh, git,
+  starship, alacritty). `./install` and both submodules are gone.
 - **tmux declarative.** All 6 plugins are in `nixpkgs.tmuxPlugins`.
 - **nvim declarative.** 31 of 33 plugins in nixpkgs; the real work is
   replacing mason with nixpkgs-provided LSP servers.
@@ -192,7 +194,8 @@ These are the remaining sub-projects from the original decomposition:
 
 Worth writing down so nobody "fixes" these later:
 
-- `~/.secrets` — sourced by `zshrc:14`, correctly outside the repo
+- `~/.secrets`, sourced from `programs.zsh.initContent` in `nix/home.nix`,
+  correctly outside the repo
 - `~/.ssh/config`, `~/.aws/config`, `~/.docker/config.json` — machine and
   credential specific
 - `~/.zprofile` — untracked, bracketed by Amazon Q blocks that say to

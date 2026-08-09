@@ -28,16 +28,14 @@ in
   xdg.configFile = {
     # lazy.nvim writes lazy-lock.json here.
     "nvim".source = link "nvim";
-    # Linked to both paths because that is goku's search path. Preserved
-    # exactly as dotbot had it.
+    # Linked to both paths because goku searches both. Dropping either one
+    # silently stops the .edn from compiling to karabiner.json.
     "karabiner.edn".source = link "karabiner/karabiner.edn";
     "karabiner/karabiner.edn".source = link "karabiner/karabiner.edn";
   };
 
   programs.git = {
     enable = true;
-    userName = "Jose Soto";
-    userEmail = "josecanhelp@gmail.com";
     # Generates the entire [filter "lfs"] block.
     lfs.enable = true;
     # Writes ~/.config/git/ignore, which git reads via XDG. This replaces
@@ -52,7 +50,14 @@ in
       "scratch*.md"
       "**/.claude/settings.local.json"
     ];
-    extraConfig = {
+    # `settings` is the current option. userName, userEmail and extraConfig
+    # were renamed into it; the compatibility shims still work but emit a
+    # deprecation trace on every rebuild.
+    settings = {
+      user = {
+        name = "Jose Soto";
+        email = "josecanhelp@gmail.com";
+      };
       github.user = "josecanhelp";
       init.defaultBranch = "main";
       pull.rebase = false;
@@ -73,8 +78,9 @@ in
 
   programs.starship = {
     enable = true;
-    # Adds the init line to the .zshrc home-manager will own in Task 3.
-    # Until then it is inert, because zshrc is still hand-written.
+    # Adds the init line to the .zshrc home-manager generates. This only
+    # works because programs.zsh owns that file; with a hand-written
+    # zshrc the option silently does nothing.
     enableZshIntegration = true;
     settings = {
       add_newline = false;
@@ -125,14 +131,14 @@ in
         # "expected a set but found null" (alacritty.nix:95). The module's
         # own docs point at settings.general.import for this case.
         #
-        # Versioned by flake.lock. Replaces the import of
-        # alacritty/alacritty-theme/, a gitignored clone that would not
-        # exist on a new machine.
+        # Comes from nixpkgs and is versioned by flake.lock, so a fresh
+        # clone resolves it. The theme used to be a gitignored git clone
+        # under alacritty/, which by definition was never reproducible.
         import = [
           "${pkgs.alacritty-theme}/share/alacritty-theme/seashells.toml"
         ];
-        # Boolean, and under [general]. In the source TOML this line sits
-        # after [env] with no table header, so it parsed as
+        # Boolean, and under [general]. The hand-written TOML this replaced
+        # had it stranded under [env] with no table header, so it parsed as
         # env.live_config_reload = "true" (a string) and never worked.
         live_config_reload = true;
       };
@@ -207,6 +213,7 @@ in
       glog = "git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
       gp = "git push origin HEAD";
       gd = "git diff";
+      gs = "git status";
       gac = "git add -A && git commit -m";
       gco = "git checkout";
       guncommit = "git reset HEAD~1";
@@ -278,9 +285,9 @@ in
       javahome = "java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home'";
       setjava8 = "export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home";
       smfs = "./vendor/bin/sail artisan migrate:fresh --seed";
-      # `mfs` was defined twice in aliases.zsh. zsh silently kept the last
-      # definition; a Nix attrset would be an evaluation error. The last
-      # one wins here too, preserving current behaviour.
+      # `mfs` was defined twice in the old alias file. zsh silently kept
+      # the last definition; a Nix attrset would reject the duplicate, so
+      # only that winning definition is carried over here.
       mfs = "sail artisan migrate:fresh";
       mfss = "sail artisan migrate:fresh --seed";
       arl = "sail artisan route:list";
@@ -299,7 +306,7 @@ in
         # compinit are ignored, so `docker <TAB>` would silently stop
         # completing. home-manager's own `typeset -U ... fpath` de-dupes
         # rather than resets, so prepending here is safe.
-        fpath=(/Users/jose/.docker/completions $fpath)
+        fpath=(${config.home.homeDirectory}/.docker/completions $fpath)
       '')
 
       ''
@@ -328,7 +335,10 @@ in
 
       (lib.mkAfter ''
         export PATH=''${PATH}:~/.composer/vendor/bin
-        export PATH=''${PATH}:~/.dotfiles/bin
+        # ~/.bin, not ~/.dotfiles/bin. home-manager creates ~/.bin (see
+        # home.file above); ~/.dotfiles is a hand-made symlink that exists
+        # on this machine only and would be missing on a fresh clone.
+        export PATH=''${PATH}:~/.bin
         export PATH=''${PATH}:~/.local/bin
         export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 

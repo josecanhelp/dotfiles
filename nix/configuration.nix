@@ -27,14 +27,16 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    # dotbot already owns these paths; without this, activation aborts with
-    # "would be clobbered". Backups are deleted in Task 4.
+    # Moves a pre-existing file aside instead of aborting activation.
+    # Note this only works for regular files: check-link-targets.sh guards
+    # on `! -L`, so an existing SYMLINK is never backed up and activation
+    # fails with "would be clobbered". Delete conflicting symlinks by hand.
     backupFileExtension = "hm-bak";
     users.jose = import ./home.nix;
   };
 
-  # alacritty/alacritty.toml hard-requires "FiraCode Nerd Font Mono".
-  # Without this it was only present as a manual install in
+  # programs.alacritty in nix/home.nix hard-requires "FiraCode Nerd Font
+  # Mono". Without this it was only present as a manual install in
   # ~/Library/Fonts, so a fresh machine rendered every prompt glyph as a
   # box. The other ~289 fonts there are design assets, not terminal
   # dependencies, and stay unmanaged.

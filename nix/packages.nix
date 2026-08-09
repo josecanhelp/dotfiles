@@ -46,7 +46,10 @@ let
     git
     starship
     tmux
-    z-lua                   # provides z and z.lua (currently disabled in zshrc)
+    # Provides z and z.lua. Note the shell integration is NOT enabled, so
+    # the zz/zi/zf/zb aliases in nix/home.nix are currently inert. To turn
+    # it on, add `eval "$(z.lua --init zsh)"` to programs.zsh.initContent.
+    z-lua
   ];
 
   vendored = with pkgs; [
