@@ -127,7 +127,9 @@ source /run/current-system/sw/share/zsh-syntax-highlighting/zsh-syntax-highlight
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"
 
 # nvm removed: node now comes from nixpkgs (see nix/packages.nix).
-# ~/.nvm is left on disk untouched; deleting it is a separate decision.
+# ~/.nvm was deleted along with it. Its only unique tool was the HubSpot
+# CLI, which isn't in nixpkgs; run it on demand with
+#   npx @hubspot/cli@8.1.0 <command>
 # For per-project node versions, use a devshell or direnv.
 
 
