@@ -171,13 +171,25 @@ nothing and is a candidate for removal, left in place pending a decision.
 ### 7. `~/.local/bin` tools
 
 ```
-claude  devon_agent  q  qterm  uv  uvx  bash/fish/nu/zsh (qterm shims)
+claude  devon_agent  uv  uvx
 ```
 
-Each installed by its own installer, none declared. `uv` **is** in
-nixpkgs and is the easy win. Claude Code and Amazon Q manage their own
-updates and are probably better left alone, but they should at least be
-named in the README bootstrap so a fresh machine gets them.
+Each installed by its own installer, none declared.
+
+**Partly resolved.** `uv` and `uvx` now come from nixpkgs and resolve from
+`/run/current-system/sw/bin`, because `~/.local/bin` is appended to `PATH`
+rather than prepended. The copies still sitting here are dead weight,
+44 MB, and can go.
+
+All Amazon Q traces were removed on 2026-08-09: the app itself was already
+uninstalled, leaving 304 MB of orphaned `qterm` shims, two broken symlinks
+(`q`, `qterm`), a LaunchAgent still loaded at every login trying to exec a
+deleted binary, and no-op source blocks in `~/.zprofile`, `~/.bash_profile`,
+and `~/.bashrc`.
+
+`claude` is Claude Code, which manages its own updates and is better left
+alone, but it should be named in the README bootstrap so a fresh machine
+gets it. `devon_agent` is a pipx venv and may well be abandoned.
 
 ---
 
@@ -207,8 +219,12 @@ Worth writing down so nobody "fixes" these later:
   correctly outside the repo
 - `~/.ssh/config`, `~/.aws/config`, `~/.docker/config.json`: machine and
   credential specific
-- `~/.zprofile`, untracked, bracketed by Amazon Q blocks that say to
-  leave them at top and bottom
+- `~/.zprofile`, untracked, written by the Homebrew installer. Since the
+  Amazon Q blocks were removed on 2026-08-09 it holds one line,
+  `eval "$(/opt/homebrew/bin/brew shellenv)"`. That is the only reason
+  `/opt/homebrew/bin` is on `PATH` at all, so it cannot simply be deleted.
+  A candidate for `programs.zsh.profileExtra`, which would make it
+  declarative and remove the last untracked shell startup file.
 - The 289 non-terminal fonts in `~/Library/Fonts`
 
 ---
