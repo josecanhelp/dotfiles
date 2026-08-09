@@ -181,7 +181,7 @@ decision, and 6 requiring a judgment call.
 | php@8.3 | `php83` |
 | pipx | `pipx` |
 | pkgconf | `pkgconf` |
-| poppler | `poppler` |
+| poppler | `poppler-utils` (plain `poppler` ships no `bin/`) |
 | pstree | `pstree` |
 | python@3.12 | `python312` |
 | qemu | `qemu` |
