@@ -239,10 +239,12 @@ follows is the remainder, each re-verified against the current tree on
 
 ### Real bugs
 
-- **Hammerspoon hotkeys silently do nothing.** `hammerspoon/init.lua:666,673`
-  pass `{ 'cmd, shift' }`, a single string, where `hs.eventtap.keyStroke`
-  expects `{ 'cmd', 'shift' }`. Neither modifier is applied. Lines `750,771`
-  pass `{ '' }` where an empty `{}` is meant.
+- ~~**Hammerspoon hotkeys silently do nothing.**~~ **Fixed 2026-08-09.**
+  `init.lua:666,673` passed `{ 'cmd, shift' }`, a single string, where
+  `hs.eventtap.keyStroke` takes a list of individual modifier names, so
+  `openanything` sent a bare `r` to Eclipse and a bare `o` to PhpStorm and
+  Xcode instead of Cmd+Shift. Lines `750,771` passed `{ '' }` where `{}`
+  was meant; harmless, but now consistent with the other 12 uses.
 - **Amethyst binds `mod1+t` twice**, to `toggle-float` (`amethyst.yml:239`)
   and `toggle-tiling` (`:249`). Last parsed wins; the other is dead.
 - **`select-bsp-layout` is bound** (`amethyst.yml:224`) but `bsp` is not in

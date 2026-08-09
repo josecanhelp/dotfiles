@@ -663,14 +663,14 @@ hs.urlevent.bind('openanything', function()
     elseif appIs(teams) then
         hs.eventtap.keyStroke({ 'cmd' }, 'e')
     elseif appIs(eclipse) then
-        hs.eventtap.keyStroke({ 'cmd, shift' }, 'r')
+        hs.eventtap.keyStroke({ 'cmd', 'shift' }, 'r')
     elseif appIncludes({ discord, superhuman }) then
         hs.eventtap.keyStroke({ 'cmd' }, 'k')
     elseif appIncludes({ slack, monday }) then
         hs.eventtap.keyStroke({ 'cmd' }, 'k')
         hs.eventtap.keyStroke({}, 'down')
     elseif appIncludes({ phpstorm, xcode }) then
-        hs.eventtap.keyStroke({ 'cmd, shift' }, 'o')
+        hs.eventtap.keyStroke({ 'cmd', 'shift' }, 'o')
     elseif appIncludes({ brave }) then
         hs.eventtap.keyStroke({ 'shift' }, 't') -- Open Vomnibar in Vimium
     elseif appIncludes({ omnifocus, obsidian }) then
@@ -747,7 +747,7 @@ hs.urlevent.bind('navigateupward', function()
     if appIs(tableplus) then
         hs.eventtap.keyStroke({ 'cmd' }, '[')
     elseif appIs(bear) then
-        hs.eventtap.keyStroke({ '' }, 'up')
+        hs.eventtap.keyStroke({}, 'up')
     elseif appIncludes({ vscode }) then
         hs.eventtap.keyStroke({ 'control' }, '`')
         hs.eventtap.keyStroke({}, 'escape')
@@ -768,7 +768,7 @@ hs.urlevent.bind('navigatedownward', function()
     if appIs(tableplus) then
         hs.eventtap.keyStroke({ 'cmd' }, ']')
     elseif appIs(bear) then
-        hs.eventtap.keyStroke({ '' }, 'down')
+        hs.eventtap.keyStroke({}, 'down')
     elseif appIncludes({ vscode }) then
         hs.eventtap.keyStroke({ 'control' }, '`')
     elseif appIs(messages) then
