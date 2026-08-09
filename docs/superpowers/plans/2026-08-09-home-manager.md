@@ -590,7 +590,13 @@ Record the counts and values. Step 9 diffs against this.
       # installed, so fzf's Ctrl-T has been silently broken.
       FZF_DEFAULT_COMMAND = "rg --files --hidden --glob '!.git'";
       FZF_CTRL_T_COMMAND = "rg --files --hidden --glob '!.git'";
-      FZF_DEFAULT_OPTS = "--preview-window right:50%:noborder:hidden --color \"preview-bg:234\" --bind \"alt-p:toggle-preview\"";
+      # Quotes deliberately omitted around the --color and --bind values.
+      # home-manager interpolates sessionVariables into a double-quoted
+      # export without escaping, so embedded quotes are stripped by the
+      # shell anyway. fzf's tokenizer strips quotes too, so the effective
+      # value is identical either way; writing it unquoted makes the Nix
+      # source, the generated export, and the effective value agree.
+      FZF_DEFAULT_OPTS = "--preview-window right:50%:noborder:hidden --color preview-bg:234 --bind alt-p:toggle-preview";
     };
 
     shellAliases = {
@@ -682,6 +688,15 @@ Record the counts and values. Step 9 diffs against this.
     initContent = lib.mkMerge [
       (lib.mkBefore ''
         [ -f ~/.secrets ] && source ~/.secrets
+
+        # MUST be before compinit, which home-manager's enableCompletion
+        # runs early in the generated .zshrc. In the original zshrc this
+        # line sat immediately before a second manual compinit; that second
+        # call existed precisely to pick these up. fpath mutations after
+        # compinit are ignored, so `docker <TAB>` would silently stop
+        # completing. home-manager's own `typeset -U ... fpath` de-dupes
+        # rather than resets, so prepending here is safe.
+        fpath=(/Users/jose/.docker/completions $fpath)
       '')
 
       ''
@@ -706,8 +721,6 @@ Record the counts and values. Step 9 diffs against this.
         bindkey '^e' edit-command-line
 
         eval "$(fzf --zsh)"
-
-        fpath=(/Users/jose/.docker/completions $fpath)
       ''
 
       (lib.mkAfter ''

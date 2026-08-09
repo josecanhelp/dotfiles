@@ -149,9 +149,15 @@ who does the linking, not how tmux or nvim behave.
 dotbot does today and it is preserved deliberately: goku's search path is the
 reason, and getting it wrong is a keyboard outage.
 
-**`functions.zsh` and `artisan.plugin.zsh` are not linked at all.** The current
-`zshrc` sources them by absolute path from `~/dotfiles/zsh/custom/`, and the
-generated one will do the same. They never needed to be in `$HOME`.
+**`functions.zsh` is not linked at all.** The current `zshrc` sources it by
+absolute path from `~/dotfiles/zsh/custom/`, and the generated one will do the
+same. It never needed to be in `$HOME`.
+
+**`artisan.plugin.zsh` is dead code.** A repo-wide search finds no reference to
+it outside the file itself: nothing sources it, and nothing ever did. It is
+left in place untouched rather than being wired up, since starting to source it
+would be a behaviour change this migration has no mandate for. Worth deciding
+separately whether to adopt or delete it.
 
 ## The four conversions
 
@@ -167,7 +173,7 @@ Owns `~/.zshrc`. The conversion boundary:
 | manual `eval "$(starship init zsh)"` | `programs.starship.enableZshIntegration` |
 | `HISTFILE`/`HISTSIZE`/`setopt` lines | `history`, `setOptions` |
 | `bindkey` / keymap lines | `defaultKeymap`, plus `initContent` for the rest |
-| `functions.zsh`, `artisan.plugin.zsh` | sourced from `initContent` by absolute path |
+| `functions.zsh` | sourced from `initContent` by absolute path |
 | everything else | `initContent` |
 
 `aliases.zsh` is verified to contain 84 `alias` lines and **zero** other
