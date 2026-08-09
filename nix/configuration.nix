@@ -1,6 +1,8 @@
 { ... }:
 
 {
+  imports = [ ./packages.nix ];
+
   # Determinate already manages the Nix daemon, so nix-darwin shouldn't.
   nix.enable = false;
 
