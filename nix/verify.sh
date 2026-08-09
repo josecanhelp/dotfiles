@@ -26,9 +26,11 @@ batch6=(goku stripe shopify uv uvx)
 # ~/.tmux.conf and ~/.tmux are deliberately absent: programs.tmux generates
 # ~/.config/tmux/tmux.conf instead, and ~/.tmux is now a real directory
 # holding resurrect state rather than a link into the repo.
+# ~/.config/nvim is deliberately absent for the same reason: programs.neovim
+# generates it as a real directory whose init.lua is a store symlink.
 links=("$HOME/.hammerspoon"
        "$HOME/.amethyst.yml" "$HOME/.hushlogin" "$HOME/.bin"
-       "$HOME/.config/nvim" "$HOME/.config/karabiner.edn"
+       "$HOME/.config/karabiner.edn"
        "$HOME/.config/karabiner/karabiner.edn")
 
 fail=0
