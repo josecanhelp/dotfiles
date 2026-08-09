@@ -34,7 +34,16 @@ let
     poppler-utils   # plain `poppler` ships no bin/
     woff2           # provides woff2_compress, woff2_decompress
   ];
+
+  shell = with pkgs; [
+    git
+    starship
+    tmux
+    z-lua                   # provides z and z.lua (currently disabled in zshrc)
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+  ];
 in
 {
-  environment.systemPackages = cli ++ media;
+  environment.systemPackages = cli ++ media ++ shell;
 }

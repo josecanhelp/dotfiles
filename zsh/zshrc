@@ -117,16 +117,16 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion) # First search history, then direc
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 # Source autosuggestion plugin
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+source /run/current-system/sw/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # ------------------------------------------------------------------------------
 # Auto Suggest Settings (Needs to be last)
 # ------------------------------------------------------------------------------
 
-export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
+export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/run/current-system/sw/share/zsh-syntax-highlighting/highlighters
 
 # Source syntax highlighting plugin
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source /run/current-system/sw/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_351.jdk/Contents/Home"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"

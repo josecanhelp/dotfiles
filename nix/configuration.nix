@@ -12,6 +12,17 @@
   system.primaryUser = "jose";
   system.stateVersion = 6;
 
+  # zsh-syntax-highlighting ships its files only under
+  # /share/zsh-syntax-highlighting, which nix-darwin does not link by
+  # default (pathsToLink covers /share/zsh but not this). Without it the
+  # package contributes nothing to the profile and drops out of the system
+  # closure entirely, even though it evaluates into systemPackages.
+  #
+  # Not using programs.zsh.enableSyntaxHighlighting: that sources from
+  # /etc/zshrc, which runs before ~/.zshrc, and zsh/zshrc requires the
+  # plugin to load last.
+  environment.pathsToLink = [ "/share/zsh-syntax-highlighting" ];
+
   # nix-homebrew manages the Homebrew installation itself.
   # This block declares what Homebrew installs.
   homebrew = {
