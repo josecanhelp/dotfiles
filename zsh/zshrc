@@ -18,26 +18,14 @@
 # Paths
 # ------------------------------------------------------------------------------
 
-export PATH=${PATH}:/bin
-export PATH=${PATH}:/opt/homebrew/lib
-export PATH=${PATH}:/sbin
-export PATH=${PATH}:/usr/bin
 export PATH=${PATH}:/usr/local/aws/bin
-export PATH=${PATH}:/usr/local/bin
 export PATH=${PATH}:/usr/local/opt
 export PATH=${PATH}:/usr/local/opt/coreutils/libexec/gnubin
-export PATH=${PATH}:/usr/local/sbin
-export PATH=${PATH}:/usr/sbin
 export PATH=${PATH}:~/.composer/vendor/bin
 export PATH=${PATH}:~/.dotfiles/bin
-export PATH=${PATH}:~/.dotfiles/bin/apache-maven-3.9.9/bin
-export PATH=${PATH}:~/.dotfiles/bin/jdt-java-lang-server/bin
 export PATH=${PATH}:~/.local/bin
-export PATH=${PATH}:~/.rbenv/versions/bin
-export PATH=${PATH}:~/nvim-osx64/bin
 export PATH=${PATH}:~/go/bin
 export PATH=${PATH}:/opt/homebrew/opt/mysql-client/bin
-export PATH=${PATH}:/Users/jose/dotfiles/bin/nvim-macos-arm64/bin
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES # Required for iterm shell integration
 export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
 
@@ -163,3 +151,8 @@ compinit
 # End of Docker CLI completions
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Nix must win over Homebrew. brew shellenv in ~/.zprofile prepends
+# /opt/homebrew/bin, and several lines above prepend their own paths.
+# This runs last, so it wins. Keep it at the bottom of this file.
+export PATH="/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH"
