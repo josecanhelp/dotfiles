@@ -78,7 +78,18 @@ let
     # 2.6.10) because brew's ruby formula is keg-only and was never linked.
     # Adding nix ruby 3.4.9 would change a command that works today.
   ];
+
+  services = with pkgs; [
+    azure-cli
+    kubernetes-helm   # provides helm
+    mariadb
+    minikube
+    qemu
+    redis
+    subversion        # provides svn
+  ];
 in
 {
-  environment.systemPackages = cli ++ media ++ shell ++ vendored ++ languages;
+  environment.systemPackages =
+    cli ++ media ++ shell ++ vendored ++ languages ++ services;
 }
