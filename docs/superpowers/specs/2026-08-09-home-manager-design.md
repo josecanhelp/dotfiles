@@ -227,6 +227,19 @@ programs.git = {
 on a new machine. `core.excludesfile` is therefore deleted rather than
 repointed, which also removes a hardcoded `/Users/jose` path.
 
+**The stale `~/.gitconfig` must be deleted for any of this to take effect.**
+With `xdg.enable = true`, home-manager writes `~/.config/git/config`, not
+`~/.gitconfig`. Git reads both and gives `~/.gitconfig` precedence on
+overlapping keys. Since dotbot created `~/.gitconfig` as a symlink into this
+repo, leaving it in place would make the generated config inert and quietly
+reinstate `core.excludesfile`. Removing it from `install.conf.yaml` stops it
+being recreated but does not delete the existing link; that is an explicit
+step.
+
+Starship and alacritty are unaffected: home-manager writes them to the same
+paths dotbot used, so `backupFileExtension` moves the old links aside during
+activation.
+
 ### programs.alacritty
 
 The current config imports a theme from `alacritty/alacritty-theme/`, a clone

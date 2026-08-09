@@ -262,7 +262,17 @@ Three mechanical conversions. Each is verified by comparing generated output aga
 
 **Interfaces:**
 - Consumes: the `link` helper and module skeleton from Task 1.
-- Produces: `~/.gitconfig`, `~/.config/starship.toml`, `~/.config/alacritty/alacritty.toml` as generated files.
+- Produces: `~/.config/git/config`, `~/.config/git/ignore`,
+  `~/.config/starship.toml`, `~/.config/alacritty/alacritty.toml` as generated
+  files.
+
+**Note the git path.** With `xdg.enable = true`, home-manager writes
+`~/.config/git/config`, **not** `~/.gitconfig`. Those are different files and
+git reads both, with `~/.gitconfig` taking precedence for any overlapping key.
+A stale `~/.gitconfig` therefore silently shadows the generated config. Step 8a
+removes it. Starship and alacritty do not have this problem: home-manager
+writes them to the same paths dotbot used, so `backupFileExtension` moves the
+old ones aside automatically.
 
 - [ ] **Step 1: Capture the current behaviour to compare against**
 
@@ -444,12 +454,42 @@ readlink /run/current-system
 
 Expected: matches Step 6's path.
 
+- [ ] **Step 8a: Remove the stale `~/.gitconfig` before verifying anything**
+
+`~/.gitconfig` is a dotbot symlink to `~/dotfiles/gitconfig`. home-manager
+writes `~/.config/git/config` instead, and git gives `~/.gitconfig`
+precedence, so leaving it in place makes the new config inert.
+
+Confirm the situation, then remove it:
+
+```bash
+ls -l ~/.gitconfig
+git config --show-origin --get core.excludesfile
+```
+
+Expected: a symlink into `~/dotfiles`, and `core.excludesfile` resolving from
+`file:/Users/jose/.gitconfig`. Then:
+
+```bash
+rm ~/.gitconfig
+git config --show-origin --get user.email
+```
+
+Expected: now resolves from `file:/Users/jose/.config/git/config`. Nothing
+recreates `~/.gitconfig`, because Step 5 already removed it from
+`install.conf.yaml`.
+
+If `core.excludesfile` still returns a value after this, the old file is still
+being read somewhere; stop and investigate rather than continuing.
+
 - [ ] **Step 8: Diff generated output against the originals**
 
 ```bash
 cd ~/dotfiles
+git config --show-origin --get user.email
 diff <(git config --get user.email) /tmp/hm-before-email && echo "email OK"
 diff <(git config --get init.defaultBranch) /tmp/hm-before-branch && echo "branch OK"
+git config --get core.excludesfile || echo "excludesfile correctly gone"
 git config --get filter.lfs.clean
 git config --get format.pretty
 cat ~/.config/git/ignore
