@@ -893,13 +893,27 @@ git rm -f dotbot dotbot-pip
 rm -rf .git/modules/dotbot .git/modules/dotbot-pip
 ```
 
-- [ ] **Step 3: Delete the dotbot entrypoints and the vendored theme**
+- [ ] **Step 3: Delete the dotbot entrypoints, the vendored theme, and dead code**
 
 ```bash
 cd ~/dotfiles
 git rm -f install.conf.yaml install
 rm -rf alacritty/alacritty-theme
 ```
+
+`zsh/custom/artisan.plugin.zsh` is dead code: a repo-wide search finds no
+reference to it outside its own header comment, so nothing has ever sourced it.
+Confirm that is still true, then remove it:
+
+```bash
+grep -rn "artisan.plugin" --include="*.zsh" --include="*.nix" --include="*.yaml" . \
+  | grep -v "^./docs/" | grep -v "^./.superpowers/" \
+  || echo "no references, safe to remove"
+git rm zsh/custom/artisan.plugin.zsh
+```
+
+Expected: the grep prints only the file's own header comment line, or nothing.
+If it prints a real reference, stop and investigate rather than deleting.
 
 - [ ] **Step 4: Remove the theme's gitignore entry**
 

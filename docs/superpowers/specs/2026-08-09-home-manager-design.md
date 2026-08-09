@@ -153,11 +153,17 @@ reason, and getting it wrong is a keyboard outage.
 absolute path from `~/dotfiles/zsh/custom/`, and the generated one will do the
 same. It never needed to be in `$HOME`.
 
-**`artisan.plugin.zsh` is dead code.** A repo-wide search finds no reference to
-it outside the file itself: nothing sources it, and nothing ever did. It is
-left in place untouched rather than being wired up, since starting to source it
-would be a behaviour change this migration has no mandate for. Worth deciding
-separately whether to adopt or delete it.
+**`artisan.plugin.zsh` is dead code and gets deleted.** A repo-wide search
+finds no reference to it outside the file itself: nothing sources it, and
+nothing ever did. Rather than wire it up (a behaviour change this migration has
+no mandate for) or leave it lying around, Task 4 removes it. Decided
+explicitly, not inherited.
+
+**home-manager's zsh history defaults are adopted deliberately.** Enabling
+`programs.zsh` raises `HISTSIZE`/`SAVEHIST` from 2000 to 10000 and adds
+`HIST_IGNORE_SPACE` and `NO_APPEND_HISTORY` on top of the existing options.
+This is a behaviour change the conversion introduces rather than preserves, and
+it is accepted as an improvement rather than pinned back to the old values.
 
 ## The four conversions
 
