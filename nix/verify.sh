@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Assert that each expected binary resolves from Nix, not Homebrew.
-# Usage: nix/verify.sh <0|1|2|3|4|5|all>
+# Usage: nix/verify.sh <0|1|2|3|4|5|6|all>
 #
 # Checks BINARY names, not nixpkgs attribute names. The two diverge:
 # inetutils provides telnet, kubernetes-helm provides helm, coreutils
@@ -18,6 +18,9 @@ batch3=(gcloud bq gsutil mvn nvim)
 # pipx intentionally absent: fails to build in nixpkgs, stays on Homebrew.
 batch4=(php python3 node dotnet yarn ttx)
 batch5=(mariadb redis-server minikube helm az svn qemu-system-aarch64)
+# Tools that were invisible to `brew leaves` because it omits third-party
+# tap formulae, plus uv which was an installer-managed ~/.local/bin binary.
+batch6=(goku stripe shopify uv uvx)
 
 fail=0
 
@@ -55,7 +58,7 @@ run_batch() {
 }
 
 if [ "${1:-all}" = all ]; then
-  for i in 0 1 2 3 4 5; do run_batch "$i"; done
+  for i in 0 1 2 3 4 5 6; do run_batch "$i"; done
 else
   run_batch "$1"
 fi

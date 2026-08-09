@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./packages.nix ];
@@ -23,10 +23,35 @@
   # plugin to load last.
   environment.pathsToLink = [ "/share/zsh-syntax-highlighting" ];
 
+  # alacritty/alacritty.toml hard-requires "FiraCode Nerd Font Mono".
+  # Without this it was only present as a manual install in
+  # ~/Library/Fonts, so a fresh machine rendered every prompt glyph as a
+  # box. The other ~289 fonts there are design assets, not terminal
+  # dependencies, and stay unmanaged.
+  fonts.packages = with pkgs; [ nerd-fonts.fira-code ];
+
   # nix-homebrew manages the Homebrew installation itself.
   # This block declares what Homebrew installs.
   homebrew = {
     enable = true;
+
+    # Third-party taps. `brew leaves` does not list formulae from these,
+    # which is why the packages migration never saw them. Declared here so
+    # a fresh machine reproduces them.
+    taps = [
+      "shopify/shopify"
+      "masaushi/tap"
+      "microsoft/mssql-release"
+    ];
+
+    # Not in nixpkgs, so they stay on Homebrew rather than going
+    # undeclared. Everything else from these taps (goku, stripe-cli,
+    # shopify-cli) moved to nix/packages.nix.
+    brews = [
+      "themekit"      # shopify/shopify
+      "ecsplorer"     # masaushi/tap
+      "msodbcsql17"   # microsoft/mssql-release
+    ];
 
     # All from homebrew/cask, so no extra taps needed.
     casks = [

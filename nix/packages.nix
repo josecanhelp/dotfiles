@@ -8,6 +8,10 @@ let
     fzf
     gh
     git-filter-repo
+    # goku compiles karabiner/karabiner.edn into the karabiner.json that
+    # Karabiner-Elements actually reads. Without it the keyboard config
+    # cannot be built at all. Was a yqrashawn/goku tap formula.
+    goku
     htop
     inetutils       # provides telnet
     jadx
@@ -19,8 +23,11 @@ let
     pstree
     ranger
     ripgrep
+    shopify-cli     # was shopify/shopify tap
+    stripe-cli      # was stripe-cli tap; provides `stripe`
     tree
     typst
+    uv              # was an installer-managed binary in ~/.local/bin
     watchexec
     wget
     yt-dlp

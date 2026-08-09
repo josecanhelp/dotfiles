@@ -28,6 +28,16 @@
 
             # Automatically migrate existing Homebrew installations
             autoMigrate = true;
+
+            # Homebrew refuses to load formulae from untrusted third-party
+            # taps, which aborts `brew bundle` during activation. These are
+            # the taps declared in nix/configuration.nix. nix-homebrew
+            # applies trust before nix-darwin runs the bundle.
+            trust.taps = [
+              "shopify/shopify"
+              "masaushi/tap"
+              "microsoft/mssql-release"
+            ];
           };
         }
       ];
