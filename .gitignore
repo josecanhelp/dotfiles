@@ -9,3 +9,5 @@ tmux/plugins/*
 tmux/resurrect
 vim/.netrwhist
 vim/plugged
+# SDD scratch workspace (subagent-driven-development)
+.superpowers/
