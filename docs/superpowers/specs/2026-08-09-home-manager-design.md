@@ -233,18 +233,27 @@ The current config imports a theme from `alacritty/alacritty-theme/`, a clone
 of `github.com/alacritty/alacritty-theme` that is listed in `.gitignore` and is
 **not a submodule**. On a new machine it does not exist and the import fails.
 
-nixpkgs packages the same theme collection, so the correct fix is to reference
-it rather than vendor or inline it:
+nixpkgs packages the same theme collection, and home-manager's alacritty
+module has a dedicated option for it:
 
 ```nix
-programs.alacritty.settings.general.import = [
-  "${pkgs.alacritty-theme}/share/alacritty-theme/seashells.toml"
-];
+programs.alacritty = {
+  enable = true;
+  package = null;        # Alacritty comes from the Homebrew cask
+  theme = "seashells";
+};
 ```
 
-Verified: `pkgs.alacritty-theme` contains 176 themes including
-`seashells.toml`. This is versioned by the flake lock, switching themes is a
-one-word change, and the clone plus its `.gitignore` entry are deleted.
+The module resolves `theme` to
+`${pkgs.alacritty-theme}/share/alacritty-theme/seashells.toml`. Verified:
+that package contains 176 themes including `seashells.toml`. This is
+versioned by the flake lock, switching themes is a one-word change, and the
+clone plus its `.gitignore` entry are deleted.
+
+`package = null` rather than `enable = false`: the module body is wrapped in
+`lib.mkIf cfg.enable`, so disabling it would write no config at all. The
+`package` option is declared nullable precisely for the case where the
+program is installed by other means.
 
 Font settings carry over unchanged, including
 `family = "FiraCode Nerd Font Mono"`, already declared in

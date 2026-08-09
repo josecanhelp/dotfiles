@@ -365,16 +365,22 @@ Insert before the closing `}`:
 
 ```nix
   programs.alacritty = {
-    enable = false; # the app comes from the Homebrew cask, not nixpkgs
+    enable = true;
+    # Alacritty itself comes from the Homebrew cask. `package = null` is
+    # supported (the option is declared nullable) and installs nothing,
+    # while still writing the config file.
+    #
+    # Do NOT use `enable = false` here: the module body is wrapped in
+    # `lib.mkIf cfg.enable`, so disabling it writes no config at all.
+    package = null;
+    # Resolved by the module to
+    #   ${pkgs.alacritty-theme}/share/alacritty-theme/seashells.toml
+    # Versioned by flake.lock. Replaces the import of
+    # alacritty/alacritty-theme/, a gitignored clone that would not exist
+    # on a new machine.
+    theme = "seashells";
     settings = {
       general = {
-        # nixpkgs packages the upstream theme collection, so the theme is
-        # versioned by flake.lock. This replaces an import of
-        # alacritty/alacritty-theme/, a gitignored clone that would not
-        # exist on a new machine.
-        import = [
-          "${pkgs.alacritty-theme}/share/alacritty-theme/seashells.toml"
-        ];
         live_config_reload = true;
       };
       env.TERM = "alacritty";
@@ -748,14 +754,34 @@ Expected: `nvim en_US.UTF-8 1`, the ripgrep command, and a non-zero count for ea
 
 - [ ] **Step 11: Delete the converted files and commit**
 
+Remove them one at a time. `git rm a b` is atomic: if either path fails the
+whole command aborts and neither is removed, which is confusing mid-task.
+
 ```bash
 cd ~/dotfiles
-git rm zsh/custom/aliases.zsh zsh/zshrc
+git rm zsh/zshrc
+```
+
+Expected: succeeds. `zsh/zshrc` has no uncommitted changes.
+
+```bash
+git rm zsh/custom/aliases.zsh
+```
+
+Expected: **fails** with "has local modifications". That refusal is the
+safety check. It confirms the file carries the uncommitted WIP that Step 2
+absorbed (the `gs` alias omitted from `shellAliases`).
+
+Re-read Step 2's alias list and confirm `gs` is absent from it, then force:
+
+```bash
+git rm -f zsh/custom/aliases.zsh
+```
+
+```bash
 git add nix/home.nix nix/packages.nix nix/configuration.nix install.conf.yaml
 git commit -m "Convert zsh to home-manager, absorbing aliases and plugin wiring"
 ```
-
-`git rm` rather than `rm`: `zsh/custom/aliases.zsh` has uncommitted changes, and `git rm` will refuse unless you pass `-f`. That refusal is the safety check confirming the WIP was carried into `shellAliases` (the `gs` alias is omitted). If it refuses, re-read Step 2's alias list before forcing.
 
 ---
 
