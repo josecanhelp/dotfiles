@@ -7,9 +7,12 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, home-manager }:
   let
     # Everything shared by every machine. Host-specific settings go in the
     # `extraModules` list of the individual host below, not in here.
@@ -45,6 +48,7 @@
             ];
           };
         }
+        home-manager.darwinModules.home-manager
       ] ++ extraModules;
     };
   in

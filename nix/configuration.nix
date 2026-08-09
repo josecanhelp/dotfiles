@@ -13,6 +13,26 @@
   system.primaryUser = "jose";
   system.stateVersion = 6;
 
+  # home-manager derives home.homeDirectory from users.users.<name>.home,
+  # which nix-darwin otherwise leaves null (system.primaryUser alone does
+  # not populate it). Without this, evaluation fails with "A definition
+  # for option `home-manager.users.jose.home.homeDirectory' is not of type
+  # `absolute path'". Not added to users.knownUsers: that would make
+  # nix-darwin try to create/manage the account, and jose already exists.
+  users.users.jose.home = "/Users/jose";
+
+  # home-manager manages files in $HOME. nix-darwin manages the machine.
+  # useGlobalPkgs makes it share this system's nixpkgs instead of
+  # instantiating a second one.
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    # dotbot already owns these paths; without this, activation aborts with
+    # "would be clobbered". Backups are deleted in Task 4.
+    backupFileExtension = "hm-bak";
+    users.jose = import ./home.nix;
+  };
+
   # zsh-syntax-highlighting ships its files only under
   # /share/zsh-syntax-highlighting, which nix-darwin does not link by
   # default (pathsToLink covers /share/zsh but not this). Without it the

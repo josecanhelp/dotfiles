@@ -22,6 +22,12 @@ batch5=(mariadb redis-server minikube helm az svn qemu-system-aarch64)
 # tap formulae, plus uv which was an installer-managed ~/.local/bin binary.
 batch6=(goku stripe shopify uv uvx)
 
+# Paths home-manager should symlink back into ~/dotfiles.
+links=("$HOME/.tmux.conf" "$HOME/.tmux" "$HOME/.hammerspoon"
+       "$HOME/.amethyst.yml" "$HOME/.hushlogin" "$HOME/.bin"
+       "$HOME/.config/nvim" "$HOME/.config/karabiner.edn"
+       "$HOME/.config/karabiner/karabiner.edn")
+
 fail=0
 
 check() {
@@ -42,6 +48,29 @@ check() {
   esac
 }
 
+check_link() {
+  local p="$1" target
+  if [ ! -L "$p" ]; then
+    printf 'NOT LINK  %s\n' "$p"
+    fail=1
+    return
+  fi
+  target="$(readlink "$p")"
+  case "$target" in
+    "$HOME"/dotfiles/*)
+      printf 'OK        %-34s -> %s\n' "$p" "$target"
+      ;;
+    /nix/store/*)
+      printf 'IN STORE  %-34s -> %s (mkOutOfStoreSymlink missed)\n' "$p" "$target"
+      fail=1
+      ;;
+    *)
+      printf 'WRONG     %-34s -> %s\n' "$p" "$target"
+      fail=1
+      ;;
+  esac
+}
+
 run_batch() {
   local n="$1"
   local ref="batch${n}[@]"
@@ -57,8 +86,13 @@ run_batch() {
   for b in "${list[@]}"; do check "$b"; done
 }
 
-if [ "${1:-all}" = all ]; then
+if [ "${1:-all}" = links ]; then
+  printf '=== links ===\n'
+  for p in "${links[@]}"; do check_link "$p"; done
+elif [ "${1:-all}" = all ]; then
   for i in 0 1 2 3 4 5 6; do run_batch "$i"; done
+  printf '=== links ===\n'
+  for p in "${links[@]}"; do check_link "$p"; done
 else
   run_batch "$1"
 fi
