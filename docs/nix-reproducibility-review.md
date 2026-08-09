@@ -181,9 +181,9 @@ named in the README bootstrap so a fresh machine gets them.
 
 ---
 
-## Tier 3: already planned
+## Tier 3: all complete
 
-These are the remaining sub-projects from the original decomposition:
+The four sub-projects from the original decomposition:
 
 - ~~**home-manager, retiring dotbot.**~~ **Done.** 13 imperative symlinks
   became 9 home-manager links plus 4 `programs.*` modules (zsh, git,
@@ -191,8 +191,9 @@ These are the remaining sub-projects from the original decomposition:
 - ~~**tmux declarative.**~~ **Done.** `programs.tmux` with 4 plugins from
   nixpkgs. tpm, all plugin directories, and `tmux.conf` are gone; resurrect
   state moved to `~/.tmux/resurrect`, outside the repo. Only nvim remains.
-- **nvim declarative.** 31 of 33 plugins in nixpkgs; the real work is
-  replacing mason with nixpkgs-provided LSP servers.
+- ~~**nvim declarative.**~~ **Done.** Cut from a 33-plugin IDE to a 9-plugin
+  terminal editor: no LSP, no formatters, no mason, no lazy.nvim. Treesitter
+  added with 16 grammars from nixpkgs.
 
 ---
 
