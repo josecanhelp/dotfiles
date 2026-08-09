@@ -1,9 +1,7 @@
 *.log
 .DS_Store
 alacritty/alacritty-theme/
-bin/apache-maven-3.9.9/*
 .claude/
-bin/nvim-macos-arm64/*
 karabiner.edn.bak
 not-public
 nvim/.undo/
@@ -11,4 +9,3 @@ tmux/plugins/*
 tmux/resurrect
 vim/.netrwhist
 vim/plugged
-bin/google-cloud-sdk/*

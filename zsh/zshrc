@@ -139,11 +139,10 @@ export NVM_DIR="$HOME/.nvm"
 
 export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/jose/dotfiles/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jose/dotfiles/bin/google-cloud-sdk/path.zsh.inc'; fi
+# gcloud now comes from nixpkgs (see nix/packages.nix). Its completions are
+# installed into the zsh function path by the package itself, so the old
+# path.zsh.inc / completion.zsh.inc sourcing is no longer needed.
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/jose/dotfiles/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jose/dotfiles/bin/google-cloud-sdk/completion.zsh.inc'; fi
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/jose/.docker/completions $fpath)
 autoload -Uz compinit

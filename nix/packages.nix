@@ -43,7 +43,15 @@ let
     zsh-autosuggestions
     zsh-syntax-highlighting
   ];
+
+  vendored = with pkgs; [
+    (google-cloud-sdk.withExtraComponents [
+      google-cloud-sdk.components.gke-gcloud-auth-plugin
+    ])
+    maven
+    neovim
+  ];
 in
 {
-  environment.systemPackages = cli ++ media ++ shell;
+  environment.systemPackages = cli ++ media ++ shell ++ vendored;
 }
