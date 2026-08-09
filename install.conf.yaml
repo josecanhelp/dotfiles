@@ -23,7 +23,6 @@
     ~/.hushlogin: hushlogin
     ~/.tmux.conf: tmux.conf
     ~/.tmux: tmux/
-    ~/.zshrc: zsh/zshrc
 - shell:
     - description: Clearing sudo credential cache
       command: "sudo --reset-timestamp"

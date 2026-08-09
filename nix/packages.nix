@@ -47,8 +47,6 @@ let
     starship
     tmux
     z-lua                   # provides z and z.lua (currently disabled in zshrc)
-    zsh-autosuggestions
-    zsh-syntax-highlighting
   ];
 
   vendored = with pkgs; [

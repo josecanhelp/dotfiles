@@ -33,17 +33,6 @@
     users.jose = import ./home.nix;
   };
 
-  # zsh-syntax-highlighting ships its files only under
-  # /share/zsh-syntax-highlighting, which nix-darwin does not link by
-  # default (pathsToLink covers /share/zsh but not this). Without it the
-  # package contributes nothing to the profile and drops out of the system
-  # closure entirely, even though it evaluates into systemPackages.
-  #
-  # Not using programs.zsh.enableSyntaxHighlighting: that sources from
-  # /etc/zshrc, which runs before ~/.zshrc, and zsh/zshrc requires the
-  # plugin to load last.
-  environment.pathsToLink = [ "/share/zsh-syntax-highlighting" ];
-
   # alacritty/alacritty.toml hard-requires "FiraCode Nerd Font Mono".
   # Without this it was only present as a manual install in
   # ~/Library/Fonts, so a fresh machine rendered every prompt glyph as a
