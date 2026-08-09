@@ -6,14 +6,14 @@
 
 ## Goal
 
-Introduce home-manager as a nix-darwin module, move all dotbot symlinks under
-it, convert three small configs to typed Nix options, and retire dotbot.
+Introduce home-manager as a nix-darwin module, convert every config that has a
+`programs.*` module, link the rest, and retire dotbot.
 
 ## Context
 
 Sub-project 1 is complete: packages, casks, fonts, macOS defaults, and host
-parameterisation are all declarative. dotbot remains the last imperative step
-on a new machine, and `README.md` still lists `./install` as required.
+parameterisation are declarative. dotbot is the last imperative step on a new
+machine, and `README.md` still lists `./install` as required.
 
 dotbot manages 13 symlinks via `install.conf.yaml`, plus two git submodules
 (`dotbot`, `dotbot-pip`).
@@ -26,35 +26,41 @@ Recorded because it is the question this sub-project keeps raising.
 |---|---|---|---|
 | flake | package universe and versions | nothing | `inputs.nixpkgs.url` |
 | nix-darwin | the machine, needs sudo, all users | `/etc`, `/Library`, `/run/current-system` | `fonts.packages`, `system.defaults.dock` |
-| home-manager | one user's home directory | `~/` | `home.file.".zshrc"`, `programs.git` |
+| home-manager | one user's home directory | `~/` | `home.file`, `programs.git` |
 
 Test: if it needs sudo or another user would want it, nix-darwin. If it is a
 file in `$HOME`, home-manager.
 
-Packages are the blurry case. They stay in `environment.systemPackages`
-rather than moving to `home.packages`. On a single-user Mac the distinction
-buys nothing, and moving 50+ packages is churn with real risk and no
-reproducibility gain.
+Packages are the blurry case. They stay in `environment.systemPackages` rather
+than moving to `home.packages`. On a single-user Mac the distinction buys
+nothing, and moving 50+ packages is churn with real risk and no reproducibility
+gain.
 
 ## Decisions
 
-**Hybrid depth.** Convert `git`, `starship`, and `alacritty` to `programs.*`
-modules (96 lines total, all mechanical). Everything else stays a file link.
-Notably `zsh` is **not** converted: `programs.zsh` would mean rewriting 460
-lines of handwritten zsh, and it is the highest-risk file on the machine
-since a mistake breaks every new shell.
+**Full conversion, not hybrid.** Everything with a `programs.*` module gets
+one: `git`, `zsh`, `starship`, `alacritty`. An earlier draft left zsh alone;
+that was rejected because it produces a half-state. `programs.starship`'s
+`enableZshIntegration` works by appending to the `.zshrc` that home-manager
+owns. If home-manager does not own it, the option silently does nothing and
+the `eval "$(starship init zsh)"` line has to stay hand-written. Same for fzf
+and zoxide. Converting zsh is what makes the other modules real.
 
-**Out-of-store symlinks throughout.** `config.lib.file.mkOutOfStoreSymlink`
-pointing at `~/dotfiles/<path>`. Editing `zshrc` takes effect in the next
-shell with no rebuild, exactly as today. The cost is that a home-manager
-rollback restores which files are linked but not their contents. Content
-rollback is git's job.
+**Out-of-store symlinks for everything that stays a file.**
+`config.lib.file.mkOutOfStoreSymlink` pointing at `~/dotfiles/<path>`. Edits
+take effect immediately with no rebuild.
 
-**home-manager as a nix-darwin module,** not standalone, wired inside
-`mkHost` so a second machine inherits it automatically.
+**`~/.zshrc` is the deliberate exception.** Because `programs.zsh` generates
+it, it lives in the store and is read-only. Changing an alias or a `setopt`
+requires `darwin-rebuild switch`. This is accepted knowingly. Shell functions
+stay in files sourced out-of-store, so the 216 lines most likely to be
+iterated on remain instantly editable.
 
-**dotbot stays in the repo until the links are verified working.** It is the
-rollback path for steps 1 to 3.
+**home-manager as a nix-darwin module,** wired inside `mkHost` so a second
+machine inherits it.
+
+**dotbot stays in the repo until the links are verified.** It is the rollback
+path.
 
 ## Architecture
 
@@ -101,12 +107,11 @@ by real bulk. Not before.
 
 ## The link table
 
-13 dotbot links become 10 home-manager links. Three disappear because they
+13 dotbot links become **9** home-manager links. Four disappear because they
 become generated configs.
 
 ```nix
 home.file = {
-  ".zshrc".source        = link "zsh/zshrc";
   ".tmux.conf".source    = link "tmux.conf";
   ".tmux".source         = link "tmux";
   ".hammerspoon".source  = link "hammerspoon";
@@ -124,8 +129,8 @@ xdg.configFile = {
 };
 ```
 
-Dropped, now generated: `~/.gitconfig`, `~/.config/starship.toml`,
-`~/.config/alacritty/alacritty.toml`.
+Now generated, no longer linked: `~/.zshrc`, `~/.gitconfig`,
+`~/.config/starship.toml`, `~/.config/alacritty/alacritty.toml`.
 
 **`xdg.enable = true` is required.** On Linux XDG is implied; on darwin
 home-manager leaves it off by default and the three `xdg.configFile` entries
@@ -139,12 +144,53 @@ would silently do nothing.
 `programs.neovim`.** Those are sub-projects 3 and 4. This sub-project changes
 who does the linking, not how tmux or nvim behave.
 
-**`karabiner.edn` is linked twice** from one source, to `~/.config/karabiner.edn`
-and `~/.config/karabiner/karabiner.edn`. That is what dotbot does today and it
-is preserved deliberately: goku's search path is the reason, and getting it
-wrong is a keyboard outage.
+**`karabiner.edn` is linked twice** from one source, to
+`~/.config/karabiner.edn` and `~/.config/karabiner/karabiner.edn`. That is what
+dotbot does today and it is preserved deliberately: goku's search path is the
+reason, and getting it wrong is a keyboard outage.
 
-## The three conversions
+**`functions.zsh` and `artisan.plugin.zsh` are not linked at all.** The current
+`zshrc` sources them by absolute path from `~/dotfiles/zsh/custom/`, and the
+generated one will do the same. They never needed to be in `$HOME`.
+
+## The four conversions
+
+### programs.zsh
+
+Owns `~/.zshrc`. The conversion boundary:
+
+| Current | Becomes |
+|---|---|
+| `aliases.zsh`, 84 pure `alias` lines | `programs.zsh.shellAliases`; file deleted |
+| manual `source` of zsh-autosuggestions | `autosuggestion.enable = true` |
+| manual `source` of zsh-syntax-highlighting | `syntaxHighlighting.enable = true` |
+| manual `eval "$(starship init zsh)"` | `programs.starship.enableZshIntegration` |
+| `HISTFILE`/`HISTSIZE`/`setopt` lines | `history`, `setOptions` |
+| `bindkey` / keymap lines | `defaultKeymap`, plus `initContent` for the rest |
+| `functions.zsh`, `artisan.plugin.zsh` | sourced from `initContent` by absolute path |
+| everything else | `initContent` |
+
+`aliases.zsh` is verified to contain 84 `alias` lines and **zero** other
+statements, so the mapping is total rather than partial.
+
+Two specifics:
+
+- **`gsup` is dropped.** `alias gsup="git branch --set-upstream-to=origin/$(current_branch)"`
+  relies on double-quote expansion at definition time. home-manager generates
+  aliases through `lib.escapeShellArg`, which single-quotes, changing when the
+  substitution happens. Rather than preserve a subtle behaviour difference,
+  the alias is removed.
+- **The uncommitted WIP is absorbed.** `zsh/custom/aliases.zsh` currently has
+  an uncommitted edit commenting out `alias gs="git status"`. The conversion
+  omits `gs` from `shellAliases`, carrying that intent forward deliberately
+  rather than losing it when the file is deleted.
+
+The zsh plugin packages currently in `nix/packages.nix`
+(`zsh-autosuggestions`, `zsh-syntax-highlighting`) are removed from there,
+because `programs.zsh` pulls them in itself. The
+`environment.pathsToLink = [ "/share/zsh-syntax-highlighting" ]` workaround in
+`configuration.nix` is removed with them, since home-manager references the
+store path directly rather than going through the system profile.
 
 ### programs.git
 
@@ -183,22 +229,26 @@ repointed, which also removes a hardcoded `/Users/jose` path.
 
 ### programs.alacritty
 
-The current `alacritty.toml` imports a theme:
+The current config imports a theme from `alacritty/alacritty-theme/`, a clone
+of `github.com/alacritty/alacritty-theme` that is listed in `.gitignore` and is
+**not a submodule**. On a new machine it does not exist and the import fails.
 
-```toml
-import = [ "~/dotfiles/alacritty/alacritty-theme/themes/seashells.toml" ]
+nixpkgs packages the same theme collection, so the correct fix is to reference
+it rather than vendor or inline it:
+
+```nix
+programs.alacritty.settings.general.import = [
+  "${pkgs.alacritty-theme}/share/alacritty-theme/seashells.toml"
+];
 ```
 
-`alacritty/alacritty-theme/` is a clone of
-`github.com/alacritty/alacritty-theme`, listed in `.gitignore` and **not a
-submodule**. On a new machine it does not exist and the import fails.
+Verified: `pkgs.alacritty-theme` contains 176 themes including
+`seashells.toml`. This is versioned by the flake lock, switching themes is a
+one-word change, and the clone plus its `.gitignore` entry are deleted.
 
-The fix is to inline the 37 lines of seashells colors into
-`programs.alacritty.settings`. After that the clone and its `.gitignore` entry
-are both deleted.
-
-Font settings carry over unchanged, including `family = "FiraCode Nerd Font
-Mono"`, which is already declared in `nix/configuration.nix`.
+Font settings carry over unchanged, including
+`family = "FiraCode Nerd Font Mono"`, already declared in
+`nix/configuration.nix`.
 
 ### programs.starship
 
@@ -217,25 +267,29 @@ double-quoted string is an escape sequence. This must use a Nix indented
 string (`''...''`) or have its backslashes doubled. Getting it wrong silently
 changes the prompt rather than failing loudly.
 
-The same care applies to `format.pretty` in the git config, which is a long
-string of `%C(...)` colour codes.
+The same care applies to `format.pretty` in the git config, a long string of
+`%C(...)` colour codes.
 
-All three conversions are mechanical, so the risk is transcription error, not
+All four conversions are mechanical, so the risk is transcription error, not
 design. The plan verifies by diffing generated output against the current
-files byte for byte rather than trusting the translation.
+files rather than trusting the translation.
 
 ## Cutover
 
-All ten target paths currently hold dotbot symlinks, and home-manager refuses
+All nine target paths currently hold dotbot symlinks, and home-manager refuses
 to clobber files it does not own. `backupFileExtension = "hm-bak"` makes it
 move each aside instead of failing activation.
 
-1. Add the home-manager input and wiring. dotbot untouched.
-2. Activate. HM takes the ten paths, backing up dotbot's links.
-3. Verify links, then verify behaviour.
+1. Add the home-manager input and wiring, plus `home.nix`. dotbot untouched.
+2. Activate. HM takes the nine paths and writes the four generated configs,
+   backing up what dotbot left.
+3. Verify links, diff generated configs against the originals, then verify
+   behaviour.
 4. Delete `install.conf.yaml`, `install`, and the `dotbot` and `dotbot-pip`
    submodules.
-5. Delete the `.hm-bak` files and `alacritty/alacritty-theme`.
+5. Delete the `.hm-bak` files, `alacritty/alacritty-theme`, `gitconfig`,
+   `starship.toml`, `alacritty/alacritty.toml`, `zsh/zshrc`, and
+   `zsh/custom/aliases.zsh`.
 
 Steps 1 to 3 are reversible with `darwin-rebuild --rollback` followed by
 `./install`, because dotbot is still present. After step 4, recovery is a
@@ -245,36 +299,46 @@ Steps 1 to 3 are reversible with `darwin-rebuild --rollback` followed by
 
 ## Verification
 
-A `links` batch in `verify.sh` asserting each of the ten paths is a symlink
+A `links` batch in `verify.sh` asserting each of the nine paths is a symlink
 resolving under `~/dotfiles`. It catches the two failures that matter:
 
 - A link pointing into `/nix/store`, meaning `mkOutOfStoreSymlink` was missed
   and the file is now read-only
-- A link that was silently never created because `xdg.enable` was off
+- A link silently never created because `xdg.enable` was off
 
-Behavioural checks a link table cannot prove:
+Generated-config checks, comparing against the pre-migration originals:
+
+- `git config --get user.email`, `--get init.defaultBranch`, and
+  `--get filter.lfs.clean` return the expected values
+- `~/.config/starship.toml` matches the original semantically, with the python
+  `format` string byte-identical
+- `~/.config/alacritty/alacritty.toml` resolves its theme import to a
+  `/nix/store` path that exists
+
+Behavioural checks a config diff cannot prove:
 
 - A new login shell starts with no errors
+- The prompt renders, meaning starship initialised
+- Autosuggestions and syntax highlighting are active
+- A sample of aliases resolve (`gp`, `art`, `dot`)
 - `tmux` starts and tpm plugins load
 - `nvim` starts with no lazy.nvim errors
-- `git config --get user.email` returns the expected value from the generated
-  config
 
 ## Done
 
-- `brew`-free, dotbot-free new machine setup: clone, `darwin-rebuild switch`,
-  done
+- New machine setup is clone plus `darwin-rebuild switch`, with no `./install`
 - `install.conf.yaml`, `install`, `dotbot/`, `dotbot-pip/` removed
 - `.gitmodules` contains only `themes/tomorrow-theme`
 - `alacritty/alacritty-theme` removed along with its `.gitignore` entry
 - `~/.gitignore_global` no longer referenced
+- `zsh/zshrc` and `zsh/custom/aliases.zsh` removed; `functions.zsh` and
+  `artisan.plugin.zsh` remain
 - `README.md` step 4 (`./install`) removed
 - `verify.sh links` passes and all behavioural checks pass
 
 ## Out of scope
 
 - `programs.tmux` (sub-project 3) and `programs.neovim` (sub-project 4)
-- Converting `zsh` to `programs.zsh`
 - Moving packages from `environment.systemPackages` to `home.packages`
 - `themes/tomorrow-theme`
 - `~/.secrets`, `~/.ssh/config`, `~/.zprofile`, which stay unmanaged by design
