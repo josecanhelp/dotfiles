@@ -373,14 +373,22 @@ Insert before the closing `}`:
     # Do NOT use `enable = false` here: the module body is wrapped in
     # `lib.mkIf cfg.enable`, so disabling it writes no config at all.
     package = null;
-    # Resolved by the module to
-    #   ${pkgs.alacritty-theme}/share/alacritty-theme/seashells.toml
-    # Versioned by flake.lock. Replaces the import of
-    # alacritty/alacritty-theme/, a gitignored clone that would not exist
-    # on a new machine.
-    theme = "seashells";
     settings = {
       general = {
+        # Do NOT use the module's `theme` option here. With `package = null`
+        # it evaluates `cfg.package.version` unguarded and dies with
+        # "expected a set but found null" (alacritty.nix:95). The module's
+        # own docs point at settings.general.import for this case.
+        #
+        # Versioned by flake.lock. Replaces the import of
+        # alacritty/alacritty-theme/, a gitignored clone that would not
+        # exist on a new machine.
+        import = [
+          "${pkgs.alacritty-theme}/share/alacritty-theme/seashells.toml"
+        ];
+        # Boolean, and under [general]. In the source TOML this line sits
+        # after [env] with no table header, so it parsed as
+        # env.live_config_reload = "true" (a string) and never worked.
         live_config_reload = true;
       };
       env.TERM = "alacritty";
@@ -442,12 +450,19 @@ Expected: matches Step 6's path.
 cd ~/dotfiles
 diff <(git config --get user.email) /tmp/hm-before-email && echo "email OK"
 diff <(git config --get init.defaultBranch) /tmp/hm-before-branch && echo "branch OK"
-diff <(git config --get filter.lfs.clean) /tmp/hm-before-lfs && echo "lfs OK"
+git config --get filter.lfs.clean
 git config --get format.pretty
 cat ~/.config/git/ignore
 ```
 
-Expected: three OKs, `format.pretty` matching the original exactly, and the six ignore entries present.
+Expected: two OKs, `format.pretty` matching the original exactly, and the six
+ignore entries present.
+
+`filter.lfs.clean` is checked by eye, not diffed. `lfs.enable = true` renders
+it as an absolute `/nix/store/.../bin/git-lfs` path rather than the bare
+`git-lfs` string it was before. That is equivalent behaviour and arguably
+better, since the binary is now pinned, but it will not string-match the
+captured baseline. Confirm it ends in `/bin/git-lfs clean -- %f`.
 
 ```bash
 grep -c . ~/.config/starship.toml
