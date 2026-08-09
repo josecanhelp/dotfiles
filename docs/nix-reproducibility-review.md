@@ -171,15 +171,17 @@ nothing and is a candidate for removal, left in place pending a decision.
 ### 7. `~/.local/bin` tools
 
 ```
-claude  devon_agent  uv  uvx
+claude
 ```
 
-Each installed by its own installer, none declared.
+**Resolved 2026-08-09.** `uv` and `uvx` now come from nixpkgs and resolve
+from `/run/current-system/sw/bin`, because `~/.local/bin` is appended to
+`PATH` rather than prepended; the stale 0.10.2 copies here were deleted.
+`devon_agent` was removed too: `pipx list` reported it had an invalid
+interpreter (`/opt/homebrew/opt/python@3.12`, pruned during the packages
+migration), so its 132 MB venv could not have run since.
 
-**Partly resolved.** `uv` and `uvx` now come from nixpkgs and resolve from
-`/run/current-system/sw/bin`, because `~/.local/bin` is appended to `PATH`
-rather than prepended. The copies still sitting here are dead weight,
-44 MB, and can go.
+Only `claude` remains, installed and updated by Claude Code itself.
 
 All Amazon Q traces were removed on 2026-08-09: the app itself was already
 uninstalled, leaving 304 MB of orphaned `qterm` shims, two broken symlinks
@@ -219,13 +221,16 @@ Worth writing down so nobody "fixes" these later:
   correctly outside the repo
 - `~/.ssh/config`, `~/.aws/config`, `~/.docker/config.json`: machine and
   credential specific
-- `~/.zprofile`, untracked, written by the Homebrew installer. Since the
-  Amazon Q blocks were removed on 2026-08-09 it holds one line,
-  `eval "$(/opt/homebrew/bin/brew shellenv)"`. That is the only reason
-  `/opt/homebrew/bin` is on `PATH` at all, so it cannot simply be deleted.
-  A candidate for `programs.zsh.profileExtra`, which would make it
-  declarative and remove the last untracked shell startup file.
+- `~/.ipython`, 2.3 MB of IPython history left behind when anaconda was
+  deleted on 2026-08-09. No `ipython` or `jupyter` is installed now.
+  Kept only because it holds command history.
 - The 289 non-terminal fonts in `~/Library/Fonts`
+
+As of 2026-08-09 every shell startup file in `$HOME` is a home-manager
+symlink. `.zshenv`, `.zprofile`, and `.zshrc` are generated; `.bashrc` and
+`.bash_profile` are gone, the latter having contained nothing but a conda
+block pointing at the deleted `~/anaconda3`. Do not hand-edit any of them:
+the edit will be silently reverted on the next activation.
 
 ---
 

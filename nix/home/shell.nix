@@ -33,10 +33,6 @@
         detect_folders = [ ".venv" ];
       };
       nodejs.symbol = "⬢ ";
-      conda = {
-        format = "[$symbol$environment](dimmed green) ";
-        symbol = "🅒 ";
-      };
     };
   };
 
