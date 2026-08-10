@@ -203,8 +203,29 @@ Every block below is moved verbatim from a shared module, not rewritten. The
   # macOS keychain. Does not exist on Linux, where git will prompt instead.
   programs.git.settings.credential.helper = "osxkeychain";
 
+  # The whole notification block, moved as one unit from the TAIL of
+  # shared/tmux.nix's extraConfig. Moving it whole is what preserves the
+  # generated tmux.conf byte-for-byte: it was the last thing in extraConfig, so
+  # appending it with mkAfter reproduces the original order exactly.
+  #
+  # Moving only the osascript line would have reordered the file, because that
+  # line sits BEFORE the session-window-changed hook, and mkAfter would have
+  # put it after. That would change the system hash.
+  #
+  # The whole block is darwin-specific even though bell-action and visual-bell
+  # are portable tmux settings: they exist to support the osascript
+  # notification, and session-window-changed clears a marker that
+  # ~/.claude/notify.sh sets, which is itself macOS-only.
   programs.tmux.extraConfig = lib.mkAfter ''
+    # Fire macOS notification when any pane rings the bell (e.g. Claude
+    # needs input in a background window).
+    set -g bell-action any
+    set -g visual-bell off
     set-hook -g alert-bell 'run-shell "osascript -e \"display notification \\\"Claude requires your attention\\\" with title \\\"Claude Code\\\"\""'
+
+    # Clear the Claude attention marker (@claude_alert) the moment its window is
+    # focused. The marker itself is set by ~/.claude/notify.sh (Claude Code hooks).
+    set-hook -g session-window-changed 'set-option -w @claude_alert ""'
   '';
 
   programs.zsh = {
@@ -288,8 +309,18 @@ block above it, from `nix/home/shared/tmux.nix` and append it to
 comments verbatim: they record the mid-rebuild-fires hazard and the
 Accessibility caveat, both of which cost real time to discover.
 
-Also delete the `set-hook -g alert-bell` line from `shared/tmux.nix`'s
-`extraConfig`, since Step 1 re-adds it in `extras.nix`.
+Also delete the entire notification block from the end of `shared/tmux.nix`'s
+`extraConfig`, since Step 1 re-adds it in `extras.nix`. That is the comment
+starting `# Fire macOS notification` through the
+`set-hook -g session-window-changed` line, currently lines 109 to 116.
+
+Delete the whole block, not just the `osascript` line. It is the tail of
+`extraConfig`, so removing it whole and re-appending it with `mkAfter`
+reproduces the file exactly. Removing only the `osascript` line would leave
+`session-window-changed` behind and reorder the generated `tmux.conf`.
+
+After the deletion, `extraConfig` should end with the `tmuxline` `if-shell`
+line.
 
 After this, `shared/tmux.nix` should have no `osascript` and no `launchd`. Its
 header is already `{ pkgs, ... }:` and stays that way; it never took `config`.
