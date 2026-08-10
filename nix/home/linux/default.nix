@@ -22,6 +22,13 @@ in
 
   programs.home-manager.enable = true;
 
+  # /bin/zsh, shared/tmux.nix's old default, is Apple's system zsh and does
+  # not exist on Linux; a fresh WSL image has no zsh at all. tmux given a
+  # nonexistent default-shell refuses to start ("not a suitable shell")
+  # rather than falling back, so this must point at the Nix-installed zsh
+  # instead.
+  programs.tmux.shell = "${pkgs.zsh}/bin/zsh";
+
   # Terminal dev core. The Mac declares 51 packages through
   # environment.systemPackages, which is a nix-darwin option, so this list is
   # written fresh rather than shared.

@@ -27,7 +27,6 @@
     escapeTime = 10;
 
     terminal = "tmux-256color";
-    shell = "/bin/zsh";
 
     # Reproduces the existing `bind -r H/J/K/L resize-pane` lines exactly.
     # Also adds `prefix + h/j/k/l` for pane selection, which were unbound

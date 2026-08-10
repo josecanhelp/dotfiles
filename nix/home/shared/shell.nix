@@ -150,15 +150,20 @@
       python = "python3";
     };
 
+    # The platform files hang more content off these two anchors: darwin/extras.nix
+    # adds mkOrder 501, 1100 and 1600, positioned relative to mkBefore's 500 just
+    # below and mkAfter's 1500 further down. Moving either anchor has out-of-file
+    # dependents to check.
     initContent = lib.mkMerge [
       (lib.mkBefore ''
         [ -f ~/.secrets ] && source ~/.secrets
       '')
 
       (lib.mkAfter ''
-        # ~/.bin, not ~/.dotfiles/bin. home-manager creates ~/.bin (see
-        # home.file above); ~/.dotfiles is a hand-made symlink that exists
-        # on this machine only and would be missing on a fresh clone.
+        # ~/.bin, not ~/.dotfiles/bin. home-manager creates ~/.bin (home.file
+        # in nix/home/darwin/default.nix and nix/home/linux/default.nix);
+        # ~/.dotfiles is a hand-made symlink that exists on this machine only
+        # and would be missing on a fresh clone.
         export PATH=''${PATH}:~/.bin
         export PATH=''${PATH}:~/.local/bin
         export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

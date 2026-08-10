@@ -8,6 +8,12 @@
   # macOS keychain. Does not exist on Linux, where git will prompt instead.
   programs.git.settings.credential.helper = "osxkeychain";
 
+  # /bin/zsh is Apple's own zsh, present on every Mac without Nix installing
+  # anything. Platform-specific because it does not exist on Linux, and tmux
+  # given a nonexistent shell refuses to start ("not a suitable shell")
+  # rather than falling back to one that does.
+  programs.tmux.shell = "/bin/zsh";
+
   # The whole notification block, moved as one unit from the TAIL of
   # shared/tmux.nix's extraConfig. Moving it whole is what preserves the
   # generated tmux.conf byte-for-byte: it was the last thing in extraConfig, so

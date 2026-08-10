@@ -101,23 +101,32 @@ Everything else should come up identically.
 systems and nix-darwin is macOS-only. It gets a separate output driven by
 standalone home-manager, which manages `$HOME` and nothing else.
 
+First activation, before `home-manager` exists on `PATH`:
+
+```sh
+nix run home-manager/master -- switch -b bak --flake ~/dotfiles#jose@RockemSockem
+```
+
+Every switch after that, once `programs.home-manager.enable` has installed the
+binary itself:
+
 ```sh
 home-manager switch --flake ~/dotfiles#jose@RockemSockem
 ```
 
 It shares four modules with the Mac, `nix/home/shared/`: git, zsh and starship,
 tmux, and neovim. Everything macOS-specific lives in `nix/home/darwin/`, and the
-Linux-only pieces in `nix/home/linux/`.
+Linux-only pieces in `nix/home/linux/`. `flake.nix` pins `nixpkgs-26.05-darwin`
+for every host, so this box's package versions are paced by the darwin release
+channel too, not a Linux-specific one.
 
 Two things to expect on a first run:
 
-**The first switch will refuse to overwrite the distro's dotfiles.** WSL images
-ship a `.bashrc` and `.profile`, and home-manager will not clobber them. Pass a
-backup extension once:
-
-```sh
-home-manager switch -b bak --flake ~/dotfiles#jose@RockemSockem
-```
+**Home-manager will refuse to overwrite files already on the box.** If zsh or
+git were ever set up by hand before this flake, home-manager finds a plain
+`~/.zshrc`, `~/.zshenv` (both from `programs.zsh`) or `~/.config/git/config`
+(from `programs.git`) already there and will not clobber them, which is why
+the first command above passes `-b bak`.
 
 **zsh will be installed but will not be your login shell.** `programs.zsh` puts
 zsh in the profile; it does not change your shell. One time:
@@ -126,6 +135,9 @@ zsh in the profile; it does not change your shell. One time:
 command -v zsh | sudo tee -a /etc/shells
 chsh -s "$(command -v zsh)"
 ```
+
+WSL2 without `systemd=true` in `/etc/wsl.conf` will also make home-manager
+warn about the systemd user units it generates, harmlessly.
 
 Deliberately not on that box: Java, cloud CLIs, media tooling, Alacritty (WSL
 uses Windows Terminal), and `zsh/custom/functions.zsh`, whose functions call
