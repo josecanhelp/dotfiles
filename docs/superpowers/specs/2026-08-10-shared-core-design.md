@@ -168,6 +168,36 @@ explicit `lib.mkOrder 1100`.
 So the darwin PATH override must carry an explicit order **after** `mkAfter`
 (1500), and the no-regression check below is what proves it.
 
+### Resolved during planning: the mkOrder 1100 block does not split
+
+Writing the plan surfaced a contradiction between two of this spec's own
+requirements. The `mkOrder 1100` block holds six items and the darwin-only ones
+are interleaved with the portable ones:
+
+```
+1. source functions.zsh          darwin only
+2. zstyle / zmodload             portable
+3. bashcompinit + aws_completer  darwin only (/usr/local/bin path)
+4. bindkey                       portable
+5. edit-command-line             portable
+6. eval "$(fzf --zsh)"           portable
+```
+
+Splitting that across two `mkOrder` blocks necessarily reorders the generated
+`.zshrc`, which changes the Mac's system hash. "Hash stays identical" and
+"functions.zsh is darwin-only" cannot both hold.
+
+**Resolution:** the whole block stays in `darwin/extras.nix`, verbatim, so line
+order is preserved exactly. `shared/shell.nix` has no `mkOrder 1100` block at
+all. `linux/default.nix` carries its own small block with the four portable
+items (`zstyle`/`zmodload`, `bindkey`, `edit-command-line`, `fzf`), roughly 12
+duplicated lines.
+
+The duplication is deliberate. It buys the strongest available verification on
+the Mac, and it means the Linux shell is written for Linux rather than inherited
+with two silent no-ops (`functions.zsh` defining functions that call `open`, and
+a completion registered against a path that does not exist).
+
 ## Verification
 
 **The Mac must not regress.** The strongest available check: the system hash
