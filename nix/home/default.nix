@@ -14,6 +14,7 @@ in
     ./alacritty.nix
     ./tmux.nix
     ./nvim.nix
+    ./karabiner.nix
   ];
 
   home.stateVersion = "26.05";
@@ -28,12 +29,5 @@ in
     ".amethyst.yml".source = link "amethyst/amethyst.yml";
     ".hushlogin".source = link "hushlogin";
     ".bin".source = link "bin";
-  };
-
-  xdg.configFile = {
-    # Linked to both paths because goku searches both. Dropping either one
-    # silently stops the .edn from compiling to karabiner.json.
-    "karabiner.edn".source = link "karabiner/karabiner.edn";
-    "karabiner/karabiner.edn".source = link "karabiner/karabiner.edn";
   };
 }
