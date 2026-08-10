@@ -232,6 +232,20 @@ unable to run the command it existed for.
 
 ## Where things live
 
+### Both machines
+
+Anything here applies to the Mac and to the WSL box, because both import
+`nix/home/shared/`.
+
+| Want to change | File |
+|---|---|
+| A shell alias, prompt setting, or env var | `nix/home/shared/shell.nix` |
+| Git config or identity | `nix/home/shared/git.nix` |
+| tmux keybindings or plugins | `nix/home/shared/tmux.nix` |
+| Neovim plugins or Lua | `nix/home/shared/nvim.nix`, `nvim/init.lua` |
+
+### The Mac only
+
 | Want to change | File |
 |---|---|
 | A CLI tool or language runtime | `nix/packages.nix` |
@@ -241,8 +255,40 @@ unable to run the command it existed for.
 | Fonts | `nix/configuration.nix`, `fonts.packages` |
 | Which files get symlinked into `$HOME` | `nix/home/darwin/default.nix`, `nix/home/darwin/karabiner.nix` |
 | A login or background job | `nix/home/darwin/karabiner.nix`, `nix/home/darwin/extras.nix` |
-| Add another machine | `flake.nix`, one block |
-| Package versions | `nix flake update`, then rebuild |
+| Add another Mac | `flake.nix`, one block |
+
+### The WSL box only
+
+Everything lives in one file, `nix/home/linux/default.nix`: its package list,
+its shell additions, and its `home.file` links.
+
+| Want to change | Where in that file |
+|---|---|
+| A CLI tool | the `home.packages` list |
+| A zsh setting for that box alone | its `programs.zsh.initContent` block |
+| A file symlinked into `$HOME` there | its `home.file` block |
+
+There is deliberately no equivalent of `nix/configuration.nix` for it. Standalone
+home-manager manages `$HOME` and nothing else, so nothing there configures the
+machine, installs system packages, or sets OS preferences.
+
+### The asymmetry that will trip you up
+
+**Adding a CLI tool is a different file on each machine.** The Mac declares
+packages in `nix/packages.nix` through `environment.systemPackages`, which is a
+nix-darwin option and therefore cannot apply to Linux at all. The WSL box
+declares them in `home.packages` in `nix/home/linux/default.nix`.
+
+So "install ripgrep everywhere" means editing two files. There is no shared
+package list, and that is a deliberate choice rather than an oversight: bridging
+a system-level option and a home-level one is not worth the indirection at this
+size. The two lists are also meant to differ, since that box gets a terminal dev
+core rather than the Mac's full set.
+
+### Package versions
+
+`nix flake update`, then rebuild. That bumps both machines at once, since they
+share `flake.lock`.
 
 ## Traps worth knowing
 
