@@ -108,7 +108,6 @@
       vu = "vagrant up";
       vh = "vagrant halt";
       vd = "vagrant destroy";
-      cda = "composer dump-autoload";
       dpostgres = "docker run --name postgres -v data:/var/lib/postgresql/data -e POSTGRES_USER=perk -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=myapp -p 5432:5432 -d postgres";
       dmysql = "docker run --name mysql -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=secret -p 3306:3306 -d mysql:5.7";
       cl = "clear";
@@ -214,7 +213,6 @@
       '')
 
       (lib.mkAfter ''
-        export PATH=''${PATH}:~/.composer/vendor/bin
         # ~/.bin, not ~/.dotfiles/bin. home-manager creates ~/.bin (see
         # home.file above); ~/.dotfiles is a hand-made symlink that exists
         # on this machine only and would be missing on a fresh clone.

@@ -114,9 +114,11 @@ failing respawn loop, `last exit code = 78: EX_CONFIG`. Nothing should have
 registered goku as a system daemon; it has since been deleted along with the
 user-level registration.
 
-The fix must set PATH explicitly, because `gokuw` is a two-line shell wrapper
-that calls both `watchexec` and `goku` by bare name. Declaring only the program
-path reproduces the same failure with prettier paths. Both binaries are in Nix
+**Superseded original proposal, kept for history only, do not copy it.** It
+argued the fix must set PATH explicitly, because `gokuw` is a two-line shell
+wrapper that calls both `watchexec` and `goku` by bare name, and that
+declaring only the program path would reproduce the same failure with
+prettier paths. Both binaries are in Nix
 (`/run/current-system/sw/bin/watchexec` confirmed present):
 
 ```nix
@@ -131,6 +133,14 @@ launchd.user.agents.goku = {
   };
 };
 ```
+
+`launchd.user.agents` is nix-darwin's option, not home-manager's; copied into
+`nix/home/` this fails to evaluate, and copied into `nix/configuration.nix` it
+creates a second, competing goku agent. What was actually implemented is the
+opposite approach: home-manager's `launchd.agents.goku` in
+`nix/home/karabiner.nix:23`, which skips `gokuw` and invokes `watchexec`
+directly with absolute Nix store paths for both binaries, so no bare-name
+PATH lookup and no PATH patching are involved.
 
 ### 2. ~~Dead php@8.1 LaunchAgent~~ FIXED 2026-08-09
 
@@ -195,10 +205,11 @@ documented exceptions in `packages.nix`, but they are documented in a
 *comment* explaining why they are not in nixpkgs. Nothing installs them. A
 fresh machine gets none of them.
 
-Declared but absent from `brew leaves`: `themekit`, `ecsplorer`,
-`msodbcsql17`. These are fine, all three are installed. `brew leaves` simply
-does not list them despite all three being marked `installed_on_request`. See
-Tier 6, where that unreliability is the finding rather than a footnote.
+Declared but absent from `brew leaves`: `themekit`, `ecsplorer`. Both are
+fine, both are installed. `brew leaves` simply does not list them despite
+both being marked `installed_on_request`. `msodbcsql17` was removed from the
+declaration on 2026-08-09; the formula itself is still installed. See Tier 6,
+where that unreliability is the finding rather than a footnote.
 
 ### 6. Hostname is assumed, never set
 

@@ -19,8 +19,11 @@ in
 
   home.stateVersion = "26.05";
 
-  # XDG is off by default on darwin. Without this, every xdg.configFile
-  # entry below silently does nothing.
+  # XDG is off by default on darwin. This has no consumer in this file: the
+  # xdg.configFile entries it enables now live in karabiner.nix. That
+  # cross-file coupling is the one real cost of splitting karabiner out into
+  # its own module, so if this line ever moves or gets deleted, the failure
+  # shows up over there, not here.
   xdg.enable = true;
 
   home.file = {

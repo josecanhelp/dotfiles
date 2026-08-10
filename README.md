@@ -64,7 +64,7 @@ The test: **does it need sudo, or would another user on this Mac want it too?** 
 | flake | package versions | nothing | `flake.nix`, `flake.lock` |
 | nix-darwin | the machine | `/etc`, `/Library`, `/run/current-system` | `nix/configuration.nix`, `nix/packages.nix` |
 | nix-homebrew | Homebrew itself | `/opt/homebrew` | `nix/configuration.nix`, `flake.nix` |
-| home-manager | my home directory | `~/` | `nix/home/` |
+| home-manager | my home directory | `~/`, plus my own launchd agents | `nix/home/` |
 
 ## Generated vs linked
 
@@ -97,6 +97,10 @@ Two files are neither generated nor linked. They are sourced by absolute path fr
 
 Shell functions have no Nix representation, so they stay real files and stay instantly editable.
 
+## Background jobs
+
+Two things run outside any app, registered through launchd. A watcher recompiles `karabiner.edn` to `karabiner.json` on save, declared in `nix/home/karabiner.nix`. A login job opens Alacritty fullscreen with the restored tmux session, declared in `nix/home/tmux.nix`. Both use home-manager's `launchd.agents.*`, not nix-darwin's `launchd.user.agents.*`: home-manager's version runs as me with no sudo, which matches everything else in `nix/home/`, and using the wrong one either fails to evaluate there or registers a second, competing agent from `nix/configuration.nix`.
+
 ## Where things live
 
 | Want to change | File |
@@ -105,7 +109,8 @@ Shell functions have no Nix representation, so they stay real files and stay ins
 | A GUI app (cask) or a brew-only formula | `nix/configuration.nix`, `homebrew` block |
 | macOS settings: Dock, Finder, key repeat | `nix/configuration.nix`, `system.defaults` |
 | Fonts | `nix/configuration.nix`, `fonts.packages` |
-| Which files get symlinked into `$HOME` | `nix/home/default.nix` |
+| Which files get symlinked into `$HOME` | `nix/home/default.nix`, `nix/home/karabiner.nix` |
+| A login or background job (launchd agent) | `nix/home/karabiner.nix` (goku watcher), `nix/home/tmux.nix` (tmux login job) |
 | Add another machine | `flake.nix`, one line in `darwinConfigurations` |
 | Package versions | `nix flake update`, then rebuild |
 

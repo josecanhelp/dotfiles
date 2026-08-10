@@ -44,7 +44,6 @@
             trust.taps = [
               "shopify/shopify"
               "masaushi/tap"
-              "microsoft/mssql-release"
             ];
           };
         }
