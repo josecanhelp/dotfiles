@@ -146,23 +146,89 @@
     ];
 
     # All from homebrew/cask, so no extra taps needed.
+    # Every token here was checked against the Homebrew cask index before being
+    # added. A wrong token does not fail the build, it fails at activation,
+    # which is a slower and more annoying way to find out.
+    #
+    # Adding an already-installed app is a no-op rather than a reinstall,
+    # because onActivation.cleanup is "none" below.
+    #
+    # 16 installed apps were deliberately NOT declared on 2026-08-10, after
+    # review: Cap, Cyberduck, ScreenFlow, Visual Studio, Discord,
+    # ResponsivelyApp, cool-retro-term, DBeaver, Eclipse, MySQLWorkbench,
+    # Raspberry Pi Imager, Sketch, Tunnelblick, NordVPN, VirtualBox and
+    # DisplayLink Manager. They stay installed; they just will not follow to a
+    # new machine. Visual Studio for Mac is discontinued upstream anyway.
+    #
+    # barrier and drawio were removed the same day. Both apps had been deleted
+    # outside Homebrew, so Homebrew still recorded them as installed and
+    # activation was a no-op, while a fresh machine would have resurrected two
+    # unused apps. Barrier's upstream is unmaintained; Deskflow and Input Leap
+    # are its successors.
     casks = [
+      "1password"                  # the GUI app; 1password-cli below is separate
       "1password-cli"
       "alacritty"
       "amethyst"
       "android-platform-tools"
       "android-studio"
-      # barrier and drawio were removed on 2026-08-10. Both apps had been
-      # deleted outside Homebrew, so Homebrew still recorded them as installed
-      # and activation was a no-op, but a fresh machine would have resurrected
-      # two apps that are not in use. Barrier's upstream is also unmaintained;
-      # Deskflow and Input Leap are its successors.
+      "balenaetcher"
+      "bambu-studio"
+      "brave-browser"
+      "chatgpt"
+      "claude"
+      "codex-app"                  # token is codex-app, not codex
+      "dbngin"
+      "docker-desktop"             # token is docker-desktop, not docker
+      "dropbox"
+      "epic-games"                 # a separate `epic` cask is a different product
+      "figma"
+      "firefox@developer-edition"  # the @ is part of the token
+      "fork"
+      "google-chrome"
+      "hammerspoon"                # its config is already linked in nix/home
+      "handbrake-app"              # plain `handbrake` is the CLI formula
+      "imageoptim"
+      # Likely deployed by Intune. Declaring it may fight the MDM channel; if
+      # activation starts failing on this line, that is why.
+      "intune-company-portal"
+      "istat-menus"
+      "izotope-product-portal"     # installs RX; RX itself has no cask
+      # Pairs with the declared goku and the karabiner.edn links in
+      # nix/home/karabiner.nix. Previously the config was declared and the app
+      # was not, so a fresh machine got the keymap and nothing to read it.
+      # Karabiner-EventViewer ships inside this cask; do not add it separately.
+      "karabiner-elements"
       "iterm2"
+      "ledger-wallet"              # token is ledger-wallet, not ledger-live
+      "local"
       "mactex"
+      "microsoft-office"           # one cask, five apps: Word/Excel/PPT/OneNote/Outlook
+      "microsoft-teams"
+      "minecraft"
+      "monologue"
       "ngrok"
+      "obs"
+      "obsidian"
+      # There are currently two OneDrive installs: this one and an older Mac App
+      # Store copy under /Applications/OneDrive.localized/. Declaring the cask
+      # leaves the App Store copy orphaned.
+      "onedrive"
+      "openshot-video-editor"
       "opensuperwhisper"
       "postman"
       "raycast"
+      "shottr"
+      "sizzy"
+      "slack"
+      "sublime-text"
+      "tableplus"
+      "transmit"
+      "trezor-suite"
+      "visual-studio-code"
+      "vlc"                        # not in nixpkgs for aarch64-darwin
+      "wireshark-app"              # token is wireshark-app for the GUI
+      "zoom"                       # token is zoom, not zoom.us
     ];
 
     # Keep hands off the 243 undeclared formulae until they move to nixpkgs.
