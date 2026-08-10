@@ -57,8 +57,11 @@ check() {
     fail=1
     return
   fi
+  # ~/.nix-profile/bin is deliberately not accepted here: useUserPackages puts
+  # home-manager packages in /etc/profiles/per-user/$USER, so ~/.nix-profile
+  # dangles and nothing can ever resolve from it. The branch was unreachable.
   case "$path" in
-    /nix/store/*|/run/current-system/sw/bin/*|"$HOME"/.nix-profile/bin/*)
+    /nix/store/*|/run/current-system/sw/bin/*|/etc/profiles/per-user/*)
       printf 'OK        %-18s %s\n' "$bin" "$path"
       ;;
     *)

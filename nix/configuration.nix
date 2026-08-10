@@ -13,6 +13,21 @@
   system.primaryUser = "jose";
   system.stateVersion = 6;
 
+  # flake.nix keys its configuration on this hostname, so the rebuild command
+  # requires it, but nothing here used to SET it. On a fresh machine
+  # `darwin-rebuild switch --flake .#REM-JoseS-MBP1` therefore failed until the
+  # name was set by hand first.
+  #
+  # networking.hostName is deliberately omitted: `scutil --get HostName` is
+  # unset on this machine, and setting it would be a behaviour change rather
+  # than a capture of what exists.
+  #
+  # The REM- prefix suggests corporate MDM assigns this name. Declaring it is
+  # harmless while MDM agrees, and will fight MDM if IT ever renames the
+  # machine. If that happens, this is the line to look at.
+  networking.computerName = "REM-JoseS-MBP1";
+  networking.localHostName = "REM-JoseS-MBP1";
+
   # home-manager derives home.homeDirectory from users.users.<name>.home,
   # which nix-darwin otherwise leaves null (system.primaryUser alone does
   # not populate it). Without this, evaluation fails with "A definition
@@ -118,6 +133,16 @@
     brews = [
       "themekit"      # shopify/shopify
       "ecsplorer"     # masaushi/tap
+      # The exceptions documented in nix/packages.nix. They were described
+      # there but never declared anywhere, so `brew leaves` and this list were
+      # disjoint sets and a fresh machine installed none of them.
+      #
+      # pytorch is deliberately still absent: packages.nix argues it is heavy
+      # and rarely wanted globally, and a devshell is the right home. Leaving
+      # it undeclared makes that argument true rather than merely stated.
+      "ant"           # apacheAnt evaluates unavailable on aarch64-darwin
+      "pipx"          # fails its checkPhase in this nixpkgs
+      "ruby"          # keg-only and unlinked, so /usr/bin/ruby still wins
     ];
 
     # All from homebrew/cask, so no extra taps needed.
@@ -127,8 +152,11 @@
       "amethyst"
       "android-platform-tools"
       "android-studio"
-      "barrier"
-      "drawio"
+      # barrier and drawio were removed on 2026-08-10. Both apps had been
+      # deleted outside Homebrew, so Homebrew still recorded them as installed
+      # and activation was a no-op, but a fresh machine would have resurrected
+      # two apps that are not in use. Barrier's upstream is also unmaintained;
+      # Deskflow and Input Leap are its successors.
       "iterm2"
       "mactex"
       "ngrok"

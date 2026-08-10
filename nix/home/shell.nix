@@ -222,7 +222,14 @@
 
         # Nix must win over Homebrew. brew shellenv in ~/.zprofile prepends
         # /opt/homebrew/bin. This runs last, so it wins.
-        export PATH="/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH"
+        #
+        # ~/.nix-profile/bin is deliberately absent. It is a dangling symlink
+        # here, and correctly so: configuration.nix sets
+        # home-manager.useUserPackages, which installs home-manager packages
+        # into /etc/profiles/per-user/$USER instead. That directory is already
+        # on PATH. The old entry resolved to nothing and only misled anyone
+        # reading this line while debugging PATH.
+        export PATH="/run/current-system/sw/bin:$PATH"
       '')
     ];
   };

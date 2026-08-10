@@ -32,5 +32,16 @@ in
     ".amethyst.yml".source = link "amethyst/amethyst.yml";
     ".hushlogin".source = link "hushlogin";
     ".bin".source = link "bin";
+
+    # Load-bearing for a hook this repo already declares. nix/home/tmux.nix
+    # sets `session-window-changed` to CLEAR the @claude_alert marker, and
+    # this script is what SETS it. Only half of that pair used to be
+    # declared, so a fresh machine got the clearing hook and nothing to
+    # clear. ~/.claude/settings.json also invokes it by absolute path.
+    #
+    # Linked rather than generated so it stays editable without a rebuild,
+    # and because the rest of ~/.claude is 368 MB of session state that must
+    # not be managed.
+    ".claude/notify.sh".source = link "claude/notify.sh";
   };
 }
