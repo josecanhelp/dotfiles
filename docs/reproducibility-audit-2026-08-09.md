@@ -18,9 +18,9 @@
 | **Declared but the app is missing** | **2** |
 
 Plus 16 macOS settings that are deliberate, undeclared, and expressible in
-nix-darwin, 54 undeclared VS Code extensions, and **nine** things that are
-already broken or that break on a fresh machine. Three of the nine are
-launchd jobs failing silently right now.
+nix-darwin, 54 undeclared VS Code extensions, and nine things that are already
+broken or that break on a fresh machine. **Three of the nine, all launchd jobs,
+were fixed on 2026-08-09; six remain.**
 
 ## Confidence
 
@@ -50,7 +50,13 @@ thing itself rather than a proxy for it.
 
 ## Tier 1: broken, or breaks on a fresh machine
 
-### 1. goku is already broken, not "will break"
+### 1. ~~goku is already broken, not "will break"~~ FIXED 2026-08-09
+
+Replaced by launchd.agents.goku in nix/home/karabiner.nix, invoking watchexec
+directly with store paths. Both Homebrew registrations and the 4.3M-line log
+removed. After activation, touching `karabiner.edn` regenerated
+`karabiner.json`: the first confirmed successful compile since the packages
+migration.
 
 `~/Library/LaunchAgents/homebrew.mxcl.goku.plist` runs
 `/opt/homebrew/opt/goku/bin/gokuw`, which the packages migration deleted along
@@ -95,6 +101,13 @@ since 2026-01-01 and `karabiner.json` was compiled 2026-08-06, so the two agree
 today. The breakage bites on the *next* Karabiner edit, which will silently do
 nothing.
 
+That mtime comparison is not evidence of breakage and should not be
+re-derived as such: it compares a symlink's mtime against a regular file's,
+and an unchanged `karabiner.json` is equally consistent with nothing having
+needed compilation. The finding rests on exactly two things: PID 7532's PATH
+containing neither binary, and the goku.log wall of "watchexec: command not
+found".
+
 There is also a **duplicate registration**: a root-owned
 `/Library/LaunchDaemons/homebrew.mxcl.goku.plist` (916 B, Apr 2025) in a
 failing respawn loop, `last exit code = 78: EX_CONFIG`. Nothing should have
@@ -118,13 +131,18 @@ launchd.user.agents.goku = {
 };
 ```
 
-### 2. Dead php@8.1 LaunchAgent
+### 2. ~~Dead php@8.1 LaunchAgent~~ FIXED 2026-08-09
+
+Plist deleted. PHP removed from the system entirely in the same sub-project.
 
 `homebrew.mxcl.php@8.1.plist` points at
 `/opt/homebrew/opt/php@8.1/sbin/php-fpm`, removed in the migration. Not
 loaded. php is now 8.3.32 from Nix. The plist is inert and should be deleted.
 
-### 3. A third broken launchd job, from our own tmux migration
+### 3. ~~A third broken launchd job, from our own tmux migration~~ FIXED 2026-08-09
+
+Replaced by launchd.agents.tmux-boot in nix/home/tmux.nix; @continuum-boot set
+off so continuum deletes its own plist.
 
 `Tmux.Start.plist` is registered in the user domain with **no file in
 `~/Library/LaunchAgents`**, because tmux-continuum registers it dynamically.
@@ -643,11 +661,27 @@ Windsurf, or VSCodium despite `~/.cursor-tutor` ×3 on disk.
 `installed_on_request=true` in their install receipts. They simply do not
 appear.
 
-The mechanism was not pinned down. One plausible explanation, that brew
-refuses to load untrusted tap formulae in an ordinary shell, did not reproduce:
-`brew info shopify/shopify/themekit` works fine here. What is certain is the
-observable behavior, and it matters more than the cause: **formulae can be
-installed, requested, and invisible to `brew leaves`.**
+The mechanism is the untrusted-tap refusal. An earlier test used `brew info`,
+which loads formulae by a different path and gave a false negative: `brew info
+shopify/shopify/themekit` works fine here. `brew uses --installed themekit`
+does not. Verified 2026-08-09:
+
+```
+Error: Refusing to load formula shopify/shopify/themekit from untrusted
+tap shopify/shopify.
+```
+
+Same for `ecsplorer` and `msodbcsql17`. **Formulae can be installed,
+requested, and invisible to `brew leaves`,** because `brew leaves` has to load
+every formula to build its graph and silently drops the ones it cannot.
+
+This is not in tension with `installed_on_request: true`: that flag is read
+from the on-disk install receipt without loading the formula at all, which is
+exactly why receipt-based checks saw all 16 on-request formulae while `brew
+leaves` saw four.
+
+The omission is not tap-specific, either. `node@16` vanished the same way for
+an unrelated reason: `Invalid OS condition: :mojave`.
 
 This is not academic. It is how three real formulae stayed hidden through an
 entire migration. Always enumerate with `brew list --formula --full-name`.
@@ -810,21 +844,18 @@ clean --force`. 48 GB, zero risk. Do this first regardless of everything else.
 
 Then:
 
-1. **The three broken launchd jobs (items 1, 2, 3).** goku is the only finding
-   where something the repo explicitly depends on is silently not working
-   today. Items 2 and 3 are cheap once you are in there.
-2. **Item 7, `notify.sh`.** Declared config depending on an undeclared file.
-3. **Items 4, 5, 6, 8, 9.** Small edits that make a fresh machine viable, plus
+1. **Item 7, `notify.sh`.** Declared config depending on an undeclared file.
+2. **Items 4, 5, 6, 8, 9.** Small edits that make a fresh machine viable, plus
    decisions on barrier/drawio and the vestigial `.nix-profile` PATH entry.
-4. **`karabiner-elements`, `hammerspoon`, `shottr`.** Highest value per line:
+3. **`karabiner-elements`, `hammerspoon`, `shottr`.** Highest value per line:
    config or login-item entries already exist here, the applications do not.
-5. **`programs.fzf` and `~/.mailmap`.** Both small. fzf deletes existing config
+4. **`programs.fzf` and `~/.mailmap`.** Both small. fzf deletes existing config
    rather than adding any; mailmap starts working for the first time.
-6. **The macOS Dock settings.** Biggest single settings gap, one block.
-7. **The remaining casks**, in batches, verifying each activation.
-8. **`programs.vscode`**, once the extension IDs are resolved.
-9. **`masApps`**, after resolving the OneDrive duplicate.
-10. **The activation-script settings**, carefully, given the `-dict-add`
+5. **The macOS Dock settings.** Biggest single settings gap, one block.
+6. **The remaining casks**, in batches, verifying each activation.
+7. **`programs.vscode`**, once the extension IDs are resolved.
+8. **`masApps`**, after resolving the OneDrive duplicate.
+9. **The activation-script settings**, carefully, given the `-dict-add`
    requirement.
 
 A cleanup pass on the junk list is worth folding in wherever convenient; none

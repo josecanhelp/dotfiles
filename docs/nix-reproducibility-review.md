@@ -210,6 +210,12 @@ The four sub-projects from the original decomposition:
 - ~~**nvim declarative.**~~ **Done.** Cut from a 33-plugin IDE to a 9-plugin
   terminal editor: no LSP, no formatters, no mason, no lazy.nvim. Treesitter
   added with 16 grammars from nixpkgs.
+- ~~**launchd declarative, and removing PHP.**~~ **Done.** Two agents declared
+  through home-manager (`goku`, `tmux-boot`), three broken Homebrew and tpm-era
+  jobs deleted. php83 removed with its four local-php aliases; the Docker-based
+  Sail aliases stay. Found by the 2026-08-09 reproducibility audit, which is
+  the first thing that ever surfaced them: `brew services list` returns empty,
+  so no brew command showed any of the three.
 
 ---
 
