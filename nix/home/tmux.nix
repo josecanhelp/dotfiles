@@ -48,8 +48,16 @@
 
     extraConfig = ''
       # Plugin configurations
-      set -g @continuum-boot 'on'
-      set -g @continuum-boot-options 'alacritty,fullscreen'
+      # Off deliberately. Continuum's own osx_enable.sh writes
+      # ~/Library/LaunchAgents/Tmux.Start.plist pointing at whatever directory
+      # the plugin happens to live in, which is why the old registration still
+      # pointed into ~/.tmux/plugins long after tpm was retired, failing with
+      # exit 1 at every login. The launchd.agents.tmux-boot block below
+      # declares the same thing against a store path instead.
+      #
+      # Setting this off is also what makes continuum run osx_disable.sh and
+      # delete its own stale plist, so it cleans up after itself.
+      set -g @continuum-boot 'off'
       set -g @continuum-restore 'on'
       set -g @resurrect-capture-pane-contents 'on'
 
@@ -107,5 +115,22 @@
       # focused. The marker itself is set by ~/.claude/notify.sh (Claude Code hooks).
       set-hook -g session-window-changed 'set-option -w @claude_alert ""'
     '';
+  };
+
+  # Open Alacritty fullscreen with the restored session at login.
+  #
+  # The script drives osascript and System Events keystrokes, so it needs
+  # Accessibility permission. macOS keys that approval to the program path,
+  # and this is a store path, so a continuum update may require re-approving
+  # under System Settings, Privacy and Security, Accessibility.
+  launchd.agents.tmux-boot = {
+    enable = true;
+    config = {
+      ProgramArguments = [
+        "${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum/scripts/handle_tmux_automatic_start/osx_alacritty_start_tmux.sh"
+        "fullscreen"
+      ];
+      RunAtLoad = true;
+    };
   };
 }
