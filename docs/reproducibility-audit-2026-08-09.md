@@ -19,8 +19,13 @@
 
 Plus 16 macOS settings that are deliberate, undeclared, and expressible in
 nix-darwin, 54 undeclared VS Code extensions, and nine things that are already
-broken or that break on a fresh machine. **Three of the nine, all launchd jobs,
-were fixed on 2026-08-09; six remain.**
+broken or that break on a fresh machine.
+
+**Status as of 2026-08-10: Tiers 1, 2 and 3 are complete.** All nine Tier 1
+items are fixed, 53 applications are declared as casks, and all 16 macOS
+settings plus the keyboard shortcuts are declared. What remains is Tiers 4, 5
+and 6, none of which is broken, plus the Mac App Store apps. Each section below
+carries its own status line.
 
 ## Confidence
 
@@ -184,7 +189,10 @@ noted above.
 returns empty with exit 0. No `brew` command surfaces any of them, which is
 exactly why they went unnoticed through the whole migration.
 
-### 4. Dangling `~/.aerospace.toml`
+### 4. ~~Dangling `~/.aerospace.toml`~~ FIXED 2026-08-10
+
+Removed. It was a dotbot-era symlink, so home-manager never owned it and no
+rebuild would ever have cleaned it up.
 
 Symlink dated 2025-08-13 pointing at
 `/Users/jose/dotfiles/aerospace/aerospace.toml`, deleted when AeroSpace was
@@ -195,7 +203,11 @@ The general lesson matters more than this one file: **dotbot-era symlinks in
 `$HOME` are invisible to home-manager.** Anything dotbot linked that
 home-manager does not now declare will dangle forever with no warning.
 
-### 5. Four Homebrew formulae are used but not declared
+### 5. ~~Four Homebrew formulae are used but not declared~~ FIXED 2026-08-10
+
+`ant`, `pipx` and `ruby` are now in `homebrew.brews`. `pytorch` was
+deliberately left undeclared instead, matching the argument already written in
+`packages.nix` that it belongs in a devshell rather than globally.
 
 `brew leaves --installed-on-request` and the `homebrew.brews` list in
 `configuration.nix` are **disjoint sets**.
@@ -211,7 +223,10 @@ both being marked `installed_on_request`. `msodbcsql17` was removed from the
 declaration on 2026-08-09; the formula itself is still installed. See Tier 6,
 where that unreliability is the finding rather than a footnote.
 
-### 6. Hostname is assumed, never set
+### 6. ~~Hostname is assumed, never set~~ FIXED 2026-08-10
+
+`networking.computerName` and `networking.localHostName` are declared, and
+`mkHost` now takes `hostname` and `user` so a second machine is one block.
 
 `flake.nix` keys its configuration on `REM-JoseS-MBP1` and
 `scutil --get ComputerName` returns that today, but `configuration.nix` has no
@@ -231,7 +246,10 @@ Caveat: the `REM-` prefix suggests corporate MDM assigns this name. Declaring
 it is harmless if MDM agrees and will fight MDM if IT ever renames the
 machine. Worth a comment in the config.
 
-### 7. The declared tmux config depends on an undeclared file
+### 7. ~~The declared tmux config depends on an undeclared file~~ FIXED 2026-08-10
+
+`claude/notify.sh` is tracked in the repo and linked to `~/.claude/notify.sh`,
+so both halves of the hook pair now ship together.
 
 `nix/home/tmux.nix:106-108` declares:
 
@@ -252,7 +270,11 @@ as a plain `home.file`. The lighter route is fine; what matters is that the
 two halves ship together. Note `settings.json` also references it by absolute
 `/Users/jose/` path, so that path assumption travels with it.
 
-### 8. `~/.nix-profile` is dangling, and `shell.nix` puts it on PATH
+### 8. ~~`~/.nix-profile` is dangling, and `shell.nix` puts it on PATH~~ FIXED 2026-08-10
+
+The vestigial PATH entry is gone, and `verify.sh` now accepts
+`/etc/profiles/per-user/*` in its place, which is where `useUserPackages`
+actually installs.
 
 `~/.nix-profile` points at `~/.local/state/nix/profiles/profile`, which does
 not exist. Meanwhile `nix/home/shell.nix:231` ends with:
@@ -280,7 +302,11 @@ which still satisfies the "Nix must win over Homebrew" intent documented above
 it. `verify.sh:46` also accepts `$HOME/.nix-profile/bin/*` as a valid Nix path
 in a case that can never match, and can lose that branch too.
 
-### 9. Two declared casks whose apps are gone
+### 9. ~~Two declared casks whose apps are gone~~ FIXED 2026-08-10
+
+`barrier` and `drawio` dropped from `homebrew.casks`. Both apps had been
+deleted outside Homebrew, so a fresh machine would have resurrected two unused
+apps.
 
 | Cask | Caskroom record | App | State |
 |---|---|---|---|
@@ -297,6 +323,21 @@ Each needs an explicit decision: reinstall, or drop from `homebrew.casks`.
 ---
 
 ## Tier 2: applications
+
+**DONE 2026-08-10.** The cask list went from 11 to 53. Of the 59 apps that had
+an official cask, 43 were declared and 16 were reviewed and deliberately left
+out: Cap, Cyberduck, ScreenFlow, Visual Studio, Discord, ResponsivelyApp,
+cool-retro-term, DBeaver, Eclipse, MySQLWorkbench, Raspberry Pi Imager, Sketch,
+Tunnelblick, NordVPN, VirtualBox and DisplayLink Manager. Those stay installed
+and simply will not follow to a new machine.
+
+One thing learned in the doing, recorded in `configuration.nix`: declaring an
+app Homebrew did not install is not free. Homebrew tries to adopt the bundle and
+refuses on a version mismatch, which is the normal state for anything that
+self-updates after a direct download. Three of the 43 hit it and Obsidian failed
+destructively, removing the app before erroring.
+
+The original survey follows, kept for the token list.
 
 The largest single win. 64 apps have an official cask and are installed by
 direct download today.
@@ -428,6 +469,18 @@ are redundant and are removal candidates rather than declarations.
 ---
 
 ## Tier 3: macOS settings
+
+**DONE 2026-08-10.** All 16 are declared, along with the eight disabled keyboard
+shortcuts, the two text replacements and the dictation flag.
+
+Two of this section's recorded values were wrong and would have silently changed
+the machine, which is the specific hazard of an enforced setting. It listed both
+Dock folders as grid view sorted by name; nix-darwin's own mapping is
+`showas: fan=1, grid=2` and `arrangement: name=1, date-added=2`, and the machine
+stores 1 and 2, so they are fan and date-added. The values actually declared were
+re-read off the running system rather than taken from here.
+
+The original survey follows.
 
 `configuration.nix` declares 13 settings across 4 domains, all matching the
 live system. 16 more are deliberate, undeclared, and expressible.
@@ -854,29 +907,77 @@ files (one of them 0 bytes).
 
 ## Suggested order
 
-**Free, immediate, no config change:** empty the Trash and run `npm cache
-clean --force`. 48 GB, zero risk. Do this first regardless of everything else.
+Rewritten 2026-08-10. Tiers 1, 2 and 3 are done, so what follows is only what
+remains.
 
-Then:
+**Still not done, and the disk is now worse than when this was written.**
+`~/.cache` 35 GB, `~/.npm` 29 GB, `~/.Trash` 19 GB. That is 83 GB on a disk at
+98 percent, with 24 GB free, down from 44 GB earlier the same day. Emptying the
+Trash and running `npm cache clean --force` reclaims 48 GB with no config change
+and no risk. This is still the highest value per minute of anything in this
+document.
 
-1. **Item 7, `notify.sh`.** Declared config depending on an undeclared file.
-2. **Items 4, 5, 6, 8, 9.** Small edits that make a fresh machine viable, plus
-   decisions on barrier/drawio and the vestigial `.nix-profile` PATH entry.
-3. **`karabiner-elements`, `hammerspoon`, `shottr`.** Highest value per line:
-   config or login-item entries already exist here, the applications do not.
-4. **`programs.fzf` and `~/.mailmap`.** Both small. fzf deletes existing config
-   rather than adding any; mailmap starts working for the first time.
-5. **The macOS Dock settings.** Biggest single settings gap, one block.
-6. **The remaining casks**, in batches, verifying each activation.
-7. **`programs.vscode`**, once the extension IDs are resolved.
-8. **`masApps`**, after resolving the OneDrive duplicate.
-9. **The activation-script settings**, carefully, given the `-dict-add`
-   requirement.
+Then, roughly in order of value:
 
-A cleanup pass on the junk list is worth folding in wherever convenient; none
-of it is urgent, but `~/.tcshrc` and `~/.xonshrc` should go with the rest of
-the anaconda removal since they were missed the first time.
+1. **`programs.fzf`.** The only remaining item that DELETES config rather than
+   adding any. Three hand-written `FZF_*` variables (`FZF_DEFAULT_COMMAND`,
+   `FZF_CTRL_T_COMMAND`, `FZF_DEFAULT_OPTS`), a manual `eval "$(fzf --zsh)"`,
+   and a documented quoting workaround in `nix/home/shared/shell.nix` all
+   collapse into the module, which sets them natively. `fzf` is already
+   declared as a package on both machines.
 
-Casks are low risk to add in batches: `homebrew.onActivation.cleanup` is
-`"none"`, so declaring an already-installed app is a no-op rather than a
-reinstall.
+   Note this section originally said five variables. It is three, counted
+   2026-08-10.
+
+2. **The four remaining known issues** in `docs/nix-reproducibility-review.md`:
+   a dead `select-bsp-layout` binding in `amethyst.yml`, globals leaking to
+   `_G` in `hammerspoon/init.lua`, `chain.lua:30` reading `lastSeenAt` before
+   it is assigned, and dead references to Paw, EOL since 2022.
+
+3. **`~/.tcshrc` and `~/.xonshrc`.** Both still contain `conda init` blocks
+   pointing at the `~/anaconda3` deleted on 2026-08-09. Same class as the
+   `~/.bash_profile` removed then, and missed because only bash and zsh were
+   checked.
+
+4. **The 64 broken shims in `/opt/homebrew/bin`**, all with dead `python@3.11`
+   or `python@3.14` shebangs. Deletion, not migration. The only judgement call
+   is `poetry`, which is in nixpkgs if still wanted.
+
+5. **`programs.vscode`.** The largest remaining block, but it wants a decision
+   first: the 54 extensions are Java, Spring, .NET and mainframe weighted, with
+   no PHP extension at all on a PHP machine. Prune before declaring rather than
+   faithfully reproducing a stale set. Several IDs are marketplace-only and
+   absent from `nixpkgs.vscode-extensions`, so a faithful declaration realistically
+   needs the `nix-vscode-extensions` flake input.
+
+6. **`masApps`, 15 Mac App Store apps.** Lowest value: `mas` can only redownload
+   what is already tied to the Apple ID, so it automates reinstall rather than
+   capturing state.
+
+**Not on this list, and deliberately so:** the Homebridge daemon and the
+FileZilla Server daemon both still run undeclared. Homebridge cannot be declared
+through `homebrew.brews` at all, since `hb-service` is an npm global rather than
+a formula. Both want a keep-or-remove decision before any declaration work.
+
+## What this document got wrong
+
+Worth recording, because the same mistakes are easy to repeat.
+
+Two Dock values here were wrong in a way that would have silently changed the
+machine rather than erroring: both folders were recorded as grid view sorted by
+name, and they are fan and date-added. `system.defaults` is enforced, so a wrong
+value reconfigures rather than fails. Every value actually declared was re-read
+off the running system instead of taken from here.
+
+The `persistent-others` syntax suggested here does not type-check; entries need
+`folder = { ... }` tagging.
+
+The activation-script advice named `system.activationScripts.postUserActivation`,
+which nix-darwin has removed and now asserts on, because all activation runs as
+root. The working form is `postActivation` plus the same
+`launchctl asuser ... sudo --user=` wrapper nix-darwin uses internally.
+
+The claim that `brew leaves` omits tap formulae was recorded as unproven here and
+is now confirmed: `brew uses --installed themekit` throws "Refusing to load
+formula from untrusted tap". An earlier test used `brew info`, which loads
+formulae by a different path and succeeds, producing a false negative.

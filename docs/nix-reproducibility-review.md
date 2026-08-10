@@ -221,6 +221,10 @@ The four sub-projects from the original decomposition:
   the file move and the platform split, which is what proved the refactor was
   behaviour-neutral. A second machine, x86_64-linux under WSL2, now shares git,
   zsh, tmux and neovim through a standalone home-manager output.
+  **Not yet activated on that box.** Cross-building x86_64-linux from darwin
+  needs a remote builder this Mac does not have, so the Linux side is verified
+  by `nix eval` only. First activation happens there by hand, and the README's
+  WSL section covers what to expect.
 
 ---
 
