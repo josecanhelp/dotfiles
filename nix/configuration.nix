@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [ ./packages.nix ];
@@ -187,7 +187,87 @@
       "/System/Library/Sounds/Tink.aiff";
 
     screencapture.location = "~/Screenshots";
+
+    # Two whole-value writes that nix-darwin has no typed option for. Safe
+    # here precisely BECAUSE they are whole-value: CustomUserPreferences emits
+    # a plain `defaults write <domain> <key> <value>`, which replaces the key.
+    # That is fine for a key you own entirely, and destructive for one you
+    # share. See the activation script below for the case where it is not safe.
+    CustomUserPreferences = {
+      # Text replacements, the ones System Settings calls Text Replacements.
+      # "with" needs quoting: it is a Nix keyword, and unquoted it is a
+      # syntax error rather than an attribute name.
+      NSGlobalDomain.NSUserDictionaryReplacementItems = [
+        { on = 1; replace = "omw"; "with" = "On my way!"; }
+        { on = 1; replace = "heroky"; "with" = "heroku"; }
+      ];
+      # Stop macOS offering to turn on Dictation. nix-darwin's `hitoolbox`
+      # scope exists but exposes only AppleFnUsageType, so this goes here.
+      "com.apple.HIToolbox".AppleDictationAutoEnable = 0;
+    };
   };
+
+  # Keyboard shortcuts that are deliberately DISABLED, so the keys are free
+  # for Karabiner, Hammerspoon and tmux to claim.
+  #
+  # These cannot use system.defaults.CustomUserPreferences, and the reason
+  # matters. That option emits one `defaults write <domain> <key> <value>` per
+  # key, which REPLACES the value. AppleSymbolicHotKeys is a single dictionary
+  # holding all 33 of this machine's shortcut entries, so declaring the 8 below
+  # through it would write a dictionary containing only those 8 and silently
+  # destroy the other 25. `-dict-add` merges instead.
+  #
+  # An earlier note suggested system.activationScripts.postUserActivation for
+  # this. That option no longer exists: nix-darwin asserts on it, because all
+  # activation now runs as root. Hence postActivation plus the same
+  # `launchctl asuser ... sudo --user=` wrapper nix-darwin itself uses for
+  # user-domain defaults, so the writes land in jose's preferences and not
+  # root's.
+  #
+  # Values were read from the live plist rather than reconstructed. Parameters
+  # are (key code, keyboard code, modifier mask).
+  #
+  # The value is written as an XML plist rather than the shorter
+  # `{enabled=0;value={parameters=(51,20,1179648);...};}` syntax, because that
+  # short form is silently lossy: `defaults` stores enabled as integer 0 and
+  # the parameters as STRINGS, where macOS itself writes boolean false and
+  # integers. Verified by writing one entry both ways and comparing types
+  # against an untouched entry. XML round-trips exactly.
+  #
+  # New machines need a logout, or `killall SystemUIServer`, before the
+  # keyboard daemon rereads these. On this machine the values already match,
+  # so activation is a no-op.
+  system.activationScripts.postActivation.text =
+    let
+      user = "jose";
+      # 28/29: Cmd-Shift-3 and Cmd-Ctrl-Shift-3, full-screen screenshot
+      # 30/31: Cmd-Shift-4 and Cmd-Ctrl-Shift-4, selection screenshot
+      #        All four off in favour of Shottr.
+      # 52:    Cmd-Opt-D, hide the Dock. Reclaimed.
+      # 60/61: Ctrl-Space and Ctrl-Opt-Space, cycle input sources. Off so
+      #        Ctrl-Space is free.
+      # 190:   Quick Note hot corner. Off so the corner does not fire.
+      #
+      # Parameters are (key code, keyboard code, modifier mask).
+      hotkeys = {
+        "28" = [ 51 20 1179648 ];
+        "29" = [ 51 20 1441792 ];
+        "30" = [ 52 21 1179648 ];
+        "31" = [ 52 21 1441792 ];
+        "52" = [ 100 2 1572864 ];
+        "60" = [ 32 49 262144 ];
+        "61" = [ 32 49 786432 ];
+        "190" = [ 113 12 8388608 ];
+      };
+      paramsXml = params:
+        lib.concatMapStrings (p: "<integer>${toString p}</integer>") params;
+      disable = id: params: ''
+        launchctl asuser "$(id -u -- ${user})" sudo --user=${user} -- \
+          defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add ${id} \
+          '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array>${paramsXml params}</array><key>type</key><string>standard</string></dict></dict>'
+      '';
+    in
+    lib.concatStrings (lib.mapAttrsToList disable hotkeys);
 
   # nix-homebrew manages the Homebrew installation itself.
   # This block declares what Homebrew installs.
