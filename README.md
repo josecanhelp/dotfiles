@@ -290,6 +290,122 @@ core rather than the Mac's full set.
 `nix flake update`, then rebuild. That bumps both machines at once, since they
 share `flake.lock`.
 
+## Adding and removing things
+
+### A GUI app on the Mac (a cask)
+
+**Find the real token first.** A wrong token does not fail the build, it fails
+at activation, which is a slower way to find out. The app's name is often not
+its token: Docker is `docker-desktop`, Wireshark is `wireshark-app`, DBeaver is
+`dbeaver-community`, Ledger Live is `ledger-wallet`, and Eclipse is
+`eclipse-ide`.
+
+Watch for names that exist in both namespaces. `handbrake` is a formula (the
+CLI) *and* a cask alias for `handbrake-app` (the GUI), so `brew install
+handbrake` and `brew install --cask handbrake` give you different software.
+`brew info --cask <token>` prints the token it actually resolved to, which is
+how you catch an alias.
+
+```sh
+brew search --cask <name>
+brew info --cask <token>     # confirm it is the thing you meant
+```
+
+Add it to `casks` in `nix/configuration.nix`, then rebuild.
+
+**If Homebrew did not install the app in the first place, expect the first
+rebuild to fail on it.** Homebrew tries to *adopt* the existing bundle and
+refuses when the installed version differs from the cask's, which is the normal
+state for anything that self-updates after a direct download:
+
+```
+Error: It seems the existing App is different from the one being installed.
+```
+
+Hand it over once, then rebuild again:
+
+```sh
+brew install --cask --force <token>
+```
+
+Do that deliberately, not reflexively. Adoption can be destructive: it may
+remove the app before failing, which is what happened to Obsidian here.
+
+### Removing a GUI app from the Mac
+
+Remove the line from `casks` and rebuild. **That does not uninstall anything.**
+`homebrew.onActivation.cleanup = "none"` means undeclared things are left alone,
+so the app stays until you remove it yourself:
+
+```sh
+brew uninstall --cask <token>
+brew uninstall --cask --force <token>   # if the app is already gone
+```
+
+The `--force` variant matters when you deleted the app by hand earlier:
+Homebrew still has a record, and a plain `uninstall` errors with "It seems the
+App source is not there."
+
+Removing the declaration is the part that matters for reproducibility. A fresh
+machine will not install it either way.
+
+### A CLI tool on the Mac
+
+**The nixpkgs attribute is often not the command name.** `telnet` comes from
+`inetutils`, `helm` from `kubernetes-helm`, `sha256sum` from `coreutils`, `wp`
+from `wp-cli`, and `cdk` from `aws-cdk-cli` (plain `cdk` in nixpkgs is an
+unrelated curses library).
+
+```sh
+nix search nixpkgs <name>
+```
+
+Add the attribute to the right group in `nix/packages.nix`: `cli`, `media`,
+`shell`, `vendored`, `languages` or `services`. Then rebuild.
+
+Optionally add the **binary** name to the matching batch in `nix/verify.sh` so
+it is asserted to resolve from Nix rather than Homebrew. Note the batches list
+binaries, not attributes, precisely because the two diverge.
+
+To remove: delete the line, rebuild, and drop it from `verify.sh` too or the
+next run reports `MISSING`.
+
+### A CLI tool on the WSL box
+
+Check it exists for that platform first. Not everything in nixpkgs is built for
+every system, and `vlc`, `obs-studio` and `virtualbox` are all absent on
+aarch64-darwin, so the reverse happens too:
+
+```sh
+nix eval --raw nixpkgs#legacyPackages.x86_64-linux.<name>.version
+```
+
+Add it to `home.packages` in `nix/home/linux/default.nix`, then on that box:
+
+```sh
+home-manager switch --flake ~/dotfiles#jose@RockemSockem
+```
+
+To remove: delete the line and switch again. Standalone home-manager does
+uninstall on removal, unlike the Homebrew path above.
+
+### Checking before you commit
+
+The Mac can verify its own changes:
+
+```sh
+nix build .#darwinConfigurations.REM-JoseS-MBP1.system --no-link --print-out-paths
+nix/verify.sh all
+```
+
+The WSL box cannot be built from the Mac, because cross-building x86_64-linux
+from darwin needs a remote builder. Evaluation is the available check, and it
+still catches a bad attribute name or a broken module:
+
+```sh
+nix eval '.#homeConfigurations."jose@RockemSockem".config.home.packages' --apply 'builtins.length'
+```
+
 ## Traps worth knowing
 
 **Nix only reads git-tracked files.** Add something under `nix/` and forget to `git add` it, and the rebuild reports that the path does not exist while you are staring right at it.
