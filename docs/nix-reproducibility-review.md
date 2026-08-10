@@ -216,6 +216,11 @@ The four sub-projects from the original decomposition:
   Sail aliases stay. Found by the 2026-08-09 reproducibility audit, which is
   the first thing that ever surfaced them: `brew services list` returns empty,
   so no brew command showed any of the three.
+- ~~**Shared core across macOS and WSL.**~~ **Done.** nix/home split into
+  shared, darwin and linux. The Mac's system hash was identical through both
+  the file move and the platform split, which is what proved the refactor was
+  behaviour-neutral. A second machine, x86_64-linux under WSL2, now shares git,
+  zsh, tmux and neovim through a standalone home-manager output.
 
 ---
 
@@ -223,8 +228,8 @@ The four sub-projects from the original decomposition:
 
 Worth writing down so nobody "fixes" these later:
 
-- `~/.secrets`, sourced from `programs.zsh.initContent` in `nix/home/shell.nix`,
-  correctly outside the repo
+- `~/.secrets`, sourced from `programs.zsh.initContent` in
+  `nix/home/shared/shell.nix`, correctly outside the repo
 - `~/.ssh/config`, `~/.aws/config`, `~/.docker/config.json`: machine and
   credential specific
 - `~/.ipython`, 2.3 MB of IPython history left behind when anaconda was

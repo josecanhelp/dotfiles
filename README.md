@@ -88,12 +88,48 @@ the shared one:
 
 | Thing | Where | Why it is left alone |
 |---|---|---|
-| Git identity | `nix/home/git.nix` | Personal, not per-machine. Change it if someone else uses this repo, not when adding a Mac of your own |
+| Git identity | `nix/home/shared/git.nix` | Personal, not per-machine. Change it if someone else uses this repo, not when adding a Mac of your own |
 | Dock contents | `nix/configuration.nix` | Lists specific apps like Brave and Teams. A machine without them gets a Dock entry pointing at nothing |
-| `~/Code/*` shortcuts | `nix/home/shell.nix` | `ee`, `tt`, `jj`, `aa`. Harmless if the directory does not exist; the alias just fails |
-| `ecrlogin` registry | `nix/home/shell.nix` | Contains a specific ECR registry alias |
+| `~/Code/*` shortcuts | `nix/home/shared/shell.nix` | `ee`, `tt`, `jj`, `aa`. Harmless if the directory does not exist; the alias just fails |
+| `ecrlogin` registry | `nix/home/shared/shell.nix` | Contains a specific ECR registry alias |
 
 Everything else should come up identically.
+
+## The WSL2 box
+
+`RockemSockem` is Linux, so it cannot use `mkHost`: that builds nix-darwin
+systems and nix-darwin is macOS-only. It gets a separate output driven by
+standalone home-manager, which manages `$HOME` and nothing else.
+
+```sh
+home-manager switch --flake ~/dotfiles#jose@RockemSockem
+```
+
+It shares four modules with the Mac, `nix/home/shared/`: git, zsh and starship,
+tmux, and neovim. Everything macOS-specific lives in `nix/home/darwin/`, and the
+Linux-only pieces in `nix/home/linux/`.
+
+Two things to expect on a first run:
+
+**The first switch will refuse to overwrite the distro's dotfiles.** WSL images
+ship a `.bashrc` and `.profile`, and home-manager will not clobber them. Pass a
+backup extension once:
+
+```sh
+home-manager switch -b bak --flake ~/dotfiles#jose@RockemSockem
+```
+
+**zsh will be installed but will not be your login shell.** `programs.zsh` puts
+zsh in the profile; it does not change your shell. One time:
+
+```sh
+command -v zsh | sudo tee -a /etc/shells
+chsh -s "$(command -v zsh)"
+```
+
+Deliberately not on that box: Java, cloud CLIs, media tooling, Alacritty (WSL
+uses Windows Terminal), and `zsh/custom/functions.zsh`, whose functions call
+macOS's `open`.
 
 ## The three layers
 
@@ -127,7 +163,7 @@ The test: **does it need sudo, or would another user on this Mac want it too?** 
 | flake | package versions | nothing | `flake.nix`, `flake.lock` |
 | nix-darwin | the machine | `/etc`, `/Library`, `/run/current-system` | `nix/configuration.nix`, `nix/packages.nix` |
 | nix-homebrew | Homebrew itself | `/opt/homebrew` | `nix/configuration.nix`, `flake.nix` |
-| home-manager | my home directory | `~/`, plus my own launchd agents | `nix/home/` |
+| home-manager | my home directory | `~/`, plus my own launchd agents | `nix/home/shared/`, `darwin/`, `linux/` |
 
 ## Generated vs linked
 
@@ -139,13 +175,13 @@ Every config in this repo is handled one of two ways, and the difference decides
 
 | Tool | What it does | How | Edit this |
 |---|---|---|---|
-| **zsh** | shell | generated | `nix/home/shell.nix` |
-| **starship** | prompt | generated | `nix/home/shell.nix` |
-| **git** | version control | generated | `nix/home/git.nix` |
-| **alacritty** | terminal | generated | `nix/home/alacritty.nix` |
-| **tmux** | multiplexer | generated | `nix/home/tmux.nix` |
-| **neovim** | editor | generated | `nix/home/nvim.nix`, `nvim/init.lua` |
-| **java** | JDK 17 and `JAVA_HOME` | generated | `nix/home/java.nix` |
+| **zsh** | shell | generated | `nix/home/shared/shell.nix` |
+| **starship** | prompt | generated | `nix/home/shared/shell.nix` |
+| **git** | version control | generated | `nix/home/shared/git.nix` |
+| **alacritty** | terminal | generated | `nix/home/darwin/alacritty.nix` |
+| **tmux** | multiplexer | generated | `nix/home/shared/tmux.nix` |
+| **neovim** | editor | generated | `nix/home/shared/nvim.nix`, `nvim/init.lua` |
+| **java** | JDK 17 and `JAVA_HOME` | generated | `nix/home/darwin/java.nix` |
 | **hammerspoon** | window and keyboard automation | linked | `hammerspoon/` |
 | **karabiner** | keyboard remapping | linked | `karabiner/karabiner.edn` |
 | **amethyst** | tiling window manager | linked | `amethyst/amethyst.yml` |
@@ -168,8 +204,8 @@ Two things run outside any app, registered through launchd:
 
 | Job | What it does | Declared in |
 |---|---|---|
-| `goku` | recompiles `karabiner.edn` to `karabiner.json` on save | `nix/home/karabiner.nix` |
-| `tmux-boot` | opens Alacritty fullscreen with the restored tmux session at login | `nix/home/tmux.nix` |
+| `goku` | recompiles `karabiner.edn` to `karabiner.json` on save | `nix/home/darwin/karabiner.nix` |
+| `tmux-boot` | opens Alacritty fullscreen with the restored tmux session at login | `nix/home/darwin/extras.nix` |
 
 Both use home-manager's `launchd.agents.*`, not nix-darwin's
 `launchd.user.agents.*`. home-manager's version runs as me with no sudo, which
@@ -191,8 +227,8 @@ unable to run the command it existed for.
 | macOS settings: Dock, Finder, key repeat | `nix/configuration.nix`, `system.defaults` |
 | A disabled keyboard shortcut or text replacement | `nix/configuration.nix`, `activationScripts.postActivation` |
 | Fonts | `nix/configuration.nix`, `fonts.packages` |
-| Which files get symlinked into `$HOME` | `nix/home/default.nix`, `nix/home/karabiner.nix` |
-| A login or background job | `nix/home/karabiner.nix`, `nix/home/tmux.nix` |
+| Which files get symlinked into `$HOME` | `nix/home/darwin/default.nix`, `nix/home/darwin/karabiner.nix` |
+| A login or background job | `nix/home/darwin/karabiner.nix`, `nix/home/darwin/extras.nix` |
 | Add another machine | `flake.nix`, one block |
 | Package versions | `nix flake update`, then rebuild |
 
@@ -200,7 +236,7 @@ unable to run the command it existed for.
 
 **Nix only reads git-tracked files.** Add something under `nix/` and forget to `git add` it, and the rebuild reports that the path does not exist while you are staring right at it.
 
-**Homebrew shadows Nix on `PATH` if you let it.** `brew shellenv` in `~/.zprofile` prepends `/opt/homebrew/bin`, which sits ahead of the Nix paths. The last `export PATH` in `nix/home/shell.nix` re-asserts precedence, and `nix/verify.sh` asserts every declared binary actually resolves from Nix rather than Homebrew.
+**Homebrew shadows Nix on `PATH` if you let it.** `brew shellenv` in `~/.zprofile` prepends `/opt/homebrew/bin`, which sits ahead of the Nix paths. The last `export PATH` in `nix/home/shared/shell.nix` re-asserts precedence, and `nix/verify.sh` asserts every declared binary actually resolves from Nix rather than Homebrew.
 
 **`system.defaults` is enforced, not suggested.** Change one of those settings in System Settings and the next rebuild puts it back. More importantly, declaring a value that does not match the machine silently *changes* the machine rather than erroring, so read the current value before adding a setting.
 
@@ -216,7 +252,7 @@ nix/verify.sh agents   # just the launchd agents
 
 Neovim, from nixpkgs, deliberately kept as a terminal editor rather than an IDE. Nine plugins, treesitter with a fixed grammar set, no LSP, no formatters, no plugin manager. It is `$EDITOR`, so its most common job is commit messages and config edits.
 
-Plugins and grammars are declared in `nix/home/nvim.nix`; the Lua lives in `nvim/init.lua` and is read into the Nix at build time.
+Plugins and grammars are declared in `nix/home/shared/nvim.nix`; the Lua lives in `nvim/init.lua` and is read into the Nix at build time.
 
 (I used to use vim-plug and made [a video](https://www.youtube.com/watch?v=gRxGH2HA2_8) about it. Still a decent watch if you're on Vim rather than Neovim.)
 
