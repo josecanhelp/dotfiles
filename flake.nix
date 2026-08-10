@@ -92,5 +92,15 @@
         user = "jose";
       };
     };
+
+    # Standalone home-manager for the WSL2 box. nix-darwin cannot serve it, so
+    # this is a separate output rather than another mkHost entry. Only $HOME is
+    # managed there; the machine itself is not.
+    homeConfigurations."jose@RockemSockem" =
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = { user = "jose"; };
+        modules = [ ./nix/home/linux ];
+      };
   };
 }
