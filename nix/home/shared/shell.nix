@@ -106,7 +106,7 @@
       nrd = "npm run dev";
       nrb = "npm run build";
       # Was `vim ~/.zshrc`, which home-manager now generates read-only.
-      editzshrc = "vim ~/dotfiles/nix/home/shell.nix";
+      editzshrc = "vim ~/dotfiles/nix/home/shared/shell.nix";
       mutt = "neomutt";
       dockerps = "docker ps --format \"table {{.ID}}\\t{{.Names}}\\t{{.Image}}\\t{{.Ports}}\"";
       dp = "dockerps";

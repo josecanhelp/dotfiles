@@ -56,7 +56,7 @@ in
     users.${user} = import ./home/darwin;
   };
 
-  # programs.alacritty in nix/home/alacritty.nix hard-requires "FiraCode Nerd
+  # programs.alacritty in nix/home/darwin/alacritty.nix hard-requires "FiraCode Nerd
   # Mono". Without this it was only present as a manual install in
   # ~/Library/Fonts, so a fresh machine rendered every prompt glyph as a
   # box. The other ~289 fonts there are design assets, not terminal
@@ -64,7 +64,7 @@ in
   fonts.packages = with pkgs; [ nerd-fonts.fira-code ];
 
   # Cap ~/Library/Logs/goku.log, written by launchd.agents.goku in
-  # nix/home/karabiner.nix. That log reached 74 MB and 4.3 million lines
+  # nix/home/darwin/karabiner.nix. That log reached 74 MB and 4.3 million lines
   # before this sub-project, because the old Homebrew agent had
   # KeepAlive = true and its binary was missing, so launchd respawned a
   # failing job every 10 seconds and every respawn appended.
@@ -367,7 +367,7 @@ in
       "istat-menus"
       "izotope-product-portal"     # installs RX; RX itself has no cask
       # Pairs with the declared goku and the karabiner.edn links in
-      # nix/home/karabiner.nix. Previously the config was declared and the app
+      # nix/home/darwin/karabiner.nix. Previously the config was declared and the app
       # was not, so a fresh machine got the keymap and nothing to read it.
       # Karabiner-EventViewer ships inside this cask; do not add it separately.
       "karabiner-elements"
