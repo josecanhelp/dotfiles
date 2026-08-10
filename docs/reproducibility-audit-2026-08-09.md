@@ -111,7 +111,8 @@ found".
 There is also a **duplicate registration**: a root-owned
 `/Library/LaunchDaemons/homebrew.mxcl.goku.plist` (916 B, Apr 2025) in a
 failing respawn loop, `last exit code = 78: EX_CONFIG`. Nothing should have
-registered goku as a system daemon. Delete it.
+registered goku as a system daemon; it has since been deleted along with the
+user-level registration.
 
 The fix must set PATH explicitly, because `gokuw` is a two-line shell wrapper
 that calls both `watchexec` and `goku` by bare name. Declaring only the program
@@ -137,7 +138,8 @@ Plist deleted. PHP removed from the system entirely in the same sub-project.
 
 `homebrew.mxcl.php@8.1.plist` points at
 `/opt/homebrew/opt/php@8.1/sbin/php-fpm`, removed in the migration. Not
-loaded. php is now 8.3.32 from Nix. The plist is inert and should be deleted.
+loaded. php is now 8.3.32 from Nix. The plist was inert and has since been
+deleted.
 
 ### 3. ~~A third broken launchd job, from our own tmux migration~~ FIXED 2026-08-09
 
@@ -154,17 +156,19 @@ Its target is
 a tpm path. `~/.tmux/` now contains only `resurrect/`; the whole `plugins/`
 tree went away when tpm was retired and plugins moved to nixpkgs.
 
-Meanwhile `nix/home/tmux.nix:51-52` still declares:
+At the time of this finding, `nix/home/tmux.nix:51-52` still declared:
 
 ```
 set -g @continuum-boot 'on'
 set -g @continuum-boot-options 'alacritty,fullscreen'
 ```
 
-So the declared config asks continuum to register a boot agent, and a stale
-tpm-era registration is what actually sits in launchd. Either re-register from
-the nixpkgs plugin path or drop `@continuum-boot`, but the current state is a
-login-time failure nobody sees.
+So the declared config asked continuum to register a boot agent, while the
+registration that actually sat in launchd was the stale tpm-era one above,
+pointing at a `~/.tmux/plugins/` path that no longer existed. `@continuum-boot`
+is now `'off'` at `nix/home/tmux.nix:60`, so continuum no longer tries to
+register its own agent; `launchd.agents.tmux-boot` is the declared replacement
+noted above.
 
 **All three broken jobs share a root cause worth noting:** `brew services list`
 returns empty with exit 0. No `brew` command surfaces any of them, which is
@@ -818,8 +822,8 @@ possible win and needs no config change at all.
 
 Note the Homebridge log implies **Homebridge is still running**, via a
 brew-installed `hb-service` that is not declared in `configuration.nix`. That
-is a second undeclared service alongside goku, and the log needs rotation
-regardless.
+is the one remaining undeclared service now that goku is declared, and the log
+needs rotation regardless.
 
 Smaller orphans: `.zowe`, `.gk`, `.continue`, `.zlua`, `.putty`, `.knime`,
 `.vnc`, `.vim`, `.viminfo`, `.hgignore_global`, `.gitflow_export` (points at
