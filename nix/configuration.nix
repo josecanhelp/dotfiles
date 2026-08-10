@@ -1,5 +1,11 @@
-{ lib, pkgs, ... }:
+{ hostname, user, lib, pkgs, ... }:
 
+let
+  # hostname and user come from mkHost in flake.nix. Adding a machine means
+  # adding one block there, not editing literals in here. Everything below
+  # that used to hardcode "jose" or "/Users/jose" derives from these two.
+  homeDir = "/Users/${user}";
+in
 {
   imports = [ ./packages.nix ];
 
@@ -10,7 +16,7 @@
   # nixpkgs.hostPlatform is set per host by mkHost in flake.nix, so this
   # module stays architecture-agnostic.
 
-  system.primaryUser = "jose";
+  system.primaryUser = user;
   system.stateVersion = 6;
 
   # flake.nix keys its configuration on this hostname, so the rebuild command
@@ -25,8 +31,8 @@
   # The REM- prefix suggests corporate MDM assigns this name. Declaring it is
   # harmless while MDM agrees, and will fight MDM if IT ever renames the
   # machine. If that happens, this is the line to look at.
-  networking.computerName = "REM-JoseS-MBP1";
-  networking.localHostName = "REM-JoseS-MBP1";
+  networking.computerName = hostname;
+  networking.localHostName = hostname;
 
   # home-manager derives home.homeDirectory from users.users.<name>.home,
   # which nix-darwin otherwise leaves null (system.primaryUser alone does
@@ -34,7 +40,7 @@
   # for option `home-manager.users.jose.home.homeDirectory' is not of type
   # `absolute path'". Not added to users.knownUsers: that would make
   # nix-darwin try to create/manage the account, and jose already exists.
-  users.users.jose.home = "/Users/jose";
+  users.users.${user}.home = homeDir;
 
   # home-manager manages files in $HOME. nix-darwin manages the machine.
   # useGlobalPkgs makes it share this system's nixpkgs instead of
@@ -47,7 +53,7 @@
     # on `! -L`, so an existing SYMLINK is never backed up and activation
     # fails with "would be clobbered". Delete conflicting symlinks by hand.
     backupFileExtension = "hm-bak";
-    users.jose = import ./home;
+    users.${user} = import ./home;
   };
 
   # programs.alacritty in nix/home/alacritty.nix hard-requires "FiraCode Nerd
@@ -76,7 +82,7 @@
   # N means no process needs signalling, J compresses with bzip2.
   environment.etc."newsyslog.d/goku.conf".text = ''
     # logfilename                       [owner:group]  mode count size when flags
-    /Users/jose/Library/Logs/goku.log    jose:staff     644  3     1024 *    NJ
+    ${homeDir}/Library/Logs/goku.log    ${user}:staff  644  3     1024 *    NJ
   '';
 
   # macOS settings that previously existed only in this machine's
@@ -120,7 +126,7 @@
       persistent-others = [
         {
           folder = {
-            path = "/Users/jose/Screenshots";
+            path = "${homeDir}/Screenshots";
             showas = "fan";
             arrangement = "date-added";
             displayas = "stack";
@@ -128,7 +134,7 @@
         }
         {
           folder = {
-            path = "/Users/jose/Downloads";
+            path = "${homeDir}/Downloads";
             showas = "fan";
             arrangement = "date-added";
             displayas = "stack";
@@ -239,7 +245,7 @@
   # so activation is a no-op.
   system.activationScripts.postActivation.text =
     let
-      user = "jose";
+      inherit user;
       # 28/29: Cmd-Shift-3 and Cmd-Ctrl-Shift-3, full-screen screenshot
       # 30/31: Cmd-Shift-4 and Cmd-Ctrl-Shift-4, selection screenshot
       #        All four off in favour of Shottr.

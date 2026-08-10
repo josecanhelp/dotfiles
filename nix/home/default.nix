@@ -15,6 +15,7 @@ in
     ./tmux.nix
     ./nvim.nix
     ./karabiner.nix
+    ./java.nix
   ];
 
   home.stateVersion = "26.05";

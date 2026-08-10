@@ -16,8 +16,19 @@
   let
     # Everything shared by every machine. Host-specific settings go in the
     # `extraModules` list of the individual host below, not in here.
-    mkHost = { system ? "aarch64-darwin", extraModules ? [ ] }:
+    #
+    # `hostname` and `user` are passed down to nix/configuration.nix as module
+    # arguments, so adding a machine means adding one block below rather than
+    # editing nine scattered literals. Both are required: there is no sensible
+    # default for either, and a wrong guess fails in confusing ways.
+    mkHost =
+      { hostname
+      , user
+      , system ? "aarch64-darwin"
+      , extraModules ? [ ]
+      }:
       nix-darwin.lib.darwinSystem {
+      specialArgs = { inherit hostname user; };
       modules = [
         ./nix/configuration.nix
         { nixpkgs.hostPlatform = system; }
@@ -32,7 +43,7 @@
             enableRosetta = false;
 
             # User owning the Homebrew prefix
-            user = "jose";
+            inherit user;
 
             # Automatically migrate existing Homebrew installations
             autoMigrate = true;
@@ -53,15 +64,33 @@
   in
   {
     darwinConfigurations = {
-      # Add a machine by adding a line here. The attribute name must match
-      # the hostname you pass to `darwin-rebuild switch --flake .#<name>`.
+      # Add a machine by adding one block here. The attribute name must match
+      # the `hostname` value AND the name you pass to
+      # `darwin-rebuild switch --flake .#<name>`, because nix-darwin looks
+      # itself up by the machine's actual hostname.
       #
-      #   "OtherMac" = mkHost { };
-      #   "IntelMac" = mkHost { system = "x86_64-darwin"; };
+      #   "Joses-Mac-mini" = mkHost {
+      #     hostname = "Joses-Mac-mini";
+      #     user = "jose";
+      #   };
       #
-      # Host-specific tweaks:
-      #   "WorkMac" = mkHost { extraModules = [ ./nix/hosts/work.nix ]; };
-      "REM-JoseS-MBP1" = mkHost { };
+      # An Intel machine:
+      #   "IntelMac" = mkHost {
+      #     hostname = "IntelMac";
+      #     user = "jose";
+      #     system = "x86_64-darwin";
+      #   };
+      #
+      # Host-specific tweaks go in their own module, never in the shared one:
+      #   "WorkMac" = mkHost {
+      #     hostname = "WorkMac";
+      #     user = "jose";
+      #     extraModules = [ ./nix/hosts/work.nix ];
+      #   };
+      "REM-JoseS-MBP1" = mkHost {
+        hostname = "REM-JoseS-MBP1";
+        user = "jose";
+      };
     };
   };
 }

@@ -75,7 +75,6 @@
       SAM_CLI_TELEMETRY = "0";
       KEYTIMEOUT = "1";
       ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX = "YES";
-      JAVA_HOME = "/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home";
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
       # ripgrep, not ag: the previous value referenced `ag`, which is not
       # installed, so fzf's Ctrl-T has been silently broken.
@@ -156,7 +155,6 @@
       findlargedir = "find ./  -maxdepth 1 -mindepth 1  -type d  -exec du -hs {} \\;| sort -rh | head -n 1";
       kubectl = "minikube kubectl --";
       javahome = "java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home'";
-      setjava8 = "export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home";
       smfs = "./vendor/bin/sail artisan migrate:fresh --seed";
       # `mfs` was defined twice in the old alias file. zsh silently kept
       # the last definition; a Nix attrset would reject the duplicate, so
