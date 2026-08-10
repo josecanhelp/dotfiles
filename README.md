@@ -6,11 +6,13 @@ please steal. (c) JoseCanHelp
 
 # JoseCanHelp
 
-I'm a vim-loving dev and I try my best to automate as much as I can. Hopefully, you find a golden nugget here and there as you search for ways to improve your configurations.
+Declarative dotfiles for macOS and WSL2, built on Nix, nix-darwin and
+home-manager. Install Nix, clone this repo, and one command applies the whole
+configuration: packages, applications, macOS settings, shell, editor and
+background jobs.
 
-Find me on [twitter](https://twitter.com/josecanhelp).
-
-If you happen to copy anything from this repository or if you are inspired by this repository to do something your own customized way, please link back to this repo in yours. I will do the same for the folks I have "borrowed" from. Cheers!
+Borrowing is encouraged. If you take something from here, a link back is
+appreciated, and I do the same for the repos I have learned from.
 
 ## Setting up a machine
 
