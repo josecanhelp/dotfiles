@@ -32,7 +32,6 @@
       status.short = true;
       help.autocorrect = 1;
       core.editor = "vim";
-      credential.helper = "osxkeychain";
       mergetool = {
         prompt = false;
         keepBackup = false;

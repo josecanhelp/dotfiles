@@ -49,19 +49,6 @@
     # to keep the previous layout.
     dotDir = config.home.homeDirectory;
 
-    # ~/.zprofile, login shells only, before .zshrc.
-    #
-    # This is the whole reason /opt/homebrew/bin is on PATH, and 362 brew
-    # binaries hang off it, pipx and ecsplorer among them. Note that
-    # `brew shellenv` PREPENDS, so Nix loses precedence right here; the
-    # final `export PATH` in initContent below runs later and takes it back.
-    #
-    # Previously an untracked ~/.zprofile written by the Homebrew installer.
-    profileExtra = ''
-      # Set PATH, MANPATH, etc., for Homebrew.
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-    '';
-
     enableCompletion = true;
     autosuggestion = {
       enable = true;
@@ -74,7 +61,6 @@
       LANG = "en_US.UTF-8";
       SAM_CLI_TELEMETRY = "0";
       KEYTIMEOUT = "1";
-      ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX = "YES";
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
       # ripgrep, not ag: the previous value referenced `ag`, which is not
       # installed, so fzf's Ctrl-T has been silently broken.
@@ -143,7 +129,6 @@
       stp = "./vendor/bin/sail test -p";
       sail = "[ -f sail ] && bash sail || bash vendor/bin/sail";
       strap = "[ -f strap ] && bash strap || bash ./bin/strap";
-      gdesc = "git log --no-merges --pretty=format:'- %s' master.. | pbcopy";
       gitamend = "git commit --amend";
       ghweb = "gh repo view --web";
       ghopen = "gh repo view --web";
@@ -168,46 +153,6 @@
     initContent = lib.mkMerge [
       (lib.mkBefore ''
         [ -f ~/.secrets ] && source ~/.secrets
-
-        # MUST be before compinit, which home-manager's enableCompletion
-        # runs early in the generated .zshrc. In the original zshrc this
-        # line sat immediately before a second manual compinit; that second
-        # call existed precisely to pick these up. fpath mutations after
-        # compinit are ignored, so `docker <TAB>` would silently stop
-        # completing. home-manager's own `typeset -U ... fpath` de-dupes
-        # rather than resets, so prepending here is safe.
-        fpath=(${config.home.homeDirectory}/.docker/completions $fpath)
-      '')
-
-      # mkOrder 1100, not a bare string. programs.starship contributes its
-      # init snippet to zsh.initContent at the default priority 1000 with no
-      # mkOrder of its own. A bare string here is also 1000, so the two tie
-      # and the winner is decided by module-encounter order, which changes
-      # if this module's position in the imports tree ever moves. 1100 puts
-      # starship first deterministically, matching the pre-split output, and
-      # stays below the mkAfter block's 1500.
-      (lib.mkOrder 1100 ''
-        source $HOME/dotfiles/zsh/custom/functions.zsh
-
-        zstyle ':completion:*' verbose yes
-        zstyle ':completion:*' menu select
-        zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-        zmodload zsh/complist
-        _comp_options+=(globdots)
-
-        autoload bashcompinit && bashcompinit
-        complete -C '/usr/local/bin/aws_completer' aws
-
-        bindkey -v '^?' backward-delete-char
-        bindkey -M menuselect 'h' vi-backward-char
-        bindkey -M menuselect 'k' vi-up-line-or-history
-        bindkey -M menuselect 'l' vi-forward-char
-        bindkey -M menuselect 'j' vi-down-line-or-history
-
-        autoload edit-command-line; zle -N edit-command-line
-        bindkey '^e' edit-command-line
-
-        eval "$(fzf --zsh)"
       '')
 
       (lib.mkAfter ''
@@ -217,17 +162,6 @@
         export PATH=''${PATH}:~/.bin
         export PATH=''${PATH}:~/.local/bin
         export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-        # Nix must win over Homebrew. brew shellenv in ~/.zprofile prepends
-        # /opt/homebrew/bin. This runs last, so it wins.
-        #
-        # ~/.nix-profile/bin is deliberately absent. It is a dangling symlink
-        # here, and correctly so: configuration.nix sets
-        # home-manager.useUserPackages, which installs home-manager packages
-        # into /etc/profiles/per-user/$USER instead. That directory is already
-        # on PATH. The old entry resolved to nothing and only misled anyone
-        # reading this line while debugging PATH.
-        export PATH="/run/current-system/sw/bin:$PATH"
       '')
     ];
   };

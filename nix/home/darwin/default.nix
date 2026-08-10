@@ -19,6 +19,7 @@ in
     ./alacritty.nix
     ./karabiner.nix
     ./java.nix
+    ./extras.nix
   ];
 
   home.stateVersion = "26.05";

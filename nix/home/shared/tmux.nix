@@ -105,47 +105,6 @@
           "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
 
       if-shell "test -f ~/dotfiles/tmux/tmuxline" "source ~/dotfiles/tmux/tmuxline"
-
-      # Fire macOS notification when any pane rings the bell (e.g. Claude Code)
-      set -g bell-action any
-      set -g visual-bell off
-      set-hook -g alert-bell 'run-shell "osascript -e \"display notification \\\"Claude requires your attention\\\" with title \\\"Claude Code\\\"\""'
-
-      # Clear the Claude attention marker (@claude_alert) the moment its window is
-      # focused. The marker itself is set by ~/.claude/notify.sh (Claude Code hooks).
-      set-hook -g session-window-changed 'set-option -w @claude_alert ""'
     '';
-  };
-
-  # Open Alacritty fullscreen with the restored session at login.
-  #
-  # The script drives osascript and System Events keystrokes, so it needs
-  # Accessibility permission. macOS keys that approval to some process, and
-  # the installed plist wraps the script as `/bin/sh -c "/bin/wait4path
-  # /nix/store && exec <store path> fullscreen"`, so the process TCC
-  # attributes the approval to may be /bin/sh rather than the store path
-  # itself. Unverified either way; a continuum update that changes the store
-  # path may require re-approving under System Settings, Privacy and
-  # Security, Accessibility.
-  #
-  # home-manager's activation only skips re-bootstrapping an agent when the
-  # installed plist byte-matches the new one. Otherwise it boots the old one
-  # out and loads the new one, and because RunAtLoad is true here, the script
-  # runs immediately, mid-activation, during `darwin-rebuild switch`. So the
-  # next nixpkgs bump that moves tmuxPlugins.continuum's store path will,
-  # mid-rebuild, activate Alacritty, keystroke "tmux" and Return into the
-  # front window, and toggle AXFullScreen, which can nest tmux inside the
-  # session you are rebuilding from and un-fullscreen an already fullscreen
-  # window. Continuum's own plist never did this, because it was written at
-  # tmux-server start, not at activation.
-  launchd.agents.tmux-boot = {
-    enable = true;
-    config = {
-      ProgramArguments = [
-        "${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum/scripts/handle_tmux_automatic_start/osx_alacritty_start_tmux.sh"
-        "fullscreen"
-      ];
-      RunAtLoad = true;
-    };
   };
 }
