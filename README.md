@@ -406,6 +406,119 @@ still catches a bad attribute name or a broken module:
 nix eval '.#homeConfigurations."jose@RockemSockem".config.home.packages' --apply 'builtins.length'
 ```
 
+## Worked examples
+
+Four end to end, using real tokens and attributes.
+
+### Adding a GUI app: Zed
+
+```sh
+brew info --cask zed        # confirm the token and that it is the right product
+```
+
+`nix/configuration.nix`, in `casks`, alphabetically:
+
+```diff
+       "wireshark-app"              # token is wireshark-app for the GUI
++      "zed"
+       "zoom"                       # token is zoom, not zoom.us
+```
+
+```sh
+nix build .#darwinConfigurations.REM-JoseS-MBP1.system --no-link --print-out-paths
+sudo darwin-rebuild switch --flake ~/dotfiles#REM-JoseS-MBP1
+```
+
+Homebrew downloads and installs it, because nothing is there to adopt. If Zed
+were **already** installed by direct download, expect the adoption failure
+described above and hand it over once with
+`brew install --cask --force zed` before rebuilding again.
+
+### Removing a GUI app: Minecraft
+
+`nix/configuration.nix`:
+
+```diff
+       "microsoft-teams"
+-      "minecraft"
+       "monologue"
+```
+
+```sh
+sudo darwin-rebuild switch --flake ~/dotfiles#REM-JoseS-MBP1
+```
+
+**Minecraft is still installed at this point.** The rebuild only stopped
+declaring it, and `cleanup = "none"` means Homebrew leaves undeclared things
+alone. That is enough if your goal is "a fresh machine should not get this".
+To actually remove it:
+
+```sh
+brew uninstall --cask minecraft
+```
+
+### Adding a CLI tool to both machines: bat
+
+This is the one that shows the asymmetry, because the same tool goes in two
+different files.
+
+```sh
+nix eval --raw nixpkgs#legacyPackages.aarch64-darwin.bat.version   # 0.26.1
+nix eval --raw nixpkgs#legacyPackages.x86_64-linux.bat.version     # 0.26.1
+```
+
+The Mac, in `nix/packages.nix`, in the `cli` group:
+
+```diff
+   cli = with pkgs; [
+     actionlint
++    bat
+     btop
+```
+
+Optionally assert it resolves from Nix, in `nix/verify.sh`. Note this list takes
+the **binary** name, which for `bat` happens to match the attribute:
+
+```diff
+-batch1=(rg fzf jq tree htop wget pstree watchexec nmap pandoc typst
++batch1=(rg bat fzf jq tree htop wget pstree watchexec nmap pandoc typst
+```
+
+The WSL box, in `nix/home/linux/default.nix`, in `home.packages`:
+
+```diff
+   home.packages = with pkgs; [
+     actionlint
++    bat
+     btop
+```
+
+Then activate on each, separately:
+
+```sh
+sudo darwin-rebuild switch --flake ~/dotfiles#REM-JoseS-MBP1      # on the Mac
+home-manager switch --flake ~/dotfiles#jose@RockemSockem          # on the WSL box
+```
+
+There is no single edit that covers both. That is the deliberate consequence of
+`environment.systemPackages` being a nix-darwin option.
+
+### Removing a CLI tool: bat again
+
+Reverse all three edits: `nix/packages.nix`, `nix/verify.sh`, and
+`nix/home/linux/default.nix`. Then activate on each machine.
+
+**Do not forget `verify.sh`.** Removing the package but leaving the binary in a
+batch makes the next `nix/verify.sh all` report:
+
+```
+MISSING   bat
+```
+
+which reads like a broken system rather than a stale assertion. Unlike the
+Homebrew path, both Nix paths genuinely uninstall on removal, so the tool is
+gone from `PATH` after activation.
+
 ## Traps worth knowing
 
 **Nix only reads git-tracked files.** Add something under `nix/` and forget to `git add` it, and the rebuild reports that the path does not exist while you are staring right at it.
