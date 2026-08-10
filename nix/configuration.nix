@@ -150,8 +150,19 @@
     # added. A wrong token does not fail the build, it fails at activation,
     # which is a slower and more annoying way to find out.
     #
-    # Adding an already-installed app is a no-op rather than a reinstall,
-    # because onActivation.cleanup is "none" below.
+    # Declaring an app Homebrew did not install is NOT free, which is worth
+    # knowing before adding to this list. Homebrew tries to "adopt" the
+    # existing bundle and refuses when the installed version differs from the
+    # cask's, so any app that self-updated after being downloaded directly
+    # fails with "It seems the existing App is different from the one being
+    # installed". On 2026-08-10 that hit balenaetcher and bambu-studio, and
+    # obsidian failed worse: adoption removed /Applications/Obsidian.app before
+    # erroring, so the app had to be reinstalled. Resolve each by letting
+    # Homebrew take ownership once, with `brew install --cask --force <token>`,
+    # after which normal upgrades work.
+    #
+    # onActivation.cleanup = "none" below only stops Homebrew UNINSTALLING
+    # things that are not declared. It does not make installing a no-op.
     #
     # 16 installed apps were deliberately NOT declared on 2026-08-10, after
     # review: Cap, Cyberduck, ScreenFlow, Visual Studio, Discord,
@@ -210,10 +221,14 @@
       "ngrok"
       "obs"
       "obsidian"
-      # There are currently two OneDrive installs: this one and an older Mac App
-      # Store copy under /Applications/OneDrive.localized/. Declaring the cask
-      # leaves the App Store copy orphaned.
-      "onedrive"
+      # onedrive is deliberately absent. The cask declares a conflict with
+      # microsoft-office above, which is a pkg installer for the whole 365
+      # suite and ships OneDrive itself, so declaring both fails activation
+      # with "Cask 'onedrive' conflicts with 'microsoft-office'".
+      #
+      # Note there are still two OneDrive installs on disk: the one Office
+      # manages, and an older Mac App Store copy under
+      # /Applications/OneDrive.localized/. That duplicate predates this config.
       "openshot-video-editor"
       "opensuperwhisper"
       "postman"
