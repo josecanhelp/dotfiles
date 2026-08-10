@@ -9,11 +9,14 @@ let
 in
 {
   imports = [
-    ./git.nix
-    ./shell.nix
+    # Shared with the WSL box. Anything in here must work on both.
+    ../shared/git.nix
+    ../shared/shell.nix
+    ../shared/tmux.nix
+    ../shared/nvim.nix
+
+    # macOS only.
     ./alacritty.nix
-    ./tmux.nix
-    ./nvim.nix
     ./karabiner.nix
     ./java.nix
   ];

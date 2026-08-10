@@ -64,6 +64,6 @@
     # mkRenamedOptionModule (modules/programs/neovim/default.nix:54); the
     # shim still works but emits a deprecation trace on every rebuild, the
     # same way programs.git.userName did before it was migrated.
-    initLua = builtins.readFile ../../nvim/init.lua;
+    initLua = builtins.readFile ../../../nvim/init.lua;
   };
 }

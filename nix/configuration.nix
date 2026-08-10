@@ -53,7 +53,7 @@ in
     # on `! -L`, so an existing SYMLINK is never backed up and activation
     # fails with "would be clobbered". Delete conflicting symlinks by hand.
     backupFileExtension = "hm-bak";
-    users.${user} = import ./home;
+    users.${user} = import ./home/darwin;
   };
 
   # programs.alacritty in nix/home/alacritty.nix hard-requires "FiraCode Nerd
