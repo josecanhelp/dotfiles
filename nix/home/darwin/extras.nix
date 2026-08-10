@@ -33,9 +33,14 @@
   '';
 
   programs.zsh = {
-    # ~/.zprofile, login shells only. The whole reason /opt/homebrew/bin is on
-    # PATH. brew shellenv PREPENDS, so the mkOrder 1600 block below is what
-    # takes precedence back for Nix.
+    # ~/.zprofile, login shells only, before .zshrc.
+    #
+    # This is the whole reason /opt/homebrew/bin is on PATH, and 362 brew
+    # binaries hang off it, pipx and ecsplorer among them. Note that
+    # `brew shellenv` PREPENDS, so Nix loses precedence right here; the
+    # final `export PATH` in initContent below runs later and takes it back.
+    #
+    # Previously an untracked ~/.zprofile written by the Homebrew installer.
     profileExtra = ''
       # Set PATH, MANPATH, etc., for Homebrew.
       eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -66,6 +71,14 @@
         fpath=(${config.home.homeDirectory}/.docker/completions $fpath)
       '')
 
+      # mkOrder 1100, not a bare string. programs.starship contributes its
+      # init snippet to zsh.initContent at the default priority 1000 with no
+      # mkOrder of its own. A bare string here is also 1000, so the two tie
+      # and the winner is decided by module-encounter order, which changes
+      # if this module's position in the imports tree ever moves. 1100 puts
+      # starship first deterministically, matching the pre-split output, and
+      # stays below the mkAfter block's 1500.
+      #
       # This entire block is verbatim from the pre-split shared/shell.nix, at
       # the same mkOrder, deliberately NOT split along platform lines.
       #
