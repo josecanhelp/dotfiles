@@ -99,7 +99,6 @@
       gac = "git add -A && git commit -m";
       gco = "git checkout";
       guncommit = "git reset HEAD~1";
-      art = "php artisan";
       ee = "cd ~/Code/engineering_department/";
       tt = "cd ~/Code/Converge/";
       jj = "cd ~/Code/JoseCanHelp/";
@@ -112,7 +111,6 @@
       cda = "composer dump-autoload";
       dpostgres = "docker run --name postgres -v data:/var/lib/postgresql/data -e POSTGRES_USER=perk -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=myapp -p 5432:5432 -d postgres";
       dmysql = "docker run --name mysql -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=secret -p 3306:3306 -d mysql:5.7";
-      artclear = "php artisan cache:clear && php artisan config:clear && php artisan view:clear && php artisan route:clear";
       cl = "clear";
       nah = "git reset --hard && git clean -df";
       wip = "git add . && git commit -m 'WIP'";
@@ -135,10 +133,8 @@
       src = "exec zsh";
       ".." = "cd ..";
       pb = "pianobar";
-      pad = "php artisan dusk";
       jig = "./vendor/bin/jigsaw";
       to = "./bin/run";
-      tinkpw = "php artisan tinker --execute=\"echo bcrypt('password')\" | pbcopy";
       lll = "ranger";
       vimlog = "nvim -V9myNvim.log .";
       forceprune = "docker volume prune --force && docker system prune --force";

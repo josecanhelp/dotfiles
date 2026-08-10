@@ -16,7 +16,9 @@ batch2=(git tmux starship)
 batch3=(gcloud bq gsutil mvn nvim)
 # ruby intentionally absent: stays as system /usr/bin/ruby 2.6.10.
 # pipx intentionally absent: fails to build in nixpkgs, stays on Homebrew.
-batch4=(php python3 node dotnet yarn ttx)
+# php intentionally absent: removed 2026-08-09, no local PHP on this machine.
+# The surviving Laravel aliases run through Docker (sail) or ./vendor/bin.
+batch4=(python3 node dotnet yarn ttx)
 batch5=(mariadb redis-server minikube helm az svn qemu-system-aarch64)
 # Tools that were invisible to `brew leaves` because it omits third-party
 # tap formulae, plus uv which was an installer-managed ~/.local/bin binary.

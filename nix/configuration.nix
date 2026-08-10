@@ -88,7 +88,6 @@
     taps = [
       "shopify/shopify"
       "masaushi/tap"
-      "microsoft/mssql-release"
     ];
 
     # Not in nixpkgs, so they stay on Homebrew rather than going
@@ -97,7 +96,6 @@
     brews = [
       "themekit"      # shopify/shopify
       "ecsplorer"     # masaushi/tap
-      "msodbcsql17"   # microsoft/mssql-release
     ];
 
     # All from homebrew/cask, so no extra taps needed.

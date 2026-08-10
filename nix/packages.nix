@@ -64,7 +64,6 @@ let
     # 24.18.0, four majors past the v20.19.1 nvm had pinned. 22 moves
     # forward without the jump that breaks native modules.
     nodejs_22
-    php83
     # pipx omitted: python3.13-pipx-1.8.0 fails to build in this nixpkgs.
     # Its test suite asserts on "black@ https://..." but a newer packaging
     # library normalizes to "black @ https://...", so 7 tests in
