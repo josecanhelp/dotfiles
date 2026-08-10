@@ -42,6 +42,28 @@
   # dependencies, and stay unmanaged.
   fonts.packages = with pkgs; [ nerd-fonts.fira-code ];
 
+  # Cap ~/Library/Logs/goku.log, written by launchd.agents.goku in
+  # nix/home/karabiner.nix. That log reached 74 MB and 4.3 million lines
+  # before this sub-project, because the old Homebrew agent had
+  # KeepAlive = true and its binary was missing, so launchd respawned a
+  # failing job every 10 seconds and every respawn appended.
+  #
+  # Rotation matches that failure mode specifically. launchd opens the
+  # StandardErrorPath once per spawned process, so a single healthy
+  # watchexec holds its descriptor and would keep writing to an already
+  # rotated file. That case does not matter: a working watcher logs almost
+  # nothing. The runaway case is many short-lived respawns, and each of
+  # those reopens the path, so rotation does bound it.
+  #
+  # This lives here rather than beside the agent because environment.etc is
+  # a nix-darwin option and /etc is machine-level; home-manager cannot
+  # write it. Fields: mode, archive count, size in KB, when, flags.
+  # N means no process needs signalling, J compresses with bzip2.
+  environment.etc."newsyslog.d/goku.conf".text = ''
+    # logfilename                       [owner:group]  mode count size when flags
+    /Users/jose/Library/Logs/goku.log    jose:staff     644  3     1024 *    NJ
+  '';
+
   # macOS settings that previously existed only in this machine's
   # preference database. Every value below was read off the running system
   # rather than chosen, so activation is a no-op today.

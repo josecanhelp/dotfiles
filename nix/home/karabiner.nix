@@ -34,6 +34,11 @@ in
       ];
       RunAtLoad = true;
       KeepAlive = true;
+      # KeepAlive plus a single log file is what produced a 74 MB
+      # goku.log before this was declared. Rotation for this path is
+      # declared as environment.etc."newsyslog.d/goku.conf" in
+      # nix/configuration.nix, because /etc is machine-level and
+      # home-manager cannot write it.
       StandardOutPath = "${config.home.homeDirectory}/Library/Logs/goku.log";
       StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/goku.log";
     };
