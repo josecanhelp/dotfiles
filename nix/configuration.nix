@@ -91,13 +91,77 @@
       tilesize = 36;
       mru-spaces = false;      # required by Amethyst; stops spaces reordering
       wvous-br-corner = 5;     # bottom-right hot corner starts the screen saver
+      wvous-tr-corner = 4;     # top-right shows the desktop
+
+      # The Dock's actual contents. Previously undeclared entirely, so a fresh
+      # machine got Apple's stock Dock. Order matters and is preserved.
+      #
+      # Plain strings work here: the option coerces a string to { app = ...; }.
+      persistent-apps = [
+        "/Applications/Brave Browser.app"
+        "/System/Applications/Messages.app"
+        "/System/Applications/Photos.app"
+        "/System/Applications/System Settings.app"
+        "/System/Applications/iPhone Mirroring.app"
+        "/Applications/Microsoft Teams.app"
+      ];
+
+      # showas and arrangement are enums that nix-darwin maps to the integers
+      # macOS stores: showas automatic=0 fan=1 grid=2 list=3, arrangement
+      # name=1 date-added=2 date-modified=3 date-created=4 kind=5.
+      #
+      # These are "fan" and "date-added" because that is what the machine
+      # actually has (showas = 1, arrangement = 2). An earlier audit recorded
+      # them as grid and name; declaring that would have silently changed both
+      # folders on the next rebuild, which is the specific hazard of an
+      # enforced setting.
+      # Each entry must be tagged `folder = ...` (or `file = ...`). A bare
+      # attrset fails to evaluate: only a plain string gets auto-tagged.
+      persistent-others = [
+        {
+          folder = {
+            path = "/Users/jose/Screenshots";
+            showas = "fan";
+            arrangement = "date-added";
+            displayas = "stack";
+          };
+        }
+        {
+          folder = {
+            path = "/Users/jose/Downloads";
+            showas = "fan";
+            arrangement = "date-added";
+            displayas = "stack";
+          };
+        }
+      ];
     };
+
+    # Sequoia's own window features, both off. These matter specifically
+    # because Amethyst is the window manager: macOS tiling margins fight
+    # Amethyst's layout, and a stray click on the wallpaper throwing every
+    # window aside is hostile to a tiling workflow.
+    WindowManager = {
+      EnableStandardClickToShowDesktop = false;
+      EnableTiledWindowMargins = false;
+      AutoHide = true;          # the Stage Manager strip stays hidden
+      GloballyEnabled = false;  # Stage Manager off; matches the macOS default
+    };
+
+    spaces.spans-displays = false;  # each display keeps its own spaces
 
     finder = {
       ShowPathbar = true;
       FXPreferredViewStyle = "Nlsv";   # list view
       _FXSortFoldersFirst = true;
+      _FXSortFoldersFirstOnDesktop = true;
       ShowHardDrivesOnDesktop = true;
+      ShowExternalHardDrivesOnDesktop = true;
+      ShowRemovableMediaOnDesktop = true;
+      FXRemoveOldTrashItems = true;    # empty the Trash after 30 days
+      # The friendly enum, not the raw "PfVo" macOS stores. nix-darwin maps it.
+      # Stock macOS opens Recents; this opens the startup volume.
+      NewWindowTarget = "OS volume";
     };
 
     NSGlobalDomain = {
@@ -109,7 +173,18 @@
       # picker, which is what makes vim navigation usable.
       ApplePressAndHoldEnabled = false;
       AppleShowAllExtensions = true;
+      # Stops a two-finger swipe triggering browser back/forward, which fires
+      # by accident far more often than on purpose.
+      AppleEnableSwipeNavigateWithScrolls = false;
+      # A float, not a string. "0" fails to evaluate against the option type.
+      # The alert sound is muted; losing this is immediately obvious.
+      "com.apple.sound.beep.volume" = 0.0;
     };
+
+    # The alert sound itself lives in .GlobalPreferences rather than -g.
+    # Stock macOS uses Boop.
+    ".GlobalPreferences"."com.apple.sound.beep.sound" =
+      "/System/Library/Sounds/Tink.aiff";
 
     screencapture.location = "~/Screenshots";
   };
