@@ -925,22 +925,51 @@ that store into virtualenvs, so entries a venv still references would survive
 deletion with the space unreclaimed. A full scan for files with a link count
 above 1 found zero, so the cache does own its data here. On APFS uv can also
 clone blocks, where the link count stays 1 while space is still shared, so treat
-31 GB as an upper bound rather than a guarantee. `uv cache prune` drops only
-unneeded entries; `uv cache clean` drops all of it. Both are safe, since uv
-refetches on the next sync. `uv` itself is declared in `packages.nix:30` and is
-not affected either way.
+31 GB as an upper bound rather than a guarantee. `uv` itself is declared in
+`packages.nix` and is unaffected either way.
+
+**Do not clear it with `--force` while the MCP servers are up.** An attempt on
+2026-08-10 failed: `uv cache prune` sat 300 seconds on `~/.cache/uv/.lock` and
+timed out, because 28 `uv` processes hold that lock. Those are the Claude Code
+MCP servers, and `lsof` shows more than a lock. Their Python interpreters have
+`.so` files open as `txt`, mapped straight out of `~/.cache/uv/archive-v0`. The
+cache is an execution root for live processes here, not just a store of
+downloads, so `--force` would delete files out from under running programs.
+
+That also corrects the hardlink reasoning above. The scan was accurate but it
+was answering the wrong question: what makes deletion unsafe is not a link
+count, it is a process executing from the directory. Clear the cache with
+Claude Code and the MCP servers stopped, or leave it. At 66 GB free it is no
+longer urgent.
 
 Then, roughly in order of value:
 
-1. **`programs.fzf`.** The only remaining item that DELETES config rather than
-   adding any. Three hand-written `FZF_*` variables (`FZF_DEFAULT_COMMAND`,
-   `FZF_CTRL_T_COMMAND`, `FZF_DEFAULT_OPTS`), a manual `eval "$(fzf --zsh)"`,
-   and a documented quoting workaround in `nix/home/shared/shell.nix` all
-   collapse into the module, which sets them natively. `fzf` is already
-   declared as a package on both machines.
+1. **`programs.fzf`. DONE 2026-08-10.** The one item here that deleted config
+   rather than adding any. Three hand-written `FZF_*` variables, a manual
+   `eval "$(fzf --zsh)"` duplicated across `darwin/extras.nix` and
+   `linux/default.nix`, and a quoting workaround all collapsed into the module.
 
-   Note this section originally said five variables. It is three, counted
-   2026-08-10.
+   Three things moved, none of them changing what fzf does. The exports went
+   from `programs.zsh.sessionVariables` to `home.sessionVariables`, which is a
+   different part of the same `~/.zshenv` and still ahead of `~/.zshrc`. The
+   integration went from the tail of the `mkOrder 1100` block to the module's
+   `mkOrder 910`, so it now precedes those bindkeys. And it gained a
+   `[[ $options[zle] = on ]]` guard plus an absolute store path, so it skips
+   non-interactive shells and no longer depends on PATH.
+
+   The ordering move was checked by running the generated `zshrc`, not by
+   reasoning about it: all four widgets bind, on Tab, `^R`, `^T` and alt-c.
+
+   Two things this section got wrong. It said five variables; there were three.
+   And it said `fzf` was "already declared as a package on both machines" as if
+   that made the package entries interchangeable. On darwin the entry in
+   `packages.nix` has to stay even though the module also adds fzf to
+   `home.packages`: `environment.systemPath` carries the per-user profile as the
+   literal `/etc/profiles/per-user/$USER/bin`, expanded by the shell, so any
+   context without `USER` set resolves it to `/etc/profiles/per-user//bin` and
+   finds nothing. The launchd-started tmux server is such a context and
+   tmux-fzf needs fzf on PATH. Same trap as the MANPATH false alarm recorded
+   below.
 
 2. **The four remaining known issues** in `docs/nix-reproducibility-review.md`:
    a dead `select-bsp-layout` binding in `amethyst.yml`, globals leaking to
