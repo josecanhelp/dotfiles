@@ -220,10 +220,9 @@ select-column-layout:
   mod: mod1
   key: f
 
-# Select BSP layout
-select-bsp-layout:
-  mod: mod1
-  key: b
+# No select-bsp-layout binding. `bsp` is not in the `layouts` list above, so
+# binding it did nothing but reserve mod1+b. Add `bsp` to that list first if
+# you want the layout back, then re-add the binding.
 
 # Move the currently focused window to the space to the left.
 throw-space-left:

@@ -133,13 +133,11 @@ if not hsapp_list then
     hsapp_list = {
         { key = 'a', name = 'Slack' },
         { key = 'b', name = 'Brave Browser' },
-        { key = 'd', name = 'React Native Debugger' },
         { key = 'e', name = 'Finder' },
         { key = 'i', name = 'iTerm' },
         { key = 'k', name = 'Keynote' },
         { key = 'm', name = 'Messages' },
         { key = 'n', id = 'com.apple.ActivityMonitor' },
-        { key = 'p', name = 'Paw' },
         { key = 'o', name = 'Obsidian' },
         { key = 's', name = 'Simulator' },
         { key = 't', name = 'TablePlus' },
