@@ -874,6 +874,10 @@ Those top three are **82 GB**. Emptying the Trash alone reclaims 19 GB, and
 first installs. Against 44 GB free on a 927 GB disk, this is the fastest
 possible win and needs no config change at all.
 
+The table above is the 2026-08-09 snapshot, kept as written. Two of those three
+were cleared on 2026-08-10 for 45 GB back; see "Suggested order" below for the
+current numbers and for what is left in `~/.cache`.
+
 ### Orphaned by uninstalled software
 
 | Path | Left behind by | Size |
@@ -910,12 +914,21 @@ files (one of them 0 bytes).
 Rewritten 2026-08-10. Tiers 1, 2 and 3 are done, so what follows is only what
 remains.
 
-**Still not done, and the disk is now worse than when this was written.**
-`~/.cache` 35 GB, `~/.npm` 29 GB, `~/.Trash` 19 GB. That is 83 GB on a disk at
-98 percent, with 24 GB free, down from 44 GB earlier the same day. Emptying the
-Trash and running `npm cache clean --force` reclaims 48 GB with no config change
-and no risk. This is still the highest value per minute of anything in this
-document.
+**Disk: mostly DONE 2026-08-10.** It first got worse, dropping to 24 GB free at
+98 percent, then the Trash was emptied and `npm cache clean --force` was run.
+That reclaimed 45 GB: `~/.npm` went 29 GB to 1.7 GB, `~/.Trash` 19 GB to zero,
+and the disk went to **69 GB free at 93 percent**.
+
+What remains is `~/.cache` at 35 GB, of which **31 GB is `~/.cache/uv/archive-v0`**,
+uv's unpacked-wheel store. Worth knowing before clearing it: uv hardlinks from
+that store into virtualenvs, so entries a venv still references would survive
+deletion with the space unreclaimed. A full scan for files with a link count
+above 1 found zero, so the cache does own its data here. On APFS uv can also
+clone blocks, where the link count stays 1 while space is still shared, so treat
+31 GB as an upper bound rather than a guarantee. `uv cache prune` drops only
+unneeded entries; `uv cache clean` drops all of it. Both are safe, since uv
+refetches on the next sync. `uv` itself is declared in `packages.nix:30` and is
+not affected either way.
 
 Then, roughly in order of value:
 
