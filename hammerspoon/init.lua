@@ -467,8 +467,11 @@ positions = {
 }
 
 -- Splits (from positions above) that I'll make available to the modal keybindings
-lrsplits = { 'tenths5', 'tenths4', 'tenths3', 'tenths2' }
-tbsplits = { 'fourths1', 'fourths2', 'fourths3', 'fourths4' }
+-- local, unlike `positions` above: these two are read only inside this file,
+-- so nothing breaks by keeping them out of _G. The closures at the cmodal
+-- bindings below capture them as upvalues.
+local lrsplits = { 'tenths5', 'tenths4', 'tenths3', 'tenths2' }
+local tbsplits = { 'fourths1', 'fourths2', 'fourths3', 'fourths4' }
 
 if spoon.WinWin then
     -- Create a new Modal Manager
@@ -677,7 +680,9 @@ hs.urlevent.bind('openanything', function()
     elseif appIs(intellij) then
         hs.eventtap.keyStroke({ 'cmd' }, 't')
     elseif true then
-        bundleId = getBundleId();
+        -- local: only this branch and the notify callback just below read it,
+        -- and the callback captures it as an upvalue.
+        local bundleId = getBundleId();
         hs.notify.new(function() hs.pasteboard.setContents(bundleId) end,
             { title = 'Hammerspoon', informativeText = 'Open Anything not set up', actionButtonTitle = 'Copy Bundle ID', alwaysShowAdditionalActions = true, hasActionButton = true })
             :send()
