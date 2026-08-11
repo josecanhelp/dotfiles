@@ -270,8 +270,10 @@ follows is the remainder, each re-verified against the current tree on
   is also Amethyst's own default for that action. Note this may change
   what `mod1+t` does for you, since it was previously ambiguous which of
   the two won registration.
-- **`select-bsp-layout` is bound** (`amethyst.yml:224`) but `bsp` is not in
-  the active `layouts` list, so the binding does nothing.
+- ~~**`select-bsp-layout` is bound** but `bsp` is not in the active `layouts`
+  list.~~ **Fixed 2026-08-11.** Binding removed, so `mod1+b` is free again. A
+  comment in its place says to add `bsp` to `layouts` first if the layout is
+  ever wanted back.
 
 ### Cleanup
 
@@ -283,16 +285,37 @@ follows is the remainder, each re-verified against the current tree on
   longer matched `init.lua`'s lowercase `urlevent.bind` names. Note that
   `karabiner/format` regenerates a `.bak` on every run by design, so the
   `.gitignore` entry stays. `raycast-scripts/` was already gone.
-- `hammerspoon/init.lua:137,143` reference React Native Debugger and Paw;
-  Paw has been EOL since 2022.
+- ~~`hammerspoon/init.lua:137,143` reference React Native Debugger and Paw.~~
+  **Fixed 2026-08-11.** Both entries dropped from `hsapp_list`; neither app is
+  installed. Frees the `d` and `p` keys in that switcher.
 
 ### Fragile, works today
 
-- Globals leaking to `_G` in `hammerspoon/init.lua`: `positions` (434),
-  `lrsplits`/`tbsplits` (473, 474), `currentLayout`/`layouts` (570, 572),
-  `bundleId` (683), plus all 16 functions in `helpers.lua`.
-- `hammerspoon/chain.lua:30` reads `lastSeenAt` before it is assigned at
-  `:39`. Works only because Lua returns nil for undeclared globals.
+- Globals leaking to `_G` in `hammerspoon/init.lua`. **Partly fixed
+  2026-08-11.** `lrsplits`, `tbsplits` and `bundleId` are now `local`: each is
+  read only within this file, and the closures that use them capture them as
+  upvalues.
+
+  `positions`, `currentLayout` and `layouts` stay global, as do all 16
+  functions in `helpers.lua`, and that is a deliberate stop rather than an
+  oversight. `helpers.lua` is loaded with a bare `require('helpers')` that
+  returns nothing, so its 114 call sites resolve only because the names are
+  global. Fixing it properly means converting `helpers` into a module returning
+  a table and rewriting every call site, plus threading the three shared
+  variables that `helpers.lua` and `chain.lua` read out of `_G`. No functional
+  gain, and the only verification available is a parse check plus a reload, in
+  a config where errors surface when a particular hotkey is pressed rather than
+  at load. Left as is on purpose.
+- ~~`hammerspoon/chain.lua:30` reads `lastSeenAt` before it is assigned at
+  `:39`.~~ **Fixed 2026-08-11.** Declared `local` alongside `lastSeenChain` and
+  `lastSeenWindow`, and seeded to `0`.
+
+  This entry's explanation was wrong. Returning nil for an undeclared global is
+  not what saved it: `nil < now - chainResetInterval` raises in Lua. It
+  survived because `or` short-circuits, and on a first call
+  `lastSeenChain ~= movements` is already true, so the comparison is never
+  reached. Correct by accident, and it would have broken on any reordering of
+  those conditions. Seeding to `0` reproduces the first-call reset directly.
 - ~~`openpr()` rewrites git remotes to `http://`.~~ **Fixed 2026-08-09.**
   Now `https://`, and its three variables are `local` rather than leaking
   into the interactive shell.

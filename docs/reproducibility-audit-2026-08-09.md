@@ -971,15 +971,38 @@ Then, roughly in order of value:
    tmux-fzf needs fzf on PATH. Same trap as the MANPATH false alarm recorded
    below.
 
-2. **The four remaining known issues** in `docs/nix-reproducibility-review.md`:
-   a dead `select-bsp-layout` binding in `amethyst.yml`, globals leaking to
-   `_G` in `hammerspoon/init.lua`, `chain.lua:30` reading `lastSeenAt` before
-   it is assigned, and dead references to Paw, EOL since 2022.
+2. **The four remaining known issues** in `docs/nix-reproducibility-review.md`.
+   **Three fixed and one partly fixed, 2026-08-11.** The dead
+   `select-bsp-layout` binding is gone and `mod1+b` is free. The Paw and React
+   Native Debugger entries are out of `hsapp_list`, freeing `d` and `p`.
+   `chain.lua`'s `lastSeenAt` is `local` and seeded to `0`.
 
-3. **`~/.tcshrc` and `~/.xonshrc`.** Both still contain `conda init` blocks
-   pointing at the `~/anaconda3` deleted on 2026-08-09. Same class as the
-   `~/.bash_profile` removed then, and missed because only bash and zsh were
-   checked.
+   The `_G` item is deliberately only part done. `lrsplits`, `tbsplits` and
+   `bundleId` are now `local`. `positions`, `currentLayout`, `layouts` and the
+   16 functions in `helpers.lua` stay global: `helpers.lua` is loaded by a bare
+   `require` that returns nothing, so its 114 call sites resolve only through
+   `_G`, and converting it buys no behaviour for a large mechanical change that
+   nothing here can verify beyond a parse and a reload. See the review doc for
+   the full reasoning.
+
+   Worth noting the review doc had the `chain.lua` diagnosis wrong, and this
+   entry repeated it. Undeclared globals returning nil is not what made that
+   line safe, since comparing nil to a number raises in Lua. It was `or`
+   short-circuiting past the comparison on the first call.
+
+3. **`~/.tcshrc`, `~/.xonshrc` and `~/.config/fish/`.** All three hold nothing
+   but dead blocks: `conda init` stanzas pointing at the `~/anaconda3` deleted
+   on 2026-08-09, and, in `fish/conf.d/`, two Amazon Q hooks calling the
+   `~/.local/bin/q` removed with Amazon Q. Neither fish nor xonsh is installed.
+   The tcsh one is the only one with any live effect, since its `else` branch
+   prepends the missing `~/anaconda3/bin` to PATH in tcsh sessions.
+
+   Same class as the `~/.bash_profile` removed on 2026-08-09 and missed because
+   only bash and zsh were checked. The fish directory was found only by
+   sweeping every shell's rc file rather than the two in use.
+
+   Removal is `rm -f ~/.tcshrc ~/.xonshrc && rm -rf ~/.config/fish`, and is
+   Jose's to run: the deletion is outside this repo and was blocked here.
 
 4. **The 64 broken shims in `/opt/homebrew/bin`**, all with dead `python@3.11`
    or `python@3.14` shebangs. Deletion, not migration. The only judgement call
