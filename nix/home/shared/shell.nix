@@ -36,6 +36,48 @@
     };
   };
 
+  # fzf's own module, replacing three hand-written FZF_* exports and a manual
+  # `eval "$(fzf --zsh)"` that was duplicated in darwin/extras.nix and
+  # linux/default.nix. The module emits both, so neither is written by hand.
+  #
+  # Three things move as a result. All are deliberate, and none change what
+  # fzf actually does:
+  #
+  #   1. The exports land in home.sessionVariables instead of
+  #      programs.zsh.sessionVariables. Both end up in ~/.zshenv: the former
+  #      via the hm-session-vars.sh line at the top, the latter written inline
+  #      below it. Both still run before ~/.zshrc, so fzf sees them.
+  #   2. The integration is emitted at mkOrder 910 rather than sitting at the
+  #      end of the 1100 block, so it now runs BEFORE the bindkeys there
+  #      instead of after. Inert: fzf binds ^T, ^R and alt-c against named
+  #      keymaps (emacs, viins, vicmd), and nothing in the 1100 block touches
+  #      those three.
+  #   3. The integration calls fzf by absolute store path instead of by name,
+  #      so it no longer depends on PATH being correct at that point.
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+
+    # ripgrep, not ag: the value this replaced referenced `ag`, which is not
+    # installed, so fzf's Ctrl-T had been silently broken.
+    #
+    # The single quotes survive into ~/.zshenv as literals inside a
+    # double-quoted export. fzf runs the command through a shell, which strips
+    # them, so the glob reaches ripgrep intact.
+    defaultCommand = "rg --files --hidden --glob '!.git'";
+    fileWidgetCommand = "rg --files --hidden --glob '!.git'";
+
+    defaultOptions = [
+      "--preview-window right:50%:noborder:hidden"
+      "--bind alt-p:toggle-preview"
+    ];
+
+    # Renders as `--color preview-bg:234`, appended after defaultOptions.
+    # That flag used to sit between the other two. fzf does not care about
+    # option order, and with no repeated flag there is nothing to override.
+    colors.preview-bg = "234";
+  };
+
   programs.zsh = {
     enable = true;
 
@@ -62,17 +104,7 @@
       SAM_CLI_TELEMETRY = "0";
       KEYTIMEOUT = "1";
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
-      # ripgrep, not ag: the previous value referenced `ag`, which is not
-      # installed, so fzf's Ctrl-T has been silently broken.
-      FZF_DEFAULT_COMMAND = "rg --files --hidden --glob '!.git'";
-      FZF_CTRL_T_COMMAND = "rg --files --hidden --glob '!.git'";
-      # Quotes deliberately omitted around the --color and --bind values.
-      # home-manager interpolates sessionVariables into a double-quoted
-      # export without escaping, so embedded quotes are stripped by the
-      # shell anyway. fzf's tokenizer strips quotes too, so the effective
-      # value is identical either way; writing it unquoted makes the Nix
-      # source, the generated export, and the effective value agree.
-      FZF_DEFAULT_OPTS = "--preview-window right:50%:noborder:hidden --color preview-bg:234 --bind alt-p:toggle-preview";
+      # The FZF_* variables used to live here. programs.fzf above owns them now.
     };
 
     shellAliases = {

@@ -114,8 +114,6 @@
 
         autoload edit-command-line; zle -N edit-command-line
         bindkey '^e' edit-command-line
-
-        eval "$(fzf --zsh)"
       '')
 
       # 1600, above the shared mkAfter block's 1500. This must run LAST of all

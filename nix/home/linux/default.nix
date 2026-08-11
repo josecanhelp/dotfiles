@@ -40,7 +40,9 @@ in
   home.packages = with pkgs; [
     actionlint
     btop
-    fzf
+    # fzf is not listed: programs.fzf in shared/shell.nix already adds it to
+    # this same home.packages. On darwin the duplicate is across two profiles
+    # and harmless; here it would be the same list twice.
     gh
     git-filter-repo
     htop
@@ -75,7 +77,5 @@ in
 
     autoload edit-command-line; zle -N edit-command-line
     bindkey '^e' edit-command-line
-
-    eval "$(fzf --zsh)"
   '';
 }

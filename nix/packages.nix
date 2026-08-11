@@ -5,6 +5,16 @@ let
     actionlint
     btop            # replaces brew bpytop, which nixpkgs does not package
     coreutils       # replaces brew sha2; provides sha256sum and friends
+    # Kept here even though programs.fzf (nix/home/shared/shell.nix) also puts
+    # fzf in home.packages. The two land in different profiles, both on PATH,
+    # same store path, so the overlap costs nothing.
+    #
+    # It is not redundant: the per-user profile appears in environment.systemPath
+    # as the literal `/etc/profiles/per-user/$USER/bin`, expanded by the shell at
+    # init. Anything running without USER set gets `/etc/profiles/per-user//bin`
+    # and finds nothing there. The tmux server the launchd agent starts is such a
+    # context, and the tmux-fzf plugin needs fzf on PATH. This entry is what
+    # guarantees it.
     fzf
     gh
     git-filter-repo
