@@ -784,6 +784,10 @@ interpreter." Among them: `poetry`, `virtualenv`, `playwright`, `uvicorn`,
 These need deleting, not migrating. The only judgement call is `poetry`, which
 is in nixpkgs if it is still wanted.
 
+**Recount 2026-08-11: it is 52, and 64 appears to be wrong.** See item 4 of
+"Suggested order" for the corrected figures, and for the one file in that set
+that brew owns and should not be hand-deleted.
+
 ### Loose binaries worth migrating
 
 All verified present in the pinned nixpkgs. Note how often the attribute name
@@ -1001,12 +1005,33 @@ Then, roughly in order of value:
    only bash and zsh were checked. The fish directory was found only by
    sweeping every shell's rc file rather than the two in use.
 
-   Removal is `rm -f ~/.tcshrc ~/.xonshrc && rm -rf ~/.config/fish`, and is
-   Jose's to run: the deletion is outside this repo and was blocked here.
+   **DONE 2026-08-11.** All three removed. A sweep of every shell rc file in
+   `$HOME` afterwards found no remaining `conda` reference, so anaconda is now
+   fully out of shell startup.
 
-4. **The 64 broken shims in `/opt/homebrew/bin`**, all with dead `python@3.11`
-   or `python@3.14` shebangs. Deletion, not migration. The only judgement call
-   is `poetry`, which is in nixpkgs if still wanted.
+4. **The broken shims in `/opt/homebrew/bin`.** Recounted 2026-08-11: it is
+   **52, not 64**, and the discrepancy is not explained by anything removed
+   since. `/usr/local/bin`, the obvious candidate for the extra 12, has zero.
+   Treat the original number as unreliable.
+
+   The count also hid a distinction that changes the fix. 51 are regular files
+   that pip wrote straight into `/opt/homebrew/bin`, so brew does not own them
+   and deleting them is correct. One, `runant.py`, is a symlink into
+   `../Cellar/ant/1.10.17/bin/`, owned by the `ant` formula this repo declares.
+   Its shebang is `/usr/bin/python`, the Python 2 Apple removed, so it is
+   equally broken, but hand-deleting it fights brew and it would return on the
+   next reinstall. Leave it: nothing invokes `runant.py`, the `ant` entry point
+   is the `ant` script, and it is broken upstream rather than here.
+
+   Breakdown of the 51: 46 dead `python@3.11`, 5 dead `python@3.14`. All
+   confirmed failing with "bad interpreter", not merely suspected.
+
+   `poetry` resolved: **not worth declaring.** Two projects reference it,
+   `screenshot-to-code` and `screenshot-to-code-jose`, whose last commits are
+   2025-07-27 and 2024-12-26. Both dormant, and it is one line in
+   `packages.nix` or a `nix shell nixpkgs#poetry` away if that changes.
+   Deleting the shim turns "bad interpreter" into "command not found", which is
+   the clearer failure of the two.
 
 5. **`programs.vscode`.** The largest remaining block, but it wants a decision
    first: the 54 extensions are Java, Spring, .NET and mainframe weighted, with
