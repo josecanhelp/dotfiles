@@ -39,6 +39,20 @@
 # machine gets extensions that are current rather than however old the nixpkgs
 # pin happens to be.
 #
+# Two of the 47 are expected to drift, and that is an accepted outcome rather
+# than a bug to chase. VS Code's extension auto-update is on (it is not set in
+# settings.json, so the default applies), so anything that ships often will
+# install a newer build into this mutable directory and shadow the declared
+# copy. Measured 2026-08-12, right after activation, 45 of 47 loaded the
+# declared version; ms-dotnettools.vscode-dotnet-runtime and
+# anthropic.claude-code had already updated themselves.
+#
+# The declaration is therefore a floor, not a lock: a fresh machine gets all 47
+# at the declared versions, and locally the fast-moving ones run ahead. Options
+# considered and rejected: chasing them with `nix flake update` (churn, since
+# claude-code ships several patches a week) and setting
+# "extensions.autoUpdate": false (that file is deliberately not managed here).
+#
 # Three settings here are load-bearing and easy to undo by accident:
 #
 #   1. `package = null`. VS Code itself is the `visual-studio-code` cask in
