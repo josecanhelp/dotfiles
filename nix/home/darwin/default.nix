@@ -19,6 +19,9 @@ in
     ./alacritty.nix
     ./karabiner.nix
     ./java.nix
+    # Needs pkgs.vscode-marketplace, which the nix-vscode-extensions overlay in
+    # flake.nix supplies for this host only.
+    ./vscode.nix
     ./extras.nix
   ];
 

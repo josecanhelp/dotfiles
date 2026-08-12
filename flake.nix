@@ -10,9 +10,16 @@
 
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Only for the 12 VS Code extensions that nixpkgs does not carry. The other
+    # 35 come from the pinned nixpkgs above. Without this the marketplace-only
+    # ones could not be declared at all.
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, home-manager }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, home-manager
+                   , nix-vscode-extensions }:
   let
     # Everything shared by every machine. Host-specific settings go in the
     # `extraModules` list of the individual host below, not in here.
@@ -32,6 +39,10 @@
       modules = [
         ./nix/configuration.nix
         { nixpkgs.hostPlatform = system; }
+        # Puts pkgs.vscode-marketplace in scope for nix/home/darwin/vscode.nix.
+        # Darwin only: VS Code is a cask on this machine and the WSL box has no
+        # GUI, so the Linux output does not need the overlay or its eval cost.
+        { nixpkgs.overlays = [ nix-vscode-extensions.overlays.default ]; }
         nix-homebrew.darwinModules.nix-homebrew
         {
           nix-homebrew = {
