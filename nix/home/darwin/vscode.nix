@@ -1,135 +1,150 @@
 { pkgs, ... }:
 
 # VS Code extensions, declared. 47 of the 55 that were installed; the other 8
-# were cut deliberately (see below).
+# were cut deliberately (listed at the bottom).
 #
-# Three things about this module are load-bearing and easy to undo by accident:
+# All 47 come from `pkgs.vscode-marketplace-release`, supplied by the
+# nix-vscode-extensions overlay wired up in flake.nix, rather than from
+# `pkgs.vscode-extensions` in the pinned nixpkgs. That is a deliberate choice
+# with a real trade-off.
+#
+# Note the `-release` suffix. The plain `vscode-marketplace` set serves
+# pre-release builds, which would have quietly moved about 15 of these onto
+# pre-releases with date-stamped versions like 0.59.2026072407. Measured against
+# what was actually loaded, the release channel is also simply more accurate:
+# 42 of 47 matched exactly, versus 24 from the pre-release set.
+#
+# The first attempt used nixpkgs for the 35 it carries and the marketplace only
+# for the 12 it does not. It half worked. VS Code resolves duplicate extension
+# ids by picking the highest version, and because `mutableExtensionsDir` is true
+# the previously hand-installed copies were still on disk. For 21 of the 47 the
+# nixpkgs pin was OLDER than the installed copy, so the old one kept loading and
+# the declaration described something that was not running. gitlens was the
+# worst: 17.11.1 declared against 18.3.0 actually loaded.
+#
+# The two ways out were to accept downgrades on 21 extensions, or to declare
+# current versions. This file does the latter, and 4 of the 47 still step back
+# slightly: anthropic.claude-code and ms-dotnettools.vscode-dotnet-runtime by a
+# little, plus vmware.vscode-spring-boot and vscjava.vscode-spring-boot-dashboard,
+# which were both running pre-release builds, so declaring stable there is a
+# correction rather than a loss. What it costs:
+#
+#   - These versions are NOT pinned by nixpkgs. They move when
+#     `nix flake update` bumps nix-vscode-extensions, which tracks the live
+#     marketplace and republishes daily.
+#   - Evaluating the overlay pulls a large marketplace index, so the first
+#     build after an update is slow.
+#
+# What it buys: the declared version is the version that loads, and a fresh
+# machine gets extensions that are current rather than however old the nixpkgs
+# pin happens to be.
+#
+# Three settings here are load-bearing and easy to undo by accident:
 #
 #   1. `package = null`. VS Code itself is the `visual-studio-code` cask in
 #      nix/configuration.nix. The module's default would install a SECOND copy
 #      from nixpkgs, since `home.packages` is gated on this being non-null.
-#      Removing this line gets you two VS Codes.
 #
-#   2. `userSettings` is deliberately absent. The module only writes
-#      settings.json when the merged settings are non-empty, and
-#      enableUpdateCheck / enableExtensionUpdateCheck both default to null so
-#      they contribute nothing. The hand-maintained 743-line settings.json is
-#      therefore untouched. Setting ANY value here takes ownership of that whole
-#      file, so do not add one casually.
+#   2. `userSettings` is deliberately absent. The module writes settings.json
+#      only when the merged settings are non-empty, and enableUpdateCheck and
+#      enableExtensionUpdateCheck both default to null so they contribute
+#      nothing. The hand-maintained 743-line settings.json is therefore
+#      untouched. Setting ANY value here takes ownership of that entire file.
 #
-#   3. `mutableExtensionsDir` is left at its default of true. Extensions are
+#   3. `mutableExtensionsDir` is left at its default of true, so extensions are
 #      linked individually into ~/.vscode/extensions rather than the directory
-#      being replaced wholesale, which means installing one by hand still works.
-#      It also means this list does NOT uninstall anything: the 8 cut below are
-#      still on disk and need `code --uninstall-extension <id>` to go.
+#      being replaced, and installing one by hand still works. The cost is the
+#      shadowing described above, which is why versions here must not lag.
 #
-# Extensions come from two places. Most are in the pinned nixpkgs. The 12 marked
-# "marketplace" below are not packaged there at all, and come from the
-# nix-vscode-extensions flake via the overlay wired up in flake.nix. Those 12
-# track the live marketplace rather than the nixpkgs pin, so they move when
-# `nix flake update` runs.
+# This file installs; it does not uninstall. The 8 cut below stopped loading as
+# soon as the declared set took over, because VS Code rebuilt its extensions.json
+# from the declared list, but their directories are still on disk until removed
+# by hand.
 #
-# Cut on 2026-08-12, and NOT removed from disk by this file:
+# Cut on 2026-08-12:
 #   ibm.zopeneditor, zowe.vscode-extension-for-zowe   mainframe work, done
-#   formulahendry.auto-rename-tag                     no update since 2023-02
-#   zengxingxin.sort-js-object-keys                   no update since 2023-02
-#   mohsen1.prettify-json                             no update since 2023-02
-#   shakram02.bash-beautify                           no update since 2023-02
+#   formulahendry.auto-rename-tag                     no release since 2023-02
+#   zengxingxin.sort-js-object-keys                   no release since 2023-02
+#   mohsen1.prettify-json                             no release since 2023-02
+#   shakram02.bash-beautify                           no release since 2023-02
 #   uloco.theme-bluloco-dark                          unused theme
 #   ghiblistuff.ghibli-theme                          unused theme
 #
-# The two themes kept are the ones actually selected in settings.json:
+# The themes kept are the ones settings.json actually selects:
 # workbench.colorTheme is "Dark Macchiato" (geek-tics.theme-macchiato) and
 # workbench.iconTheme is material-icon-theme. Peacock stays because the
 # Archive-Converge repos carry per-workspace peacock colours.
 
-let
-  nixpkgsExts = with pkgs.vscode-extensions; [
-    # Java and Spring
-    redhat.java
-    vscjava.vscode-java-pack
-    vscjava.vscode-java-debug
-    vscjava.vscode-java-dependency
-    vscjava.vscode-java-test
-    vscjava.vscode-maven
-    vscjava.vscode-spring-initializr
-    redhat.vscode-xml
-    dotjoshjohnson.xml
-
-    # .NET
-    ms-dotnettools.vscode-dotnet-runtime
-
-    # Data
-    mechatroner.rainbow-csv
-
-    # Python
-    ms-python.python
-    ms-python.vscode-pylance
-    ms-python.debugpy
-    ms-python.black-formatter
-    ms-python.vscode-python-envs
-
-    # Web and JS
-    dbaeumer.vscode-eslint
-    esbenp.prettier-vscode
-    bradlc.vscode-tailwindcss
-    christian-kohler.npm-intellisense
-
-    # Themes and window tinting
-    pkief.material-icon-theme
-    johnpapa.vscode-peacock
-
-    # Core editing and git
-    vscodevim.vim
-    eamodio.gitlens
-    editorconfig.editorconfig
-    streetsidesoftware.code-spell-checker
-    alefragnani.project-manager
-    aaron-bond.better-comments
-    anthropic.claude-code
-
-    # Config formats and containers
-    jnoortheen.nix-ide
-    tamasfe.even-better-toml
-    redhat.vscode-yaml
-    ms-azuretools.vscode-containers
-    ms-vscode-remote.remote-containers
-
-    # Collaboration
-    ms-vsliveshare.vsliveshare
-  ];
-
-  # marketplace: absent from nixpkgs, so these come from the overlay.
-  marketplaceExts = with pkgs.vscode-marketplace; [
-    # Java and Spring
-    vscjava.vscode-spring-boot-dashboard
-    vmware.vscode-spring-boot
-    vmware.vscode-boot-dev-pack
-    madhavd1.javadoc-tools
-
-    # .NET
-    jmrog.vscode-nuget-package-manager
-
-    # SQL Server and SQL formatting
-    ms-mssql.mssql
-    ms-mssql.sql-bindings-vscode
-    adpyke.vscode-sql-formatter
-    inferrinizzard.prettier-sql-vscode
-
-    # Python
-    kevinrose.vsc-python-indent
-
-    # The active colour theme
-    geek-tics.theme-macchiato
-
-    # Testing
-    ms-playwright.playwright
-  ];
-in
 {
   programs.vscode = {
     enable = true;
     package = null;
-    profiles.default.extensions = nixpkgsExts ++ marketplaceExts;
+
+    profiles.default.extensions = with pkgs.vscode-marketplace-release; [
+      # Java and Spring
+      redhat.java
+      vscjava.vscode-java-pack
+      vscjava.vscode-java-debug
+      vscjava.vscode-java-dependency
+      vscjava.vscode-java-test
+      vscjava.vscode-maven
+      vscjava.vscode-spring-initializr
+      vscjava.vscode-spring-boot-dashboard
+      vmware.vscode-spring-boot
+      vmware.vscode-boot-dev-pack
+      madhavd1.javadoc-tools
+      redhat.vscode-xml
+      dotjoshjohnson.xml
+
+      # .NET
+      ms-dotnettools.vscode-dotnet-runtime
+      jmrog.vscode-nuget-package-manager
+
+      # SQL Server and data
+      ms-mssql.mssql
+      ms-mssql.sql-bindings-vscode
+      adpyke.vscode-sql-formatter
+      inferrinizzard.prettier-sql-vscode
+      mechatroner.rainbow-csv
+
+      # Python
+      ms-python.python
+      ms-python.vscode-pylance
+      ms-python.debugpy
+      ms-python.black-formatter
+      ms-python.vscode-python-envs
+      kevinrose.vsc-python-indent
+
+      # Web and JS
+      dbaeumer.vscode-eslint
+      esbenp.prettier-vscode
+      bradlc.vscode-tailwindcss
+      christian-kohler.npm-intellisense
+
+      # Themes and window tinting
+      geek-tics.theme-macchiato
+      pkief.material-icon-theme
+      johnpapa.vscode-peacock
+
+      # Core editing and git
+      vscodevim.vim
+      eamodio.gitlens
+      editorconfig.editorconfig
+      streetsidesoftware.code-spell-checker
+      alefragnani.project-manager
+      aaron-bond.better-comments
+      anthropic.claude-code
+
+      # Config formats and containers
+      jnoortheen.nix-ide
+      tamasfe.even-better-toml
+      redhat.vscode-yaml
+      ms-azuretools.vscode-containers
+      ms-vscode-remote.remote-containers
+
+      # Testing and collaboration
+      ms-playwright.playwright
+      ms-vsliveshare.vsliveshare
+    ];
   };
 }

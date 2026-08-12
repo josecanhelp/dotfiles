@@ -11,9 +11,14 @@
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Only for the 12 VS Code extensions that nixpkgs does not carry. The other
-    # 35 come from the pinned nixpkgs above. Without this the marketplace-only
-    # ones could not be declared at all.
+    # Source for ALL 47 VS Code extensions, not just the ones nixpkgs lacks.
+    # nixpkgs carries 35 of them, but its pins were older than the installed
+    # copies for 21, and VS Code loads the highest version it finds, so
+    # declaring from nixpkgs described versions that were not running. See the
+    # long comment in nix/home/darwin/vscode.nix for the full reasoning.
+    #
+    # Consequence: extension versions follow this input rather than the nixpkgs
+    # pin, so `nix flake update` moves them.
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
   };
