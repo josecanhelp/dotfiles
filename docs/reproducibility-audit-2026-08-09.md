@@ -1107,3 +1107,21 @@ The claim that `brew leaves` omits tap formulae was recorded as unproven here an
 is now confirmed: `brew uses --installed themekit` throws "Refusing to load
 formula from untrusted tap". An earlier test used `brew info`, which loads
 formulae by a different path and succeeds, producing a false negative.
+
+**The MANPATH conclusion referenced above was wrong twice.** It was first
+reported as broken, which was a test artifact: `env -i` dropped `USER`, so
+`/etc/profiles/per-user/$USER/bin` expanded to a path with an empty component.
+It was then recorded as fine, which is also untrue. Checked properly on
+2026-08-12: `man home-configuration.nix` does fail with "No manual entry",
+because the per-user profile's `share/man` is not on the default `manpath`. The
+page is installed, at
+`/etc/profiles/per-user/$USER/share/man/man5/home-configuration.nix.5`, and
+reading it requires passing that path directly.
+
+A second trap sits behind the first. Even with the right file, `grep` for an
+option name returns nothing, because `man` sets option names in bold using
+overstrike sequences. `man <path> | col -b | grep 'programs\.direnv'` finds 13
+matches where the same grep without `col -b` finds zero. That is a good way to
+conclude a module does not exist when it does. `docs/nix-conventions.md`
+documents the working invocation and prefers a `nix eval` existence check, which
+has neither problem.

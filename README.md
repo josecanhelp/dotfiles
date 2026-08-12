@@ -294,6 +294,49 @@ share `flake.lock`.
 
 ## Adding and removing things
 
+**The rule: nothing gets installed by hand.** If a tool is worth keeping it is
+worth a line in a file here, and removing that line is the half people forget.
+An app deleted but still declared comes back on a fresh machine; a declaration
+deleted but the app left behind means this machine and a fresh one disagree.
+Both are drift.
+
+Which file depends on what the thing is:
+
+| What it is | Where it goes |
+|---|---|
+| CLI tool from nixpkgs, Mac | `nix/packages.nix` |
+| CLI tool from nixpkgs, WSL | `home.packages` in `nix/home/linux/default.nix` |
+| Program with a home-manager module | `nix/home/shared/` if portable, else `nix/home/darwin/` |
+| GUI app | `casks` in `nix/configuration.nix` |
+| App Store app | `masApps` in `nix/configuration.nix` |
+| CLI tool **not** in nixpkgs | `brews` in `nix/configuration.nix` |
+| VS Code extension | `nix/home/darwin/vscode.nix` |
+| macOS setting | `system.defaults` in `nix/configuration.nix` |
+| Background job | `launchd.agents` in a `nix/home/darwin/` module |
+
+Order of preference is **nixpkgs, then a cask, then a brew formula.** nixpkgs
+gives a pinned version and a rollback; Homebrew records only that something
+should be installed, not which version. Every entry in `brews` carries a comment
+saying why nixpkgs would not do, and that is the bar.
+
+**Prefer a `programs.<name>` module over writing a config file yourself.**
+home-manager ships 406 of them. The options are type-checked, the module knows
+the file's real format, and modules compose: that is how
+`programs.starship.enableZshIntegration` adds a line to the `.zshrc` that
+`programs.zsh` generates. Only reach for `home.file` when no module exists.
+
+Two documents go deeper:
+
+- **[docs/adding-and-removing.md](docs/adding-and-removing.md)** has eight
+  worked examples covering all nine rows above, with real tokens and the errors
+  you should expect. The two CLI rows share one example, because a tool wanted on
+  both machines is deliberately two edits.
+- **[docs/nix-conventions.md](docs/nix-conventions.md)** covers the conventions
+  behind them: module over file, ordering with `mkBefore`/`mkAfter`/`mkOrder`,
+  how to verify before committing, and the traps this repo has actually hit.
+
+The rest of this section is the short version for the two most common cases.
+
 ### A GUI app on the Mac (a cask)
 
 **Find the real token first.** A wrong token does not fail the build, it fails
@@ -410,116 +453,13 @@ nix eval '.#homeConfigurations."jose@RockemSockem".config.home.packages' --apply
 
 ## Worked examples
 
-Four end to end, using real tokens and attributes.
-
-### Adding a GUI app: Zed
-
-```sh
-brew info --cask zed        # confirm the token and that it is the right product
-```
-
-`nix/configuration.nix`, in `casks`, alphabetically:
-
-```diff
-       "wireshark-app"              # token is wireshark-app for the GUI
-+      "zed"
-       "zoom"                       # token is zoom, not zoom.us
-```
-
-```sh
-nix build .#darwinConfigurations.REM-JoseS-MBP1.system --no-link --print-out-paths
-sudo darwin-rebuild switch --flake ~/dotfiles#REM-JoseS-MBP1
-```
-
-Homebrew downloads and installs it, because nothing is there to adopt. If Zed
-were **already** installed by direct download, expect the adoption failure
-described above and hand it over once with
-`brew install --cask --force zed` before rebuilding again.
-
-### Removing a GUI app: Minecraft
-
-`nix/configuration.nix`:
-
-```diff
-       "microsoft-teams"
--      "minecraft"
-       "monologue"
-```
-
-```sh
-sudo darwin-rebuild switch --flake ~/dotfiles#REM-JoseS-MBP1
-```
-
-**Minecraft is still installed at this point.** The rebuild only stopped
-declaring it, and `cleanup = "none"` means Homebrew leaves undeclared things
-alone. That is enough if your goal is "a fresh machine should not get this".
-To actually remove it:
-
-```sh
-brew uninstall --cask minecraft
-```
-
-### Adding a CLI tool to both machines: bat
-
-This is the one that shows the asymmetry, because the same tool goes in two
-different files.
-
-```sh
-nix eval --raw nixpkgs#legacyPackages.aarch64-darwin.bat.version   # 0.26.1
-nix eval --raw nixpkgs#legacyPackages.x86_64-linux.bat.version     # 0.26.1
-```
-
-The Mac, in `nix/packages.nix`, in the `cli` group:
-
-```diff
-   cli = with pkgs; [
-     actionlint
-+    bat
-     btop
-```
-
-Optionally assert it resolves from Nix, in `nix/verify.sh`. Note this list takes
-the **binary** name, which for `bat` happens to match the attribute:
-
-```diff
--batch1=(rg fzf jq tree htop wget pstree watchexec nmap pandoc typst
-+batch1=(rg bat fzf jq tree htop wget pstree watchexec nmap pandoc typst
-```
-
-The WSL box, in `nix/home/linux/default.nix`, in `home.packages`:
-
-```diff
-   home.packages = with pkgs; [
-     actionlint
-+    bat
-     btop
-```
-
-Then activate on each, separately:
-
-```sh
-sudo darwin-rebuild switch --flake ~/dotfiles#REM-JoseS-MBP1      # on the Mac
-home-manager switch --flake ~/dotfiles#jose@RockemSockem          # on the WSL box
-```
-
-There is no single edit that covers both. That is the deliberate consequence of
-`environment.systemPackages` being a nix-darwin option.
-
-### Removing a CLI tool: bat again
-
-Reverse all three edits: `nix/packages.nix`, `nix/verify.sh`, and
-`nix/home/linux/default.nix`. Then activate on each machine.
-
-**Do not forget `verify.sh`.** Removing the package but leaving the binary in a
-batch makes the next `nix/verify.sh all` report:
-
-```
-MISSING   bat
-```
-
-which reads like a broken system rather than a stale assertion. Unlike the
-Homebrew path, both Nix paths genuinely uninstall on removal, so the tool is
-gone from `PATH` after activation.
+Moved to **[docs/adding-and-removing.md](docs/adding-and-removing.md)**, which
+carries eight of them: a CLI tool on both machines (`bat`), a home-manager module
+(`direnv`), a GUI app (Zed, and removing Minecraft), a brew formula with a
+third-party tap, an App Store app, a VS Code extension, a macOS setting, and a
+launchd background job. Each one names the file, shows the diff, gives the
+activation command, and says what does *not* happen, which is usually the
+surprising part.
 
 ## Traps worth knowing
 
@@ -566,6 +506,8 @@ Several macOS shortcuts are deliberately disabled so their keys are free for Kar
 
 ## Notes to self
 
+- `docs/adding-and-removing.md` is the cookbook: eight worked examples, one per kind of thing this repo declares.
+- `docs/nix-conventions.md` is the conventions behind them, written for someone new to Nix: module over file, where a new thing goes, ordering, how to verify, and the traps this repo has hit.
 - `docs/nix-reproducibility-review.md` tracks what is still not declarative, plus known issues not yet fixed.
 - `docs/reproducibility-audit-2026-08-09.md` is the full audit: what a fresh machine would not get, and what has since been closed.
 - `docs/keyboard-workflow.md` explains the Karabiner and Hammerspoon layering.
