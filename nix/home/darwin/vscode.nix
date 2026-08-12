@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 # VS Code extensions, declared. 47 of the 55 that were installed; the other 8
 # were cut deliberately (listed at the bottom).
@@ -146,5 +146,45 @@
       ms-playwright.playwright
       ms-vsliveshare.vsliveshare
     ];
+  };
+
+  # Rebuild VS Code's extension cache whenever the declared set changes.
+  #
+  # This exists because of `package = null` above. VS Code 1.74+ reads
+  # ~/.vscode/extensions/extensions.json rather than scanning the directory, so
+  # that file has to be regenerated when extensions move. home-manager's own
+  # module does this, but its hook is gated on `cfg.package != null`, so setting
+  # package to null to avoid a second VS Code silently disables it.
+  #
+  # Without this, changing the extension list leaves a cache pointing at
+  # directories that no longer exist and every affected extension fails to load
+  # with "Unable to resolve nonexistent file .../package.json". That is exactly
+  # what happened on 2026-08-12 after the old hand-installed directories were
+  # deleted.
+  #
+  # The marker file's content is the declared id@version list, so it changes
+  # precisely when the extension set or any version changes, and not otherwise.
+  home.file.".vscode/extensions/.hm-declared-extensions" = {
+    text = lib.concatMapStrings (e: "${e.vscodeExtUniqueId}@${e.version}\n") (
+      lib.sort (a: b: a.vscodeExtUniqueId < b.vscodeExtUniqueId)
+        config.programs.vscode.profiles.default.extensions
+    );
+
+    # The cask's own CLI, by absolute path. `code` is not on PATH during
+    # activation, and pkgs.vscode is deliberately not installed.
+    onChange =
+      let
+        codeBin = "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code";
+      in
+      ''
+        if [ -x "${codeBin}" ]; then
+          run rm -f "$HOME/.vscode/extensions/extensions.json" \
+                    "$HOME/.vscode/extensions/.init-default-profile-extensions"
+          run "${codeBin}" --list-extensions > /dev/null || true
+          echo "VS Code extension cache rebuilt. Reload any open window."
+        else
+          echo "VS Code cask not found; skipping extension cache rebuild."
+        fi
+      '';
   };
 }
