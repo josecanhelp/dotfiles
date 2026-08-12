@@ -897,6 +897,14 @@ brew-installed `hb-service` that is not declared in `configuration.nix`. That
 is the one remaining undeclared service now that goku is declared, and the log
 needs rotation regardless.
 
+**That inference was wrong, and Homebridge is gone as of 2026-08-12.** A large
+unrotated log meant it had run, not that it was running: the daemon was loaded
+but not up, and the log had stopped at 529 MB. Nothing needed rotating, and the
+whole install was removed instead. Also note `hb-service` was not
+brew-installed as stated here; it was an npm global living under Homebrew's
+prefix, which is why `homebrew.brews` could never have declared it. See
+"Suggested order" for the removal record.
+
 Smaller orphans: `.zowe`, `.gk`, `.continue`, `.zlua`, `.putty`, `.knime`,
 `.vnc`, `.vim`, `.viminfo`, `.hgignore_global`, `.gitflow_export` (points at
 an uninstalled Sourcetree), `~/.config/fish/` (a conda block plus dead Fig
@@ -1044,10 +1052,38 @@ Then, roughly in order of value:
    what is already tied to the Apple ID, so it automates reinstall rather than
    capturing state.
 
-**Not on this list, and deliberately so:** the Homebridge daemon and the
-FileZilla Server daemon both still run undeclared. Homebridge cannot be declared
-through `homebrew.brews` at all, since `hb-service` is an npm global rather than
-a formula. Both want a keep-or-remove decision before any declaration work.
+**Homebridge and FileZilla: REMOVED 2026-08-12.** Both were undeclared daemons,
+and the decision was to drop them rather than declare them. FileZilla went
+entirely, client as well as server.
+
+Removed: two `/Library/LaunchDaemons` plists
+(`com.homebridge.server`, `org.filezilla-project.filezilla-server.service`),
+`FileZilla Server.app` and `FileZilla.app`, three npm packages under
+`/opt/homebrew/lib/node_modules` with their three `bin` symlinks, and the data at
+`~/.homebridge`, `~/.config/filezilla`, `/Library/Preferences/org.filezilla-project.filezilla-server.service`
+and the client plist. About 563 MB. Configs were backed up first, minus the log.
+
+Three things the audit had wrong or that caught us out:
+
+- **Homebridge was not running,** contrary to the entry below claiming the
+  396 MB log implied a live service. The daemon and its interpreter were both
+  present, it simply was not up, so the log had stopped growing. It reached
+  529 MB before stopping.
+- **`npm uninstall -g` could not remove those packages.** `npm` on PATH is the
+  nix one, whose global prefix is inside the read-only nix store, so the
+  uninstall failed with EACCES on `mkdir` without ever looking at
+  `/opt/homebrew`. The packages had been installed by the old Homebrew node,
+  whose npm no longer exists. Deleting the three directories and three symlinks
+  directly was the fix. Anything else installed by that vanished npm will need
+  the same treatment.
+- **Do not read `df` straight after a large delete on APFS.** The removal script
+  did, and reported 68 MB reclaimed. Another 495 MB appeared once APFS caught
+  up. There was no snapshot pinning anything; space reclamation is just
+  asynchronous.
+
+One leftover, deliberately not touched: `/usr/local/bin/node`, a root-owned
+220 MB standalone from February 2025 that only the Homebridge daemon referenced.
+Nothing in this repo points at it now.
 
 ## What this document got wrong
 
