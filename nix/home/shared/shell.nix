@@ -189,6 +189,18 @@
     initContent = lib.mkMerge [
       (lib.mkBefore ''
         [ -f ~/.secrets ] && source ~/.secrets
+
+        # The pre-Nix config (still on disk at ~/.zshrc.backup:158) exported
+        # this to /usr/local/share, the Intel Homebrew prefix. Nothing sources
+        # that file any more, but the export outlives it inside any process
+        # tree started before the migration, a long-running tmux server being
+        # the usual carrier, and every shell below it inherits the dead path.
+        # zsh-syntax-highlighting falls back to its own store directory only
+        # when this is unset, so an inherited value makes it print
+        # "highlighters directory not found" and load zero highlighters.
+        # Clearing it after ~/.secrets and well before home-manager sources
+        # the plugin lets the plugin resolve its own path.
+        unset ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR
       '')
 
       (lib.mkAfter ''
