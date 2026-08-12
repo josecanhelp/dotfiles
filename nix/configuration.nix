@@ -407,6 +407,42 @@ in
       "zoom"                       # token is zoom, not zoom.us
     ];
 
+    # Mac App Store apps, by App Store item ID. IDs read off the installed
+    # bundles with `mdls -name kMDItemAppStoreAdamID`, not looked up by hand:
+    # a wrong ID silently installs a different app.
+    #
+    # Worth being clear about what this does and does not buy, because it is
+    # less than the casks above:
+    #
+    #   - `mas` can only download what is already tied to the Apple ID. This
+    #     automates reinstall on a fresh machine, it does not capture state.
+    #   - It pins nothing. There is no version to hold; the App Store serves
+    #     whatever is current.
+    #   - Nothing here is removed if an entry is deleted. cleanup = "none"
+    #     below applies to these too.
+    #   - A fresh machine has to be signed into the App Store first, or
+    #     `brew bundle` reports these as failures.
+    #
+    # No `mas` entry is needed in brews: nix-darwin puts pkgs.mas on PATH
+    # itself when it runs `brew bundle`.
+    #
+    # Note Xcode is a ~15 GB download on a fresh machine.
+    masApps = {
+      "1Password for Safari" = 1569813296;
+      "BreakTime" = 427475982;
+      "DaisyDisk" = 411643860;
+      "GIPHY CAPTURE" = 668208984;
+      "iMovie" = 408981434;
+      "Keynote" = 409183694;
+      "Microsoft Remote Desktop" = 1295203466;
+      "Microsoft To Do" = 1274495053;
+      "Pixelmator Pro" = 1289583905;
+      "Swift Playground" = 1496833156;
+      "TestFlight" = 899247664;
+      "Toggl Track" = 1291898086;
+      "Xcode" = 497799835;
+    };
+
     # Keep hands off the 243 undeclared formulae until they move to nixpkgs.
     # "uninstall" or "zap" would remove everything not listed above.
     onActivation.cleanup = "none";
