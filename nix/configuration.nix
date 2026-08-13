@@ -375,7 +375,8 @@ in
       "ledger-wallet"              # token is ledger-wallet, not ledger-live
       "local"
       "mactex"
-      "microsoft-office"           # one cask, five apps: Word/Excel/PPT/OneNote/Outlook
+      "microsoft-office"           # one cask, six apps: Word/Excel/PPT/OneNote/
+                                   # Outlook, plus OneDrive. See the note below.
       "microsoft-teams"
       "minecraft"
       "monologue"
@@ -384,12 +385,22 @@ in
       "obsidian"
       # onedrive is deliberately absent. The cask declares a conflict with
       # microsoft-office above, which is a pkg installer for the whole 365
-      # suite and ships OneDrive itself, so declaring both fails activation
-      # with "Cask 'onedrive' conflicts with 'microsoft-office'".
+      # suite and carries OneDrive.pkg as a component, so declaring both fails
+      # activation with "Cask 'onedrive' conflicts with 'microsoft-office'".
+      # The Office cask's own uninstall block claims the com.microsoft.OneDrive
+      # receipt and /Applications/OneDrive.app, so Homebrew agrees it owns it.
       #
-      # Note there are still two OneDrive installs on disk: the one Office
-      # manages, and an older Mac App Store copy under
-      # /Applications/OneDrive.localized/. That duplicate predates this config.
+      # Nothing here pins the OneDrive version. It leaves Homebrew's control at
+      # install and self-updates in place through three OneDriveStandaloneUpdater
+      # launch daemons, not Microsoft AutoUpdate, whose record for it is stale.
+      # The cask reads 16.111.26080215; the OneDrive receipt already reads
+      # 26.134.0713, updated two days after activation.
+      #
+      # There used to be a second copy here: an older Mac App Store build
+      # (25.046.0310) at /Applications/OneDrive.localized/, predating this
+      # config and declared nowhere. Removed 2026-08-13. Do not add it to
+      # masApps to "fix" the drift; the Office pkg already covers OneDrive,
+      # and two installs of one app is what caused the confusion.
       "openshot-video-editor"
       "opensuperwhisper"
       "postman"

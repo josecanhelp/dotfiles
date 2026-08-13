@@ -391,6 +391,12 @@ Microsoft Office is either five individual casks (`microsoft-outlook`,
 `microsoft-word`, `microsoft-excel`, `microsoft-powerpoint`,
 `microsoft-onenote`) or the single `microsoft-office`. One cask, five apps.
 
+**Corrected 2026-08-13: six apps.** The `microsoft-office` pkg also carries
+`OneDrive.pkg` as a component (`xar -tf` on the installer confirms it), and the
+cask's own uninstall block claims the `com.microsoft.OneDrive` receipt and
+`/Applications/OneDrive.app`. That is why the `onedrive` cask declares
+`conflicts_with` it.
+
 Notes on a few:
 - `vlc`, `obs`, `virtualbox` are **not** in nixpkgs for aarch64-darwin. The
   cask is the only route.
@@ -400,6 +406,15 @@ Notes on a few:
   `/Applications/OneDrive.app` and an older MAS one (25.046.0310) at
   `/Applications/OneDrive.localized/`. Declaring the cask orphans the MAS
   copy. Resolve which one you want first.
+  **RESOLVED 2026-08-13.** Declaring the cask was tried and failed activation
+  outright on the conflict above, so `onedrive` stays undeclared and the
+  `microsoft-office` pkg installs it. The MAS copy was deleted. Removing it
+  needs root, which is not obvious: moving a directory rewrites its `..`, and
+  the bundle is `root:wheel` 755, so being in `admin` gets you write on
+  `/Applications` but not on the bundle. Renaming it in place works, moving it
+  out does not. Nothing pins the version either way, since OneDrive leaves
+  Homebrew's control at install and self-updates through its own three
+  `OneDriveStandaloneUpdater` launch daemons, not brew and not MAU.
 - `google-drive` installs the Docs/Sheets/Slides stubs as a side effect, so
   those are not separate declarations.
 - `intune-company-portal` is likely MDM-managed; declaring it may fight the
@@ -414,10 +429,14 @@ android-studio (2025.2.1.8 vs 2026.1).
 
 Harmless today. A `brew upgrade --cask` would rewrite those bundles.
 
-### Mac App Store (15)
+### Mac App Store (15, one since removed)
 
 nix-darwin installs `mas` automatically once `homebrew.masApps` is non-empty,
 so no manual step is needed.
+
+**Amended 2026-08-13.** The `OneDrive` entry (823766827) was dropped from the
+block below. It was the duplicate MAS copy, since deleted, and declaring it
+would reinstall a second OneDrive on every fresh machine. Fourteen to declare.
 
 ```nix
 homebrew.masApps = {
@@ -430,7 +449,6 @@ homebrew.masApps = {
   "DaisyDisk" = 411643860;
   "Microsoft To Do" = 1274495053;
   "BreakTime" = 427475982;
-  "OneDrive" = 823766827;
   "Keynote" = 409183694;
   "iMovie" = 408981434;
   "1Password for Safari" = 1569813296;
@@ -443,8 +461,8 @@ Caveats: `masApps` only redownloads apps already tied to the Apple ID; `mas`
 cannot sign in to the App Store on modern macOS, so it automates reinstall,
 not first purchase. Xcode is a very large download and will make a fresh
 activation slow. WhatsApp, Microsoft Remote Desktop, and DaisyDisk also have
-casks if you would rather avoid the MAS route entirely. The OneDrive entry
-here is the duplicate discussed above.
+casks if you would rather avoid the MAS route entirely. OneDrive is not listed
+and should not be added: it comes with the `microsoft-office` cask.
 
 ### No cask available (14)
 
