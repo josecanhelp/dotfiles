@@ -40,5 +40,11 @@
       # colour codes are not broken by wrapping.
       format.pretty = "format:%Cblue%h%Creset %Creset%Cgreen%cn, %cr%Creset : %s%Creset%C(red)%d%Creset";
     };
+    includes = [
+      {
+        condition = "gitdir:~/Code/Converge/";
+        contents.user.email = "jose.soto@convergemarketing.com";
+      }
+    ];
   };
 }
