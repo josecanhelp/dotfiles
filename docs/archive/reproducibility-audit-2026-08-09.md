@@ -328,7 +328,7 @@ Each needs an explicit decision: reinstall, or drop from `homebrew.casks`.
 an official cask, 43 were declared and 16 were reviewed and deliberately left
 out: Cap, Cyberduck, ScreenFlow, Visual Studio, Discord, ResponsivelyApp,
 cool-retro-term, DBeaver, Eclipse, MySQLWorkbench, Raspberry Pi Imager, Sketch,
-Tunnelblick, NordVPN, VirtualBox and DisplayLink Manager. Those stay installed
+Tunnelblick, VirtualBox and DisplayLink Manager. Those stay installed
 and simply will not follow to a new machine.
 
 One thing learned in the doing, recorded in `configuration.nix`: declaring an

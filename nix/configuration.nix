@@ -304,6 +304,7 @@ in
       "ant"           # apacheAnt evaluates unavailable on aarch64-darwin
       "pipx"          # fails its checkPhase in this nixpkgs
       "ruby"          # keg-only and unlinked, so /usr/bin/ruby still wins
+      "opencode"      # Homebrew provides a newer release than this nixpkgs pin
     ];
 
     # All from homebrew/cask, so no extra taps needed.
@@ -328,7 +329,7 @@ in
     # 16 installed apps were deliberately NOT declared on 2026-08-10, after
     # review: Cap, Cyberduck, ScreenFlow, Visual Studio, Discord,
     # ResponsivelyApp, cool-retro-term, DBeaver, Eclipse, MySQLWorkbench,
-    # Raspberry Pi Imager, Sketch, Tunnelblick, NordVPN, VirtualBox and
+    # Raspberry Pi Imager, Sketch, Tunnelblick, VirtualBox and
     # DisplayLink Manager. They stay installed; they just will not follow to a
     # new machine. Visual Studio for Mac is discontinued upstream anyway.
     #
