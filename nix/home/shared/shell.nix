@@ -104,8 +104,40 @@
       SAM_CLI_TELEMETRY = "0";
       KEYTIMEOUT = "1";
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
+
+      # Local code root, not the Converge subdirectory. engineering_department
+      # documents this convention in SETUP.md and builds paths as
+      # $CONVERGE_CODE/Converge/<repo>, so pointing it one level deeper would
+      # resolve to .../Converge/Converge. Claude Code expands ${CONVERGE_CODE}
+      # in .mcp.json, which is how that repo locates the mcp-servers checkout.
+      #
+      # Belongs here rather than in ~/.secrets because it is a path, not a
+      # credential, so it can live in the repo instead of an untracked file.
+      # Both reach non-interactive shells now that envExtra below sources
+      # ~/.secrets from ~/.zshenv.
+      CONVERGE_CODE = "$HOME/Code";
       # The FZF_* variables used to live here. programs.fzf above owns them now.
     };
+
+    # ~/.secrets is sourced here rather than from initContent because envExtra
+    # writes to ~/.zshenv, which every zsh reads, while initContent writes to
+    # ~/.zshrc, which only interactive ones read. MCP server definitions in
+    # ~/.claude.json and .mcp.json reference these as ${VAR}, and Claude Code
+    # resolves them from its own environment. A `claude` started by cron, a
+    # scheduled routine, or any other non-interactive parent inherited none of
+    # them from .zshrc, so those servers failed to start with no useful error.
+    #
+    # The tradeoff is deliberate: the keys are now in the environment of every
+    # non-interactive zsh, including script and git-hook subshells, not just
+    # login terminals.
+    #
+    # Safe in .zshenv only because ~/.secrets is exports and comments with no
+    # output. Anything that prints here corrupts scp, rsync and non-interactive
+    # ssh, which parse the stream. The `[ -f ]` guard keeps a machine without
+    # the file working; the file is deliberately outside the dotfiles repo.
+    envExtra = ''
+      [ -f ~/.secrets ] && source ~/.secrets
+    '';
 
     shellAliases = {
       heroky = "heroku";
@@ -188,8 +220,6 @@
     # dependents to check.
     initContent = lib.mkMerge [
       (lib.mkBefore ''
-        [ -f ~/.secrets ] && source ~/.secrets
-
         # The pre-Nix config (still on disk at ~/.zshrc.backup:158) exported
         # this to /usr/local/share, the Intel Homebrew prefix. Nothing sources
         # that file any more, but the export outlives it inside any process
@@ -198,8 +228,10 @@
         # zsh-syntax-highlighting falls back to its own store directory only
         # when this is unset, so an inherited value makes it print
         # "highlighters directory not found" and load zero highlighters.
-        # Clearing it after ~/.secrets and well before home-manager sources
-        # the plugin lets the plugin resolve its own path.
+        # Clearing it well before home-manager sources the plugin lets the
+        # plugin resolve its own path. This used to sit below the ~/.secrets
+        # source line, which now lives in envExtra above; the two never
+        # interacted, and .zshenv runs before .zshrc either way.
         unset ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR
       '')
 
