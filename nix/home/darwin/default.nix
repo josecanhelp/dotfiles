@@ -22,7 +22,10 @@ in
     # Needs pkgs.vscode-marketplace, which the nix-vscode-extensions overlay in
     # flake.nix supplies for this host only.
     ./vscode.nix
-    ./extras.nix
+    ./git.nix
+    ./tmux.nix
+    ./shell.nix
+    ./launchd.nix
   ];
 
   home.stateVersion = "26.05";

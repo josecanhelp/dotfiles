@@ -11,7 +11,7 @@ broken ones it has, and remove global PHP.
 
 ## Context
 
-`docs/reproducibility-audit-2026-08-09.md` found three broken launchd jobs.
+`reproducibility-audit-2026-08-09.md` found three broken launchd jobs.
 All three were invisible to `brew services list`, which returns empty with
 exit 0. That is precisely why they survived a four-part migration unnoticed.
 
@@ -314,7 +314,7 @@ runtime check.
 - Editing `karabiner.edn` regenerates `karabiner.json` without manual `goku`
 - Logging in opens Alacritty fullscreen with the restored session
 - No PHP on the system; the Docker-based Laravel aliases still work
-- `docs/reproducibility-audit-2026-08-09.md` Tier 1 items 1, 2, 3 marked done
+- `reproducibility-audit-2026-08-09.md` Tier 1 items 1, 2, 3 marked done
 - `nix/verify.sh` no longer checks for `php`
 
 ## Out of scope

@@ -518,7 +518,7 @@ verify.sh loses php from batch4, which would otherwise fail with MISSING."
 ## Task 4: Update the audit and review docs
 
 **Files:**
-- Modify: `docs/reproducibility-audit-2026-08-09.md` (Tier 1 items 1, 2, 3)
+- Modify: `reproducibility-audit-2026-08-09.md` (Tier 1 items 1, 2, 3)
 - Modify: `docs/nix-reproducibility-review.md` (Tier 3 sub-project list)
 
 **Interfaces:**
@@ -527,7 +527,7 @@ verify.sh loses php from batch4, which would otherwise fail with MISSING."
 
 - [ ] **Step 1: Mark Tier 1 items 1, 2 and 3 done in the audit**
 
-In `docs/reproducibility-audit-2026-08-09.md`, change the three headings to strike through the title and append the resolution, matching the style already used in `nix-reproducibility-review.md`:
+In `reproducibility-audit-2026-08-09.md`, change the three headings to strike through the title and append the resolution, matching the style already used in `../nix-reproducibility-review.md`:
 
 ```markdown
 ### 1. ~~goku is already broken, not "will break"~~ FIXED 2026-08-09
@@ -570,8 +570,8 @@ In the `## Tier 3: all complete` list, after the nvim entry, add:
 
 ```bash
 cd ~/dotfiles
-grep -n "—" docs/reproducibility-audit-2026-08-09.md docs/nix-reproducibility-review.md && echo "FIX THESE" || echo "clean"
-git add docs/reproducibility-audit-2026-08-09.md docs/nix-reproducibility-review.md
+grep -n "—" reproducibility-audit-2026-08-09.md ../nix-reproducibility-review.md && echo "FIX THESE" || echo "clean"
+git add reproducibility-audit-2026-08-09.md ../nix-reproducibility-review.md
 git commit -m "docs: mark the three launchd findings resolved
 
 Tier 1 items 1, 2 and 3 of the reproducibility audit are fixed. Six of the

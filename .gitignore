@@ -4,7 +4,5 @@
 karabiner.edn.bak
 not-public
 nvim/.undo/
-vim/.netrwhist
-vim/plugged
 # SDD scratch workspace (subagent-driven-development)
 .superpowers/

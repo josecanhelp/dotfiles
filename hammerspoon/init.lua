@@ -37,17 +37,6 @@ hs.application.enableSpotlightForNameSearches(true)
 -- Configuration File Auto-Reload
 ----------------------------------------------------------------------------------------------------
 
--- Goku
-hs.pathwatcher.new(os.getenv('HOME') .. '/.config/karabiner/', function()
-    -- Absolute path, not bare 'goku'. Hammerspoon is a GUI app launched by
-    -- launchd, so hs.execute runs under a minimal PATH that has no Nix
-    -- entries. /run/current-system/sw/bin is a stable symlink maintained by
-    -- nix-darwin, so this survives rebuilds. The old /usr/local/bin/goku was
-    -- an Intel Homebrew path and has not existed since the ARM migration.
-    local output = hs.execute('/run/current-system/sw/bin/goku')
-    hs.notify.new({ title = 'Karabiner Config', informativeText = output }):send()
-end):start()
-
 -- Hammerspoon
 hs.loadSpoon('ReloadConfiguration')
 spoon.ReloadConfiguration:start()

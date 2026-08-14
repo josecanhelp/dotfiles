@@ -2,14 +2,13 @@
 # Assert that each expected binary resolves from Nix, not Homebrew, that the
 # repo symlinks point where they should, and that the declared launchd agents
 # are registered against paths that exist.
-# Usage: nix/verify.sh <0|1|2|3|4|5|6|links|agents|all>
+# Usage: nix/verify.sh <1|2|3|4|5|6|links|agents|all>
 #
 # Checks BINARY names, not nixpkgs attribute names. The two diverge:
 # inetutils provides telnet, kubernetes-helm provides helm, coreutils
 # provides sha256sum.
 set -uo pipefail
 
-batch0=()
 batch1=(rg fzf jq tree htop wget pstree watchexec nmap pandoc typst
         actionlint git-filter-repo joker yt-dlp ranger jadx gh telnet
         sha256sum btop pkgconf ffmpeg magick pdfinfo pdftotext
@@ -122,12 +121,16 @@ check_agent() {
       return
       ;;
   esac
-  for p in $(printf '%s\n' "$args" | tr ' ' '\n' | grep '^/nix/store/'); do
-    if [ ! -e "$p" ]; then
-      printf 'DEAD PATH %-38s -> %s\n' "$label" "$p"
-      missing=1
-    fi
-  done
+  while IFS= read -r p; do
+    case "$p" in
+      /nix/store/*)
+        if [ ! -e "$p" ]; then
+          printf 'DEAD PATH %-38s -> %s\n' "$label" "$p"
+          missing=1
+        fi
+        ;;
+    esac
+  done < <(printf '%s\n' "$args" | tr ' ' '\n')
   if [ "$missing" -ne 0 ]; then
     fail=1
     return
@@ -137,14 +140,22 @@ check_agent() {
 
 run_batch() {
   local n="$1"
-  local ref="batch${n}[@]"
   local list=()
-  # Guard against empty arrays under `set -u` on bash 3.2.
-  eval "if [ \${#batch${n}[@]} -gt 0 ]; then list=(\"\${${ref}}\"); fi"
-  if [ ${#list[@]} -eq 0 ]; then
-    printf '=== batch %s === (nothing to check)\n' "$n"
-    return
-  fi
+  # Keep this explicit for Bash 3.2, which has no associative arrays and does
+  # not need eval to select one of the fixed batches.
+  case "$n" in
+    1) list=("${batch1[@]}");;
+    2) list=("${batch2[@]}");;
+    3) list=("${batch3[@]}");;
+    4) list=("${batch4[@]}");;
+    5) list=("${batch5[@]}");;
+    6) list=("${batch6[@]}");;
+    *)
+      printf 'UNKNOWN BATCH %s\n' "$n" >&2
+      fail=1
+      return
+      ;;
+  esac
   printf '=== batch %s ===\n' "$n"
   local b
   for b in "${list[@]}"; do check "$b"; done
@@ -157,7 +168,7 @@ elif [ "${1:-all}" = agents ]; then
   printf '=== agents ===\n'
   for a in "${agents[@]}"; do check_agent "$a"; done
 elif [ "${1:-all}" = all ]; then
-  for i in 0 1 2 3 4 5 6; do run_batch "$i"; done
+  for i in 1 2 3 4 5 6; do run_batch "$i"; done
   printf '=== links ===\n'
   for p in "${links[@]}"; do check_link "$p"; done
   printf '=== agents ===\n'

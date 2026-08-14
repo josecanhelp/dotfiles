@@ -211,8 +211,8 @@ Use this when the action itself is new, not just a new app for an existing actio
    [:g [:hs "mynewintent"]]
    ```
 
-   Saving triggers a Goku rebuild automatically (a `pathwatcher` in `init.lua` runs
-   `goku` and notifies on save).
+   Saving triggers the declarative `launchd.agents.goku` watcher in
+   `nix/home/darwin/karabiner.nix`, which runs Goku with absolute Nix store paths.
 
 2. **Add the handler** in `init.lua`:
 
@@ -226,8 +226,8 @@ Use this when the action itself is new, not just a new app for an existing actio
    end)
    ```
 
-3. **Save both.** Karabiner recompiles, Hammerspoon reloads, and `hyper + g` now
-   dispatches per app.
+3. **Save both.** Karabiner recompiles through launchd, Hammerspoon reloads, and
+   `hyper + g` now dispatches per app.
 
 ## Why this design
 
