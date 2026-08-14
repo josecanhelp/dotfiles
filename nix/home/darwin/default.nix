@@ -55,5 +55,40 @@ in
     # and because the rest of ~/.claude is 368 MB of session state that must
     # not be managed.
     ".claude/notify.sh".source = link "claude/notify.sh";
+
+    # Corepack shims. `yarn` is not a global package any more (nix/packages.nix
+    # explains why: nixpkgs ships 1.22 Classic), so these two files are what
+    # put `yarn` and `pnpm` on PATH. Each resolves whichever version a repo
+    # pins in package.json's `packageManager` field.
+    #
+    # Written as wrappers rather than left to `corepack enable
+    # --install-directory`, which symlinks straight into the nodejs store
+    # path. That link dangles the first time nodejs_22 advances and the old
+    # path is collected, and `yarn` then fails with a missing-file error that
+    # points at /nix/store rather than at the upgrade. Resolving `corepack`
+    # from PATH at call time survives it.
+    #
+    # Declared here and not in ../shared/shell.nix, next to the PATH block
+    # that makes them reachable, because the WSL host imports that file and
+    # omits every language package, nodejs_22 included. A shim there would
+    # exec a corepack Linux does not have.
+    #
+    # ~/.local/bin, not ~/.bin: the latter is an out-of-store symlink to the
+    # tracked bin/ directory, and these are generated, not tracked.
+    ".local/bin/yarn" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        exec corepack yarn "$@"
+      '';
+    };
+
+    ".local/bin/pnpm" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        exec corepack pnpm "$@"
+      '';
+    };
   };
 }

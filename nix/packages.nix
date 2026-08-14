@@ -86,7 +86,12 @@ let
     # silent two-version downgrade.
     python314
     python3Packages.fonttools   # provides ttx, pyftsubset
-    yarn
+    # yarn deliberately omitted. nixpkgs `yarn` is 1.22.22 (Classic), and from
+    # /run/current-system/sw/bin it shadowed the Corepack shim in every repo
+    # that pins a modern Yarn through package.json's `packageManager` field.
+    # Corepack ships inside nodejs_22 and resolves the pinned version per
+    # project, so `yarn` is no longer a global package here. See the
+    # dropped-packages note below.
     # ruby deliberately omitted. `ruby` resolves to /usr/bin/ruby (system
     # 2.6.10) because brew's ruby formula is keg-only and was never linked.
     # Adding nix ruby 3.4.9 would change a command that works today.
@@ -126,6 +131,14 @@ in
   #                  deleted on 2026-08-09; nothing references it.
   #   python@3.10    Removed from nixpkgs 26.05.
   #   bpytop, sha2   Superseded by btop and coreutils respectively.
+  #   yarn           nixpkgs ships 1.22.22 (Classic). Repos that pin a modern
+  #                  Yarn in package.json's `packageManager` field carry a
+  #                  Berry lockfile and `workspace:*` ranges that Classic
+  #                  cannot read, so a global Classic on PATH was a trap, not
+  #                  a fallback. Corepack (bundled with nodejs_22) resolves
+  #                  the pinned version per project. Its shims are declared
+  #                  in nix/home/darwin/default.nix and land in ~/.local/bin,
+  #                  because /run/current-system/sw/bin is read-only.
   environment.systemPackages =
     cli ++ media ++ shell ++ vendored ++ languages ++ services;
 }

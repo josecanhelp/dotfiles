@@ -242,7 +242,17 @@
         # and would be missing on a fresh clone.
         export PATH=''${PATH}:~/.bin
         export PATH=''${PATH}:~/.local/bin
-        export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+        # $HOME/.yarn/bin is gone from this line on purpose. It holds a Yarn
+        # 1.22 Classic shim left by a 2024 install-script run, and prepended
+        # here it outranked the Corepack shim in ~/.local/bin for every repo
+        # pinning a modern Yarn. Dropping the entry lets Corepack resolve
+        # `yarn` per project, from the shims nix/home/darwin/default.nix
+        # declares. ~/.local/bin stays appended, not prepended, so the
+        # resolved ordering in docs/nix-reproducibility-review.md holds: Nix
+        # still wins for anything both it and an installer provide.
+        # The global-installs bin below stays. It supplies cdk,
+        # create-next-app, create-playwright, create-vite and cva.
+        export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
       '')
     ];
   };

@@ -183,6 +183,19 @@ migration), so its 132 MB venv could not have run since.
 
 Only `claude` remains, installed and updated by Claude Code itself.
 
+**Update 2026-08-14.** The append-not-prepend ordering above is now load
+bearing for a second reason, so it should stay. `yarn` was dropped from
+`nix/packages.nix` (nixpkgs ships 1.22 Classic, which cannot read a Berry
+lockfile or a `workspace:*` range) and Corepack shims for `yarn` and `pnpm`
+land here instead, since `/run/current-system/sw/bin` is read-only. They are
+declared as `home.file` wrappers in `nix/home/darwin/default.nix`, so unlike
+`claude` they are reproducible and need no bootstrap step. The
+`$HOME/.yarn/bin` entry was also removed from the shared PATH block in
+`nix/home/shared/shell.nix`; it held a 2024 Classic shim that was prepended,
+so it outranked these shims. This directory also picked up the agent CLIs
+added after this review was written (`chrome-devtools-axi`, `gh-axi`,
+`lavish-axi`, `no-mistakes`, `quota-axi`, `tasks-axi`, `treehouse`).
+
 All Amazon Q traces were removed on 2026-08-09: the app itself was already
 uninstalled, leaving 304 MB of orphaned `qterm` shims, two broken symlinks
 (`q`, `qterm`), a LaunchAgent still loaded at every login trying to exec a
