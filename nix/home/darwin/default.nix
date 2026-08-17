@@ -101,5 +101,16 @@ in
         exec corepack pnpm "$@"
       '';
     };
+
+    # `corepack enable` installs a pnpx shim alongside the other two, so this
+    # path gets a store symlink and the same dangling-on-upgrade failure unless
+    # it is declared here too. corepack routes `pnpx` to pnpm's `dlx`.
+    ".local/bin/pnpx" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        exec corepack pnpx "$@"
+      '';
+    };
   };
 }
