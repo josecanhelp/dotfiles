@@ -56,6 +56,17 @@ in
     # not be managed.
     ".claude/notify.sh".source = link "claude/notify.sh";
 
+    # Claude Code's status line. It publishes the session's model, context
+    # percentage, cost and plan usage into a per-pane tmux option that
+    # tmux/tmuxline draws in status-right, and prints back the keyboard hints
+    # that configuring any status line suppresses.
+    #
+    # Linked for the same two reasons as notify.sh: it stays editable without a
+    # rebuild, and the rest of ~/.claude must not be managed. It is registered
+    # in ~/.claude/settings.json by absolute path, which is unmanaged for that
+    # same reason.
+    ".claude/statusline.sh".source = link "claude/statusline.sh";
+
     # Corepack shims. `yarn` is not a global package any more (nix/packages.nix
     # explains why: nixpkgs ships 1.22 Classic), so these two files are what
     # put `yarn` and `pnpm` on PATH. Each resolves whichever version a repo

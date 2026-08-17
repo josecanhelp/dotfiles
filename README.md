@@ -133,6 +133,7 @@ edit or reload them without a rebuild:
 | Karabiner and Goku input | `karabiner/karabiner.edn` |
 | Amethyst | `amethyst/amethyst.yml` |
 | Claude notification hook | `claude/notify.sh` |
+| Claude status line | `claude/statusline.sh` |
 | Personal scripts | `bin/` |
 | Login suppression | `hushlogin` |
 

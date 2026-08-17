@@ -16,6 +16,15 @@ setw -g window-status-activity-style "underscore,fg=colour250,bg=colour234"
 setw -g window-status-separator ""
 setw -g window-status-style "none,fg=colour250,bg=colour234"
 set -g status-left "#[fg=colour16,bg=colour254,bold] #S #[fg=colour254,bg=colour234,nobold,nounderscore,noitalics]"
-set -g status-right "#[fg=colour252,bg=colour234,nobold,nounderscore,noitalics]#[fg=colour235,bg=colour252] %H:%M %b %d "
+# Claude Code segment, drawn only for a pane that has published one. The
+# value is set per pane by ~/.claude/statusline.sh, so this shows the
+# FOCUSED pane's session and collapses to nothing on a plain shell pane.
+# Colour tracks context pressure: green under 70%, orange to 89%, red at
+# 90% and over.
+# The styles inside the conditional carry no commas on purpose, because a
+# comma inside #[...] would be read as a branch separator by the
+# surrounding #{?...}. Only fg is set; the background comes from
+# status-style.
+set -g status-right "#{?@claude_status,#[fg=colour240] │ #{?#{==:#{@claude_ctx_state},hot},#[fg=colour203],#{?#{==:#{@claude_ctx_state},warn},#[fg=colour215],#[fg=colour114]}}#{@claude_status} ,}#[fg=colour252,bg=colour234,nobold,nounderscore,noitalics]#[fg=colour235,bg=colour252] %H:%M %b %d "
 setw -g window-status-format "#[fg=colour234,bg=colour234,nobold,nounderscore,noitalics]#[default] #I #W #{?#{==:#{@claude_alert},input},#[fg=colour215] #[fg=colour250],}#{?#{==:#{@claude_alert},done},#[fg=colour114] #[fg=colour250],}#{?window_zoomed_flag,,} #[fg=colour234,bg=colour234,nobold,nounderscore,noitalics]"
 setw -g window-status-current-format "#[fg=colour234,bg=colour31,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour31,bold] #I #W #{?window_zoomed_flag,,} #[fg=colour31,bg=colour234,nobold,nounderscore,noitalics]"
