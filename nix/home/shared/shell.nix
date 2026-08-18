@@ -116,6 +116,12 @@
       # Both reach non-interactive shells now that envExtra below sources
       # ~/.secrets from ~/.zshenv.
       CONVERGE_CODE = "$HOME/Code";
+
+      # Written as $HOME rather than $CONVERGE_CODE above. Both land in the
+      # same ~/.zshenv block, which home-manager emits in alphabetical order,
+      # so CONVERGE_CODE does happen to be defined first. Not worth depending
+      # on: a future variable that sorts earlier would still be undefined here.
+      FM_HOME = "$HOME/Code/Converge/firstmate";
       # The FZF_* variables used to live here. programs.fzf above owns them now.
     };
 
