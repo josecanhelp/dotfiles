@@ -34,6 +34,24 @@ in
   networking.computerName = hostname;
   networking.localHostName = hostname;
 
+  # Runs the open-source tailscaled as a root launchd daemon instead of the
+  # Tailscale.app GUI. The App Store and macsys (standalone) builds are both
+  # sandboxed, and tailscale gates its SSH server on version.IsSandboxedMacOS()
+  # in envknob/featureknob, so `tailscale set --ssh` fails on those with "The
+  # Tailscale SSH server does not run in sandboxed Tailscale GUI builds."
+  # tailscaled trips neither IsMacAppStore() nor IsMacSysExt(), so this is the
+  # only way to serve Tailscale SSH on darwin. Enables SSH from the phone with
+  # no keys and no authorized_keys: identity comes from the tailnet itself.
+  #
+  # Requires Tailscale.app to be uninstalled first, or the two daemons fight
+  # over the utun interface. Also requires an `ssh` block in the tailnet ACL;
+  # without one, every connection is denied regardless of this setting.
+  #
+  # Cost: no menu bar GUI, and the version follows the nixpkgs pin rather than
+  # Tailscale's auto-updater. overrideLocalDns is deliberately left off: the
+  # module already writes /etc/resolver/ts.net, which is enough for MagicDNS.
+  services.tailscale.enable = true;
+
   # home-manager derives home.homeDirectory from users.users.<name>.home,
   # which nix-darwin otherwise leaves null (system.primaryUser alone does
   # not populate it). Without this, evaluation fails with "A definition
