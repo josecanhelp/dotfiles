@@ -49,7 +49,17 @@ if [ -z "${model:-}" ]; then
   exit 0
 fi
 
+# Spend alarm. Fully detached and self-rate-limited, so it can never delay or
+# break this render: notify-only, and it exits in ~25ms on most invocations.
+if [ -x "$HOME/dotfiles/claude/spend-alert.sh" ]; then
+  ( "$HOME/dotfiles/claude/spend-alert.sh" >/dev/null 2>&1 & ) 2>/dev/null || true
+fi
+
 segment=$(printf '%s · %s%% · $%.2f' "$model" "$ctx" "${cost:-0}")
+# Account-wide spend for the local day, published by spend-alert.sh. Session
+# cost above is this pane only; several panes spend against one allotment.
+day_spend=$(cat "$HOME/.claude/spend-alert/current" 2>/dev/null | head -1)
+[ -n "$day_spend" ] && segment="$segment · $day_spend"
 [ "${five_hour:-0}" -ge 0 ] 2>/dev/null && segment="$segment · 5h ${five_hour}%"
 [ "${seven_day:-0}" -ge 0 ] 2>/dev/null && segment="$segment · 7d ${seven_day}%"
 

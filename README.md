@@ -137,6 +137,14 @@ edit or reload them without a rebuild:
 | Personal scripts | `bin/` |
 | Login suppression | `hushlogin` |
 
+`claude/spend-alert.sh` sits beside those two but is **not** linked and needs no
+rebuild: `statusline.sh` invokes it by absolute path. It is a notify-only Claude
+Code spend alarm. It reads token usage out of `~/.claude/projects/*/*.jsonl`,
+tracks the local-day total and a rolling one-hour burn rate in
+`~/.claude/spend-alert/`, and sends a macOS notification when a threshold is
+crossed. It never blocks, kills or pauses anything, and it self-rate-limits to
+one scan every 120 seconds so the 10-second status refresh stays free.
+
 Two files are sourced from the checkout rather than linked: the zsh functions
 file and `tmux/tmuxline`. The supported checkout path is `~/dotfiles`.
 
