@@ -157,6 +157,7 @@
       ee = "cd ~/Code/engineering_department/";
       tt = "cd ~/Code/Converge/";
       jj = "cd ~/Code/JoseCanHelp/";
+      hh = "cd /Users/jose/Code/H2W/vscode_workspace/h2w-wordpress";
       dot = "cd ~/dotfiles";
       gsa = "git submodule add";
       vs = "vagrant status";
