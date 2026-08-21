@@ -323,6 +323,26 @@ in
       "pipx"          # fails its checkPhase in this nixpkgs
       "ruby"          # keg-only and unlinked, so /usr/bin/ruby still wins
       "opencode"      # Homebrew provides a newer release than this nixpkgs pin
+      "wp-cli"
+
+      # wp-cli's only Homebrew dependency is the unversioned `php`, which is
+      # 8.5 as of 2026-08-18. PHP 8.5 deprecated `case X;`, and the wp-cli
+      # 2.12.0 phar bundles react/promise 2.x, which still writes it that way,
+      # so every `wp` run emitted a deprecation notice. Homebrew's php.ini
+      # leaves display_errors on, so the notice landed on STDOUT and corrupted
+      # anything piping `wp ... --format=json`.
+      #
+      # php@8.4 is keg-only, so `link` force-links it into /opt/homebrew and
+      # `conflicts_with` unlinks 8.5 first. 8.5 stays installed but unlinked:
+      # uninstalling it would break wp-cli's dependency and Homebrew would pull
+      # it back on the next upgrade anyway. Activation re-applies both, so a
+      # `brew upgrade` that relinks 8.5 is undone by the next
+      # `darwin-rebuild switch`.
+      {
+        name = "php@8.4";
+        link = true;
+        conflicts_with = [ "php" ];
+      }
     ];
 
     # All from homebrew/cask, so no extra taps needed.
