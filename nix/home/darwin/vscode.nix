@@ -129,6 +129,20 @@
       ms-python.vscode-python-envs
       kevinrose.vsc-python-indent
 
+      # CAD
+      # Client only. The viewer server it talks to is started by the ocp_vscode
+      # Python package inside a project's own venv, so this extension is inert
+      # in any workspace that does not install it. The two are released as a
+      # pair and the versions must match: this is 4.0.1, and
+      # ~/Code/3d-designs/soto-3d-designs pins ocp_vscode 4.0.1 in uv.lock.
+      #
+      # That pairing is the one maintenance cost. This list follows
+      # nix-vscode-extensions, which republishes daily, while the Python side is
+      # frozen in a lockfile, so `nix flake update` can move one and not the
+      # other. If the viewer stops connecting after an update, check that before
+      # anything else.
+      bernhard-42.ocp-cad-viewer
+
       # Web and JS
       dbaeumer.vscode-eslint
       esbenp.prettier-vscode
@@ -175,6 +189,18 @@
   # with "Unable to resolve nonexistent file .../package.json". That is exactly
   # what happened on 2026-08-12 after the old hand-installed directories were
   # deleted.
+  #
+  # There is a second route to the identical error, hit on 2026-08-21 when
+  # bernhard-42.ocp-cad-viewer was added: VS Code was RUNNING during the switch.
+  # The hook regenerates the cache correctly, and then the live instance
+  # rewrites it from its own state using VS Code's own `id-version` directory
+  # convention, which does not match the unversioned symlink home-manager
+  # creates. Exactly one entry breaks, the newly declared one, while the other
+  # 47 keep working, so it reads like a problem with that extension rather than
+  # a stale cache.
+  #
+  # Fix: quit VS Code, then run this hook's own two commands by hand. Better:
+  # quit VS Code before `darwin-rebuild switch` when the extension list changed.
   #
   # The marker file's content is the declared id@version list, so it changes
   # precisely when the extension set or any version changes, and not otherwise.
