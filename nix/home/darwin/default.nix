@@ -12,6 +12,7 @@ in
     # Shared with the WSL box. Anything in here must work on both.
     ../shared/git.nix
     ../shared/shell.nix
+    ../shared/direnv.nix
     ../shared/tmux.nix
     ../shared/nvim.nix
 

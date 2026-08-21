@@ -6,10 +6,11 @@ let
 in
 {
   imports = [
-    # The same four modules the Mac uses. Task 2 removed everything
+    # The same five modules the Mac uses. Task 2 removed everything
     # macOS-specific from them.
     ../shared/git.nix
     ../shared/shell.nix
+    ../shared/direnv.nix
     ../shared/tmux.nix
     ../shared/nvim.nix
   ];

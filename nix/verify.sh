@@ -13,7 +13,7 @@ batch1=(rg fzf jq tree htop wget pstree watchexec nmap pandoc typst
         actionlint git-filter-repo joker yt-dlp ranger jadx gh telnet
         sha256sum btop pkgconf ffmpeg magick pdfinfo pdftotext
         rsvg-convert woff2_compress cjpeg)
-batch2=(git tmux starship)
+batch2=(git tmux starship direnv)
 batch3=(gcloud bq gsutil mvn nvim)
 # ruby intentionally absent: stays as system /usr/bin/ruby 2.6.10.
 # pipx intentionally absent: fails to build in nixpkgs, stays on Homebrew.
