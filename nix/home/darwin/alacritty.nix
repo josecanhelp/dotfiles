@@ -41,9 +41,13 @@
         dynamic_padding = true;
         padding = { x = 0; y = 0; };
       };
+      # A plain login shell, no multiplexer. This used to run
+      # `tmux attach || tmux`, which nested tmux underneath Herder whenever
+      # Herder was the multiplexer actually in use. Two layers of prefix keys
+      # is worse than none. Start the multiplexer by hand when it is wanted.
       terminal.shell = {
         program = "/bin/zsh";
-        args = [ "-l" "-c" "tmux attach || tmux" ];
+        args = [ "-l" ];
       };
     };
   };
