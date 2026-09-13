@@ -337,16 +337,12 @@ in
     # which is why the packages migration never saw them. Declared here so
     # a fresh machine reproduces them.
     taps = [
-      "shopify/shopify"
-      "masaushi/tap"
     ];
 
     # Not in nixpkgs, so they stay on Homebrew rather than going
     # undeclared. Everything else from these taps (goku, stripe-cli,
     # shopify-cli) moved to nix/packages.nix.
     brews = [
-      "themekit"      # shopify/shopify
-      "ecsplorer"     # masaushi/tap
       # The exceptions documented in nix/packages.nix. They were described
       # there but never declared anywhere, so `brew leaves` and this list were
       # disjoint sets and a fresh machine installed none of them.
@@ -401,7 +397,9 @@ in
     casks = [
       "1password"                  # the GUI app; 1password-cli below is separate
       "1password-cli"
-      "alacritty"
+      # alacritty removed 2026-09-12, replaced by ghostty below. Its config
+      # module is archived at nix/home/darwin/alacritty.nix and the app is still
+      # installed; `brew uninstall --cask alacritty` when you are sure.
       "amethyst"
       "android-platform-tools"
       "android-studio"
@@ -410,7 +408,6 @@ in
       "brave-browser"
       "chatgpt"
       "claude"
-      "codex-app"                  # token is codex-app, not codex
       "dbngin"
       "docker-desktop"             # token is docker-desktop, not docker
       "dropbox"
@@ -418,6 +415,11 @@ in
       "figma"
       "firefox@developer-edition"  # the @ is part of the token
       "fork"
+      # The STABLE cask (1.3.1), deliberately not ghostty@tip: tip auto-updates
+      # to a nightly build, which is the opposite of what this file is for. 1.3.1
+      # also matches the nixpkgs ghostty, so nix/home/darwin/ghostty.nix can take
+      # a real package later instead of package = null.
+      # `brew uninstall --cask ghostty@tip` once this one is in and working.
       "google-chrome"
       "hammerspoon"                # its config is already linked in nix/home
       "imageoptim"
@@ -434,7 +436,6 @@ in
       "iterm2"
       "ledger-wallet"              # token is ledger-wallet, not ledger-live
       "local"
-      "mactex"
       "microsoft-office"           # one cask, six apps: Word/Excel/PPT/OneNote/
                                    # Outlook, plus OneDrive. See the note below.
       "microsoft-teams"

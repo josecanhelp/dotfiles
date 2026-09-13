@@ -67,26 +67,45 @@
                                        :dorder :insensitive
                                        :uorder :insensitive
                                        :afterup {:set ["super-duper" 0]}}} {:set ["super-duper" 1]}]]}
-        {:des "Super Duper Mode for Traversing Tmux"
+        ;; Works against tmux AND herdr. The :hs entries route through Hammerspoon,
+        ;; which sends prefix sequences both multiplexers now share. The :!Ta
+        ;; entries send C-a directly; herdr's config.toml sets rename_tab to
+        ;; prefix+comma to match :n, and zoom (prefix+z) already matched :o.
+        ;;
+        ;; Three that do NOT agree, left alone deliberately:
+        ;;   :r sends C-a r. tmux reloads its config; herdr opens resize mode.
+        ;;     Moving herdr's reload onto prefix+r would collide with resize
+        ;;     mode, which earns the key more often.
+        ;;   :f sends C-a f Return, tmux's find-window. herdr has no equivalent
+        ;;     and its `goto` action is undocumented, so this does nothing there.
+        ;;   :delete_or_backspace sends C-a x then y, because tmux's kill-pane
+        ;;     asks to confirm. If herdr's close_pane does not ask, the y lands
+        ;;     in the shell instead. Drop the :y if that turns out to be so.
+        ;;
+        ;; Moving between herdr WORKSPACES has no entry here: herdr ships those
+        ;; bindings unset, so config.toml now binds prefix+shift+k / prefix+shift+j.
+        ;; tmux has no workspace concept, so there is nothing to keep in sync.
+        ;;   :y sends C-a { (swap-pane -U), which herdr has no equivalent for.
+        {:des "Super Duper Mode for Traversing Tmux/Herdr"
          :rules [:super-duper
-                 [:f [:!Ta :f :return_or_enter]] ; Find a window
-                 [:up_arrow [:hs "tabprevious"]] ; Switch to the previous tmux window
-                 [:down_arrow [:hs "tabnext"]] ; Switch to the next tmux window
+                 [:f [:!Ta :f :return_or_enter]] ; Find a window (tmux only; no herdr equivalent)
+                 [:up_arrow [:hs "tabprevious"]] ; Switch to the previous window/tab
+                 [:down_arrow [:hs "tabnext"]] ; Switch to the next window/tab
                  [:j [:hs "navigatedownward"]] ; Focus on the pane below current pane
                  [:k [:hs "navigateupward"]] ; Focus on the pane above current pane
                  [:h [:hs "navigateback"]] ; Focus on the pane to the left of the current pane
                  [:l [:hs "navigateforward"]] ; Focus on the pane to the right of the current pane
-                 [:n [:!Ta :comma]] ; Quick rename tmux window
+                 [:n [:!Ta :comma]] ; Quick rename window/tab
                  [:o [:!Ta :z]] ; Zoom on current pane
                  [:r [:!Ta :r]] ; Reload the Matrix
-                 [:hyphen [:hs "splithorizontally"]] ; Split tmux window horizontally
-                 [:backslash [:hs "splitvertically"]] ; Split tmux window vertically
-                 [:delete_or_backspace [:!Ta :x :y]] ; Kill a tmux pane without asking for confirmation
-                 [:y [:!Ta :!Sopen_bracket]] ; Kill a tmux pane without asking for confirmation
+                 [:hyphen [:hs "splithorizontally"]] ; Split stacked
+                 [:backslash [:hs "splitvertically"]] ; Split side by side
+                 [:delete_or_backspace [:!Ta :x :y]] ; Kill a pane without asking for confirmation
+                 [:y [:!Ta :!Sopen_bracket]] ; Swap pane upward (tmux only)
                  ]}
         {:des "Launch Mode for opening up Applications"
          :rules [:launch-mode
-                 [:a [:launch "Alacritty"]]
+                 [:a [:launch "Ghostty"]]
                  [:c [:launch "Visual\\ Studio\\ Code"]]
                  [:f [:launch "Brave\\ Browser"]]
                  [:m [:launch "Messages"]]

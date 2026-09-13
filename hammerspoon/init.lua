@@ -25,6 +25,21 @@ local activeModal = nil
 local hsapp_list = nil
 local hspoon_list = nil
 
+-- Every terminal emulator that runs a multiplexer, so the pane, split and tab
+-- bindings below have one list to test instead of a repeated pair. The globals
+-- come from require('appBundles') above.
+--
+-- alacritty stays in deliberately. It was replaced by ghostty on 2026-09-12 but
+-- is still installed, and its nix module is archived rather than deleted, so the
+-- bindings keep working if you switch back.
+--
+-- The keystrokes these send are MULTIPLEXER bindings, not terminal-app ones, so
+-- what actually has to agree is tmux and herdr. Both are on prefix C-a with
+-- prefix+hjkl to traverse, prefix+v to split side by side and prefix+- to split
+-- stacked. Hammerspoon cannot tell which multiplexer is running (same app, same
+-- bundle id), which is exactly why the two configs were made to match.
+local terminals = { iterm, alacritty, ghostty }
+
 ----------------------------------------------------------------------------------------------------
 -- General Settings
 ----------------------------------------------------------------------------------------------------
@@ -710,8 +725,14 @@ hs.urlevent.bind('navigateback', function()
             hs.eventtap.keyStroke({}, 'escape')
         elseif appIncludes({ obsidian }) then
             hs.eventtap.keyStroke({ 'cmd', 'option', 'control' }, 'a')
-        elseif appIncludes({ iterm, alacritty }) then
-            hs.eventtap.keyStroke({ 'control' }, 'h', 0)
+        elseif appIncludes(terminals) then
+            -- prefix+h rather than a bare C-h. Three reasons: herdr binds pane
+            -- focus behind the prefix and cannot be given a bare-key form with
+            -- tmux's vim-awareness; tmux already binds prefix+h the same way
+            -- (customPaneNavigationAndResize); and going through the prefix
+            -- leaves C-h with the app, so nvim splits keep working.
+            hs.eventtap.keyStroke({ 'control' }, 'a')
+            hs.eventtap.keyStroke({}, 'h')
         end
     elseif activeModal == 'windowM' then
         hs.eventtap.keyStroke({}, 'a')
@@ -729,8 +750,9 @@ hs.urlevent.bind('navigateforward', function()
         hs.eventtap.keyStroke({}, 'escape')
     elseif appIncludes({ obsidian }) then
         hs.eventtap.keyStroke({ 'cmd', 'option', 'control' }, 'd')
-    elseif appIncludes({ iterm, alacritty }) then
-        hs.eventtap.keyStroke({ 'control' }, 'l', 0)
+    elseif appIncludes(terminals) then
+        hs.eventtap.keyStroke({ 'control' }, 'a')
+        hs.eventtap.keyStroke({}, 'l')
     end
 end)
 
@@ -746,8 +768,9 @@ hs.urlevent.bind('navigateupward', function()
         hs.eventtap.keyStroke({ 'control', 'shift' }, 'tab')
     elseif appIs(brave) then
         hs.eventtap.keyStroke({ 'cmd', 'shift' }, ']')
-    elseif appIncludes({ iterm, alacritty }) then
-        hs.eventtap.keyStroke({ 'control' }, 'k', 0)
+    elseif appIncludes(terminals) then
+        hs.eventtap.keyStroke({ 'control' }, 'a')
+        hs.eventtap.keyStroke({}, 'k')
     elseif appIs(obsidian) then
         hs.eventtap.keyStroke({ 'cmd', 'option', 'control' }, 'w')
     else
@@ -766,8 +789,9 @@ hs.urlevent.bind('navigatedownward', function()
         hs.eventtap.keyStroke({ 'control' }, 'tab')
     elseif appIs(brave) then
         hs.eventtap.keyStroke({ 'cmd', 'shift' }, '[')
-    elseif appIncludes({ iterm, alacritty }) then
-        hs.eventtap.keyStroke({ 'control' }, 'j', 0)
+    elseif appIncludes(terminals) then
+        hs.eventtap.keyStroke({ 'control' }, 'a')
+        hs.eventtap.keyStroke({}, 'j')
     elseif appIncludes({ obsidian }) then
         hs.eventtap.keyStroke({ 'cmd', 'option', 'control' }, 's')
     else
@@ -793,7 +817,7 @@ end)
 hs.urlevent.bind('openprojectselector', function()
     if appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd', 'option' }, 'p')
-    elseif appIncludes({ iterm, alacritty }) then
+    elseif appIncludes(terminals) then
         hs.eventtap.keyStroke({ 'ctrl' }, 'a')
         hs.eventtap.keyStroke({}, 'f')
         hs.eventtap.keyStroke({}, 'return')
@@ -812,7 +836,7 @@ hs.urlevent.bind('copyanything', function()
 end)
 
 hs.urlevent.bind('tabprevious', function()
-    if appIncludes({ iterm, alacritty }) then
+    if appIncludes(terminals) then
         hs.eventtap.keyStroke({ 'control' }, 'a')
         hs.eventtap.keyStroke({}, 'p')
     elseif appIs(vscode) then
@@ -821,7 +845,7 @@ hs.urlevent.bind('tabprevious', function()
 end)
 
 hs.urlevent.bind('tabnext', function()
-    if appIncludes({ iterm, alacritty }) then
+    if appIncludes(terminals) then
         hs.eventtap.keyStroke({ 'control' }, 'a')
         hs.eventtap.keyStroke({}, 'n')
     elseif appIs(vscode) then
@@ -831,48 +855,60 @@ end)
 
 
 hs.urlevent.bind('superduperleft', function()
-    if appIncludes({ iterm, alacritty }) then
-        hs.eventtap.keyStroke({ 'control' }, 'h')
+    if appIncludes(terminals) then
+        hs.eventtap.keyStroke({ 'control' }, 'a')
+        hs.eventtap.keyStroke({}, 'h')
     elseif appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd', 'option' }, 'left')
     end
 end)
 
 hs.urlevent.bind('superduperright', function()
-    if appIncludes({ iterm, alacritty }) then
-        hs.eventtap.keyStroke({ 'control' }, 'l')
+    if appIncludes(terminals) then
+        hs.eventtap.keyStroke({ 'control' }, 'a')
+        hs.eventtap.keyStroke({}, 'l')
     elseif appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd', 'option' }, 'right')
     end
 end)
 
+-- CORRECTED 2026-09-12: these two sent the wrong direction. superduperup sent
+-- C-j (down) and superduperdown sent C-k (up), inverted against vim convention
+-- and against navigateupward/navigatedownward above, which had it right. Now
+-- both agree: k is up, j is down.
 hs.urlevent.bind('superduperup', function()
-    if appIncludes({ iterm, alacritty }) then
-        hs.eventtap.keyStroke({ 'control' }, 'j')
+    if appIncludes(terminals) then
+        hs.eventtap.keyStroke({ 'control' }, 'a')
+        hs.eventtap.keyStroke({}, 'k')
     elseif appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd', 'option' }, 'up')
     end
 end)
 
 hs.urlevent.bind('superduperdown', function()
-    if appIncludes({ iterm, alacritty }) then
-        hs.eventtap.keyStroke({ 'control' }, 'k')
+    if appIncludes(terminals) then
+        hs.eventtap.keyStroke({ 'control' }, 'a')
+        hs.eventtap.keyStroke({}, 'j')
     elseif appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd', 'option' }, 'down')
     end
 end)
 
 hs.urlevent.bind('splitvertically', function()
-    if appIncludes({ iterm, alacritty }) then
+    if appIncludes(terminals) then
+        -- prefix+v, was prefix+| (shift+backslash). herdr's split_vertical is
+        -- prefix+v and it will not take a backslash binding, so tmux moved to
+        -- match: tmux/tmux.conf now has `bind v split-window -h` and keeps
+        -- `bind |` as an alias, and even-vertical moved to prefix+V.
         hs.eventtap.keyStroke({ 'control' }, 'a')
-        hs.eventtap.keyStroke({ 'shift' }, '\\')
+        hs.eventtap.keyStroke({}, 'v')
     elseif appIs(obsidian) then
         hs.eventtap.keyStroke({ 'cmd', 'option', 'control' }, '\\')
     end
 end)
 
 hs.urlevent.bind('splithorizontally', function()
-    if appIncludes({ iterm, alacritty }) then
+    if appIncludes(terminals) then
         hs.eventtap.keyStroke({ 'control' }, 'a')
         hs.eventtap.keyStroke({}, '-')
     elseif appIs(obsidian) then

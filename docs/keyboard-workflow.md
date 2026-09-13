@@ -82,22 +82,45 @@ Escape. Both triggers expose the same bindings.
 
 ### Super Duper Mode
 
-Activated by pressing **`s` and `d` simultaneously**. Mostly tmux control (tmux prefix
-is `Ctrl+A`).
+Activated by pressing **`s` and `d` simultaneously**. Multiplexer control. Works against
+both tmux and herdr, which are configured to share the `Ctrl+A` prefix and the same
+bindings, because Hammerspoon cannot tell which one is running (same terminal, same
+bundle ID).
 
-| Key | Action |
+| Key | Action | tmux | herdr |
+| --- | --- | --- | --- |
+| `f` | `Ctrl+A f Return` | find window | **nothing** |
+| `up` | `hammerspoon://tabprevious` | same | same |
+| `down` | `hammerspoon://tabnext` | same | same |
+| `h` `j` `k` `l` | `navigateback` / `navigatedownward` / `navigateupward` / `navigateforward` | same | same |
+| `n` | `Ctrl+A ,` | rename window | rename tab |
+| `o` | `Ctrl+A z` | zoom pane | zoom |
+| `r` | `Ctrl+A r` | reload config | **resize mode** |
+| `-` | `hammerspoon://splithorizontally` | same | same |
+| `\` | `hammerspoon://splitvertically` | same | same |
+| `delete` | `Ctrl+A x y` | kill pane, `y` confirms | close pane; `y` may leak |
+| `y` | `Ctrl+A Shift+[` | copy mode | no equivalent |
+
+The bolded rows are the only ones that diverge. `r` is deliberate: remapping herdr's
+reload onto `prefix+r` would collide with its resize mode, which earns the key more
+often. The other three are tmux behaviours herdr has no counterpart for (`goto`, the
+nearest thing to find-window, is undocumented and left alone rather than guessed at).
+
+### herdr workspaces
+
+Not reachable from Super Duper Mode, and not a tmux concept at all. herdr ships
+`previous_workspace` and `next_workspace` **unset**, so out of the box there is no key
+for this; `~/.config/herdr/config.toml` binds them.
+
+| Keys | Action |
 | --- | --- |
-| `f` | `Ctrl+A f Return` (tmux find window) |
-| `up` | `hammerspoon://tabprevious` |
-| `down` | `hammerspoon://tabnext` |
-| `h` `j` `k` `l` | `navigateback` / `navigatedownward` / `navigateupward` / `navigateforward` |
-| `n` | `Ctrl+A ,` (tmux rename window) |
-| `o` | `Ctrl+A z` (tmux zoom pane) |
-| `r` | `Ctrl+A r` (tmux reload) |
-| `-` | `hammerspoon://splithorizontally` |
-| `\` | `hammerspoon://splitvertically` |
-| `delete` | `Ctrl+A x y` (kill tmux pane, no confirm) |
-| `y` | `Ctrl+A Shift+[` (enter tmux copy mode) |
+| `Ctrl+A Shift+K` | Previous workspace |
+| `Ctrl+A Shift+J` | Next workspace |
+| `Ctrl+A w` | Workspace picker (herdr default, and tmux's `choose-tree` key) |
+| `Ctrl+A Shift+N` | New workspace |
+
+These are herdr-only, so they are configured in herdr rather than sent through
+Hammerspoon. Changes need `herdr server reload-config` to take effect.
 
 ### Launch Mode
 
@@ -107,7 +130,7 @@ because Hyper Mode requires Escape/Caps Lock to be held.)
 
 | Key | Launches |
 | --- | --- |
-| `a` | Alacritty |
+| `a` | Ghostty |
 | `c` | Visual Studio Code |
 | `f` | Brave Browser |
 | `m` | Messages |
@@ -121,6 +144,15 @@ because Hyper Mode requires Escape/Caps Lock to be held.)
 Each row is one `hs.urlevent.bind` handler in `init.lua`. The right column shows the
 keystroke sent per frontmost app.
 
+**Terminal** below means the `terminals` list in `init.lua`: Ghostty, iTerm and Alacritty.
+Alacritty is still listed although Ghostty replaced it, so the bindings keep working if
+you switch back. The keystrokes these rows send are *multiplexer* bindings rather than
+terminal-app ones, so what has to agree is tmux and herdr, not the three emulators.
+
+Note the traversal rows send `Ctrl+A h` rather than a bare `Ctrl+H`. Going through the
+prefix is what makes them work in herdr as well as tmux, and it leaves `Ctrl+H` with the
+focused app, so nvim splits keep working without tmux's `is_vim` shell guard.
+
 ### Cross-app action intents
 
 | Intent | Per-app keystrokes |
@@ -129,17 +161,17 @@ keystroke sent per frontmost app.
 | `openanything` | VS Code / TablePlus / Fork `Cmd+P` · Teams `Cmd+E` · Eclipse `Cmd+Shift+R` · Discord / Superhuman `Cmd+K` · Slack / Monday `Cmd+K` then `Down` · PhpStorm / Xcode `Cmd+Shift+O` · Brave `Shift+T` (Vimium) · OmniFocus / Obsidian `Cmd+O` · Bear `Cmd+Shift+F` · IntelliJ `Cmd+T` · else: notify with bundle ID |
 | `createanything` | OmniFocus `Ctrl+Option+Space` · Bear `Cmd+N` · Brave `Cmd+T` |
 | `closeanything` | Brave `Cmd+W` |
-| `openprojectselector` | VS Code `Cmd+Option+P` · iTerm / Alacritty `Ctrl+A f Return` |
+| `openprojectselector` | VS Code `Cmd+Option+P` · Terminal `Ctrl+A f Return` |
 | `togglesidebar` | VS Code `Cmd+B` then `Cmd+H` · Slack `Cmd+Shift+D` · Bear `Ctrl+3` · PhpStorm `Cmd+1` · Sketch `Cmd+Option+1` then `Cmd+Option+2` · Obsidian `Cmd+Option+Ctrl+M` · OmniFocus `Cmd+Option+S` |
-| `navigateback` | Bear / Spotify `Cmd+Option+Left` · Finder / Slack / Brave `Cmd+[` · VS Code `Cmd+K Cmd+Left Esc` · Obsidian `Cmd+Option+Ctrl+A` · iTerm / Alacritty `Ctrl+H` · (in Window modal: `a`) |
-| `navigateforward` | Bear / Spotify `Cmd+Option+Right` · Finder / Slack / Brave `Cmd+]` · VS Code `Cmd+K Cmd+Right Esc` · Obsidian `Cmd+Option+Ctrl+D` · iTerm / Alacritty `Ctrl+L` |
-| `navigateupward` | TablePlus `Cmd+[` · Bear `Up` · VS Code `Ctrl+\`` then `Esc` · Messages `Ctrl+Shift+Tab` · Brave `Cmd+Shift+]` · iTerm / Alacritty `Ctrl+K` · Obsidian `Cmd+Option+Ctrl+W` · else `Cmd+Shift+[` |
-| `navigatedownward` | TablePlus `Cmd+]` · Bear `Down` · VS Code `Ctrl+\`` · Messages `Ctrl+Tab` · Brave `Cmd+Shift+[` · iTerm / Alacritty `Ctrl+J` · Obsidian `Cmd+Option+Ctrl+S` · else `Cmd+Shift+]` |
+| `navigateback` | Bear / Spotify `Cmd+Option+Left` · Finder / Slack / Brave `Cmd+[` · VS Code `Cmd+K Cmd+Left Esc` · Obsidian `Cmd+Option+Ctrl+A` · Terminal `Ctrl+A h` · (in Window modal: `a`) |
+| `navigateforward` | Bear / Spotify `Cmd+Option+Right` · Finder / Slack / Brave `Cmd+]` · VS Code `Cmd+K Cmd+Right Esc` · Obsidian `Cmd+Option+Ctrl+D` · Terminal `Ctrl+A l` |
+| `navigateupward` | TablePlus `Cmd+[` · Bear `Up` · VS Code `Ctrl+\`` then `Esc` · Messages `Ctrl+Shift+Tab` · Brave `Cmd+Shift+]` · Terminal `Ctrl+A k` · Obsidian `Cmd+Option+Ctrl+W` · else `Cmd+Shift+[` |
+| `navigatedownward` | TablePlus `Cmd+]` · Bear `Down` · VS Code `Ctrl+\`` · Messages `Ctrl+Tab` · Brave `Cmd+Shift+[` · Terminal `Ctrl+A j` · Obsidian `Cmd+Option+Ctrl+S` · else `Cmd+Shift+]` |
 | `copyanything` | selected text to clipboard · Bear `Cmd+Option+Shift+L` (copy note link) · Brave `yy` (copy URL) |
-| `tabprevious` | iTerm / Alacritty `Ctrl+A p` · VS Code `Cmd+Option+Left` |
-| `tabnext` | iTerm / Alacritty `Ctrl+A n` · VS Code `Cmd+Option+Right` |
-| `splithorizontally` | iTerm / Alacritty `Ctrl+A -` · Obsidian `Cmd+Option+Ctrl+-` |
-| `splitvertically` | iTerm / Alacritty `Ctrl+A Shift+\` · Obsidian `Cmd+Option+Ctrl+\` |
+| `tabprevious` | Terminal `Ctrl+A p` · VS Code `Cmd+Option+Left` |
+| `tabnext` | Terminal `Ctrl+A n` · VS Code `Cmd+Option+Right` |
+| `splithorizontally` | Terminal `Ctrl+A -` · Obsidian `Cmd+Option+Ctrl+-` |
+| `splitvertically` | Terminal `Ctrl+A v` · Obsidian `Cmd+Option+Ctrl+\` |
 | `togglebreaktime` | toggles the BreakTime app via AppleScript (not app-specific) |
 
 ### Modal intents

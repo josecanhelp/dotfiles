@@ -136,21 +136,15 @@ considered, and none of them are declared anywhere:
 |---|---|---|
 | `goku` | yqrashawn/goku | **yes** |
 | `stripe` | stripe-cli | **yes** (`stripe-cli`) |
-| `shopify-cli` | shopify/shopify | **yes** (`shopify-cli`) |
-| `themekit` | shopify/shopify | no |
-| `ecsplorer` | masaushi/tap | no |
 | `msodbcsql17` | microsoft/mssql-release | no |
 
-Four are live on your PATH right now (`goku`, `stripe`, `shopify`,
-`ecsplorer`).
+Four are live on your PATH right now (`goku`, `stripe`).
 
 Three move to nixpkgs directly. The other three need declaring on the
 Homebrew side, which nix-darwin supports:
 
 ```nix
 homebrew.taps = [
-  "shopify/shopify"
-  "masaushi/tap"
   "microsoft/mssql-release"
 ];
 homebrew.brews = [ "themekit" "ecsplorer" "msodbcsql17" ];

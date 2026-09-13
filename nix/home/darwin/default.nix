@@ -8,25 +8,38 @@ let
   link = path: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${path}";
 in
 {
+  # ARCHIVED 2026-09-12, not deleted: ../shared/tmux.nix, ./tmux.nix,
+  # ./launchd.nix and ./alacritty.nix are all still in the repo, unreferenced.
+  # herdr replaced tmux and ghostty replaced alacritty. To go back, uncomment the
+  # lines below and rebuild; nothing else has to be undone.
+  #
+  # tmux's generated config was archived to tmux/tmux.conf before the modules
+  # came out, and the tmux binary is still declared in nix/packages.nix, so
+  # `tmux -f ~/dotfiles/tmux/tmux.conf` works today with no rebuild at all.
+  #
+  # ./launchd.nix has to stay out while tmux does: it referenced
+  # pkgs.tmuxPlugins.continuum, so it cannot evaluate without programs.tmux. It
+  # opened alacritty fullscreen at login; herdr's persistent sessions replace it.
   imports = [
     # Shared with the WSL box. Anything in here must work on both.
     ../shared/git.nix
     ../shared/shell.nix
     ../shared/direnv.nix
-    ../shared/tmux.nix
+    # ../shared/tmux.nix
     ../shared/nvim.nix
 
     # macOS only.
-    ./alacritty.nix
+    # ./alacritty.nix
+    ./ghostty.nix
     ./karabiner.nix
     ./java.nix
     # Needs pkgs.vscode-marketplace, which the nix-vscode-extensions overlay in
     # flake.nix supplies for this host only.
     ./vscode.nix
     ./git.nix
-    ./tmux.nix
+    # ./tmux.nix
     ./shell.nix
-    ./launchd.nix
+    # ./launchd.nix
   ];
 
   home.stateVersion = "26.05";

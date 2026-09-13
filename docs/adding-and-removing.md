@@ -202,7 +202,6 @@ used is required**, not decoration:
 
 ```diff
    brews = [
-     "themekit"      # shopify/shopify
 +    "somecli"       # not in nixpkgs at all
      "ant"           # apacheAnt evaluates unavailable on aarch64-darwin
 ```
@@ -213,7 +212,6 @@ mid-activation. In `nix/configuration.nix`:
 
 ```diff
    taps = [
-     "shopify/shopify"
 +    "someorg/tap"
 ```
 
@@ -221,7 +219,6 @@ and in `flake.nix`, under `nix-homebrew`:
 
 ```diff
      trust.taps = [
-       "shopify/shopify"
 +      "someorg/tap"
 ```
 

@@ -12,9 +12,14 @@ let
     # It is not redundant: the per-user profile appears in environment.systemPath
     # as the literal `/etc/profiles/per-user/$USER/bin`, expanded by the shell at
     # init. Anything running without USER set gets `/etc/profiles/per-user//bin`
-    # and finds nothing there. The tmux server the launchd agent starts is such a
-    # context, and the tmux-fzf plugin needs fzf on PATH. This entry is what
-    # guarantees it.
+    # and finds nothing there, so any long-lived process started outside a login
+    # shell needs this entry to find fzf.
+    #
+    # The original example was the tmux server started by the launchd agent in
+    # nix/home/darwin/launchd.nix. That agent and the tmux modules came out on
+    # 2026-09-12 when herdr replaced tmux, so that specific case is gone; the
+    # PATH reasoning above still holds and fzf has other consumers, so the entry
+    # stays.
     fzf
     gh
     git-filter-repo
@@ -33,7 +38,6 @@ let
     pstree
     ranger
     ripgrep
-    shopify-cli     # was shopify/shopify tap
     stripe-cli      # was stripe-cli tap; provides `stripe`
     tree
     typst

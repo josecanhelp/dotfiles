@@ -69,8 +69,6 @@
             # the taps declared in nix/configuration.nix. nix-homebrew
             # applies trust before nix-darwin runs the bundle.
             trust.taps = [
-              "shopify/shopify"
-              "masaushi/tap"
             ];
           };
         }
