@@ -398,19 +398,6 @@ in
     #
     # onActivation.cleanup = "none" below only stops Homebrew UNINSTALLING
     # things that are not declared. It does not make installing a no-op.
-    #
-    # 16 installed apps were deliberately NOT declared on 2026-08-10, after
-    # review: Cap, Cyberduck, ScreenFlow, Visual Studio, Discord,
-    # ResponsivelyApp, cool-retro-term, DBeaver, Eclipse, MySQLWorkbench,
-    # Raspberry Pi Imager, Sketch, Tunnelblick, VirtualBox and
-    # DisplayLink Manager. They stay installed; they just will not follow to a
-    # new machine. Visual Studio for Mac is discontinued upstream anyway.
-    #
-    # barrier and drawio were removed the same day. Both apps had been deleted
-    # outside Homebrew, so Homebrew still recorded them as installed and
-    # activation was a no-op, while a fresh machine would have resurrected two
-    # unused apps. Barrier's upstream is unmaintained; Deskflow and Input Leap
-    # are its successors.
     casks = [
       "1password"                  # the GUI app; 1password-cli below is separate
       "1password-cli"
@@ -433,7 +420,6 @@ in
       "fork"
       "google-chrome"
       "hammerspoon"                # its config is already linked in nix/home
-      "handbrake-app"              # plain `handbrake` is the CLI formula
       "imageoptim"
       # Likely deployed by Intune. Declaring it may fight the MDM channel; if
       # activation starts failing on this line, that is why.
@@ -475,8 +461,6 @@ in
       # config and declared nowhere. Removed 2026-08-13. Do not add it to
       # masApps to "fix" the drift; the Office pkg already covers OneDrive,
       # and two installs of one app is what caused the confusion.
-      "openshot-video-editor"
-      "opensuperwhisper"
       "postman"
       "raycast"
       "shottr"
@@ -513,18 +497,12 @@ in
     #
     # Note Xcode is a ~15 GB download on a fresh machine.
     masApps = {
-      "1Password for Safari" = 1569813296;
-      "BreakTime" = 427475982;
       "DaisyDisk" = 411643860;
       "GIPHY CAPTURE" = 668208984;
-      "iMovie" = 408981434;
       "Keynote" = 409183694;
       "Microsoft Remote Desktop" = 1295203466;
-      "Microsoft To Do" = 1274495053;
       "Pixelmator Pro" = 1289583905;
-      "Swift Playground" = 1496833156;
       "TestFlight" = 899247664;
-      "Toggl Track" = 1291898086;
       "Xcode" = 497799835;
     };
 
