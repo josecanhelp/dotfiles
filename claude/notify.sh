@@ -15,3 +15,8 @@ if [ -n "$TMUX_PANE" ] && command -v tmux >/dev/null 2>&1; then
     tmux set-option -w -t "$TMUX_PANE" @claude_alert "$state" 2>/dev/null
   fi
 fi
+
+# The tmux calls above are cosmetic and may fail (stale pane, no tmux server,
+# option refused). Their status must not become this hook's, or Claude Code
+# reports a failed Stop hook with no stderr to explain it.
+exit 0
