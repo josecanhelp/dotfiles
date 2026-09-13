@@ -74,6 +74,41 @@ in
     users.${user} = import ./home/darwin;
   };
 
+  # nix-darwin writes /etc/zshrc, and three of its defaults duplicate work
+  # that home-manager's ~/.zshrc already does. The compinit duplication was
+  # not just wasteful: it made zsh completion caching impossible, and cost
+  # about 1.2s on every shell.
+  #
+  # /etc/zshrc:24 ran `compinit` before ~/.zshrc had finished building fpath,
+  # and ~/.zshrc:27 ran it again after. The two runs saw different completion
+  # sets, because nix/home/darwin/shell.nix adds ~/.docker/completions at
+  # mkOrder 501 and the shared module's `typeset -U fpath` dedupes what
+  # /etc/zshenv prepended. compinit validates ~/.zcompdump by comparing the
+  # `#files:` count in its header against what it finds in fpath, so each run
+  # read the count the other one had written (3152 against 3026), called the
+  # cache stale, rescanned all ~1,280 completion functions and rewrote the
+  # 77 KB dump. The cache was never once loaded. Measured 1.26s per shell
+  # before and 0.10s after, with ~/.zcompdump now keeping its mtime between
+  # launches instead of changing on every single one.
+  #
+  # enableCompletion deliberately stays true. It is what puts
+  # nix-zsh-completions on the system and links /share/zsh into
+  # environment.pathsToLink, so turning it off would empty fpath rather than
+  # speed anything up. Only the global compinit CALL goes, which is the case
+  # enableGlobalCompInit documents ("disabled if the user wants to extend its
+  # fpath and a custom compinit call in the local config is required").
+  # home-manager's compinit, which runs once fpath is complete, is now the
+  # only one.
+  #
+  # The other two are plain duplicates with no caching angle. bashcompinit
+  # also runs at nix/home/darwin/shell.nix:34, and promptInit's `prompt suse`
+  # is overwritten by starship a few lines later in the same ~/.zshrc.
+  programs.zsh = {
+    enableGlobalCompInit = false;
+    enableBashCompletion = false;
+    promptInit = "";
+  };
+
   # programs.alacritty in nix/home/darwin/alacritty.nix hard-requires "FiraCode Nerd
   # Mono". Without this it was only present as a manual install in
   # ~/Library/Fonts, so a fresh machine rendered every prompt glyph as a
