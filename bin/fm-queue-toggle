@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# fm-queue-toggle - open or close the firstmate queue pane in the CURRENT window.
+#
+# Bound to prefix-Q. Acts on whatever window the captain presses it in, which is
+# deliberate: firstmate's crewmate windows come and go and RENUMBER, so targeting
+# a window by index is unreliable (it put the pane in a crewmate window once).
+# "Current window" is correct by construction.
+set -uo pipefail
+WIDTH="${FM_QUEUE_WIDTH:-58}"
+
+# Find our pane by BOTH the marker option and its start command, and refuse to
+# kill anything that does not match both. A marker alone is not enough: `set -p`
+# once landed it on the captain's own Claude pane, and killing that would end his
+# session. Two independent signals, or we do nothing.
+existing=$(tmux list-panes -F '#{pane_id}\t#{@fm_queue_pane}\t#{pane_start_command}' 2>/dev/null \
+           | awk -F'\t' '$2=="1" && $3 ~ /fm-queue-pane/ {print $1; exit}')
+
+if [ -n "$existing" ]; then
+  cmd=$(tmux display-message -p -t "$existing" '#{pane_start_command}' 2>/dev/null)
+  case "$cmd" in
+    *fm-queue-pane*) tmux kill-pane -t "$existing" 2>/dev/null ;;
+    *) tmux display-message "fm-queue-toggle: refused, pane $existing is not the queue pane" ;;
+  esac
+  exit 0
+fi
+
+tmux split-window -d -h -l "$WIDTH" -c "$HOME" \
+  "FM_HOME=${FM_HOME:-$HOME/Code/Converge/firstmate} exec $HOME/dotfiles/bin/fm-queue-pane ${FM_QUEUE_REFRESH:-45}"

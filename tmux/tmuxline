@@ -3,6 +3,19 @@
 
 set -g status-justify "left"
 set -g status "on"
+# Two status rows (added 2026-09-08 on the captain's word): the Claude usage
+# stats get their own row ABOVE the window tabs, instead of sharing status-right
+# with the clock. status-format[0] is the upper row, [1] the normal
+# left/tabs/right row; swap the two indices if they ever render inverted.
+# prefix-Q toggles the firstmate queue pane (what the crew is doing, and what is
+# waiting on the captain's answer) in the CURRENT window. Added 2026-09-08.
+# It acts on the current window on purpose: crewmate windows renumber when they
+# are torn down, so anything keyed to a window index lands in the wrong place.
+bind-key Q run-shell "$HOME/dotfiles/bin/fm-queue-toggle"
+
+set -g status 2
+set -g status-format[0] "#[align=right,bg=colour234]#{?@claude_status,#{?#{==:#{@claude_ctx_state},hot},#[fg=colour203],#{?#{==:#{@claude_ctx_state},warn},#[fg=colour215],#[fg=colour114]}}#{@claude_status} ,}"
+set -g status-format[1] "#[align=left range=left #{E:status-left-style}]#[push-default]#{T;=/#{status-left-length}:status-left}#[pop-default]#[norange default]#[list=on align=#{status-justify}]#[list=left-marker]<#[list=right-marker]>#[list=on]#{W:#[range=window|#{window_index} #{E:window-status-style}#{?#{&&:#{window_last_flag},#{!=:#{E:window-status-last-style},default}}, #{E:window-status-last-style},}#{?#{&&:#{window_bell_flag},#{!=:#{E:window-status-bell-style},default}}, #{E:window-status-bell-style},#{?#{&&:#{||:#{window_activity_flag},#{window_silence_flag}},#{!=:#{E:window-status-activity-style},default}}, #{E:window-status-activity-style},}}]#[push-default]#{T:window-status-format}#[pop-default]#[norange default]#{?loop_last_flag,,#{window-status-separator}},#[range=window|#{window_index} list=focus #{?#{!=:#{E:window-status-current-style},default},#{E:window-status-current-style},#{E:window-status-style}}#{?#{&&:#{window_last_flag},#{!=:#{E:window-status-last-style},default}}, #{E:window-status-last-style},}#{?#{&&:#{window_bell_flag},#{!=:#{E:window-status-bell-style},default}}, #{E:window-status-bell-style},#{?#{&&:#{||:#{window_activity_flag},#{window_silence_flag}},#{!=:#{E:window-status-activity-style},default}}, #{E:window-status-activity-style},}}]#[push-default]#{T:window-status-current-format}#[pop-default]#[norange list=on default]#{?loop_last_flag,,#{window-status-separator}}}#[nolist align=right range=right #{E:status-right-style}]#[push-default]#{T;=/#{status-right-length}:status-right}#[pop-default]#[norange default]"
 set -g status-left-style "none"
 set -g message-command-style "fg=colour231,bg=colour31"
 set -g status-right-style "none"
@@ -25,6 +38,6 @@ set -g status-left "#[fg=colour16,bg=colour254,bold] #S #[fg=colour254,bg=colour
 # comma inside #[...] would be read as a branch separator by the
 # surrounding #{?...}. Only fg is set; the background comes from
 # status-style.
-set -g status-right "#{?@claude_status,#[fg=colour240] │ #{?#{==:#{@claude_ctx_state},hot},#[fg=colour203],#{?#{==:#{@claude_ctx_state},warn},#[fg=colour215],#[fg=colour114]}}#{@claude_status} ,}#[fg=colour252,bg=colour234,nobold,nounderscore,noitalics]#[fg=colour235,bg=colour252] %H:%M %b %d "
+set -g status-right "#[fg=colour252,bg=colour234,nobold,nounderscore,noitalics]#[fg=colour235,bg=colour252] %H:%M %b %d "
 setw -g window-status-format "#[fg=colour234,bg=colour234,nobold,nounderscore,noitalics]#[default] #I #W #{?#{==:#{@claude_alert},input},#[fg=colour215] #[fg=colour250],}#{?#{==:#{@claude_alert},done},#[fg=colour114] #[fg=colour250],}#{?window_zoomed_flag,,} #[fg=colour234,bg=colour234,nobold,nounderscore,noitalics]"
 setw -g window-status-current-format "#[fg=colour234,bg=colour31,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour31,bold] #I #W #{?window_zoomed_flag,,} #[fg=colour31,bg=colour234,nobold,nounderscore,noitalics]"

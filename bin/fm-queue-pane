@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+# fm-queue-pane - a tmux side pane showing what firstmate's crew is doing and,
+# more importantly, what is waiting on the captain's answer.
+#
+# Why this exists: captain, 2026-09-08 - "I'm losing context as to the questions
+# I'm being asked by first mate and I have to scroll up in my history in order to
+# review it, it'd be nice to have something like active questions or something off
+# to the side so I know what needs my input."
+#
+# It invents no tracking of its own. Everything below is read live from
+# bin/fm-bearings-snapshot.sh --json, which projects the canonical fleet snapshot.
+# A question only appears here if firstmate filed it as a captain-held backlog task.
+#
+# Usage:  fm-queue-pane [refresh-seconds]     default 45
+set -uo pipefail
+
+FM_HOME="${FM_HOME:-$HOME/Code/Converge/firstmate}"
+SNAP="$FM_HOME/bin/fm-bearings-snapshot.sh"
+EVERY="${1:-45}"
+
+bold=$'\033[1m'; dim=$'\033[2m'; amber=$'\033[38;5;215m'
+green=$'\033[38;5;114m'; red=$'\033[38;5;203m'; off=$'\033[0m'
+
+render() {
+  local w json
+  # tput cols is unreliable inside a split pane; ask tmux for the real width
+  # -t "$TMUX_PANE" matters: without a target, display-message reports the
+  # ACTIVE pane, which is the captain's Claude pane, not this one.
+  w=$(tmux display-message -p -t "${TMUX_PANE:-}" "#{pane_width}" 2>/dev/null)
+  [ -n "$w" ] || w=$(tput cols 2>/dev/null || echo 58)
+  w=$(( w > 4 ? w - 2 : 40 ))
+  json=$("$SNAP" --json 2>/dev/null) || { printf '%s snapshot unavailable%s\n' "$red" "$off"; return; }
+
+  FM_W="$w" python3 - "$json" <<'PY'
+import sys, os, json, textwrap, datetime
+w = max(28, int(os.environ.get("FM_W", "60")))
+B,D,A,G,O = '\033[1m','\033[2m','\033[38;5;215m','\033[38;5;114m','\033[0m'
+try:
+    d = json.loads(sys.argv[1])
+except Exception:
+    print(f"{A}snapshot did not parse{O}"); raise SystemExit
+
+def rule():
+    print(f"{D}{'─'*w}{O}")
+
+def wrap(text, indent=4, limit=2):
+    lines = textwrap.wrap(text, width=w-indent) or [""]
+    for l in lines[:limit]:
+        print(" "*indent + l)
+    if len(lines) > limit:
+        print(" "*indent + f"{D}…{O}")
+
+gen = d.get("generated","")
+try:
+    t = datetime.datetime.fromisoformat(gen.replace("Z","+00:00")).astimezone().strftime("%H:%M:%S")
+except Exception:
+    t = gen[-9:-1] if gen else "?"
+
+inflight = d.get("in_flight") or []
+decisions = d.get("decisions_open") or []
+
+print(f"{B}FIRSTMATE{O}  {D}{t}{O}")
+rule()
+print(f"{A}{B}AWAITING YOU  ({len(decisions)}){O}")
+if not decisions:
+    print(f"  {D}nothing{O}")
+for x in decisions:
+    print(f"  {A}•{O} {B}{x.get('id','?')[:w-4]}{O}")
+    s = (x.get("summary") or "").strip()
+    if s: wrap(s, indent=4, limit=2)
+print()
+print(f"{G}{B}CREW  ({len(inflight)}){O}")
+if not inflight:
+    print(f"  {D}idle{O}")
+for x in inflight:
+    st = x.get("state","?")
+    mark = G if st in ("working","done") else A
+    print(f"  {mark}•{O} {x.get('id','?')[:w-4]}  {D}{st}{O}")
+    doing = (x.get("doing") or "").strip()
+    if doing: wrap(doing, indent=4, limit=2)
+
+sm = d.get("secondmates") or []
+if sm:
+    print(); print(f"{D}secondmates: {len(sm)}{O}")
+PY
+}
+
+# Mark this pane so the toggle binding can find it again, whatever window it
+# is in. Window INDICES move when firstmate tears down crewmate windows, so
+# nothing here may key off an index.
+printf '\033]2;fm-queue-pane\007'
+# -t "$TMUX_PANE" is required: `set -p` without a target sets the option on the
+# ACTIVE pane, which is the captain's Claude pane, not this one. Getting this
+# wrong once made the toggle able to kill his session pane.
+tmux set -p -t "${TMUX_PANE:-}" @fm_queue_pane 1 2>/dev/null || true
+
+trap 'exit 0' INT TERM
+while :; do
+  out="$(render)"
+  clear
+  printf '%s\n' "$out"
+  printf '\n%s  refresh %ss · ctrl-c to stop%s\n' "$dim" "$EVERY" "$off"
+  sleep "$EVERY"
+done
