@@ -46,14 +46,19 @@ get backwards in both directions. Attaching with `herdr --remote <user>@<host>` 
 hands the whole UI to the remote machine nor keeps it all local. The split is per
 setting:
 
-| Setting | Read from |
-| --- | --- |
-| `[theme]`, `[theme.custom]` | **local client** |
-| `[ui]` sidebar settings | **local client** |
-| `[keys]` | **local client** (override with `--remote-keybindings server`) |
-| `[ui] tab_bar_right` | **remote server** |
-| `[ui] window_title` | **remote server** |
-| Custom commands and plugins | **remote server** |
+| Setting | Read from | How known |
+| --- | --- | --- |
+| `[theme]`, `[theme.custom]` | **local client** | tested |
+| `[ui]` sidebar settings | **local client** | documented |
+| `[keys]` | **local client** (override with `--remote-keybindings server`) | documented |
+| `[ui] tab_bar_right` | **remote server** | tested |
+| `[ui] window_title` | **remote server** | documented |
+| Custom commands and plugins | **remote server** | documented |
+
+Note that `[ui]` is **split**. Sidebar settings come from the client while
+`tab_bar_right` comes from the server, so the table name is not a reliable guide and
+the rows have to be known individually. The "How known" column says which rows were
+confirmed by experiment rather than taken from the reference.
 
 herdr's docs state the first half: *"The UI uses the client's local theme, sidebar
 settings, and keybindings by default. Herdr does not copy local command plugins,
@@ -68,6 +73,17 @@ invisible under `herdr --remote`.
 
 Verified directly: with an entry present locally and absent on the server, the status
 area was blank on remote attach and correct locally.
+
+`[theme.custom]` was tested the same way and came out the other direction. The client
+sets `overlay1` to lime; fm-work's config was temporarily given `overlay1 = "#ff8800"`
+and reloaded. The tag stayed **lime** on attach, so the client's theme wins and the
+documented sentence holds for theme exactly as written.
+
+The consequence is worth stating plainly, because it is the question this design keeps
+running into: **the tag's color cannot differ per server.** Text and shape are the only
+channels that can. Anything that looks like a per-server color would have to come from
+outside herdr, for example launching each remote in its own Ghostty window with a
+different theme.
 
 The practical rule: **appearance cannot vary by server, content can, and content lives
 on the server.** A theme change here paints identically whatever is on the far end.
