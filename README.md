@@ -183,6 +183,8 @@ building them.
   versus platform-specific configuration, ordering, and verification.
 - [Keyboard workflow](docs/keyboard-workflow.md) explains the Karabiner and
   Hammerspoon layers.
+- [herdr](docs/herdr.md) covers how the terminal workspace manager is configured,
+  which side resolves what under `herdr --remote`, and the theme token map.
 - [Reproducibility review](docs/nix-reproducibility-review.md) tracks remaining
   non-declarative state and known gaps.
 - [Historical audit](docs/archive/reproducibility-audit-2026-08-09.md) records

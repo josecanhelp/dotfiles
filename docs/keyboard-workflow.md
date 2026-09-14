@@ -122,6 +122,9 @@ for this; `~/.config/herdr/config.toml` binds them.
 These are herdr-only, so they are configured in herdr rather than sent through
 Hammerspoon. Changes need `herdr server reload-config` to take effect.
 
+Everything about herdr other than keys, including how the config is deployed and what
+its theme tokens paint, is in [herdr.md](herdr.md).
+
 ### Launch Mode
 
 A Goku simlayer on the **`'` (quote)** key: hold `'` and press a letter within 350ms to
