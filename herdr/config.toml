@@ -1,0 +1,57 @@
+onboarding = false
+
+# Keys chosen to MATCH ~/dotfiles/tmux/tmux.conf, so one set of Hammerspoon and
+# Karabiner bindings drives either multiplexer. Hammerspoon cannot tell them
+# apart (same terminal, same bundle id), so the configs have to agree instead.
+#
+# Pane focus (prefix+h/j/k/l), splits (prefix+v, prefix+minus), tabs
+# (prefix+c/p/n), zoom (prefix+z), close pane (prefix+x) and the workspace
+# picker (prefix+w, the same key tmux uses for choose-tree) already match tmux
+# at herdr's defaults and are deliberately NOT overridden here.
+[keys]
+# tmux's prefix, not herdr's ctrl+b default.
+prefix = "ctrl+a"
+
+# Move between workspaces. herdr ships previous_workspace and next_workspace
+# UNSET, so out of the box there is no key at all for this; the only ways to
+# change workspace are the prefix+w picker and navigate mode's up/down arrows.
+# These two bindings are the fix.
+#
+# shift+k / shift+j rather than something closer to tmux, because tmux has no
+# workspace concept to match (sessions are the nearest thing and are switched
+# with prefix+( and prefix+), which herdr cannot bind: its key parser takes
+# only minus, comma, ampersand, plus and backtick as named punctuation).
+# Vertical letters suit the sidebar, which lists workspaces top to bottom, and
+# agree with navigate mode's own up/down for the same movement.
+previous_workspace = "prefix+shift+k"
+next_workspace = "prefix+shift+j"
+
+# Karabiner's super-duper `n` sends C-a , which tmux uses to rename a window.
+rename_tab = "prefix+comma"
+
+# KNOWN DIVERGENCES, deliberately not fixed:
+#
+# `r`  Karabiner's super-duper `r` sends C-a r, which tmux binds to reloading
+#      its config and herdr binds to resize mode. Remapping herdr's
+#      reload_config onto prefix+r would collide with resize_mode, and resize
+#      mode earns the key more often.
+#
+# `f`  Karabiner's super-duper `f` sends C-a f Return, which is tmux's
+#      find-window. herdr has no equivalent, and `goto` (prefix+g) is
+#      undocumented, so it is left alone rather than guessed at. C-a f simply
+#      does nothing in herdr.
+
+[ui]
+status_indicators = "symbols"
+
+[ui.sound]
+enabled = true
+
+[ui.toast]
+delivery = "system"
+
+[experimental]
+# Launch herdr from inside a herdr-managed pane. Off by default; on so that an
+# agent pane can start its own session (nested workspaces, remote attach from
+# within a pane) instead of being refused.
+allow_nested = true

@@ -31,6 +31,7 @@ in
     # macOS only.
     # ./alacritty.nix
     ./ghostty.nix
+    ./herdr.nix
     ./karabiner.nix
     ./java.nix
     # Needs pkgs.vscode-marketplace, which the nix-vscode-extensions overlay in
