@@ -56,32 +56,22 @@ rename_tab = "prefix+comma"
 [ui]
 status_indicators = "symbols"
 
-# Which herdr server this client is attached to, pinned to the right of the tab
-# row. A `hostname` entry cannot answer it: both remotes are the same box and
-# only the account differs (--remote fmwork@homelab vs fmpersonal@homelab), so
-# the entry reads the username instead.
+# Marks a LOCAL herdr session, shown at the right of the tab row. The matching
+# entries for the two remotes live ON THOSE SERVERS, in their own config.toml,
+# not here. See docs/herdr.md.
 #
-# `command` entries resolve on the SERVER, which is the whole reason one line
-# here covers all three cases: fmwork prints WORK, fmpersonal prints PERSONAL,
-# and a local session falls through to LOCAL. Theme, sidebar and keybindings
-# could NOT do this. herdr takes those from the local client config on a remote
-# attach, so they render identically no matter which server is on the far end.
+# herdr reads tab_bar_right from the SERVER's config. The documented line, that
+# hostname/datetime/command entries "resolve on the Herdr server", is a much
+# narrower claim than it first reads as: it governs where a value is computed,
+# not which config the entry list comes from. A list written here renders on
+# local sessions only and is invisible under `herdr --remote`. Verified by
+# attaching with an entry present here and absent there; the area was blank.
 #
-# herdr runs the string through `/bin/sh -lc`, so the case statement works
-# inline and there is no status script to keep in sync across three machines.
-#
-# The three markers are different SHAPES rather than one shape in three colors.
-# Output has ESC sequences stripped rather than interpreted, so a command entry
-# cannot color itself, and the theme tokens that could are client-local and so
-# paint all three states identically. Shape is the only channel besides the
-# word itself that can actually vary by server, and it stays readable when a
-# narrow tab row truncates the status area.
-#
-# The answer never changes for the life of a connection, so the interval only
-# has to be short enough to recover from a transient failure, which blanks the
-# entry until the next run. `-lc` is a login shell, hence the roomy timeout.
+# Static text rather than a command, because this file only ever describes this
+# machine. An earlier version ran a `case` over `$(hostname)` to name whichever
+# remote it was attached to, which could never have worked for the reason above.
 tab_bar_right = [
-  { type = "command", command = "case $(id -un) in fmwork) echo '■ WORK';; fmpersonal) echo '◆ PERSONAL';; *) echo '● LOCAL';; esac", interval_seconds = 300, timeout_seconds = 5 },
+  { type = "text", text = "● LOCAL" },
 ]
 
 [ui.sound]
