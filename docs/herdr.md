@@ -42,47 +42,89 @@ its own, so a fresh machine needs that bootstrap by hand. This is a known gap ag
 ## Which config applies under `herdr --remote`
 
 This is the single most useful thing to know about remote sessions, and it is easy to
-get backwards. Attaching with `herdr --remote <user>@<host>` does **not** hand the
-whole UI to the remote machine.
+get backwards in both directions. Attaching with `herdr --remote <user>@<host>` neither
+hands the whole UI to the remote machine nor keeps it all local. The split is per
+setting:
 
-| Setting | Resolved by |
+| Setting | Read from |
 | --- | --- |
 | `[theme]`, `[theme.custom]` | **local client** |
 | `[ui]` sidebar settings | **local client** |
 | `[keys]` | **local client** (override with `--remote-keybindings server`) |
-| `tab_bar_right` entries of type `hostname`, `datetime`, `command` | **remote server** |
-| `window_title` | **remote server** |
-| Custom commands and plugins advertised by the server | **remote server** |
+| `[ui] tab_bar_right` | **remote server** |
+| `[ui] window_title` | **remote server** |
+| Custom commands and plugins | **remote server** |
 
-herdr's docs state it as: *"The UI uses the client's local theme, sidebar settings, and
-keybindings by default. Herdr does not copy local command plugins, configuration,
-executables, or secrets onto SSH hosts."*
+herdr's docs state the first half: *"The UI uses the client's local theme, sidebar
+settings, and keybindings by default. Herdr does not copy local command plugins,
+configuration, executables, or secrets onto SSH hosts."*
 
-The practical rule: **appearance cannot vary by server, content can.** Any theme or
-color change made here paints identically no matter which machine is on the far end.
-Only things herdr resolves server-side can differ.
+They do not state the second half, and the sentence that looks like it does is a trap.
+The reference says `hostname`, `datetime`, and `command` entries "resolve on the Herdr
+server". That governs **where a value is computed**, not **which config the entry list
+is read from**. Both happen to be server-side, but the sentence only asserts the first.
+A `tab_bar_right` list written in the client config renders on local sessions and is
+invisible under `herdr --remote`.
+
+Verified directly: with an entry present locally and absent on the server, the status
+area was blank on remote attach and correct locally.
+
+The practical rule: **appearance cannot vary by server, content can, and content lives
+on the server.** A theme change here paints identically whatever is on the far end.
+Anything that should differ per machine has to be configured on that machine.
 
 ## The server tag
 
-`[ui] tab_bar_right` in `herdr/config.toml` pins a marker to the right of the tab row
-saying which server the client is attached to:
+A marker at the right of the tab row says which server the client is attached to.
+Because `tab_bar_right` is read server-side, this is **three config files, one per
+machine**, each carrying a static `text` entry:
 
-| Attached to | Shows |
-| --- | --- |
-| `herdr --remote fmwork@homelab` | `■ WORK` |
-| `herdr --remote fmpersonal@homelab` | `◆ PERSONAL` |
-| this machine | `● LOCAL` |
+| Session | Config file | Shows |
+| --- | --- | --- |
+| local | `~/dotfiles/herdr/config.toml` (this repo) | `● LOCAL` |
+| `--remote fmwork@homelab` | `~/.config/herdr/config.toml` on `fm-work` | `■ WORK` |
+| `--remote fmpersonal@homelab` | `~/.config/herdr/config.toml` on `fm-personal` | `◆ PERSONAL` |
 
-A `hostname` entry cannot do this, because both remotes are the same box and only the
-account differs. The entry reads the username instead, via a `command` entry that
-resolves on the server.
+Static text rather than a command, because each file describes exactly one machine.
+Nothing to detect at runtime, nothing that can time out. The markers are three
+different **shapes**, since command output has ESC sequences stripped rather than
+interpreted and the theme tokens that could color the entry are client-local, so shape
+and wording are the only channels available.
+
+**Known gap.** The two remote halves are hand-maintained and outside this repo. They
+are not declared in nix, not version controlled, and a rebuilt container loses them.
+A backup from the last edit sits beside each file as `config.toml.bak-<date>`.
+Restoring one means appending the `[ui] tab_bar_right` block by hand and running
+`herdr server reload-config` on that host.
+
+### Gotcha: the ssh login name is not the shell user
+
+Relevant if the tag ever becomes a `command` entry again. `herdr --remote
+fmwork@homelab` logs in as `fmwork`, but the shell on the far side runs as **`node` on
+both containers**, so matching on `id -un` matches neither and falls through silently.
+Match on `hostname`, which is `fm-work` and `fm-personal` and names the machine the
+server actually runs on.
+
+A command entry can be checked without attaching, by running it where it would run:
+
+```
+$ ssh -o BatchMode=yes fmwork@homelab '/bin/sh -lc "hostname"'
+fm-work
+```
+
+That check is worth the one command. A command entry that fails, times out, or returns
+nothing leaves the area **blank** with no error shown anywhere, which is the same
+symptom as the entry not being configured on that server at all. Those two causes are
+indistinguishable from the client, so check the server config first.
+
+herdr also ships a built-in `{ type = "hostname" }` entry that needs no shell. It
+prints the raw hostname, already readable here, and cannot fail the way a command can.
 
 Notes on `command` entries, none of which are obvious:
 
 - They run through **`/bin/sh -lc`** on Linux and macOS (`cmd.exe /d /c` on Windows).
-  Full shell syntax works inline, which is why the tag is a `case` statement in the
-  config rather than a script file deployed to three machines. Note `-lc` is a *login*
-  shell, so profile startup counts against the timeout.
+  Full shell syntax works inline, so a one-line `case` needs no script file on disk.
+  Note `-lc` is a *login* shell, so profile startup counts against the timeout.
 - herdr uses the **last line** of successful output and **strips ESC sequences rather
   than interpreting them**. A command cannot color its own output.
 - The entry is **cleared** on failure, empty output, or timeout, and refills on the
