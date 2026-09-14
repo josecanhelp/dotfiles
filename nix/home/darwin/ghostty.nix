@@ -28,10 +28,10 @@
     settings = {
       theme = "retroma-teal";
 
-      font-family = "JetBrains Mono";
-      font-size = 13;
+      font-family = "MonoLisa";
+      font-size = 16;
 
-      window-padding-x = 14;
+      window-padding-x = 10;
       window-padding-y = 10;
 
       cursor-style = "block";
