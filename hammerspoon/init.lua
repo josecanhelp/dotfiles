@@ -802,6 +802,8 @@ end)
 hs.urlevent.bind('opencommandpalette', function()
     if appIs(vscode) then
         hs.eventtap.keyStroke({ 'cmd', 'shift' }, 'p')
+    elseif appIncludes(terminals) then
+        hs.eventtap.keyStroke({ 'cmd', 'shift' }, 'p')
     elseif appIs(figma) then
         hs.eventtap.keyStroke({ 'cmd' }, '/') -- Figma Quick actions
     elseif appIs(teams) then
