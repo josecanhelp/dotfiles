@@ -109,6 +109,29 @@ in
     promptInit = "";
   };
 
+  # Touch ID for sudo, so a rebuild does not need a typed password.
+  #
+  # This writes /etc/pam.d/sudo_local, which macOS ships as an EMPTY file that
+  # survives OS updates precisely so it can be overridden. Before this it was
+  # empty here too, which is why `sudo darwin-rebuild switch` could only ever
+  # run from a real terminal: every other context (an editor task, an agent
+  # shell, anything without a tty) failed at "a terminal is required to read
+  # the password".
+  #
+  # reattach is not optional on this machine. pam_tid is tied to the bootstrap
+  # session, and a multiplexer pane is not in it, so Touch ID silently fails
+  # inside one and falls back to the password prompt. The option documents the
+  # fix for tmux and screen; herdr is the same shape of program and needs it
+  # for the same reason. Since 2026-09-12 essentially every shell here is a
+  # herdr pane, so without this the feature would be on and never once fire.
+  #
+  # Apple Watch works through the same pam_tid module. If it does not, the
+  # toggle is System Settings > Touch ID & Password.
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    reattach = true;
+  };
+
   # programs.alacritty in nix/home/darwin/alacritty.nix hard-requires "FiraCode Nerd
   # Mono". Without this it was only present as a manual install in
   # ~/Library/Fonts, so a fresh machine rendered every prompt glyph as a
