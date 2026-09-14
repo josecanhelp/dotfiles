@@ -50,8 +50,8 @@ enabled = true
 [ui.toast]
 delivery = "system"
 
-[experimental]
-# Launch herdr from inside a herdr-managed pane. Off by default; on so that an
-# agent pane can start its own session (nested workspaces, remote attach from
-# within a pane) instead of being refused.
-allow_nested = true
+# experimental.allow_nested is deliberately left at its default of false.
+# It would let herdr launch from inside a herdr-managed pane, which sounds
+# useful for `herdr --remote` but buys little: a fresh terminal window has no
+# nesting to resolve, no doubled prefix key and no ambiguity about which
+# session a keystroke reaches. Open a new window to ssh into a session.
