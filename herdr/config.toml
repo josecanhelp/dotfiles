@@ -1,5 +1,17 @@
 onboarding = false
 
+[theme.custom]
+# The tab row's right-hand status entry (the WORK/PERSONAL/LOCAL tag configured
+# under [ui] below) takes its foreground from overlay1. herdr's docs list the
+# theme tokens but never say what any of them paint; this one was identified by
+# setting it to an obvious color and looking at the result.
+#
+# Two caveats. overlay1 is a shared palette token rather than a tag-specific
+# one, so this also repaints anything else herdr draws with it, and that blast
+# radius has not been mapped. And like every theme key it is client-local, so
+# it cannot vary by server: WORK, PERSONAL and LOCAL all render in this color.
+overlay1 = "#00ff00"
+
 # Keys chosen to MATCH ~/dotfiles/tmux/tmux.conf, so one set of Hammerspoon and
 # Karabiner bindings drives either multiplexer. Hammerspoon cannot tell them
 # apart (same terminal, same bundle id), so the configs have to agree instead.
@@ -43,6 +55,34 @@ rename_tab = "prefix+comma"
 
 [ui]
 status_indicators = "symbols"
+
+# Which herdr server this client is attached to, pinned to the right of the tab
+# row. A `hostname` entry cannot answer it: both remotes are the same box and
+# only the account differs (--remote fmwork@homelab vs fmpersonal@homelab), so
+# the entry reads the username instead.
+#
+# `command` entries resolve on the SERVER, which is the whole reason one line
+# here covers all three cases: fmwork prints WORK, fmpersonal prints PERSONAL,
+# and a local session falls through to LOCAL. Theme, sidebar and keybindings
+# could NOT do this. herdr takes those from the local client config on a remote
+# attach, so they render identically no matter which server is on the far end.
+#
+# herdr runs the string through `/bin/sh -lc`, so the case statement works
+# inline and there is no status script to keep in sync across three machines.
+#
+# The three markers are different SHAPES rather than one shape in three colors.
+# Output has ESC sequences stripped rather than interpreted, so a command entry
+# cannot color itself, and the theme tokens that could are client-local and so
+# paint all three states identically. Shape is the only channel besides the
+# word itself that can actually vary by server, and it stays readable when a
+# narrow tab row truncates the status area.
+#
+# The answer never changes for the life of a connection, so the interval only
+# has to be short enough to recover from a transient failure, which blanks the
+# entry until the next run. `-lc` is a login shell, hence the roomy timeout.
+tab_bar_right = [
+  { type = "command", command = "case $(id -un) in fmwork) echo '■ WORK';; fmpersonal) echo '◆ PERSONAL';; *) echo '● LOCAL';; esac", interval_seconds = 300, timeout_seconds = 5 },
+]
 
 [ui.sound]
 enabled = true
