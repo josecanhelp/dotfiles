@@ -34,7 +34,8 @@ batch6=(goku stripe shopify uv uvx)
 links=("$HOME/.hammerspoon"
        "$HOME/.amethyst.yml" "$HOME/.hushlogin" "$HOME/.bin"
        "$HOME/.config/karabiner.edn"
-       "$HOME/.config/karabiner/karabiner.edn")
+       "$HOME/.config/karabiner/karabiner.edn"
+       "$HOME/.config/herdr/config.toml")
 
 # launchd agents declared by home-manager, by label.
 #
