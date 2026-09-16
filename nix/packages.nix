@@ -102,6 +102,12 @@ let
   ];
 
   services = with pkgs; [
+    # awscli2, because /usr/local/bin/aws is an x86_64 build and Rosetta 2
+    # is not installed here, so it dies with "Bad CPU type in executable"
+    # on this arm64 machine. The nix build is native aarch64, and
+    # /run/current-system/sw/bin precedes /usr/local/bin on PATH, so this
+    # shadows the old install rather than needing it removed.
+    awscli2
     azure-cli
     kubernetes-helm   # provides helm
     mariadb
