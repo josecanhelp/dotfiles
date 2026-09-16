@@ -378,6 +378,7 @@ in
       "ruby"          # keg-only and unlinked, so /usr/bin/ruby still wins
       "opencode"      # Homebrew provides a newer release than this nixpkgs pin
       "wp-cli"
+      "glow"
 
       # wp-cli's only Homebrew dependency is the unversioned `php`, which is
       # 8.5 as of 2026-08-18. PHP 8.5 deprecated `case X;`, and the wp-cli
