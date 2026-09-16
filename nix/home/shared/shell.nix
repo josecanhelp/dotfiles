@@ -219,6 +219,7 @@
       mfss = "sail artisan migrate:fresh --seed";
       arl = "sail artisan route:list";
       python = "python3";
+      ff = "cd ~/Code/Converge/firstmate/";
     };
 
     # The platform files hang more content off these two anchors: darwin/extras.nix
