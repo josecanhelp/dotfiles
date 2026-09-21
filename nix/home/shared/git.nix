@@ -13,7 +13,6 @@
       ".DS_Store"
       ".vscode/*"
       ".secrets"
-      "CLAUDE.md"
       "scratch*.md"
       "**/.claude/settings.local.json"
     ];
