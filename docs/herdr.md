@@ -103,9 +103,10 @@ config pieces behave differently under `herdr --remote` (herdr 0.9.0, tested):
   `[keys]` mirror this repo's, so nothing else changes.
 
 The plugin's popup runs `clauth` from the herdr server's PATH, which does not include
-`~/.cargo/bin`. On fm-work-aws, `~/.local/bin/clauth` is a symlink to
-`~/.cargo/bin/clauth` for that reason. Like the other remote pieces, it is outside this
-repo.
+`~/.cargo/bin`, so clauth has to live in `~/.local/bin`. fm-work-aws is not
+hand-maintained like the homelab containers: its clauth binary, plugin and herdr config
+come from `infra/firstmate-host/config/` in the converge-ops repo
+(`install-clauth.sh` and `apply-herdr-config.sh`, run by hand on the host).
 
 ## The server tag
 
