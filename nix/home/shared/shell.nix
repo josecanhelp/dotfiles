@@ -105,6 +105,13 @@
       KEYTIMEOUT = "1";
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
 
+      # npm's default global prefix is the nodejs store path, which is
+      # read-only, so `npm install -g` fails there. ~/.local/bin is already
+      # on PATH and holds the agent CLIs (gh-axi, tasks-axi, quota-axi, ...).
+      # Set here rather than in ~/.npmrc, which carries a registry auth token
+      # that must not be copied into the world-readable store.
+      NPM_CONFIG_PREFIX = "$HOME/.local";
+
       # Local code root, not the Converge subdirectory. engineering_department
       # documents this convention in SETUP.md and builds paths as
       # $CONVERGE_CODE/Converge/<repo>, so pointing it one level deeper would
