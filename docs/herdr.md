@@ -89,6 +89,24 @@ The practical rule: **appearance cannot vary by server, content can, and content
 on the server.** A theme change here paints identically whatever is on the far end.
 Anything that should differ per machine has to be configured on that machine.
 
+### Example: the clauth plugin
+
+The clauth plugin is installed on the remote host (`clauth herdr install`). Its two
+config pieces behave differently under `herdr --remote` (herdr 0.9.0, tested):
+
+- The `$clauth` sidebar row is a sidebar setting, so it is read from the client. It
+  lives in this repo's `config.toml` and works.
+- The `prefix+a` binding (`type = "plugin_action"`) does **not** work from the client
+  config. The client drops the key: nothing reaches the server log and nothing shows.
+  Attaching with `herdr --remote fm@fm-work-aws --remote-keybindings server` makes the
+  host's `[keys]` apply instead, and then the same binding opens the popup. The host's
+  `[keys]` mirror this repo's, so nothing else changes.
+
+The plugin's popup runs `clauth` from the herdr server's PATH, which does not include
+`~/.cargo/bin`. On fm-work-aws, `~/.local/bin/clauth` is a symlink to
+`~/.cargo/bin/clauth` for that reason. Like the other remote pieces, it is outside this
+repo.
+
 ## The server tag
 
 A marker at the right of the tab row says which server the client is attached to.

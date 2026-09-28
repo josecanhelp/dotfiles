@@ -220,6 +220,9 @@
       arl = "sail artisan route:list";
       python = "python3";
       ff = "cd ~/Code/Converge/firstmate/";
+      # Server keybindings because a client-side plugin_action binding never
+      # reaches a plugin on the host. See docs/herdr.md.
+      hw = "herdr --remote fm@fm-work-aws --remote-keybindings server";
     };
 
     # The platform files hang more content off these two anchors: darwin/extras.nix

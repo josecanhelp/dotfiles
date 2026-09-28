@@ -74,6 +74,11 @@ tab_bar_right = [
   { type = "text", text = "● LOCAL" },
 ]
 
+# clauth herdr plugin: `$clauth` renders the account each Claude Code pane
+# burns. Sidebar settings are client-local, so this also has to live here.
+[ui.sidebar.agents.rows_by_agent]
+claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent", "$clauth", "$clauth_delegate"]]
+
 [ui.sound]
 enabled = true
 
